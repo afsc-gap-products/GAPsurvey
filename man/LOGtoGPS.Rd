@@ -62,6 +62,7 @@ LOGtoGPS(
     HAUL = 3,
     DATE = "06/06/2017",
     path_in = paste0(path_in0, "/log2gps/06062017.log"),
+    path_out = getwd(),
     filename_add = "",
     quiet = TRUE)
 }

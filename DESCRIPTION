@@ -27,14 +27,5 @@ Depends:
     R (>= 2.10)
 Imports: 
     RODBC,
-    tcltk,
-    stringr, 
-    lubridate, 
-    readr, 
-    magrittr, 
-    dplyr
-Suggests: 
-    rmarkdown,
-    knitr
-VignetteBuilder: knitr
+    tcltk
 

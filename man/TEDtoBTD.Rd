@@ -54,6 +54,7 @@ TEDtoBTD(
    VERSION_NUMBER = 123,
    SERIAL_NUMBER = 123,
    path_in = paste0(path_in0, "/bvdr2btd/"),
+   path_out = getwd(),
    filename_add = "new", # is this important?
    quiet = TRUE)
 }
