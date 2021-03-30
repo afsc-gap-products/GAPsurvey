@@ -1008,5 +1008,3 @@ numbers0 <- function (x, number_places = NA) {
 #' data(PolySpecies)
 "PolySpecies"
 
-
-
