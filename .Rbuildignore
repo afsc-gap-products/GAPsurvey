@@ -1,0 +1,9 @@
+^GAPsurvey\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+
+^data-raw$
+^out$
+^old$
+^notes.R$
+^installfiles$

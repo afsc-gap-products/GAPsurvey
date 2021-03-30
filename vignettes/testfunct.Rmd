@@ -1,0 +1,104 @@
+---
+title: "testfunct"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{testfunct}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(eval = TRUE, echo = TRUE, include = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(GAPsurvey)
+path_in0 <- system.file("exdata", package = "GAPsurvey")
+# path_in0 <- paste0(dirname(dirname(dirname(getwd()))), 
+                           # "/R/R-3.6.0/library/GAPsurvey/exdata/")
+path_out0 <- paste0(getwd(), "/out/")
+```
+
+# numbers0
+
+Make numbers the same length preceeded by 0s
+
+```{r}
+# example 1
+numbers0(x = c(1,11,111))
+# example 2
+numbers0(x = c(1,11,111), number_places = 4)
+# example 3
+numbers0(x = c(1,11,111), number_places = 2)
+```
+
+
+# TEDtoBTD
+
+BVDR Conversion to Create BTD data
+
+Converts Marport BVDR data (TED) to RACE BTD format.
+
+```{r}
+TEDtoBTD(
+ VESSEL = 94,
+ CRUISE = 201901,
+ HAUL = 3,
+ MODEL_NUMBER = 123,
+ VERSION_NUMBER = 123,
+ SERIAL_NUMBER = 123,
+ path_in = paste0(path_in0, "/bvdr2btd/"), 
+ # path_out = path_out0, 
+ filename_add = "new", # is this important?
+ quiet = TRUE) 
+```
+
+# LOGtoGPS
+
+```{r}
+LOGtoGPS(
+ VESSEL = 94,
+ CRUISE = 201901,
+ HAUL = 3, 
+ DATE = "06/06/2017",
+ path_in = paste0(path_in0, "/log2gps/06062017.log"), 
+ # path_out = path_out0, 
+ filename_add = "", 
+ quiet = TRUE)
+```
+
+# 
+
+```{r}
+# CTDtoBTD(
+#  VESSEL = 94,
+#  CRUISE = 201901,
+#  HAUL = 3,
+#  DATE = "06/02/2019", 
+#  MODEL_NUMBER = 123,
+#  VERSION_NUMBER = 123,
+#  SERIAL_NUMBER = 123,
+#  path_in = paste0(path_in0, "ctd2btd/6-02-19/DATA01.ctd"), 
+#  path_out = path_out0, 
+#  filename_add = "", # is this important?
+#  quiet = TRUE) 
+```
+
+
+```{r}
+# CTDXMLtoBTD(
+#  VESSEL = 94,
+#  CRUISE = 201901,
+#  HAUL = 3,
+#  DATE = "06/02/2019",
+#  MODEL_NUMBER = 123,
+#  VERSION_NUMBER = 123,
+#  SERIAL_NUMBER = 123,
+#  path_in = paste0(path_in0, "ctdxml2btd/SBE19_CTD8106_Hauls_Test2_15March2021.xml"),
+#  path_out = path_out0,
+#  filename_add = "", # is this important?
+#  quiet = TRUE)
+```

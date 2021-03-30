@@ -1,0 +1,40 @@
+Package: GAPsurvey
+Title: Provides data management tools for RACE GAP surveys
+Version: 2.3.00
+Authors@R: 
+  c(person(given = "Jason",
+           family = "Conner",
+           email = "Jason.Conner@noaa.gov", 
+           role = c("aut", "cre")), 
+    person(given = "Emily",
+           family = "Markowitz", 
+           role = c("aut"),
+           comment = c(ORCID = "0000-0001-5757-4230"),
+           email = "Emily.Markowitz@noaa.gov"),
+    person(given = "Liz",
+           family = "Dawson",
+           role = "aut",
+           email = "Liz.Dawson@noaa.gov"))
+Description: Provides data management tools for RACE GAP surveys. 
+    And more!
+URL: https://gitlab-afsc.fisheries.noaa.gov/Jason.Conner/gapsurvey
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
+Imports: 
+    RODBC,
+    tcltk,
+    stringr, 
+    lubridate, 
+    readr, 
+    magrittr, 
+    dplyr
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr
+
