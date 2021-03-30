@@ -2,15 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{TEDtoBTD}
 \alias{TEDtoBTD}
-\title{\subsection{title: GAPsurvey
-purpose: assist scientists on the survey collect data
-author: Jason Conner (jason.conner AT noaa.gov)
-start date:
-modified by: Emily Markowitz (emily.markowitz AT noaa.gov)
-modified date: March 2021}{
-
-BVDR Conversion to Create BTD data
-}}
+\title{BVDR Conversion to Create BTD data}
 \usage{
 TEDtoBTD(
   VESSEL = NA,

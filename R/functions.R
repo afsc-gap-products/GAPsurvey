@@ -1,11 +1,11 @@
-#' ---
-#' title: GAPsurvey
-#' purpose: assist scientists on the survey collect data
-#' author: Jason Conner (jason.conner AT noaa.gov)
-#' start date:
-#' modified by: Emily Markowitz (emily.markowitz AT noaa.gov)
-#' modified date: March 2021
-#' ---
+# #' ---
+# #' title: GAPsurvey
+# #' purpose: assist scientists on the survey collect data
+# #' author: Jason Conner (jason.conner AT noaa.gov)
+# #' start date:
+# #' modified by: Emily Markowitz (emily.markowitz AT noaa.gov)
+# #' modified date: March 2021
+# #' ---
 
 
 # R-create BTH and BTD files from other sources ----------------------------------------------
@@ -509,9 +509,6 @@ LOGtoGPS <- function(
 #'
 #' @return ...
 #' @export
-#'
-#' @example
-#' # lengthData()
 lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 
   PolySpecies <- utils::data("PolySpecies")
@@ -876,7 +873,7 @@ catchData <- function(haul, dsnTablet, dsnDataEnt, importLength=TRUE) {
 #'
 #' Creates connection channel to data_ent.mdb, then appends data to given table.
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
-#' @param data # TOLEDO
+#' @param data TOLEDO
 #' @param tablename String of the data_ent table you are deleting data from
 #'
 #' @return ...
