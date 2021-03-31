@@ -16,7 +16,7 @@ catchData(haul, dsnTablet, dsnDataEnt, importLength = TRUE)
 \item{importLength}{logical - import length data (GAPsurvey::lengthData()) prior to importing catch data}
 }
 \value{
-...
+changes to catch data in the access database (.mbd)
 }
 \description{
 NOTE: Must be run on 32-bit R!
@@ -24,7 +24,33 @@ NOTE: Must be run on 32-bit R!
 \details{
 Processes catch data exported from catch tablets into summarized values into the designated dataent.mdb. You must have exported from the tablet:
 DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul.
+
+#---> To use the program you must first:
+Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
+Each of these file names will begin with the tablet name and end with the haul number.
+DATAENT_CATCH_xxxx.csv
+DATAENT_BBAG_xxxx.csv     -- If there was a benthic bag
+RAW_BBAG_xxxx.csv         -- If there was a benthic bag
+RAW_CATCH_HAUL_xxxx.csv
+RAW_CATCH_HAUL_ATTR_xxxx.csv
+RAW_CATCH_SAMPLE_xxxx.csv
+RAW_CATCH_VALUE_xxxx.csv
+SPECIMEN_xxxx.csv         -- The specimen data
+HAUL_xxxx.csv             -- A length file for each tablet
 }
+\section{TOLEDO}{
+IF there are subsets listed in the catch and length data, the user will be given an option to define the subsample type (from 1 to 0 for 100\% sampled to 0\% sampled) of
+}
+
 \examples{
-# catchData()
+# Point functions to correct tablet directory and "dataEnt" file#
+dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+
+# Define the current haul number to import #
+haul <- 59
+
+# Import catch data #
+catchData(haul,dsnTablet,dsnDataEnt,importLength)
 }

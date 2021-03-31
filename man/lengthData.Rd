@@ -14,11 +14,23 @@ lengthData(haul, dsnTablet, dsnDataEnt)
 \item{dsnDataEnt}{String for the drive folder (in R notation) - include full file name and extension.}
 }
 \value{
-...
+changes to catch data in the access database (.mbd)
 }
 \description{
 NOTE: Must be run on 32-bit R!
 }
 \details{
 Looks for tablet length files in given DSN and uploads them to LENGTH and RAW_LENGTH in the given data_ent.mdb.
+}
+\examples{
+# Point functions to correct tablet directory and "dataEnt" file#
+dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+
+# Define the current haul number to import #
+haul <- 59
+
+# Import catch data #
+lengthData(haul,dsnTablet,dsnDataEnt)
 }

@@ -14,11 +14,21 @@ benthicData(haul, dsnTablet, dsnDataEnt)
 \item{dsnDataEnt}{full file path of the location of the dataent.mdb - include full file name and extension.}
 }
 \value{
-...
+changes to catch data in the access database (.mbd)
 }
 \description{
 NOTE: Must be run on 32-bit R!
 }
 \examples{
-# benthicData()
+# Point functions to correct tablet directory and "dataEnt" file#
+dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+
+# Define the current haul number to import #
+haul <- 59
+
+# Import catch data #
+# benthicData(haul,dsnTablet,dsnDataEnt)
+# TOLEDO - need benthic example data to add!
 }

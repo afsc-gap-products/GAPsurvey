@@ -11,7 +11,6 @@
 # R-create BTH and BTD files from other sources ----------------------------------------------
 
 
-
 #' BVDR Conversion to Create BTD data
 #'
 #' Converts Marport BVDR data (TED) to RACE BTD format.
@@ -364,8 +363,20 @@ LOGtoGPS <- function(
 #' @param dsnTablet String for the drive folder (in R notation) where tablet files exist.
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
 #'
-#' @return ...
+#' @return changes to catch data in the access database (.mbd)
 #' @export
+#'
+#' @examples
+#' # Point functions to correct tablet directory and "dataEnt" file#
+#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+#' 
+#' # Define the current haul number to import #
+#' haul <- 59
+#' 
+#' # Import catch data #
+#' lengthData(haul,dsnTablet,dsnDataEnt)
 lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 
   PolySpecies <- GAPsurvey::PolySpecies
@@ -373,7 +384,8 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
 
   # Check to see if length files exist in data_ent.mdb for this haul
-  entRawLength <- selectDataEnt(dsnDataEnt, paste0("select * from RAW_LENGTH where HAUL = ",haul))
+  entRawLength <- selectDataEnt(dsnDataEnt = dsnDataEnt, 
+                                query = paste0("select * from RAW_LENGTH where HAUL = ", haul))
   if (nrow(entRawLength) != 0) {
     stop("L1: stop! Length data already exist in data_ent.mdb")
   }
@@ -398,14 +410,19 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
   }
 
   # Add index to raw length data
-  entRawLength <- cbind(tabRawLength,INDEX = seq(from=i_rawLength, length.out=nrow(tabRawLength)))
+  entRawLength <- cbind(tabRawLength,
+                        INDEX = seq(from=i_rawLength, 
+                                    length.out=nrow(tabRawLength)))
 
   # Calculate length frequencies
   tabRawLength$FREQUENCY <- 1
-  entLengthFreq <- stats::aggregate.data.frame(tabRawLength$FREQUENCY,by=tabRawLength[c("HAUL","POLY_SPECIES_CODE","SEX","LENGTH")], FUN = sum)
+  entLengthFreq <- stats::aggregate.data.frame(tabRawLength$FREQUENCY,
+                                               by = tabRawLength[c("HAUL","POLY_SPECIES_CODE","SEX","LENGTH")], 
+                                               FUN = sum)
   colnames(entLengthFreq)[5] <- "FREQUENCY"
 
-  entLengthFreq <- base::merge(entLengthFreq, PolySpecies, by = "POLY_SPECIES_CODE")[,c("HAUL","SPECIES_CODE","SEX","LENGTH","FREQUENCY")]
+  entLengthFreq <- base::merge(entLengthFreq, PolySpecies, 
+                               by = "POLY_SPECIES_CODE")[,c("HAUL","SPECIES_CODE","SEX","LENGTH","FREQUENCY")]
   entLengthFreq$SUBSAMPLE_TYPE <- 1L
   entLengthFreq$LENGTH_TYPE <- NA
 
@@ -414,7 +431,8 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
   writeDataEnt(dsnDataEnt,entLengthFreq,"LENGTH")
 
   # Verify lengths were uploaded
-  checkRawLength <- selectDataEnt(dsnDataEnt, paste0("select * from RAW_LENGTH where HAUL = ",haul))
+  checkRawLength <- selectDataEnt(dsnDataEnt, 
+                                  paste0("select * from RAW_LENGTH where HAUL = ",haul))
   if (nrow(checkRawLength) > 0) {
     message(paste0("Success! ", nrow(checkRawLength), " rows inserted into data_ent.mdb"))
   } else {
@@ -430,6 +448,21 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' Import Specimen Tablet Files Into DataEnt.mdb
 #'
 #' Looks for tablet specimen files in given DSN and uploads them to SPECIMEN in the given data_ent.mdb.
+#' 
+#' #---> To use the program you must first:
+#'  Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
+#'  Each of these file names will begin with the tablet name and end with the haul number. 
+#'     DATAENT_CATCH_xxxx.csv
+#'     DATAENT_BBAG_xxxx.csv     -- If there was a benthic bag
+#'     RAW_BBAG_xxxx.csv         -- If there was a benthic bag
+#'     RAW_CATCH_HAUL_xxxx.csv
+#'     RAW_CATCH_HAUL_ATTR_xxxx.csv
+#'     RAW_CATCH_SAMPLE_xxxx.csv
+#'     RAW_CATCH_VALUE_xxxx.csv
+#'     SPECIMEN_xxxx.csv         -- The specimen data
+#'     HAUL_xxxx.csv             -- A length file for each tablet
+#' 
+#' 
 #' @param haul Number of the haul you want to upload
 #' @param dsnTablet String for the drive folder (in R notation) where tablet files exist.
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
@@ -438,7 +471,20 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
-#' # specimenData()
+#' @return changes to catch data in the access database (.mbd)
+#' @export
+#'
+#' @examples
+#' # Point functions to correct tablet directory and "dataEnt" file#
+#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+#' 
+#' # Define the current haul number to import #
+#' haul <- 59
+#' 
+#' # Import catch data #
+#' specimenData(haul,dsnTablet,dsnDataEnt)
 specimenData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
 
@@ -483,11 +529,21 @@ specimenData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @param dsnTablet full file path of the location of raw tablet data
 #' @param dsnDataEnt full file path of the location of the dataent.mdb - include full file name and extension.
 #'
-#' @return ...
+#' @return changes to catch data in the access database (.mbd)
 #' @export
 #'
 #' @examples
-#' # benthicData()
+#' # Point functions to correct tablet directory and "dataEnt" file#
+#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+#' 
+#' # Define the current haul number to import #
+#' haul <- 59
+#' 
+#' # Import catch data #
+#' # benthicData(haul,dsnTablet,dsnDataEnt)
+#' # TOLEDO - need benthic example data to add!
 benthicData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
 
@@ -517,21 +573,53 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #'
 #' Processes catch data exported from catch tablets into summarized values into the designated dataent.mdb. You must have exported from the tablet:
 #' DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul.
+#' 
+#' #---> To use the program you must first:
+#'  Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
+#'  Each of these file names will begin with the tablet name and end with the haul number. 
+#'     DATAENT_CATCH_xxxx.csv
+#'     DATAENT_BBAG_xxxx.csv     -- If there was a benthic bag
+#'     RAW_BBAG_xxxx.csv         -- If there was a benthic bag
+#'     RAW_CATCH_HAUL_xxxx.csv
+#'     RAW_CATCH_HAUL_ATTR_xxxx.csv
+#'     RAW_CATCH_SAMPLE_xxxx.csv
+#'     RAW_CATCH_VALUE_xxxx.csv
+#'     SPECIMEN_xxxx.csv         -- The specimen data
+#'     HAUL_xxxx.csv             -- A length file for each tablet
+#'  
+#'  # TOLEDO   
+#'  IF there are subsets listed in the catch and length data, the user will be given an option to define the subsample type (from 1 to 0 for 100% sampled to 0% sampled) of 
+#' 
 #' @param haul haul number
 #' @param dsnTablet full file path of the location of raw tablet data
 #' @param dsnDataEnt full file path and filename of the location of the dataent.mdb - include full file name and extension.
 #' @param importLength logical - import length data (GAPsurvey::lengthData()) prior to importing catch data
 #'
-#' @return ...
+#' @return changes to catch data in the access database (.mbd)
 #' @export
 #'
 #' @examples
-#' # catchData()
-catchData <- function(haul, dsnTablet, dsnDataEnt, importLength=TRUE) {
+#' # Point functions to correct tablet directory and "dataEnt" file#
+#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+#' 
+#' # Define the current haul number to import #
+#' haul <- 59
+#' 
+#' # Import catch data #
+#' catchData(haul,dsnTablet,dsnDataEnt,importLength)
+catchData <- function(haul, 
+                      dsnTablet, 
+                      dsnDataEnt, 
+                      importLength = TRUE) {
+  
   options(stringsAsFactors = F)
   
   # Grab data_ent formatted tablet data
-  catchFile <- list.files(path=dsnTablet, pattern=paste0("DATAENT_CATCH_",sprintf("%04d", haul)))
+  catchFile <- list.files(path=dsnTablet, 
+                          pattern=paste0("DATAENT_CATCH_",
+                                         sprintf("%04d", haul)))
   
   if (length(catchFile) != 1) {
     stop("C1: Data Ent Catch file missing or duplicate")

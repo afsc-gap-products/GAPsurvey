@@ -15,10 +15,35 @@ specimenData(haul, dsnTablet, dsnDataEnt)
 }
 \value{
 ...
+
+changes to catch data in the access database (.mbd)
 }
 \description{
 Looks for tablet specimen files in given DSN and uploads them to SPECIMEN in the given data_ent.mdb.
 }
+\details{
+#---> To use the program you must first:
+Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
+Each of these file names will begin with the tablet name and end with the haul number.
+DATAENT_CATCH_xxxx.csv
+DATAENT_BBAG_xxxx.csv     -- If there was a benthic bag
+RAW_BBAG_xxxx.csv         -- If there was a benthic bag
+RAW_CATCH_HAUL_xxxx.csv
+RAW_CATCH_HAUL_ATTR_xxxx.csv
+RAW_CATCH_SAMPLE_xxxx.csv
+RAW_CATCH_VALUE_xxxx.csv
+SPECIMEN_xxxx.csv         -- The specimen data
+HAUL_xxxx.csv             -- A length file for each tablet
+}
 \examples{
-# specimenData()
+# Point functions to correct tablet directory and "dataEnt" file#
+dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+
+# Define the current haul number to import #
+haul <- 59
+
+# Import catch data #
+specimenData(haul,dsnTablet,dsnDataEnt)
 }
