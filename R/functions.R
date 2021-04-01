@@ -103,6 +103,7 @@ TEDtoBTD <- function(
   MODE=2
 
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
+  
   new.BTH=cbind(VESSEL,CRUISE,HAUL,MODEL_NUMBER,VERSION_NUMBER,SERIAL_NUMBER,
                 HOST_TIME,LOGGER_TIME,LOGGING_START,LOGGING_END,SAMPLE_PERIOD,NUMBER_CHANNELS,
                 NUMBER_SAMPLES,MODE)
@@ -154,7 +155,7 @@ TEDtoBTD <- function(
 #' @examples
 #' path_in0 <- system.file("exdata", package = "GAPsurvey")
 #' # CTDXMLtoBTD()
-CTDXMLtoBTD <- function(
+CTDtoBTD <- function(
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
@@ -175,6 +176,12 @@ CTDXMLtoBTD <- function(
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of CTD:  ") }
 
+  
+  
+  # new.BTD = as.data.frame(cbind(VESSEL, CRUISE, HAUL, SERIAL_NUMBER, DATE_TIME, TEMPERATURE, DEPTH)) 
+  
+  # new.BTH = cbind(VESSEL, CRUISE, HAUL, MODEL_NUMBER, VERSION_NUMBER, SERIAL_NUMBER, HOST_TIME, LOGGER_TIME, LOGGING_START, LOGGING_END, SAMPLE_PERIOD, NUMBER_CHANNELS, NUMBER_SAMPLES, MODE)
+  
   #   HAUL <- as.numeric(HAUL)
   #   shaul <- numbers0(x = HAUL, number_places = 4)
   #
