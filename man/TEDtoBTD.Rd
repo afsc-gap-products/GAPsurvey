@@ -45,7 +45,6 @@ A .BTH and .BTD file to the path_out directory.
 Converts Marport BVDR data (TED) to RACE BTD format.
 }
 \examples{
-path_in0 <- system.file("exdata", package = "GAPsurvey")
 TEDtoBTD(
    VESSEL = 94,
    CRUISE = 201901,
@@ -53,8 +52,9 @@ TEDtoBTD(
    MODEL_NUMBER = 123,
    VERSION_NUMBER = 123,
    SERIAL_NUMBER = 123,
-   path_in = paste0(path_in0, "/bvdr2btd/"),
+   path_in = system.file("exdata/bvdr2btd/", 
+   package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "new", # is this important?
+   filename_add = "new", 
    quiet = TRUE)
 }

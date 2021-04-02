@@ -8,7 +8,6 @@ CTDtoBTD(
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
-  DATE = NA,
   MODEL_NUMBER = NA,
   VERSION_NUMBER = NA,
   SERIAL_NUMBER = NA,
@@ -24,8 +23,6 @@ CTDtoBTD(
 \item{CRUISE}{Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.}
 
 \item{HAUL}{Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
-
-\item{DATE}{Optional. Default = NA. The date in MM/DD/YYYY format (e.g., "06/02/2019"). If NA or not called in the function, a prompt will appear asking for this data.}
 
 \item{MODEL_NUMBER}{Optional. Default = NA. The model number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
 
@@ -48,6 +45,15 @@ A .BTH and .BTD file to the path_out directory.
 Convert CTD data in XML form to BTD and BTH
 }
 \examples{
-path_in0 <- system.file("exdata", package = "GAPsurvey")
-# CTDXMLtoBTD()
+CTDtoBTD(
+   VESSEL = 94,
+   CRUISE = 201901,
+   HAUL = 3,
+   MODEL_NUMBER = 123,
+   VERSION_NUMBER = 123,
+   SERIAL_NUMBER = 123,
+   path_in = system.file("exdata/ctd2btd/SBE19_CTD8106_0094_raw.cnv",
+    package = "GAPsurvey"),
+   path_out = getwd(),
+   quiet = TRUE)
 }

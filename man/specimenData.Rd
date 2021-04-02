@@ -36,14 +36,14 @@ SPECIMEN_xxxx.csv         -- The specimen data
 HAUL_xxxx.csv             -- A length file for each tablet
 }
 \examples{
-# Point functions to correct tablet directory and "dataEnt" file#
-dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
-dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+# Point functions to correct tablet directory and "dataEnt" file
+dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
 importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 
-# Define the current haul number to import #
-haul <- 59
+# Define the current haul number
+haul <- 8
 
-# Import catch data #
+# Import catch data
 specimenData(haul,dsnTablet,dsnDataEnt)
 }

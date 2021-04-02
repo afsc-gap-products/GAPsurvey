@@ -17,7 +17,7 @@ Authors@R:
            email = "Liz.Dawson@noaa.gov"))
 Description: Provides data management tools for RACE GAP surveys. 
     And more!
-URL: https://gitlab-afsc.fisheries.noaa.gov/Jason.Conner/gapsurvey
+URL: https://gitlab-afsc.fisheries.noaa.gov/Jason.Conner/gapsurvey, https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -26,6 +26,7 @@ RoxygenNote: 7.1.1
 Depends: 
     R (>= 2.10)
 Imports: 
-    RODBC,
+    RODBC, 
+    oce,
     tcltk
 

@@ -55,13 +55,13 @@ To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
 }
 }
 \examples{
-path_in0 <- system.file("exdata", package = "GAPsurvey")
 LOGtoGPS(
     VESSEL = 94,
     CRUISE = 201901,
     HAUL = 3,
     DATE = "06/06/2017",
-    path_in = paste0(path_in0, "/log2gps/06062017.log"),
+    path_in = system.file("exdata/log2gps/06062017.log", 
+    package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "",
     quiet = TRUE)

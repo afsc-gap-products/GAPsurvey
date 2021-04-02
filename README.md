@@ -30,9 +30,10 @@ Below is the annotated script for importing catch, length, and specimen data usi
 	## Make sure the necessary packages are installed ##
 	install.packages("C:/R/GAPsurvey_2.1.4.zip", repos = NULL, type = "win.binary")
 	install.packages("C:/R/RODBC_1.3-15.zip", repos = NULL, type = "source")
+	install.packages("C:/R/oce_1.3-0.tar.gz", repos = NULL, type = "source") https://cran.r-project.org/src/contrib/Archive/oce/oce_1.3-0.tar.gz
 
 	# Load package libraries #
-	library("GAPsurvey", "RODBC")
+	library("GAPsurvey", "RODBC", "oce")
 
 	# Point functions to correct directories - Note: for tablet data it is the directory for data_ent include the file name #
 	dsnTablet <- "C:/Users/NOAADATA/Documents/Bluetooth/inbox"

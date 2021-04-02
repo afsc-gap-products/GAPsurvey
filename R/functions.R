@@ -29,7 +29,6 @@
 #' @export
 #'
 #' @examples
-#' path_in0 <- system.file("exdata", package = "GAPsurvey")
 #' TEDtoBTD(
 #'    VESSEL = 94,
 #'    CRUISE = 201901,
@@ -37,9 +36,10 @@
 #'    MODEL_NUMBER = 123,
 #'    VERSION_NUMBER = 123,
 #'    SERIAL_NUMBER = 123,
-#'    path_in = paste0(path_in0, "/bvdr2btd/"),
+#'    path_in = system.file("exdata/bvdr2btd/", 
+#'    package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "new", # is this important?
+#'    filename_add = "new", 
 #'    quiet = TRUE)
 TEDtoBTD <- function(
   VESSEL = NA,
@@ -59,6 +59,10 @@ TEDtoBTD <- function(
   if (is.na(MODEL_NUMBER)){ MODEL_NUMBER <- readline("Type model number:  ") }
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of Marport height sensor:  ") }
+  
+  # make sure path_in comes in with correct format
+  path_in <- fix_path(path_in)
+  path_out <- fix_path(path_out)
 
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
@@ -102,13 +106,18 @@ TEDtoBTD <- function(
   NUMBER_SAMPLES=0
   MODE=2
 
+  # Write BTD file
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
-  
-  new.BTH=cbind(VESSEL,CRUISE,HAUL,MODEL_NUMBER,VERSION_NUMBER,SERIAL_NUMBER,
-                HOST_TIME,LOGGER_TIME,LOGGING_START,LOGGING_END,SAMPLE_PERIOD,NUMBER_CHANNELS,
-                NUMBER_SAMPLES,MODE)
   new.BTD[which(is.na(new.BTD))]=""
-  new.BTD=as.data.frame(new.BTD)
+  new.BTD <- data.frame(new.BTD)
+  
+  # Write BTH file
+  new.BTH=cbind(VESSEL,CRUISE,HAUL,MODEL_NUMBER,VERSION_NUMBER,SERIAL_NUMBER,
+                HOST_TIME,LOGGER_TIME,LOGGING_START,LOGGING_END,
+                SAMPLE_PERIOD,NUMBER_CHANNELS,
+                NUMBER_SAMPLES,MODE)
+  new.BTH <- data.frame(new.BTH)
+    
   new.BTD=new.BTD[new.BTD$DEPTH!="2000",]
 
   #head(new.BTD)
@@ -140,7 +149,6 @@ TEDtoBTD <- function(
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param DATE Optional. Default = NA. The date in MM/DD/YYYY format (e.g., "06/02/2019"). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param MODEL_NUMBER Optional. Default = NA. The model number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
 #' @param VERSION_NUMBER Optional. Default = NA. The version number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
@@ -153,13 +161,21 @@ TEDtoBTD <- function(
 #' @export
 #'
 #' @examples
-#' path_in0 <- system.file("exdata", package = "GAPsurvey")
-#' # CTDXMLtoBTD()
+#' CTDtoBTD(
+#'    VESSEL = 94,
+#'    CRUISE = 201901,
+#'    HAUL = 3,
+#'    MODEL_NUMBER = 123,
+#'    VERSION_NUMBER = 123,
+#'    SERIAL_NUMBER = 123,
+#'    path_in = system.file("exdata/ctd2btd/SBE19_CTD8106_0094_raw.cnv",
+#'     package = "GAPsurvey"),
+#'    path_out = getwd(),
+#'    quiet = TRUE)
 CTDtoBTD <- function(
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
-  DATE = NA,
   MODEL_NUMBER = NA,
   VERSION_NUMBER = NA,
   SERIAL_NUMBER = NA,
@@ -176,66 +192,67 @@ CTDtoBTD <- function(
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of CTD:  ") }
 
+  # make sure path_in comes in with correct format
+  path_in <- fix_path(path_in)
+  path_out <- fix_path(path_out)
   
-  
-  # new.BTD = as.data.frame(cbind(VESSEL, CRUISE, HAUL, SERIAL_NUMBER, DATE_TIME, TEMPERATURE, DEPTH)) 
-  
-  # new.BTH = cbind(VESSEL, CRUISE, HAUL, MODEL_NUMBER, VERSION_NUMBER, SERIAL_NUMBER, HOST_TIME, LOGGER_TIME, LOGGING_START, LOGGING_END, SAMPLE_PERIOD, NUMBER_CHANNELS, NUMBER_SAMPLES, MODE)
-  
-  #   HAUL <- as.numeric(HAUL)
-  #   shaul <- numbers0(x = HAUL, number_places = 4)
-  #
-  #   if (is.na(path_in)){
-  #     file.name <- file.choose()
-  #   } else {
-  #     # check if path exists #TOLEDO
-  #     file.name <- path_in
-  #   }
-  #
-  #
-  #   library(tibble)
-  #   library(dplyr)
-  #   library(readr)
-  #   library(XML)
-  #   library(xml2)
-  #
-  #   # read.ctd(file = path_in, type = "SBE19", )
-  #   # a <- utils::read.csv(file = path_in)
-  #   a <- read_xml(path_in)
-  #   doc <- XML::xmlParse(file = path_in)
-  #
-  #   df.list<-list()
-  #
-  #   # top <- regex()
-  #   #https://megapteraphile.wordpress.com/2020/03/29/converting-xml-to-tibble-in-r/
-  #   topics <- c("Calibration", "CalibrationCoefficients", "ConfigurationData",
-  #               "Headers", "EventCounters", "Data", "SBEDataUpload",
-  #               "InstrumentRawData", "InstrumentState", "InternalSensors",
-  #               "SBEDataUpload", "SBEDataUploadFile", "SBEDataUpload")
-  #   for (i in 1:length(topics)){
-  #     df <- xmlToDataFrame(nodes =
-  #                            getNodeSet(doc,
-  #                                       paste0("//", topics[i])))
-  #     df.list <- c(df.list, list(df))
-  #     names(df.list)[i] <- topics[i]
-  #   }
-  #
-  #
-  #   tb <- as_tibble(df.list$ConfigurationData) %>%
-  #     transmute(
-  #       AutoRun = AutoRun,
-  #       ScansToAverage = parse_number(ScansToAverage),
-  #       MinimumCondFreq = MinimumCondFreq,
-  #       PumpDelay = as.numeric(PumpDelay)
-  #     )
-  #
-  # df <- xmlToDataFrame(nodes = getNodeSet(doc, "//SBEDataUploadFile"))
-  #   # df <- xmlToDataFrame(nodes = getNodeSet(doc, "//Sensor"))
-  #   # df <- xmlToDataFrame(nodes = getNodeSet(doc, "//InternalSensors"))
-  #
-  #   read.ctd(file = path_in, type = "SBE19" )
-  #
+  data0 <- oce::read.ctd(file = path_in)
 
+  data <- data.frame(data0@data)
+
+  DATE <- as.character(data0@metadata$date) # TOLEDO - there are options
+  DATE <- strsplit(x = DATE, split = " ")[[1]][1]
+  DATE <- strsplit(x = DATE, split = "-")
+  DATE <- paste0(DATE[[1]][2], "/", DATE[[1]][3], "/", DATE[[1]][1])
+  
+  xx=merged$date
+  DATE_TIME=format(xx, format = "%m/%d/%Y %H:%M:%S")
+  HOST_TIME=max(DATE_TIME)
+  LOGGER_TIME=max(DATE_TIME)
+  LOGGING_START=min(DATE_TIME)
+  LOGGING_END=max(DATE_TIME)
+  TEMPERATURE=merged$temp
+  DEPTH=merged$depth
+  SAMPLE_PERIOD=3
+  NUMBER_CHANNELS=2
+  NUMBER_SAMPLES=0
+  MODE=2
+  
+  # Write BTD file
+  new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
+  new.BTD[which(is.na(new.BTD))]=""
+  new.BTD <- data.frame(new.BTD)
+  
+  # Write BTH file
+  new.BTH=cbind(VESSEL,CRUISE,HAUL,MODEL_NUMBER,VERSION_NUMBER,SERIAL_NUMBER,
+                HOST_TIME,LOGGER_TIME,LOGGING_START,LOGGING_END,
+                SAMPLE_PERIOD,NUMBER_CHANNELS,
+                NUMBER_SAMPLES,MODE)
+  new.BTH <- data.frame(new.BTH)
+  
+  new.BTD=new.BTD[new.BTD$DEPTH!="2000",]
+  
+  #head(new.BTD)
+  #return(head(new.BTD))
+  utils::write.csv(new.BTD,
+                   paste0(path_out, "HAUL",shaul,
+                          ifelse(is.na(filename_add) | filename_add == "",
+                                 "", paste0("_", filename_add)),
+                          ".BTD"),
+                   quote=F,row.names=F,eol=",\n")
+  utils::write.csv(new.BTH,
+                   paste0(path_out, "HAUL",shaul,
+                          ifelse(is.na(filename_add) | filename_add == "",
+                                 "", paste0("_", filename_add)),
+                          ".BTH"),
+                   quote=F,row.names=F)
+  
+  if(!quiet){
+    tcltk::tkmessageBox(title = "Message",
+                        message = paste0("Your new .BTD and .BTH files are saved to the folder ", path_out),
+                        icon = "info", type = "ok")
+  }
+  
 }
 
 
@@ -278,13 +295,13 @@ CTDtoBTD <- function(
 #' @export
 #'
 #' @examples
-#' path_in0 <- system.file("exdata", package = "GAPsurvey")
 #' LOGtoGPS(
 #'     VESSEL = 94,
 #'     CRUISE = 201901,
 #'     HAUL = 3,
 #'     DATE = "06/06/2017",
-#'     path_in = paste0(path_in0, "/log2gps/06062017.log"),
+#'     path_in = system.file("exdata/log2gps/06062017.log", 
+#'     package = "GAPsurvey"),
 #'     path_out = getwd(),
 #'     filename_add = "",
 #'     quiet = TRUE)
@@ -303,6 +320,10 @@ LOGtoGPS <- function(
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
   if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
 
+  # make sure path_in comes in with correct format
+  path_in <- fix_path(path_in)
+  path_out <- fix_path(path_out)
+  
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
 
@@ -358,7 +379,6 @@ LOGtoGPS <- function(
 
 # Work with catch data ----------------------------------------------
 
-
 #' Import Length Tablet Files Into DataEnt.mdb
 #'
 #' NOTE: Must be run on 32-bit R!
@@ -374,15 +394,17 @@ LOGtoGPS <- function(
 #' @export
 #'
 #' @examples
-#' # Point functions to correct tablet directory and "dataEnt" file#
-#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
-#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' # NOTE: This function is typically run within the catchData()
+#' 
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
 #' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 #' 
-#' # Define the current haul number to import #
-#' haul <- 59
+#' # Define the current haul number
+#' haul <- 8
 #' 
-#' # Import catch data #
+#' # Import catch data
 #' lengthData(haul,dsnTablet,dsnDataEnt)
 lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 
@@ -482,15 +504,15 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
-#' # Point functions to correct tablet directory and "dataEnt" file#
-#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
-#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
 #' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 #' 
-#' # Define the current haul number to import #
-#' haul <- 59
+#' # Define the current haul number
+#' haul <- 8
 #' 
-#' # Import catch data #
+#' # Import catch data
 #' specimenData(haul,dsnTablet,dsnDataEnt)
 specimenData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
@@ -540,15 +562,15 @@ specimenData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
-#' # Point functions to correct tablet directory and "dataEnt" file#
-#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
-#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
 #' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 #' 
-#' # Define the current haul number to import #
-#' haul <- 59
+#' # Define the current haul number
+#' haul <- 8
 #' 
-#' # Import catch data #
+#' # Import catch data
 #' # benthicData(haul,dsnTablet,dsnDataEnt)
 #' # TOLEDO - need benthic example data to add!
 benthicData <- function(haul, dsnTablet, dsnDataEnt) {
@@ -606,15 +628,15 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
-#' # Point functions to correct tablet directory and "dataEnt" file#
-#' dsnTablet <- system.file("exdata/catch/", package = "GAPsurvey")
-#' dsnDataEnt <- system.file("exdata/catch/data_ent.mdb", package = "GAPsurvey")
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
 #' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 #' 
-#' # Define the current haul number to import #
-#' haul <- 59
+#' # Define the current haul number
+#' haul <- 8
 #' 
-#' # Import catch data #
+#' # Import catch data 
 #' catchData(haul,dsnTablet,dsnDataEnt,importLength)
 catchData <- function(haul, 
                       dsnTablet, 
@@ -696,7 +718,8 @@ catchData <- function(haul,
   }
   
   # Grab catch header files
-  catchHeader <- list.files(path=dsnTablet, pattern=paste0("RAW_CATCH_HAUL_",sprintf("%04d", haul)))
+  catchHeader <- list.files(path=dsnTablet, 
+                            pattern=paste0("RAW_CATCH_HAUL_",sprintf("%04d", haul)))
   if (length(catchHeader) != 1) {
     stop("C4: Raw Catch Haul file missing or duplicated")
   } else {
@@ -935,6 +958,41 @@ numbers0 <- function (x, number_places = NA) {
   }
   return(xx)
 }
+
+
+#' Make sure file path is complete
+#'
+#' Function adds '/' or '\\' to the end of directories and recognizes when there are file extentions at the end of strings.
+#'
+#' @param path A string with the complete path of the directory or file. 
+#'
+#' @return A fixed path string. 
+#' @export
+#'
+#' @examples
+#' fix_path("sdfg/sdfg/sdfg/dfg.dd")
+#' fix_path("sdfg/sdfg/sdfg")
+#' fix_path("sdfg/sdfg/sdfg/")
+fix_path <- function(path) {
+  path0 <- ifelse(
+    # Does the string end with a back slash?
+    substr(x = path, 
+           start = nchar(path), 
+           stop = nchar(path)) %in% c("/", "\\") |
+      # or if there is a file extention?
+      grepl(pattern = "\\.", 
+            x = substr(x = path, 
+                       start = nchar(path)-7,
+                       stop = nchar(path))), 
+    path, 
+    paste0(path, "/") )
+  
+  return(path0)
+}
+
+
+
+
 
 # Data ------------------------------------------------------------------------------------
 
