@@ -11,7 +11,7 @@ CTDtoBTD(
   MODEL_NUMBER = NA,
   VERSION_NUMBER = NA,
   SERIAL_NUMBER = NA,
-  path_in = "./",
+  path_in = NA,
   path_out = "./",
   filename_add = "",
   quiet = FALSE

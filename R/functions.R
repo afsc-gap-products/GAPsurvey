@@ -66,9 +66,6 @@ TEDtoBTD <- function(
 
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
-  # if(HAUL<10) shaul=paste("000",HAUL,sep="")
-  # if(HAUL>9 & HAUL<100) shaul=paste("00",HAUL,sep="")
-  # if(HAUL>99) shaul=paste("0",HAUL,sep="")
 
   file.name.ted <- paste(path_in,
                          CRUISE,"_",VESSEL,"_",shaul,".ted",sep="")
@@ -179,7 +176,7 @@ CTDtoBTD <- function(
   MODEL_NUMBER = NA,
   VERSION_NUMBER = NA,
   SERIAL_NUMBER = NA,
-  path_in = "./",
+  path_in = NA,
   path_out = "./",
   filename_add = "",
   quiet = FALSE){
@@ -187,22 +184,35 @@ CTDtoBTD <- function(
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
-  if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
   if (is.na(MODEL_NUMBER)){ MODEL_NUMBER <- readline("Type model number:  ") }
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of CTD:  ") }
+  
+  if (is.na(path_in)) {
+    tcltk::tkmessageBox(title = "Message",
+                        message = "In next window open the CTD .cnv file", 
+                        icon = "info", type = "ok")
+    file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
+  } else {
+    path_in <- fix_path(path_in)
+    file.name <- path_in
+  }
 
   # make sure path_in comes in with correct format
-  path_in <- fix_path(path_in)
   path_out <- fix_path(path_out)
   
-  data0 <- oce::read.ctd(file = path_in)
+  HAUL <- as.numeric(HAUL)
+  shaul <- numbers0(x = HAUL, number_places = 4)
+  
+  data0 <- oce::read.ctd(file = file.name)
 
+  data<-data.frame(data0@data)
+  
   xx <- as.POSIXlt(data0@metadata$startTime, 
-                          tz="America/New_York", 
                           format = "%Y-%m-%d %H:%M:%S") # TOLEDO - there are options
   # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
-  data$DATE_TIME <- format((xx + data$timeS), format = "%m/%d/%Y %H:%M:%S")
+  DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS), 
+                                        format = "%m/%d/%Y %H:%M:%S")
 
   
   HOST_TIME=max(data$DATE_TIME)
@@ -251,13 +261,6 @@ CTDtoBTD <- function(
   }
   
 }
-
-
-
-
-
-
-
 
 
 
