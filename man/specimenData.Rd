@@ -14,8 +14,6 @@ specimenData(haul, dsnTablet, dsnDataEnt)
 \item{dsnDataEnt}{String for the drive folder (in R notation) - include full file name and extension.}
 }
 \value{
-...
-
 changes to catch data in the access database (.mbd)
 }
 \description{

@@ -45,3 +45,5 @@ inst/doc
 notes.R
 /installfiles
 /exe
+*.BTH
+*.BTD

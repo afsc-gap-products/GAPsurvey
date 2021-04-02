@@ -34,8 +34,8 @@
 #'    CRUISE = 201901,
 #'    HAUL = 3,
 #'    MODEL_NUMBER = 123,
-#'    VERSION_NUMBER = 123,
-#'    SERIAL_NUMBER = 123,
+#'    VERSION_NUMBER = 456,
+#'    SERIAL_NUMBER = 789,
 #'    path_in = system.file("exdata/bvdr2btd/", 
 #'    package = "GAPsurvey"),
 #'    path_out = getwd(),
@@ -166,8 +166,8 @@ TEDtoBTD <- function(
 #'    CRUISE = 201901,
 #'    HAUL = 3,
 #'    MODEL_NUMBER = 123,
-#'    VERSION_NUMBER = 123,
-#'    SERIAL_NUMBER = 123,
+#'    VERSION_NUMBER = 456,
+#'    SERIAL_NUMBER = 789,
 #'    path_in = system.file("exdata/ctd2btd/SBE19_CTD8106_0094_raw.cnv",
 #'     package = "GAPsurvey"),
 #'    path_out = getwd(),
@@ -198,25 +198,23 @@ CTDtoBTD <- function(
   
   data0 <- oce::read.ctd(file = path_in)
 
-  data <- data.frame(data0@data)
+  xx <- as.POSIXlt(data0@metadata$startTime, 
+                          tz="America/New_York", 
+                          format = "%Y-%m-%d %H:%M:%S") # TOLEDO - there are options
+  # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
+  data$DATE_TIME <- format((xx + data$timeS), format = "%m/%d/%Y %H:%M:%S")
 
-  DATE <- as.character(data0@metadata$date) # TOLEDO - there are options
-  DATE <- strsplit(x = DATE, split = " ")[[1]][1]
-  DATE <- strsplit(x = DATE, split = "-")
-  DATE <- paste0(DATE[[1]][2], "/", DATE[[1]][3], "/", DATE[[1]][1])
   
-  xx=merged$date
-  DATE_TIME=format(xx, format = "%m/%d/%Y %H:%M:%S")
-  HOST_TIME=max(DATE_TIME)
-  LOGGER_TIME=max(DATE_TIME)
-  LOGGING_START=min(DATE_TIME)
-  LOGGING_END=max(DATE_TIME)
-  TEMPERATURE=merged$temp
-  DEPTH=merged$depth
-  SAMPLE_PERIOD=3
-  NUMBER_CHANNELS=2
-  NUMBER_SAMPLES=0
-  MODE=2
+  HOST_TIME=max(data$DATE_TIME)
+  LOGGER_TIME=max(data$DATE_TIME)
+  LOGGING_START=min(data$DATE_TIME)
+  LOGGING_END=max(data$DATE_TIME)
+  TEMPERATURE=data$temperature
+  DEPTH=data$depth
+  SAMPLE_PERIOD=3  # TOLEDO!
+  NUMBER_CHANNELS=2  # TOLEDO!
+  NUMBER_SAMPLES=0  # TOLEDO!
+  MODE=2  # TOLEDO!
   
   # Write BTD file
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
@@ -229,7 +227,6 @@ CTDtoBTD <- function(
                 SAMPLE_PERIOD,NUMBER_CHANNELS,
                 NUMBER_SAMPLES,MODE)
   new.BTH <- data.frame(new.BTH)
-  
   new.BTD=new.BTD[new.BTD$DEPTH!="2000",]
   
   #head(new.BTD)
@@ -495,11 +492,7 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @param haul Number of the haul you want to upload
 #' @param dsnTablet String for the drive folder (in R notation) where tablet files exist.
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
-#'
-#' @return ...
-#' @export
-#'
-#' @examples
+#' 
 #' @return changes to catch data in the access database (.mbd)
 #' @export
 #'
