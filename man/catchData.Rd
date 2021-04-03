@@ -37,11 +37,9 @@ RAW_CATCH_SAMPLE_xxxx.csv
 RAW_CATCH_VALUE_xxxx.csv
 SPECIMEN_xxxx.csv         -- The specimen data
 HAUL_xxxx.csv             -- A length file for each tablet
-}
-\section{TOLEDO}{
-IF there are subsets listed in the catch and length data, the user will be given an option to define the subsample type (from 1 to 0 for 100\% sampled to 0\% sampled) of
-}
 
+IF the catch was subsampled, the user will be given an option to define the subsample type (1 = 100\% Processed (No subsample), 2 = Subsampled, Load cell estimate of total weight, 4 = Subsampled, Visual estimate of total weight, 6 = Subsampled, basket weights of both fractions (table split), 9 = Non-quantitative catch sampling, 12 = Volumetric method. Density from Density Lookup Table, 13 = Volumetric method. Density calculated on deck from haul sample).
+}
 \examples{
 # Point functions to correct tablet directory and "dataEnt" file
 dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")

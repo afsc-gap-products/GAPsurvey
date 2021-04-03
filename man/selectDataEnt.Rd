@@ -9,7 +9,7 @@ selectDataEnt(dsnDataEnt, query)
 \arguments{
 \item{dsnDataEnt}{String for the drive folder (in R notation) - include full file name and extension.}
 
-\item{query}{An SQL quiery # TOLEDO}
+\item{query}{A SQL query}
 }
 \value{
 ...

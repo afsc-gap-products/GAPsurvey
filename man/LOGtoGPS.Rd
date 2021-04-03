@@ -28,7 +28,7 @@ LOGtoGPS(
 
 \item{path_out}{Optional. The default is the local working directory but may be specified with a string.}
 
-\item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.}
+\item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.}
 
 \item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
@@ -44,7 +44,7 @@ In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" co
 To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
 \enumerate{
 \item Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
-\item Use GLOBE Files>Logs> to convert GLG (binary) to a LOG (csv)file
+\item Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
 \item LOGtoGPS()will prompt you for Vessel code, Cruise no., Haul no. and Date
 \item The final prompt will ask for the location of the GLOBE LOG file
 \item LOGtoGPS()will create csv file in the R directory with filename "new.gps"

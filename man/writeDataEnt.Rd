@@ -9,7 +9,7 @@ writeDataEnt(dsnDataEnt, data, tablename)
 \arguments{
 \item{dsnDataEnt}{String for the drive folder (in R notation) - include full file name and extension.}
 
-\item{data}{TOLEDO}
+\item{data}{matrix or data.frame containg data from catch, specimen and lengths tablets}
 
 \item{tablename}{String of the data_ent table you are deleting data from}
 }

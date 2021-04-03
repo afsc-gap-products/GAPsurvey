@@ -18,19 +18,19 @@ TEDtoBTD(
 )
 }
 \arguments{
-\item{VESSEL}{Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.}
+\item{VESSEL}{Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{CRUISE}{Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.}
+\item{CRUISE}{Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{HAUL}{Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
+\item{HAUL}{Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{MODEL_NUMBER}{Optional. Default = NA. The model number of the Marport reciever (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
+\item{MODEL_NUMBER}{Optional. Default = NA. The model number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
-\item{VERSION_NUMBER}{Optional. Default = NA. The version number of the Marport reciever (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
+\item{VERSION_NUMBER}{Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).}
 
-\item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the Marport reciever (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
+\item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).}
 
-\item{path_in}{Optional. The default is the localion on the catch computer ("C:/Program Files/Marport Server/Logs/") but any path can be entered.}
+\item{path_in}{Optional. The default is the location on the catch computer ("C:/Program Files/Marport Server/Logs/") but any path can be entered.}
 
 \item{path_out}{Optional. The default is the local working directory but can be specified with a string.}
 
@@ -39,10 +39,10 @@ TEDtoBTD(
 \item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
 \value{
-A .BTH and .BTD file to the path_out directory.
+.BTH and .BTD files to the path_out directory.
 }
 \description{
-Converts Marport BVDR data (TED) to RACE BTD format.
+Converts Marport BVDR data (.ted and .tet) to .BTD format.
 }
 \examples{
 TEDtoBTD(

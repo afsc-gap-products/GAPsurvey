@@ -30,5 +30,4 @@ haul <- 8
 
 # Import catch data
 # benthicData(haul,dsnTablet,dsnDataEnt)
-# TOLEDO - need benthic example data to add!
 }

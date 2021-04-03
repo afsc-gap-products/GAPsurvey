@@ -24,11 +24,11 @@ CTDtoBTD(
 
 \item{HAUL}{Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{MODEL_NUMBER}{Optional. Default = NA. The model number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
+\item{MODEL_NUMBER}{Optional. Default = NA. The model number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
-\item{VERSION_NUMBER}{Optional. Default = NA. The version number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
+\item{VERSION_NUMBER}{Optional. Default = NA. The version number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
-\item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO}
+\item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
 \item{path_in}{Optional. Default = "./., or the local working directory but any path (as a string) may be entered.}
 
@@ -39,7 +39,7 @@ CTDtoBTD(
 \item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
 \value{
-A .BTH and .BTD file to the path_out directory.
+.BTH and .BTD files to the path_out directory.
 }
 \description{
 Convert CTD data in XML form to BTD and BTH
