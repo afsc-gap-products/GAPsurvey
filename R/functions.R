@@ -291,7 +291,7 @@ CTDtoBTD <- function(
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.
 #' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
-#' @return A .BTH and .BTD file to the path_out directory.
+#' @return A .GPS file to the path_out directory.
 #' @export
 #'
 #' @examples
@@ -320,20 +320,21 @@ LOGtoGPS <- function(
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
   if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
 
+  if (is.na(path_in)) {
+    tcltk::tkmessageBox(title = "Message",
+                        message = paste0("In next window, open the file named ", gsub(pattern = "/", replacement = "", x = DATE), ".log."), 
+                        icon = "info", type = "ok")
+    file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
+  } else {
+    path_in <- fix_path(path_in)
+    file.name <- path_in
+  }
+  
   # make sure path_in comes in with correct format
-  path_in <- fix_path(path_in)
   path_out <- fix_path(path_out)
   
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
-
-  if (is.na(path_in)) {
-    tcltk::tkmessageBox(title = "Message",
-                        message = "In next window open the globe .log file", icon = "info", type = "ok")
-    file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
-  } else {
-    file.name <- path_in
-  }
 
   log.file<-utils::read.csv(file.name,header=F, sep=",")
 

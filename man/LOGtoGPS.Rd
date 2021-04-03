@@ -33,7 +33,7 @@ LOGtoGPS(
 \item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
 \value{
-A .BTH and .BTD file to the path_out directory.
+A .GPS file to the path_out directory.
 }
 \description{
 Lorem

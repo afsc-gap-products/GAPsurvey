@@ -42,7 +42,7 @@ vignettes/*.pdf
 /old
 inst/doc
 /out
-notes.R
+# notes.R
 /installfiles
 /exe
 *.BTH
