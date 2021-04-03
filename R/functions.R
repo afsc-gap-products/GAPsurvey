@@ -13,19 +13,19 @@
 
 #' BVDR Conversion to Create BTD data
 #'
-#' Converts Marport BVDR data (TED) to RACE BTD format.
-#' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param HAUL Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param MODEL_NUMBER Optional. Default = NA. The model number of the Marport reciever (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
-#' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport reciever (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
-#' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport reciever (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
-#' @param path_in Optional. The default is the localion on the catch computer ("C:/Program Files/Marport Server/Logs/") but any path can be entered.
+#' Converts Marport BVDR data (.ted and .tet) to .BTD format.
+#' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param MODEL_NUMBER Optional. Default = NA. The model number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
+#' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
+#' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
+#' @param path_in Optional. The default is the location on the catch computer ("C:/Program Files/Marport Server/Logs/") but any path can be entered.
 #' @param path_out Optional. The default is the local working directory but can be specified with a string.
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.
 #' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
-#' @return A .BTH and .BTD file to the path_out directory.
+#' @return .BTH and .BTD files to the path_out directory.
 #' @export
 #'
 #' @examples
@@ -146,15 +146,15 @@ TEDtoBTD <- function(
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param MODEL_NUMBER Optional. Default = NA. The model number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
-#' @param VERSION_NUMBER Optional. Default = NA. The version number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
-#' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the CTD (I think) (e.g., 123) If NA or not called in the function, a prompt will appear asking for this data. # TOLEDO
+#' @param MODEL_NUMBER Optional. Default = NA. The model number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
+#' @param VERSION_NUMBER Optional. Default = NA. The version number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
+#' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
 #' @param path_in Optional. Default = "./., or the local working directory but any path (as a string) may be entered.
 #' @param path_out Optional. The default is the local working directory but may be specified with a string.
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.
 #' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
-#' @return A .BTH and .BTD file to the path_out directory.
+#' @return .BTH and .BTD files to the path_out directory.
 #' @export
 #'
 #' @examples
@@ -209,7 +209,7 @@ CTDtoBTD <- function(
   data<-data.frame(data0@data)
   
   xx <- as.POSIXlt(data0@metadata$startTime, 
-                          format = "%Y-%m-%d %H:%M:%S") # TOLEDO - there are options
+                          format = "%Y-%m-%d %H:%M:%S") 
   # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
   DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS), 
                                         format = "%m/%d/%Y %H:%M:%S")
@@ -221,10 +221,10 @@ CTDtoBTD <- function(
   LOGGING_END=max(data$DATE_TIME)
   TEMPERATURE=data$temperature
   DEPTH=data$depth
-  SAMPLE_PERIOD=3  # TOLEDO!
-  NUMBER_CHANNELS=2  # TOLEDO!
-  NUMBER_SAMPLES=0  # TOLEDO!
-  MODE=2  # TOLEDO!
+  SAMPLE_PERIOD=3  
+  NUMBER_CHANNELS=2  
+  NUMBER_SAMPLES=0  
+  MODE=2  
   
   # Write BTD file
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
@@ -273,7 +273,7 @@ CTDtoBTD <- function(
 #' To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
 #'
 #' 1) Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
-#' 2) Use GLOBE Files>Logs> to convert GLG (binary) to a LOG (csv)file
+#' 2) Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
 #' 3) LOGtoGPS()will prompt you for Vessel code, Cruise no., Haul no. and Date
 #' 4) The final prompt will ask for the location of the GLOBE LOG file
 #' 5) LOGtoGPS()will create csv file in the R directory with filename "new.gps"
@@ -288,7 +288,7 @@ CTDtoBTD <- function(
 #' @param DATE Optional. Default = NA. The date in MM/DD/YYYY format (e.g., "06/02/2019"). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param path_in Optional. Default = "./., or the local working directory but any path (as a string) may be entered.
 #' @param path_out Optional. The default is the local working directory but may be specified with a string.
-#' @param filename_add Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.
+#' @param filename_add Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.
 #' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
 #' @return A .GPS file to the path_out directory.
@@ -569,7 +569,7 @@ specimenData <- function(haul, dsnTablet, dsnDataEnt) {
 #' 
 #' # Import catch data
 #' # benthicData(haul,dsnTablet,dsnDataEnt)
-#' # TOLEDO - need benthic example data to add!
+
 benthicData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
 
@@ -613,8 +613,7 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #'     SPECIMEN_xxxx.csv         -- The specimen data
 #'     HAUL_xxxx.csv             -- A length file for each tablet
 #'  
-#'  # TOLEDO   
-#'  IF there are subsets listed in the catch and length data, the user will be given an option to define the subsample type (from 1 to 0 for 100% sampled to 0% sampled) of 
+#'  IF the catch was subsampled, the user will be given an option to define the subsample type (1 = 100% Processed (No subsample), 2 = Subsampled, Load cell estimate of total weight, 4 = Subsampled, Visual estimate of total weight, 6 = Subsampled, basket weights of both fractions (table split), 9 = Non-quantitative catch sampling, 12 = Volumetric method. Density from Density Lookup Table, 13 = Volumetric method. Density calculated on deck from haul sample).
 #' 
 #' @param haul haul number
 #' @param dsnTablet full file path of the location of raw tablet data
@@ -845,7 +844,7 @@ catchData <- function(haul,
 #'
 #' Creates connection channel to data_ent.mdb, then appends data to given table.
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
-#' @param data TOLEDO
+#' @param data matrix or data.frame containg data from catch, specimen and lengths tablets
 #' @param tablename String of the data_ent table you are deleting data from
 #'
 #' @return ...
@@ -903,7 +902,7 @@ deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
 #'
 #' Executes SQL queries of data_ent.mdb
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
-#' @param query An SQL quiery # TOLEDO
+#' @param query A SQL query
 #'
 #' @return ...
 #' @export
@@ -1014,4 +1013,3 @@ fix_path <- function(path) {
 #' @examples
 #' data(PolySpecies)
 "PolySpecies"
-
