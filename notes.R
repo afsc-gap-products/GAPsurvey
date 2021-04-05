@@ -36,7 +36,7 @@ setwd(here::here())
 # devtools::check()
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_2.3.00.tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_2.3.00.tar.gz"))
-# devtools::build()
+devtools::build()
 file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2.3.00.tar.gz"), 
           to = paste0(here::here(), "/GAPsurvey_2.3.00.tar.gz"),
           overwrite = TRUE)

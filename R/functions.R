@@ -204,17 +204,36 @@ CTDtoBTD <- function(
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
   
-  data0 <- oce::read.ctd(file = file.name)
-
-  data<-data.frame(data0@data)
+  data0 <- (readLines(file.name))
   
-  xx <- as.POSIXlt(data0@metadata$startTime, 
-                          format = "%Y-%m-%d %H:%M:%S") 
+  data <- data0[(which(data0 == "*END*")+1):length(data0)]
+  # datapasta::df_paste(input_table = data)
+  
+  data <- data.frame(matrix(data = unlist(strsplit(data, "\\s+")), 
+                    ncol = 7, byrow = TRUE))
+  data$X1 <- NULL
+  names(data) <- c("timeS", "depth", "temperature", "pressure", 
+                   "conductivity", "flag") # , "salinity"
+  
+  # data$timeS <- as.POSIXct(data$timeS)
+  # data0 <- oce::read.ctd(file = file.name)
+  # data<-data.frame(data0@data)
+
+  xx <- data0[(grepl(x = data0, pattern = "# datcnv_date = "))]
+  xx <- gsub(pattern = "# datcnv_date = ", replacement = "", x = xx)
+  xx <- strsplit(x = xx, split = ",")[[1]][1]
+  xx <- as.POSIXlt(xx, format = "%b %d %Y %H:%M:%S")
+  data$timeS <- as.numeric(as.character(data$timeS))
+  DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS),
+                                        format = "%Y-%m-%d %H:%M:%S")
+  
+  # xx <- as.POSIXlt(data0@metadata$startTime, 
+  #                         format = "%Y-%m-%d %H:%M:%S") 
+  #                         
   # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
-  DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS), 
-                                        format = "%m/%d/%Y %H:%M:%S")
+  # DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS),
+  #                                       format = "%m/%d/%Y %H:%M:%S")
 
-  
   HOST_TIME=max(data$DATE_TIME)
   LOGGER_TIME=max(data$DATE_TIME)
   LOGGING_START=min(data$DATE_TIME)
