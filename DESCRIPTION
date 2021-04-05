@@ -29,4 +29,7 @@ Imports:
     RODBC, 
     oce,
     tcltk
-
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr

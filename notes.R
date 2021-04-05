@@ -24,7 +24,7 @@
 .rs.restartR()
 
 # options(rmarkdown.html_vignette.check_title = FALSE)
-# Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.0.1/bin;', Sys.getenv('PATH')))
+Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 library(here)
 library(devtools)
 library(roxygen2)
@@ -36,7 +36,7 @@ setwd(here::here())
 # devtools::check()
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_2.3.00.tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_2.3.00.tar.gz"))
-devtools::build()
+# devtools::build()
 file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2.3.00.tar.gz"), 
           to = paste0(here::here(), "/GAPsurvey_2.3.00.tar.gz"),
           overwrite = TRUE)
