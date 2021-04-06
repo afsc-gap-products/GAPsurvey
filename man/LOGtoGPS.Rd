@@ -63,6 +63,6 @@ LOGtoGPS(
     path_in = system.file("exdata/log2gps/06062017.log", 
     package = "GAPsurvey"),
     path_out = getwd(),
-    filename_add = "",
+    filename_add = "newlog",
     quiet = TRUE)
 }

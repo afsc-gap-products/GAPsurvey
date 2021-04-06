@@ -29,7 +29,7 @@
 
 
 ## Make sure the necessary packages are installed ##
-install.packages("C:/R/GAPsurvey_2.3.00.tar.gz", repos = NULL, type = "source")
+install.packages("C:/R/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
 install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
 
 # Run Functions as Needed ------------------------------------

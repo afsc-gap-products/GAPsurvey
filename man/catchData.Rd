@@ -25,7 +25,7 @@ NOTE: Must be run on 32-bit R!
 Processes catch data exported from catch tablets into summarized values into the designated dataent.mdb. You must have exported from the tablet:
 DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul.
 
-#---> To use the program you must first:
+To use the program you must first:
 Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
 Each of these file names will begin with the tablet name and end with the haul number.
 DATAENT_CATCH_xxxx.csv

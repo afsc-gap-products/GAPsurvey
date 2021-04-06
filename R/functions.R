@@ -36,10 +36,9 @@
 #'    MODEL_NUMBER = 123,
 #'    VERSION_NUMBER = 456,
 #'    SERIAL_NUMBER = 789,
-#'    path_in = system.file("exdata/bvdr2btd/", 
-#'    package = "GAPsurvey"),
+#'    path_in = system.file("exdata/bvdr2btd/", package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "new", 
+#'    filename_add = "newted", 
 #'    quiet = TRUE)
 TEDtoBTD <- function(
   VESSEL = NA,
@@ -91,7 +90,14 @@ TEDtoBTD <- function(
   #which(ted.file[,4] %in% tet.file[,4])
 
   xx=merged$date
-  DATE_TIME=format(xx, format = "%m/%d/%Y %H:%M:%S")
+  DATE_TIME <- format(xx, format = "%m/%d/%Y %H:%M:%S")
+  
+  DATE_TIME_btd <- format(as.POSIXct(DATE_TIME, format = "%m/%d/%Y %H:%M:%S"), 
+                          format = "%m/%d/%Y %H:%M:%S")
+  
+  DATE_TIME_btd <- format.date(DATE_TIME_btd)
+  DATE_TIME <- format(xx, format = "%m/%d/%y %H:%M:%S")
+  
   HOST_TIME=max(DATE_TIME)
   LOGGER_TIME=max(DATE_TIME)
   LOGGING_START=min(DATE_TIME)
@@ -104,6 +110,7 @@ TEDtoBTD <- function(
   MODE=2
 
   # Write BTD file
+  DATE_TIME <- DATE_TIME_btd
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
   new.BTD[which(is.na(new.BTD))]=""
   new.BTD <- data.frame(new.BTD)
@@ -119,22 +126,25 @@ TEDtoBTD <- function(
 
   #head(new.BTD)
   #return(head(new.BTD))
-  utils::write.csv(new.BTD,
-            paste0(path_out, "HAUL",shaul,
-                   ifelse(is.na(filename_add) | filename_add == "",
-                          "", paste0("_", filename_add)),
-                   ".BTD"),
-            quote=F,row.names=F,eol=",\n")
-  utils::write.csv(new.BTH,
-            paste0(path_out, "HAUL",shaul,
-                   ifelse(is.na(filename_add) | filename_add == "",
-                          "", paste0("_", filename_add)),
-                   ".BTH"),
-            quote=F,row.names=F)
+  filename <- paste0(path_out, "HAUL",shaul,
+                     ifelse(is.na(filename_add) | filename_add == "",
+                            "", paste0("_", filename_add)))
+  utils::write.csv(x = new.BTD,
+                   file = paste0(filename, ".BTD"),
+                   quote=F,
+                   row.names=F,
+                   eol=",\n"
+                   )
+  
+  utils::write.csv(x = new.BTH,
+                   file = paste0(filename, ".BTH"),
+                   quote=F,
+                   row.names=F)
 
   if(!quiet){
     tcltk::tkmessageBox(title = "Message",
-                 message = paste0("Your new .BTD and .BTH files are saved to the folder ", path_out),
+                        message = paste0("Your new ", filename, 
+                                         " .BTD and .BTH files are saved."),
                  icon = "info", type = "ok")
   }
 }
@@ -165,9 +175,9 @@ TEDtoBTD <- function(
 #'    MODEL_NUMBER = 123,
 #'    VERSION_NUMBER = 456,
 #'    SERIAL_NUMBER = 789,
-#'    path_in = system.file("exdata/ctd2btd/SBE19_CTD8106_0094_raw.cnv",
-#'     package = "GAPsurvey"),
+#'    path_in = system.file("exdata/ctd2btd/SBE19_CTD8106_0094_raw.cnv", package = "GAPsurvey"),
 #'    path_out = getwd(),
+#'    filename_add = "newctd", 
 #'    quiet = TRUE)
 CTDtoBTD <- function(
   VESSEL = NA,
@@ -224,9 +234,23 @@ CTDtoBTD <- function(
   xx <- strsplit(x = xx, split = ",")[[1]][1]
   xx <- as.POSIXlt(xx, format = "%b %d %Y %H:%M:%S")
   data$timeS <- as.numeric(as.character(data$timeS))
-  DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS),
+  DATE_TIME <- format((xx + data$timeS),
                                         format = "%Y-%m-%d %H:%M:%S")
+  DATE_TIME_btd <- format(as.POSIXct(DATE_TIME),
+                      format = "%m/%d/%Y %H:%M:%S")
+
+  DATE_TIME_btd <- format.date(DATE_TIME_btd)
+
+  # DATE_TIME_btd <- gsub(pattern = "^0",
+  #                       replacement = "",
+  #                       x = DATE_TIME_btd)
+  # DATE_TIME_btd <- gsub(pattern = "^0",
+  #                       replacement = "",
+  #                       x = DATE_TIME_btd)
+  DATE_TIME <- format(as.POSIXct(DATE_TIME),
+                       format = "%m/%d/%y %H:%M:%S")
   
+  data$DATE_TIME <- DATE_TIME
   # xx <- as.POSIXlt(data0@metadata$startTime, 
   #                         format = "%Y-%m-%d %H:%M:%S") 
   #                         
@@ -246,6 +270,10 @@ CTDtoBTD <- function(
   MODE=2  
   
   # Write BTD file
+  # DATE_TIME <- format(as.POSIXct(DATE_TIME, "%m/%d/%y %H:%M:%S"), 
+  #                     format = "%m/%e/%Y %H:%M:%S")
+  DATE_TIME<-DATE_TIME_btd
+
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
   new.BTD[which(is.na(new.BTD))]=""
   new.BTD <- data.frame(new.BTD)
@@ -260,22 +288,23 @@ CTDtoBTD <- function(
   
   #head(new.BTD)
   #return(head(new.BTD))
-  utils::write.csv(new.BTD,
-                   paste0(path_out, "HAUL",shaul,
-                          ifelse(is.na(filename_add) | filename_add == "",
-                                 "", paste0("_", filename_add)),
-                          ".BTD"),
-                   quote=F,row.names=F,eol=",\n")
-  utils::write.csv(new.BTH,
-                   paste0(path_out, "HAUL",shaul,
-                          ifelse(is.na(filename_add) | filename_add == "",
-                                 "", paste0("_", filename_add)),
-                          ".BTH"),
-                   quote=F,row.names=F)
+  filename <- paste0(path_out, "HAUL",shaul,
+                     ifelse(is.na(filename_add) | filename_add == "",
+                            "", paste0("_", filename_add)))
+  utils::write.csv(x = new.BTD,
+                   file = paste0(filename, ".BTD"),
+                   quote=F,
+                   row.names=F,
+                   eol="\n")
+  utils::write.csv(x = new.BTH,
+                   file = paste0(filename, ".BTH"),
+                   quote=F,
+                   row.names=F)
   
   if(!quiet){
     tcltk::tkmessageBox(title = "Message",
-                        message = paste0("Your new .BTD and .BTH files are saved to the folder ", path_out),
+                        message = paste0("Your new ", filename, 
+                                         " .BTD and .BTH files are saved."),
                         icon = "info", type = "ok")
   }
   
@@ -322,7 +351,7 @@ CTDtoBTD <- function(
 #'     path_in = system.file("exdata/log2gps/06062017.log", 
 #'     package = "GAPsurvey"),
 #'     path_out = getwd(),
-#'     filename_add = "",
+#'     filename_add = "newlog",
 #'     quiet = TRUE)
 LOGtoGPS <- function(
   VESSEL = NA,
@@ -376,21 +405,48 @@ LOGtoGPS <- function(
 
   lat1=as.numeric(as.character(infoselect$"LAT1"[1:6]))
   LAT=ifelse(infoselect$"LAT2"=="N",lat1,-lat1)
+  LAT <- formatC(x = LAT, digits = 4, format = "f")
   # LAT[1:6]
 
   long1=as.numeric(as.character(infoselect$"LONG1"[1:6]))
   LONG=ifelse(infoselect$"LONG2"=="E",long1,-long1)
+  LONG <- formatC(x = LONG, digits = 4, format = "f")
+  
   # LONG[1:6]
 
-  df=cbind(VESSEL, CRUISE, HAUL, DATE_TIME, LAT, LONG)
+  new_gps <- cbind.data.frame(VESSEL, CRUISE, HAUL, DATE_TIME, LAT, LONG)
   # head(df)
-  utils::write.table(df,paste0(path_out,
-                        "HAUL", shaul, ".gps"),
-              quote=F,sep = ",",row.names=F,col.names=F)
+  # utils::write.table(df,paste0(path_out,
+  #                       "HAUL", shaul, ".gps"),
+  #             quote=F,sep = ",",row.names=F,col.names=F)
+  
+  filename <- paste0(path_out, "HAUL",shaul,
+                     ifelse(is.na(filename_add) | filename_add == "",
+                            "", paste0("_", filename_add)),
+                     ".gps")
+  
+  # utils::write.csv(x = new_gps,
+  #                  file = filename,
+  #                  quote = F, 
+  #                  sep = ",",
+  #                  row.names = FALSE, 
+  #                  col.names = FALSE
+  #                  )
+  new_gps1<-new_gps
+  names(new_gps1) <- NULL
+  new_gps1 <- as.matrix(new_gps1)
+  
+  utils::write.table(x = new_gps1,
+                   file = filename,
+                   quote=FALSE,
+                   sep = ",",
+                   row.names=FALSE,
+                   col.names = FALSE,
+                   eol="\n")
 
   if (!quiet) {
     tcltk::tkmessageBox(title = "Message",
-                 message = paste0("Your new files are saved to the folder ", path_out),
+                 message = paste0("Your new .gps files are saved to ", filename),
                  icon = "info", type = "ok")
   }
 
@@ -619,8 +675,8 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' Processes catch data exported from catch tablets into summarized values into the designated dataent.mdb. You must have exported from the tablet:
 #' DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul.
 #' 
-#' #---> To use the program you must first:
-#'  Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
+#' To use the program you must first:
+#' Bluetooth transfer the following files from tablets to catch computer (should automatically go into C:Users/NOAADATA/Documents/Bluetooth/inbox)
 #'  Each of these file names will begin with the tablet name and end with the haul number. 
 #'     DATAENT_CATCH_xxxx.csv
 #'     DATAENT_BBAG_xxxx.csv     -- If there was a benthic bag
@@ -1007,7 +1063,12 @@ fix_path <- function(path) {
 
 
 
-
+format.date <- function(x, ...) {
+  tmp <- format(x, ...)
+  tmp <- sub("^[0]+", "", tmp)
+  tmp <- sub('/0', "/", tmp)
+  return(tmp)
+}
 
 # Data ------------------------------------------------------------------------------------
 

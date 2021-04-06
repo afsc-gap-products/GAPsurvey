@@ -1,6 +1,6 @@
 Package: GAPsurvey
 Title: Provides data management tools for RACE GAP surveys
-Version: 2.3.00
+Version: 2.4.00
 Authors@R: 
   c(person(given = "Jason",
            family = "Conner",
