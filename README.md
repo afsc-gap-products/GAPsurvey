@@ -1,6 +1,7 @@
 GAPsurvey
 =========
 
+<!-- EDIT IN README.Rmd file ONLY! -->
 Catch, Length, and Specimen Data Import Program Instructions (R Package
 "GAPsurvey")
 
@@ -28,21 +29,16 @@ Make sure the necessary packages are installed
     devtools::install_version("RODBC", version = "1.3-16", repos = "http://cran.us.r-project.org")
     library(RODBC)
 
-    # https://cran.r-project.org/src/contrib/Archive/oce/oce_1.3-0.tar.gz
-    devtools::install_version("oce", version = "1.3-0", repos = "http://cran.us.r-project.org")
-    library(oce)
-
     devtools::install_github("emilymarkowitz-noaa/GAPsurvey")
     library(GAPsurvey)
 
 Or, if you are installing from the catch computer/without internet
 connection, you can instally the packages like this:
 
-    install.packages("C:/R/GAPsurvey_2.3.00.tar.gz", repos = NULL, type = "source")
+    install.packages("C:/R/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
     install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
-    install.packages("C:/R/oce_1.3-0.tar.gz", repos = NULL, type = "source")
 
-    library("GAPsurvey", "RODBC", "oce")
+    library("GAPsurvey", "RODBC")
 
 Directories
 -----------
