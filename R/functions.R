@@ -152,6 +152,8 @@ TEDtoBTD <- function(
 
 
 #' Convert CTD data in XML form to BTD and BTH
+#' 
+#' Note that if there are multiple observatios from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together). 
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
@@ -224,6 +226,28 @@ CTDtoBTD <- function(
   data$X1 <- NULL
   names(data) <- c("timeS", "depth", "temperature", "pressure", 
                    "conductivity", "flag") # , "salinity"
+  
+  data$second <- floor(x = as.numeric(as.character(data$timeS)))
+  
+  
+  # data <- data %>%
+  #   group_by(data, second) %>% 
+  #   summarize(m_depth = mean(depth, na.rm = TRUE), 
+  #             m_temperature = mean(temperature, na.rm = TRUE), 
+  #             m_pressure = mean(pressure, na.rm = TRUE), 
+  #             m_conductivity = mean(conductivity, na.rm = TRUE))
+  
+  dat <- data[,c("depth", "temperature", "pressure", "conductivity", "second")]
+  dat <- data.frame(base::sapply(X = dat, as.character))
+  dat <- data.frame(base::sapply(X = dat, as.numeric))
+  
+  data <- aggregate.data.frame(x = dat[, c("depth", "temperature", 
+                                           "pressure", "conductivity")],
+                       by = list(timeS = data$second), 
+                       FUN = mean, 
+                       na.rm = TRUE
+                        )
+
   
   # data$timeS <- as.POSIXct(data$timeS)
   # data0 <- oce::read.ctd(file = file.name)

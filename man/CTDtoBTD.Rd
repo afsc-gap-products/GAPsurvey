@@ -42,7 +42,7 @@ CTDtoBTD(
 .BTH and .BTD files to the path_out directory.
 }
 \description{
-Convert CTD data in XML form to BTD and BTH
+Note that if there are multiple observatios from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together).
 }
 \examples{
 CTDtoBTD(
