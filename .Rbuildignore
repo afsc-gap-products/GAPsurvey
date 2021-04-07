@@ -8,6 +8,4 @@
 ^notes.R$
 ^installfiles$
 ^exe$
-^\.BTH$
-^\.BTD$
 ^\.rmd$
