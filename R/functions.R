@@ -482,9 +482,9 @@ LOGtoGPS <- function(
 #' Import Length Tablet Files Into DataEnt.mdb
 #'
 #' NOTE: Must be run on 32-bit R!
+#' NOTE: This function is typically run within the catchData()
 #'
 #' Looks for tablet length files in given DSN and uploads them to LENGTH and RAW_LENGTH in the given data_ent.mdb.
-#'
 #'
 #' @param haul Number of the haul you want to upload
 #' @param dsnTablet String for the drive folder (in R notation) where tablet files exist.
@@ -494,18 +494,29 @@ LOGtoGPS <- function(
 #' @export
 #'
 #' @examples
-#' # NOTE: This function is typically run within the catchData()
-#' 
+#' # Gulf of Alaska Example
 #' # Point functions to correct tablet directory and "dataEnt" file
 #' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
-#' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 #' 
 #' # Define the current haul number
 #' haul <- 8
 #' 
-#' # Import catch data
-#' lengthData(haul,dsnTablet,dsnDataEnt)
+#' # Import length data
+#' lengthData(haul,dsnTablet,dsnDataEnt)  
+#' 
+#' 
+#' 
+#' # Eastern Bering Sea Example
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
+#' 
+#' # Define the current haul number
+#' haul <- 59
+#' 
+#' # Import length data
+#' lengthData(haul,dsnTablet,dsnDataEnt) 
 lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 
   PolySpecies <- GAPsurvey::PolySpecies
@@ -600,6 +611,7 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
+#' # Gulf of Alaska Example
 #' # Point functions to correct tablet directory and "dataEnt" file
 #' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
@@ -608,8 +620,21 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' # Define the current haul number
 #' haul <- 8
 #' 
-#' # Import catch data
+#' # Import specimen data
 #' specimenData(haul,dsnTablet,dsnDataEnt)
+#' 
+#' 
+#' # Eastern Bering Sea Example
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
+#' 
+#' # Define the current haul number
+#' haul <- 59
+#' 
+#' # Import specimen data
+#' specimenData(haul,dsnTablet,dsnDataEnt)
+#' 
 specimenData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
 
@@ -645,11 +670,11 @@ specimenData <- function(haul, dsnTablet, dsnDataEnt) {
 
 
 
-
-
 #' Import Benthic Bag Tablet Files Into DataEnt.mdb
 #'
 #' NOTE: Must be run on 32-bit R!
+#' NOTE: Benthic Bag data is not collected by the eastern Bering Sea team, so this function is not required for those trawls. 
+#' 
 #' @param haul haul number
 #' @param dsnTablet full file path of the location of raw tablet data
 #' @param dsnDataEnt full file path of the location of the dataent.mdb - include full file name and extension.
@@ -668,7 +693,6 @@ specimenData <- function(haul, dsnTablet, dsnDataEnt) {
 #' 
 #' # Import catch data
 #' # benthicData(haul,dsnTablet,dsnDataEnt)
-
 benthicData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
 
@@ -723,13 +747,28 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
+#' # Gulf of Alaska Example
 #' # Point functions to correct tablet directory and "dataEnt" file
 #' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
-#' importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
+#' importLength <- TRUE 
 #' 
 #' # Define the current haul number
 #' haul <- 8
+#' 
+#' # Import catch data 
+#' catchData(haul,dsnTablet,dsnDataEnt,importLength)
+#' 
+#' 
+#' 
+#' # Eastern Bering Sea Example
+#' # Point functions to correct tablet directory and "dataEnt" file
+#' dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
+#' importLength <- TRUE 
+#' 
+#' # Define the current haul number
+#' haul <- 59
 #' 
 #' # Import catch data 
 #' catchData(haul,dsnTablet,dsnDataEnt,importLength)
@@ -946,7 +985,7 @@ catchData <- function(haul,
 #' @param data matrix or data.frame containg data from catch, specimen and lengths tablets
 #' @param tablename String of the data_ent table you are deleting data from
 #'
-#' @return ...
+#' @return Changes to the data_ent.mbd file. 
 #' @export
 #'
 #' @examples
@@ -976,11 +1015,25 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
 #' @param haul Number of the haul you want to delete
 #' @param tablename String of the data_ent table you are deleting data from
 #'
-#' @return ...
+#' @return Changes to the data_ent.mbd file. 
 #' @export
 #'
 #' @examples
-#' # deleteDataEnt(dsnDataEnt,haul,"BENTHIC_BAG")
+#' # There will need to be observations in the data_ent.mbd for this example to work. 
+#' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
+#' dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                       tablename = 'MIXTURE')
+#' dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                           tablename = 'MIXTURE_HEADER')
+#' dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                         tablename = 'CATCH')
+#' dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                             tablename = 'CATCH_HEADER')
+#' dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                          tablename = 'LENGTH')
+#' dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
+#'                               haul, tablename = 'RAW_LENGTH')
 deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
   odbcStr <- paste0("Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=",dsnDataEnt)
   dataEnt <- RODBC::odbcDriverConnect(odbcStr)
@@ -1003,7 +1056,7 @@ deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
 #' @param query A SQL query
 #'
-#' @return ...
+#' @return Changes to the data_ent.mbd file. 
 #' @export
 #'
 #' @examples

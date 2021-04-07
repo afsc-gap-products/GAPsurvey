@@ -34,6 +34,7 @@ SPECIMEN_xxxx.csv         -- The specimen data
 HAUL_xxxx.csv             -- A length file for each tablet
 }
 \examples{
+# Gulf of Alaska Example
 # Point functions to correct tablet directory and "dataEnt" file
 dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
@@ -42,6 +43,19 @@ importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 # Define the current haul number
 haul <- 8
 
-# Import catch data
+# Import specimen data
 specimenData(haul,dsnTablet,dsnDataEnt)
+
+
+# Eastern Bering Sea Example
+# Point functions to correct tablet directory and "dataEnt" file
+dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
+
+# Define the current haul number
+haul <- 59
+
+# Import specimen data
+specimenData(haul,dsnTablet,dsnDataEnt)
+
 }

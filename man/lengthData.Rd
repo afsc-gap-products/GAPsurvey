@@ -18,21 +18,33 @@ changes to catch data in the access database (.mbd)
 }
 \description{
 NOTE: Must be run on 32-bit R!
+NOTE: This function is typically run within the catchData()
 }
 \details{
 Looks for tablet length files in given DSN and uploads them to LENGTH and RAW_LENGTH in the given data_ent.mdb.
 }
 \examples{
-# NOTE: This function is typically run within the catchData()
-
+# Gulf of Alaska Example
 # Point functions to correct tablet directory and "dataEnt" file
 dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
-importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 
 # Define the current haul number
 haul <- 8
 
-# Import catch data
-lengthData(haul,dsnTablet,dsnDataEnt)
+# Import length data
+lengthData(haul,dsnTablet,dsnDataEnt)  
+
+
+
+# Eastern Bering Sea Example
+# Point functions to correct tablet directory and "dataEnt" file
+dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
+
+# Define the current haul number
+haul <- 59
+
+# Import length data
+lengthData(haul,dsnTablet,dsnDataEnt) 
 }

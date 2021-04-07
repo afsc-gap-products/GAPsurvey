@@ -14,7 +14,7 @@ deleteDataEnt(dsnDataEnt, haul, tablename)
 \item{tablename}{String of the data_ent table you are deleting data from}
 }
 \value{
-...
+Changes to the data_ent.mbd file.
 }
 \description{
 NOTE: Must be run on 32-bit R!
@@ -23,5 +23,19 @@ NOTE: Must be run on 32-bit R!
 Deletes data from data_ent.mdb for a haul.
 }
 \examples{
-# deleteDataEnt(dsnDataEnt,haul,"BENTHIC_BAG")
+# There will need to be observations in the data_ent.mbd for this example to work. 
+dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
+dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                      tablename = 'MIXTURE')
+dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                          tablename = 'MIXTURE_HEADER')
+dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                        tablename = 'CATCH')
+dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                            tablename = 'CATCH_HEADER')
+dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                         tablename = 'LENGTH')
+dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
+                              haul, tablename = 'RAW_LENGTH')
 }

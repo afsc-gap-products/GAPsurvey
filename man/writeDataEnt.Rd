@@ -14,7 +14,7 @@ writeDataEnt(dsnDataEnt, data, tablename)
 \item{tablename}{String of the data_ent table you are deleting data from}
 }
 \value{
-...
+Changes to the data_ent.mbd file.
 }
 \description{
 NOTE: Must be run on 32-bit R!

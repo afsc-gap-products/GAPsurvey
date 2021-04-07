@@ -12,7 +12,7 @@ selectDataEnt(dsnDataEnt, query)
 \item{query}{A SQL query}
 }
 \value{
-...
+Changes to the data_ent.mbd file.
 }
 \description{
 NOTE: Must be run on 32-bit R!

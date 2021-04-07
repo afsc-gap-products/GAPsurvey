@@ -18,6 +18,7 @@ changes to catch data in the access database (.mbd)
 }
 \description{
 NOTE: Must be run on 32-bit R!
+NOTE: Benthic Bag data is not collected by the eastern Bering Sea team, so this function is not required for those trawls.
 }
 \examples{
 # Point functions to correct tablet directory and "dataEnt" file
