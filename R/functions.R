@@ -340,10 +340,7 @@ CTDtoBTD <- function(
 #' Recover position data from Globe .log file
 #'
 #' In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
-#' To get a .log file that is usable in this function, you will need to use the Globe computer to download (or export?) a file for the date that you are missing gps data for in the .log format.
-#'
-#' To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
-#'
+#' To get a .log file that is usable in this function,
 #' 1) Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
 #' 2) Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
 #' 3) LOGtoGPS()will prompt you for Vessel code, Cruise no., Haul no. and Date
@@ -353,6 +350,8 @@ CTDtoBTD <- function(
 #' 7) Upload HAULXXXX.GPS into WHEELHOUSE
 #' 8) NOTE: The raw GLOBE log data are in GMT time (-8 hrs or 4PM AKDT prior day to 4PM current day. Hence if haul with missing GPS spans the 4PM hour (e.g.,3:45-4:30 PM),YOU WILL HAVE TO CONVERT TWO GLG files (current day and next day)and run LOGtoGPS()twice & manually combine the two GPS files
 #' 9) ALSO NOTE: You may have to shut down GLOBE or wait until after 4pm on following day before all the incoming NMEA data are written to the GLG file.
+#'
+#' Now that you have a .log file, you can RUN the function by putting your cursor on the "LOGtoGPS()" line below & press CTRL+R.
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
