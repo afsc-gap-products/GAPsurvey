@@ -37,10 +37,7 @@ A .GPS file to the path_out directory.
 }
 \description{
 In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
-To get a .log file that is usable in this function, you will need to use the Globe computer to download (or export?) a file for the date that you are missing gps data for in the .log format.
-}
-\details{
-To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
+To get a .log file that is usable in this function,
 \enumerate{
 \item Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
 \item Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
@@ -52,6 +49,9 @@ To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
 \item NOTE: The raw GLOBE log data are in GMT time (-8 hrs or 4PM AKDT prior day to 4PM current day. Hence if haul with missing GPS spans the 4PM hour (e.g.,3:45-4:30 PM),YOU WILL HAVE TO CONVERT TWO GLG files (current day and next day)and run LOGtoGPS()twice & manually combine the two GPS files
 \item ALSO NOTE: You may have to shut down GLOBE or wait until after 4pm on following day before all the incoming NMEA data are written to the GLG file.
 }
+}
+\details{
+Now that you have a .log file, you can RUN the function by putting your cursor on the "LOGtoGPS()" line below & press CTRL+R.
 }
 \examples{
 LOGtoGPS(
