@@ -13,7 +13,7 @@
 
 #' BVDR Conversion to Create BTD data
 #'
-#' Converts Marport BVDR data (.ted and .tet) to .BTD format.
+#' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the TEDtoBTD() function here!
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
@@ -151,8 +151,9 @@ TEDtoBTD <- function(
 
 
 
-#' Convert CTD data in XML form to BTD and BTH
+#' Convert CTD data in .cnv form to BTD and BTH
 #' 
+#' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.  To do this, use the SBE Data Processing Program, and in the Run menu select "1. Data conversion".  Under "Program setup file" select the .psa file, under "Instrument configuration file" select the .xmlcon file for the CTD, and under "Input directory" select the .hex file that is specific to the haul that you are missing data from.  Press "Start Process" button and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!   
 #' Note that if there are multiple observatios from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together). 
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
@@ -336,11 +337,10 @@ CTDtoBTD <- function(
 
 
 
-#' Recover position data from Globe.log file
+#' Recover position data from Globe .log file
 #'
-#' Lorem
-#'
-#' In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE
+#' In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
+#' To get a .log file that is usable in this function, you will need to use the Globe computer to download (or export?) a file for the date that you are missing gps data for in the .log format.
 #'
 #' To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
 #'
