@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{LOGtoGPS}
 \alias{LOGtoGPS}
-\title{Recover position data from Globe.log file}
+\title{Recover position data from Globe .log file}
 \usage{
 LOGtoGPS(
   VESSEL = NA,
@@ -36,11 +36,10 @@ LOGtoGPS(
 A .GPS file to the path_out directory.
 }
 \description{
-Lorem
+In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
+To get a .log file that is usable in this function, you will need to use the Globe computer to download (or export?) a file for the date that you are missing gps data for in the .log format.
 }
 \details{
-In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE
-
 To RUN the function, put curser on the "LOGtoGPS()" line below & press CTRL+R.
 \enumerate{
 \item Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date

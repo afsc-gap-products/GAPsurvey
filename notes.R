@@ -11,9 +11,13 @@
 # https://drive.google.com/drive/folders/1XqWqrvaq1ZAhrZZzxy9NfSlgEDeJRn9G?usp=sharing
 
 
+# Data
+# C:\Users\emily.markowitz\Documents\Projects\GAPsurvey_general\GAPsurvey\inst\exdata\catch\GOA
+
 # Things to fix in 2022
 # 1. LOGtoGPS() fix 4pm double file problem
 # 2. make CTD .hex and .xml files inputs into CTDtoBTD
+# 
 # 
 
 ############## QUESTIONS ####################
