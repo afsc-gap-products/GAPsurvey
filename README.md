@@ -8,15 +8,13 @@ Catch, Length, and Specimen Data Import Program Instructions (R Package
 R and Package Versions
 ----------------------
 
-### 32-bit R Studio is required to run this program
+[R 3.6.0 32 bit](https://cran.r-project.org/bin/windows/base/old/3.6.0/)
+\* 32-bit R Studio is required to run this program!
 
-(R 3.6.0 32/64
-bit)\[<https://cran.r-project.org/bin/windows/base/old/3.6.0/>\]
+[RStudio Desktop 1.1.463](https://www.npackd.org/p/rstudio/1.1.463)
 
-(<https://www.npackd.org/p/rstudio/1.1.463>)\[RStudio Desktop 1.1.463\]
-
-(RTools35 for R 3.3.x to
-3.6.x)\[<https://cran.r-project.org/bin/windows/Rtools/history.html>\]
+[RTools35 for R 3.3.x to
+3.6.x](https://cran.r-project.org/bin/windows/Rtools/history.html)
 
 Below is the annotated script for importing catch, length, and specimen
 data using the GAPsurvey package:
