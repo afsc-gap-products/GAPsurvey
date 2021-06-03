@@ -173,12 +173,12 @@ TEDtoBTD <- function(
 #' @examples
 #' CTDtoBTD(
 #'    VESSEL = 94,
-#'    CRUISE = 201901,
-#'    HAUL = 3,
+#'    CRUISE = 2001,
+#'    HAUL = 4,
 #'    MODEL_NUMBER = 123,
 #'    VERSION_NUMBER = 456,
 #'    SERIAL_NUMBER = 789,
-#'    path_in = system.file("exdata/ctd2btd/SBE19_CTD8106_0094_raw.cnv", package = "GAPsurvey"),
+#'    path_in = system.file("exdata/ctd2btd/SBE19plus_01908103_2021_06_01_94_0004_raw.cnv", package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newctd", 
 #'    quiet = TRUE)
@@ -218,15 +218,33 @@ CTDtoBTD <- function(
   shaul <- numbers0(x = HAUL, number_places = 4)
   
   data0 <- (readLines(file.name))
+  header0<-data0[(which(data0 == "# units = specified")+1):
+                    (grep(pattern = "# span 0 =", x = data0)-1)]
+  header0 <- lapply(strsplit(x = header0, split = " = "), `[[`, 2)
+  header0 <- unlist(lapply(strsplit(x = unlist(header0), split = " "), `[[`, 2))
+  header0 <- gsub(pattern = ",", replacement = "", x = header0)
+  # header0 <- header0[header0 != ""] # flag column
+  headers<-data.frame(bth = c("", "timeS", "depth", "temperature", "pressure", 
+                              "conductivity", "flag"), 
+                      ctd = c("", "Time", "Depth", "Temperature", "Pressure",  
+                              "Conductivity", ""))
+  # headers<-headers[headers$ctd %in% header0,]
+  headers<-headers[match(x = header0, table = headers$ctd), ]
   
   data <- data0[(which(data0 == "*END*")+1):length(data0)]
+  # data <- unique(data)
+  
   # datapasta::df_paste(input_table = data)
   
   data <- data.frame(matrix(data = unlist(strsplit(data, "\\s+")), 
-                    ncol = 7, byrow = TRUE))
+                    ncol = nrow(headers)+1, byrow = TRUE))
   data$X1 <- NULL
-  names(data) <- c("timeS", "depth", "temperature", "pressure", 
-                   "conductivity", "flag") # , "salinity"
+  names(data)<-headers$bth
+  # names(data) <- header0
+  
+
+  # names(data) <- c("timeS", "depth", "temperature", "pressure", 
+  #                  "conductivity", "flag") # , "salinity"
   
   data$second <- floor(x = as.numeric(as.character(data$timeS)))
   
@@ -996,11 +1014,11 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
   sqlReturn <- RODBC::sqlSave(dataEnt, data, tablename, append=T, rownames=F)
 
   # FUTURE: SQLupdate version
-  #sqlReturn <- RODBC::sqlUpdate(dataEnt, data, tablename, index=index)
+  sqlReturn <- RODBC::sqlUpdate(dataEnt, data, tablename, index=index)
 
   RODBC::odbcClose(dataEnt)
 
-  return(sqlReturn)
+  # return(sqlReturn)
 }
 
 
