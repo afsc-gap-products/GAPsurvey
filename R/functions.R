@@ -754,6 +754,8 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #'     SPECIMEN_xxxx.csv         -- The specimen data
 #'     HAUL_xxxx.csv             -- A length file for each tablet
 #'  
+#'  PLEASE NOTE: You cannot have any species in your catch data files that have a blank subsample_weight!  If you erroneously tap on a species during data collection, you must delete that species from the tablet before transfering the data to the catch computer!
+#'
 #'  IF the catch was subsampled, the user will be given an option to define the subsample type (1 = 100% Processed (No subsample), 2 = Subsampled, Load cell estimate of total weight, 4 = Subsampled, Visual estimate of total weight, 6 = Subsampled, basket weights of both fractions (table split), 9 = Non-quantitative catch sampling, 12 = Volumetric method. Density from Density Lookup Table, 13 = Volumetric method. Density calculated on deck from haul sample).
 #' 
 #' @param haul haul number
