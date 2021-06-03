@@ -32,6 +32,8 @@ RAW_CATCH_SAMPLE_xxxx.csv
 RAW_CATCH_VALUE_xxxx.csv
 SPECIMEN_xxxx.csv         -- The specimen data
 HAUL_xxxx.csv             -- A length file for each tablet
+
+PLEASE NOTE: You cannot have any species in your catch data files that have a blank subsample_weight!  If you erroneously tap on a species during data collection, you must delete that species from the tablet before transfering the data to the catch computer!
 }
 \examples{
 # Gulf of Alaska Example
