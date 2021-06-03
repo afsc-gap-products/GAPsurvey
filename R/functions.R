@@ -153,7 +153,7 @@ TEDtoBTD <- function(
 
 #' Convert CTD data in .cnv form to BTD and BTH
 #' 
-#' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.  To do this, use the SBE Data Processing Program, and in the Run menu select "1. Data conversion".  Under "Program setup file" select the .psa file, under "Instrument configuration file" select the .xmlcon file for the CTD, and under "Input directory" select the .hex file that is specific to the haul that you are missing data from.  Press "Start Process" button and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!   
+#' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.  This .cnv file must include columns for Time, Depth, Temperature, Pressure, and Conductivity.  To do this, use the SBE Data Processing Program, and in the Run menu select "1. Data conversion".  Under "Program setup file" select the .psa file, under "Instrument configuration file" select the .xmlcon file for the CTD, and under "Input directory" select the .hex file that is specific to the haul that you are missing data from.  Press "Start Process" button and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!   
 #' Note that if there are multiple observatios from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together). 
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
