@@ -1,10 +1,10 @@
 # #' ---
 # #' title: GAPsurvey
 # #' purpose: assist scientists on the survey collect data
-# #' author: Jason Conner (jason.conner AT noaa.gov)
-# #' start date:
-# #' modified by: Emily Markowitz (emily.markowitz AT noaa.gov)
-# #' modified date: March 2021
+# #' author: Jason Conner (jason.conner AT noaa.gov), Emily Markowitz (emily.markowitz AT noaa.gov), and Liz Dawson (Liz.Dawson AT noaa.gov)
+# #' modified by: Emily Markowitz (emily.markowitz AT noaa.gov) and Liz Dawson (Liz.Dawson AT noaa.gov)
+# #' start date: 2018?
+# #' modified date: June 2021
 # #' ---
 
 
