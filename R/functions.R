@@ -767,7 +767,7 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' @export
 #'
 #' @examples
-#' # Gulf of Alaska Example
+#' # Gulf of Alaska Example (without error)
 #' # Point functions to correct tablet directory and "dataEnt" file
 #' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
@@ -779,9 +779,7 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' # Import catch data 
 #' catchData(haul,dsnTablet,dsnDataEnt,importLength)
 #' 
-#' 
-#' 
-#' # Eastern Bering Sea Example
+#' # Eastern Bering Sea Example (Will cause error)
 #' # Point functions to correct tablet directory and "dataEnt" file
 #' dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
@@ -792,6 +790,7 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' 
 #' # Import catch data 
 #' catchData(haul,dsnTablet,dsnDataEnt,importLength)
+#' # Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. Return to the tablet and edit the data there before running it through this function again. 
 catchData <- function(haul, 
                       dsnTablet, 
                       dsnDataEnt, 
@@ -819,6 +818,14 @@ catchData <- function(haul,
   if (anyNA(tabCatch$SAMPLED_ALL)) {
     stop("C3b: SAMPLED_ALL flag has not been set for one or more species in this haul, correct on tablet and try again.")
   }
+  
+  
+  if (sum((is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)))>0) {
+    stop(paste0("C3c: Both SUBSAMPLE_WEIGHT and NONSUB_WEIGHT have missing value(s) for ", 
+                sum((is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)),
+                    " observation(s). Correct on tablet and try again.")))
+  }
+
   
   # If importLength = TRUE, upload length files first
   if (importLength) {

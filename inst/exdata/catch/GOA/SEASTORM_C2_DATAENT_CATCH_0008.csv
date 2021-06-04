@@ -7,7 +7,7 @@ SPECIES_CODE,SPECIES_NAME,NONSUB_WEIGHT,SUBSAMPLE_WEIGHT,SUBSAMPLE_NUMBERS,SAMPL
 10262,"southern rock sole",,  2.240,,"Y",
 10270,"butter sole",,  0.354,,"Y",
 20510,"sablefish",, 19.120,,"Y",
-21240,"Malacocephalus laevis",,,,"Y",
+21240,"Malacocephalus laevis",,0.7,,"Y",
 21341,"darkfin sculpin",,  0.608,4,"Y",
 21740,"walleye pollock",,  4.420,,"Y",
 30020,"shortspine thornyhead",  1.569, 28.220,,"Y",

@@ -43,7 +43,7 @@ PLEASE NOTE: You cannot have any species in your catch data files that have a bl
 IF the catch was subsampled, the user will be given an option to define the subsample type (1 = 100\% Processed (No subsample), 2 = Subsampled, Load cell estimate of total weight, 4 = Subsampled, Visual estimate of total weight, 6 = Subsampled, basket weights of both fractions (table split), 9 = Non-quantitative catch sampling, 12 = Volumetric method. Density from Density Lookup Table, 13 = Volumetric method. Density calculated on deck from haul sample).
 }
 \examples{
-# Gulf of Alaska Example
+# Gulf of Alaska Example (without error)
 # Point functions to correct tablet directory and "dataEnt" file
 dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
@@ -55,9 +55,7 @@ haul <- 8
 # Import catch data 
 catchData(haul,dsnTablet,dsnDataEnt,importLength)
 
-
-
-# Eastern Bering Sea Example
+# Eastern Bering Sea Example (Will cause error)
 # Point functions to correct tablet directory and "dataEnt" file
 dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
 dsnDataEnt <- system.file("exdata/catch/EBS/data_ent.mdb", package = "GAPsurvey")
@@ -68,4 +66,5 @@ haul <- 59
 
 # Import catch data 
 catchData(haul,dsnTablet,dsnDataEnt,importLength)
+# Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. Return to the tablet and edit the data there before running it through this function again. 
 }
