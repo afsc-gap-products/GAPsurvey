@@ -1017,11 +1017,11 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
   sqlReturn <- RODBC::sqlSave(dataEnt, data, tablename, append=T, rownames=F)
 
   # FUTURE: SQLupdate version
-  sqlReturn <- RODBC::sqlUpdate(dataEnt, data, tablename, index=index)
+  # sqlReturn <- RODBC::sqlUpdate(dataEnt, data, tablename, index=index)
 
   RODBC::odbcClose(dataEnt)
 
-  # return(sqlReturn)
+  return(sqlReturn)
 }
 
 
