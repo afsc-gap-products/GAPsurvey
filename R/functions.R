@@ -804,7 +804,7 @@ catchData <- function(haul,
                                          sprintf("%04d", haul)))
   
   if (length(catchFile) != 1) {
-    stop("C1: Data Ent Catch file missing or duplicate")
+    stop("C1: Data Ent Catch file missing or duplicate.")
   } else {
     tabCatch <- read.csv(file.path(dsnTablet,catchFile))
   }
@@ -812,18 +812,18 @@ catchData <- function(haul,
   
   
   if (!is.character(tabCatch$SAMPLED_ALL)) {
-    stop("C3: SAMPLED_ALL flag has not been set for any species in this haul, correct and try again.")
+    stop("C3: SAMPLED_ALL flag has not been set for any species in this haul. Correct data in tablet and try again.")
   }
   
   if (anyNA(tabCatch$SAMPLED_ALL)) {
-    stop("C3b: SAMPLED_ALL flag has not been set for one or more species in this haul, correct on tablet and try again.")
+    stop("C3b: SAMPLED_ALL flag has not been set for one or more species in this haul. Correct data in tablet and try again.")
   }
   
   
   if (sum((is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)))>0) {
-    stop(paste0("C3c: Both SUBSAMPLE_WEIGHT and NONSUB_WEIGHT have missing value(s) for ", 
+    stop(paste0("C3c: Both SUBSAMPLE_WEIGHT and NONSUB_WEIGHT have no values for ", 
                 sum(is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)),
-                    " observation(s). Correct on tablet and try again."))
+                    " species. Delete species entry if added in error. A value is required for one or both types of weights (subsample or non-subsample). Correct data in tablet and try again."))
   }
 
   
@@ -882,7 +882,7 @@ catchData <- function(haul,
   catchHeader <- list.files(path=dsnTablet, 
                             pattern=paste0("RAW_CATCH_HAUL_",sprintf("%04d", haul)))
   if (length(catchHeader) != 1) {
-    stop("C4: Raw Catch Haul file missing or duplicated")
+    stop("C4: Raw Catch Haul file missing or duplicated.")
   } else {
     tabCatchHeader <- read.csv(file.path(dsnTablet,catchHeader))[,c("HAUL","WEIGHT","HUNDRED_PERCENT_SAMPLED")]
   }
