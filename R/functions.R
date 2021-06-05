@@ -822,8 +822,8 @@ catchData <- function(haul,
   
   if (sum((is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)))>0) {
     stop(paste0("C3c: Both SUBSAMPLE_WEIGHT and NONSUB_WEIGHT have missing value(s) for ", 
-                sum((is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)),
-                    " observation(s). Correct on tablet and try again.")))
+                sum(is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)),
+                    " observation(s). Correct on tablet and try again."))
   }
 
   
