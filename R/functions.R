@@ -178,7 +178,9 @@ TEDtoBTD <- function(
 #'    MODEL_NUMBER = 123,
 #'    VERSION_NUMBER = 456,
 #'    SERIAL_NUMBER = 789,
-#'    path_in = system.file("exdata/ctd2btd/SBE19plus_01908103_2021_06_01_94_0004_raw.cnv", package = "GAPsurvey"),
+#'    path_in = system.file(paste0("exdata/ctd2btd/",
+#'       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"), 
+#'       package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newctd", 
 #'    quiet = TRUE)
@@ -260,7 +262,7 @@ CTDtoBTD <- function(
   dat <- data.frame(base::sapply(X = dat, as.character))
   dat <- data.frame(base::sapply(X = dat, as.numeric))
   
-  data <- aggregate.data.frame(x = dat[, c("depth", "temperature", 
+  data <- stats::aggregate.data.frame(x = dat[, c("depth", "temperature", 
                                            "pressure", "conductivity")],
                        by = list(timeS = data$second), 
                        FUN = mean, 
@@ -790,7 +792,9 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' 
 #' # Import catch data 
 #' # catchData(haul,dsnTablet,dsnDataEnt,importLength)
-#' # Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. Return to the tablet and edit the data there before running it through this function again. 
+#' # Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. 
+#' # Return to the tablet and edit the data there before running it through 
+#' # this function again. 
 catchData <- function(haul, 
                       dsnTablet, 
                       dsnDataEnt, 
@@ -806,7 +810,7 @@ catchData <- function(haul,
   if (length(catchFile) != 1) {
     stop("C1: Data Ent Catch file missing or duplicate.")
   } else {
-    tabCatch <- read.csv(file.path(dsnTablet,catchFile))
+    tabCatch <- utils::read.csv(file.path(dsnTablet,catchFile))
   }
   tabCatch$seq <- seq(1:nrow(tabCatch))
   
@@ -831,7 +835,7 @@ catchData <- function(haul,
   if (importLength) {
     lengthFreq <- lengthData(haul,dsnTablet, dsnDataEnt)
     
-    lengthSum <- aggregate.data.frame(lengthFreq$FREQUENCY,by=lengthFreq[c("SPECIES_CODE")], FUN = sum)
+    lengthSum <- stats::aggregate.data.frame(lengthFreq$FREQUENCY,by=lengthFreq[c("SPECIES_CODE")], FUN = sum)
     
     halibut <- lengthFreq[lengthFreq$SPECIES_CODE==10120,]
     if (nrow(halibut) > 0) {
@@ -884,7 +888,7 @@ catchData <- function(haul,
   if (length(catchHeader) != 1) {
     stop("C4: Raw Catch Haul file missing or duplicated.")
   } else {
-    tabCatchHeader <- read.csv(file.path(dsnTablet,catchHeader))[,c("HAUL","WEIGHT","HUNDRED_PERCENT_SAMPLED")]
+    tabCatchHeader <- utils::read.csv(file.path(dsnTablet,catchHeader))[,c("HAUL","WEIGHT","HUNDRED_PERCENT_SAMPLED")]
   }
   names(tabCatchHeader) <- c("HAUL","TOTAL_CATCH_WEIGHT","HUNDRED_PERCENT_SAMPLED")
   

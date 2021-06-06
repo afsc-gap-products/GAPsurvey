@@ -53,7 +53,9 @@ CTDtoBTD(
    MODEL_NUMBER = 123,
    VERSION_NUMBER = 456,
    SERIAL_NUMBER = 789,
-   path_in = system.file("exdata/ctd2btd/SBE19plus_01908103_2021_06_01_94_0004_raw.cnv", package = "GAPsurvey"),
+   path_in = system.file(paste0("exdata/ctd2btd/",
+      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"), 
+      package = "GAPsurvey"),
    path_out = getwd(),
    filename_add = "newctd", 
    quiet = TRUE)

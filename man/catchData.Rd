@@ -66,5 +66,7 @@ haul <- 59
 
 # Import catch data 
 # catchData(haul,dsnTablet,dsnDataEnt,importLength)
-# Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. Return to the tablet and edit the data there before running it through this function again. 
+# Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. 
+# Return to the tablet and edit the data there before running it through 
+# this function again. 
 }
