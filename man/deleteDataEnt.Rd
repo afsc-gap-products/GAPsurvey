@@ -26,8 +26,9 @@ Deletes data from data_ent.mdb for a haul.
 # There will need to be observations in the data_ent.mbd for this example to work. 
 dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
-dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                      tablename = 'MIXTURE')
+haul <- 8
+ dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                       tablename = 'MIXTURE')
 dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
                           tablename = 'MIXTURE_HEADER')
 dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
