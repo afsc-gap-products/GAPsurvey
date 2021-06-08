@@ -455,37 +455,23 @@ LOGtoGPS <- function(
   mm=substr(infoselect$"TIME",start=3, stop=4)
   ss=substr(infoselect$"TIME",start=5, stop=6)
   DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
-  # DATE_TIME[1:6]
 
-  lat1=as.numeric(as.character(infoselect$LAT1)) # [1:6]
+  lat1=as.numeric(as.character(infoselect$LAT1)) 
   LAT=ifelse(infoselect$"LAT2"=="N",lat1,-lat1)
   LAT <- formatC(x = LAT, digits = 4, format = "f")
-  # LAT[1:6]
 
-  long1=as.numeric(as.character(infoselect$LONG1)) # [1:6]
+  long1=as.numeric(as.character(infoselect$LONG1)) 
   LONG=ifelse(infoselect$"LONG2"=="E",long1,-long1)
   LONG <- formatC(x = LONG, digits = 4, format = "f")
   
-  # LONG[1:6]
-
   new_gps <- cbind.data.frame(VESSEL, CRUISE, HAUL, DATE_TIME, LAT, LONG)
-  # head(df)
-  # utils::write.table(df,paste0(path_out,
-  #                       "HAUL", shaul, ".gps"),
-  #             quote=F,sep = ",",row.names=F,col.names=F)
+
   
   filename <- paste0(path_out, "HAUL",shaul,
                      ifelse(is.na(filename_add) | filename_add == "",
                             "", paste0("_", filename_add)),
                      ".gps")
   
-  # utils::write.csv(x = new_gps,
-  #                  file = filename,
-  #                  quote = F, 
-  #                  sep = ",",
-  #                  row.names = FALSE, 
-  #                  col.names = FALSE
-  #                  )
   new_gps1<-new_gps
   names(new_gps1) <- NULL
   new_gps1 <- as.matrix(new_gps1)
