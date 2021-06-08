@@ -392,7 +392,18 @@ CTDtoBTD <- function(
 #'     HAUL = 3,
 #'     DATE = "06/06/2017",
 #'     path_in = system.file("exdata/log2gps/06062017.log", 
-#'     package = "GAPsurvey"),
+#'         package = "GAPsurvey"),
+#'     path_out = getwd(),
+#'     filename_add = "newlog",
+#'     quiet = TRUE)
+#'     
+#'     LOGtoGPS(
+#'     VESSEL = 94,
+#'     CRUISE = 202101,
+#'     HAUL = 37,
+#'     DATE = "06/07/2021",
+#'     path_in = system.file("exdata/log2gps/Haul0037.log", 
+#'         package = "GAPsurvey"),
 #'     path_out = getwd(),
 #'     filename_add = "newlog",
 #'     quiet = TRUE)
@@ -446,12 +457,12 @@ LOGtoGPS <- function(
   DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
   # DATE_TIME[1:6]
 
-  lat1=as.numeric(as.character(infoselect$"LAT1"[1:6]))
+  lat1=as.numeric(as.character(infoselect$LAT1)) # [1:6]
   LAT=ifelse(infoselect$"LAT2"=="N",lat1,-lat1)
   LAT <- formatC(x = LAT, digits = 4, format = "f")
   # LAT[1:6]
 
-  long1=as.numeric(as.character(infoselect$"LONG1"[1:6]))
+  long1=as.numeric(as.character(infoselect$LONG1)) # [1:6]
   LONG=ifelse(infoselect$"LONG2"=="E",long1,-long1)
   LONG <- formatC(x = LONG, digits = 4, format = "f")
   

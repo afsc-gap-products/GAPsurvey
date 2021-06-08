@@ -60,7 +60,18 @@ LOGtoGPS(
     HAUL = 3,
     DATE = "06/06/2017",
     path_in = system.file("exdata/log2gps/06062017.log", 
-    package = "GAPsurvey"),
+        package = "GAPsurvey"),
+    path_out = getwd(),
+    filename_add = "newlog",
+    quiet = TRUE)
+    
+    LOGtoGPS(
+    VESSEL = 94,
+    CRUISE = 202101,
+    HAUL = 37,
+    DATE = "06/07/2021",
+    path_in = system.file("exdata/log2gps/Haul0037.log", 
+        package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "newlog",
     quiet = TRUE)
