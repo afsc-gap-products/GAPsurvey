@@ -29,8 +29,8 @@
 
 
 ## Make sure the necessary packages are installed ##
-install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
-install.packages("C:/R/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
+install.packages("C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/RODBC_1.3-16.zip", repos = NULL, type = "source")
+install.packages("C:/Users/liz.dawson/Work/R_Code/gapsurvey_20210607/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
 
 # Run Functions as Needed ------------------------------------
 
@@ -59,12 +59,12 @@ library("GAPsurvey", "RODBC")
 
 
 # Point functions to correct tablet directory and "dataEnt" file
-dsnTablet <- "C:/Users/NOAADATA/Documents/Bluetooth/inbox"
-dsnDataEnt <- "C:/Data/data_ent.mdb"
+dsnTablet <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7"
+dsnDataEnt <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/data_ent.mdb"
 importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 
 # Define the current haul number to import #
-haul <- 59
+haul <- 7
 
 
 # Import catch, length, and specimen data #
