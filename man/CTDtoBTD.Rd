@@ -67,24 +67,24 @@ CTDtoBTD(
    VERSION_NUMBER = 456,
    SERIAL_NUMBER = 789,
    path_in = system.file(paste0("exdata/ctd2btd/",
-      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
+      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"), 
        package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newctd",
+   filename_add = "newctd", 
    quiet = TRUE)
- 
+  
  
 CTDtoBTD(
    VESSEL = 94,
-   CRUISE = 2001,
-   HAUL = 4,
-   MODEL_NUMBER = 123,
-   VERSION_NUMBER = 456,
-   SERIAL_NUMBER = 789,
+   CRUISE = 202101,
+   HAUL = 107,
+   MODEL_NUMBER = "",
+   VERSION_NUMBER = "",
+   SERIAL_NUMBER = 8105,
    path_in = system.file(paste0("exdata/ctd2btd/",
-     "SBE19plus_01908105_2021_06_25_94_0005.cnv"),
+     "SBE19plus_01908105_2021_06_25_94_0005.cnv"), 
       package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newctd",
+   filename_add = "newctd", 
    quiet = TRUE)
 }

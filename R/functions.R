@@ -152,19 +152,19 @@ TEDtoBTD <- function(
 
 
 #' Convert CTD data in .cnv form to BTD and BTH
-#'
+#' 
 #' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.  
-#'
-#' To do this,
+#' 
+#' To do this, 
 #' 1. use the SBE Data Processing Program, and in the "Run" menu select "1. Data conversion".  
-#' 2. Under "Program setup file" select the .psa file (should be DataCnv.psa located in CTD folder), under "Instrument configuration file" select the .xmlcon file for the CTD located in the
+#' 2. Under "Program setup file" select the .psa file (should be DataCnv.psa located in CTD folder), under "Instrument configuration file" select the .xmlcon file for the CTD located in the 
 #' deployment_xmlcon folder- this is CTD specific, know your CTD's serial number, and under "Input directory" select the .hex file (from the CTD computer) that is specific to the haul that you are missing data.  Click "Start Process".
 #' The conversion program will ask you for outputs. At the prompt, Select and Add "Time, Elapsed, seconds", "Depth, salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
-#' 3. This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
-#' 4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!  
-#' 5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files.
-#'
-#' Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together).
+#' 3. This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m". 
+#' 4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!   
+#' 5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files. 
+#' 
+#' Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together). 
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
@@ -189,25 +189,25 @@ TEDtoBTD <- function(
 #'    VERSION_NUMBER = 456,
 #'    SERIAL_NUMBER = 789,
 #'    path_in = system.file(paste0("exdata/ctd2btd/",
-#'       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
+#'       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"), 
 #'        package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "newctd",
+#'    filename_add = "newctd", 
 #'    quiet = TRUE)
-#'  
+#'   
 #'  
 #' CTDtoBTD(
 #'    VESSEL = 94,
-#'    CRUISE = 2001,
-#'    HAUL = 4,
-#'    MODEL_NUMBER = 123,
-#'    VERSION_NUMBER = 456,
-#'    SERIAL_NUMBER = 789,
+#'    CRUISE = 202101,
+#'    HAUL = 107,
+#'    MODEL_NUMBER = "",
+#'    VERSION_NUMBER = "",
+#'    SERIAL_NUMBER = 8105,
 #'    path_in = system.file(paste0("exdata/ctd2btd/",
-#'      "SBE19plus_01908105_2021_06_25_94_0005.cnv"),
+#'      "SBE19plus_01908105_2021_06_25_94_0005.cnv"), 
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "newctd",
+#'    filename_add = "newctd", 
 #'    quiet = TRUE)
 CTDtoBTD <- function(
   VESSEL = NA,
@@ -220,7 +220,7 @@ CTDtoBTD <- function(
   path_out = "./",
   filename_add = "",
   quiet = FALSE){
-  
+
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
@@ -230,15 +230,15 @@ CTDtoBTD <- function(
   
   if (is.na(path_in)) {
     tcltk::tkmessageBox(title = "Message",
-                        message = "In next window open the CTD .cnv file",
+                        message = "In next window open the CTD .cnv file", 
                         icon = "info", type = "ok")
     file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
   } else {
     path_in <- fix_path(path_in)
     file.name <- path_in
   }
-  
-  # make sure path_in comes in with correct
+
+  # make sure path_in comes in with correct 
   options(stringsAsFactors = FALSE) # die, factors, die!
   path_out <- fix_path(path_out)
   
@@ -247,13 +247,13 @@ CTDtoBTD <- function(
   
   data0 <- (readLines(file.name))
   header0<-data0[(which(data0 == "# units = specified")+1):
-                   (grep(pattern = "# span 0 =", x = data0)-1)]
+                    (grep(pattern = "# span 0 =", x = data0)-1)]
   header0 <- lapply(strsplit(x = header0, split = " = "), `[[`, 2)
   header0 <- unlist(lapply(strsplit(x = unlist(header0), split = " "), `[[`, 2))
   header0 <- gsub(pattern = ",", replacement = "", x = header0)
   # header0 <- header0[header0 != ""] # flag column
-  headers<-data.frame(bth = c("", "timeS", "depth", "temperature", "pressure",
-                              "conductivity", "flag"),
+  headers<-data.frame(bth = c("", "timeS", "depth", "temperature", "pressure", 
+                              "conductivity", "flag"), 
                       ctd = c("", "Time", "Depth", "Temperature", "Pressure",  
                               "Conductivity", ""))
   # headers<-headers[headers$ctd %in% header0,]
@@ -264,42 +264,42 @@ CTDtoBTD <- function(
   
   # datapasta::df_paste(input_table = data1)
   
-  data1 <- data.frame(matrix(data = unlist(strsplit(data1, "\\s+")),
-                             ncol = nrow(headers)+1, byrow = TRUE))
+  data1 <- data.frame(matrix(data = unlist(strsplit(data1, "\\s+")), 
+                    ncol = nrow(headers)+1, byrow = TRUE))
   data1$X1 <- NULL
   names(data1)<-headers$bth
   # names(data1) <- header0
   
-  
-  # names(data1) <- c("timeS", "depth", "temperature", "pressure",
+
+  # names(data1) <- c("timeS", "depth", "temperature", "pressure", 
   #                  "conductivity", "flag") # , "salinity"
   
   data1$second <- floor(x = as.numeric(as.character(data1$timeS)))
   
   
   # data1 <- data1 %>%
-  #   group_by(data1, second) %>%
-  #   summarize(m_depth = mean(depth, na.rm = TRUE),
-  #             m_temperature = mean(temperature, na.rm = TRUE),
-  #             m_pressure = mean(pressure, na.rm = TRUE),
+  #   group_by(data1, second) %>% 
+  #   summarize(m_depth = mean(depth, na.rm = TRUE), 
+  #             m_temperature = mean(temperature, na.rm = TRUE), 
+  #             m_pressure = mean(pressure, na.rm = TRUE), 
   #             m_conductivity = mean(conductivity, na.rm = TRUE))
   
   dat <- data1[,c("depth", "temperature", "pressure", "conductivity", "second")]
   dat <- data.frame(base::sapply(X = dat, as.character))
   dat <- data.frame(base::sapply(X = dat, as.numeric))
   
-  data1 <- stats::aggregate.data.frame(x = dat[, c("depth", "temperature",
-                                                   "pressure", "conductivity")],
-                                       by = list(timeS = data1$second),
-                                       FUN = mean,
-                                       na.rm = TRUE
-  )
-  
+  data1 <- stats::aggregate.data.frame(x = dat[, c("depth", "temperature", 
+                                           "pressure", "conductivity")],
+                       by = list(timeS = data1$second), 
+                       FUN = mean, 
+                       na.rm = TRUE
+                        )
+
   
   # data1$timeS <- as.POSIXct(data1$timeS)
   # data0 <- oce::read.ctd(file = file.name)
   # data1<-data.frame(data0@data1)
-  
+
   xx <- data0[(grepl(x = data0, pattern = "* cast   "))]
   xx <- gsub(pattern = "* cast   ", replacement = "", x = xx)
   xx <- strsplit(x = xx, split = ",")[[1]][1]
@@ -308,12 +308,12 @@ CTDtoBTD <- function(
   xx <- as.POSIXlt(xx, format = "%d %b %Y %H:%M:%S")
   data1$timeS <- as.numeric(as.character(data1$timeS))
   DATE_TIME <- format((xx + data1$timeS),
-                      format = "%Y-%m-%d %H:%M:%S")
+                                        format = "%Y-%m-%d %H:%M:%S")
   DATE_TIME_btd <- format(as.POSIXct(DATE_TIME),
-                          format = "%m/%d/%Y %H:%M:%S")
-  
-  # DATE_TIME_btd <- base::format.date(DATE_TIME_btd)
-  
+                      format = "%m/%d/%Y %H:%M:%S")
+
+  DATE_TIME_btd <- format_date(DATE_TIME_btd)
+
   # DATE_TIME_btd <- gsub(pattern = "^0",
   #                       replacement = "",
   #                       x = DATE_TIME_btd)
@@ -321,16 +321,16 @@ CTDtoBTD <- function(
   #                       replacement = "",
   #                       x = DATE_TIME_btd)
   DATE_TIME <- format(as.POSIXct(DATE_TIME),
-                      format = "%m/%d/%y %H:%M:%S")
+                       format = "%m/%d/%y %H:%M:%S")
   
   data1$DATE_TIME <- DATE_TIME
-  # xx <- as.POSIXlt(data0@metadata$startTime,
-  #                         format = "%Y-%m-%d %H:%M:%S")
-  #                        
+  # xx <- as.POSIXlt(data0@metadata$startTime, 
+  #                         format = "%Y-%m-%d %H:%M:%S") 
+  #                         
   # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
   # DATE_TIME <- data1$DATE_TIME <- format((xx + data1$timeS),
   #                                       format = "%m/%d/%Y %H:%M:%S")
-  
+
   HOST_TIME=max(data1$DATE_TIME)
   LOGGER_TIME=max(data1$DATE_TIME)
   LOGGING_START=min(data1$DATE_TIME)
@@ -343,10 +343,10 @@ CTDtoBTD <- function(
   MODE=2  
   
   # Write BTD file
-  # DATE_TIME <- format(as.POSIXct(DATE_TIME, "%m/%d/%y %H:%M:%S"),
+  # DATE_TIME <- format(as.POSIXct(DATE_TIME, "%m/%d/%y %H:%M:%S"), 
   #                     format = "%m/%e/%Y %H:%M:%S")
   DATE_TIME<-DATE_TIME_btd
-  
+
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
   new.BTD[which(is.na(new.BTD))]=""
   new.BTD <- data.frame(new.BTD)
@@ -376,7 +376,7 @@ CTDtoBTD <- function(
   
   if(!quiet){
     tcltk::tkmessageBox(title = "Message",
-                        message = paste0("Your new ", filename,
+                        message = paste0("Your new ", filename, 
                                          " .BTD and .BTH files are saved."),
                         icon = "info", type = "ok")
   }
@@ -1197,7 +1197,7 @@ fix_path <- function(path) {
 
 
 
-format.date <- function(x, ...) {
+format_date <- function(x, ...) {
   tmp <- format(x, ...)
   tmp <- sub("^[0]+", "", tmp)
   tmp <- sub('/0', "/", tmp)
