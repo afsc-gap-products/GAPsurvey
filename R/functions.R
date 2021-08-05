@@ -95,7 +95,7 @@ TEDtoBTD <- function(
   DATE_TIME_btd <- format(as.POSIXct(DATE_TIME, format = "%m/%d/%Y %H:%M:%S"), 
                           format = "%m/%d/%Y %H:%M:%S")
   
-  DATE_TIME_btd <- format.date(DATE_TIME_btd)
+  DATE_TIME_btd <- format_date(DATE_TIME_btd)
   DATE_TIME <- format(xx, format = "%m/%d/%y %H:%M:%S")
   
   HOST_TIME=max(DATE_TIME)
@@ -816,7 +816,7 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' haul <- 59
 #' 
 #' # Import catch data 
-#' # catchData(haul,dsnTablet,dsnDataEnt,importLength)
+#' catchData(haul,dsnTablet,dsnDataEnt,importLength)
 #' # Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. 
 #' # Return to the tablet and edit the data there before running it through 
 #' # this function again. 
@@ -1078,8 +1078,11 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
 #' # There will need to be observations in the data_ent.mbd for this example to work. 
 #' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
-#' haul <- 8
-#'  dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#' importLength <- TRUE 
+#' haul <- 8 # Define the current haul number
+#' catchData(haul,dsnTablet,dsnDataEnt,importLength) # Import catch data 
+#' 
+#' dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                        tablename = 'MIXTURE')
 #' dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                           tablename = 'MIXTURE_HEADER')

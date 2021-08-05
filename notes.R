@@ -40,6 +40,8 @@
 
 install.packages("C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/RODBC_1.3-16.zip", repos = NULL, type = "source")
 install.packages("C:/Users/liz.dawson/Work/R_Code/gapsurvey_20210607/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
+dsnTablet <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7"
+dsnDataEnt <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/data_ent.mdb"
 
 
 ############## QUESTIONS ####################
@@ -60,11 +62,11 @@ install("GAPsurvey")
 3
 setwd(here::here())
 # devtools::check()
-file.remove(paste0(dirname(here::here()), "/GAPsurvey_2.4.00.tar.gz"))
-file.remove(paste0((here::here()), "/GAPsurvey_2.4.00.tar.gz"))
+file.remove(paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
+file.remove(paste0((here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
 devtools::build()
-file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2.4.00.tar.gz"), 
-          to = paste0(here::here(), "/GAPsurvey_2.4.00.tar.gz"),
+file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"), 
+          to = paste0(here::here(), "/GAPsurvey_2021.08.01.tar.gz"),
           overwrite = TRUE)
 
 ########### Create Documentation GitHub-Pages ############
