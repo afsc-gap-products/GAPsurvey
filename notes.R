@@ -38,6 +38,8 @@
 
 
 
+install.packages("C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/RODBC_1.3-16.zip", repos = NULL, type = "source")
+install.packages("C:/Users/liz.dawson/Work/R_Code/gapsurvey_20210607/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
 
 
 ############## QUESTIONS ####################
@@ -97,3 +99,27 @@ file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2.4.00.tar.gz"),
 # https://sourceforge.net/projects/qpdf/files/qpdf/10.0.1/
 # Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.0.1/bin;', Sys.getenv('PATH')))
 # Sys.which(Sys.getenv("R_QPDF", "qpdf"))
+
+
+CTDtoBTD(
+  VESSEL = 94,
+  CRUISE = 2001,
+  HAUL = 4,
+  MODEL_NUMBER = 123,
+  VERSION_NUMBER = 456,
+  SERIAL_NUMBER = 789,
+  path_in = system.file("exdata/ctd2btd/SBE19plus_01908103_2021_06_01_94_0004_raw.cnv", package = "GAPsurvey"),   
+  path_out = getwd(),
+  filename_add = "newctd", 
+  quiet = TRUE)
+
+
+LOGtoGPS(
+  VESSEL = 94,
+  CRUISE = 202101,
+  HAUL = 37,
+  DATE = "06/07/2021",
+  path_in = "C:/Users/emily.markowitz/Documents/Projects/GAPsurvey_general/GAPsurvey/inst/exdata/log2gps/Haul0037.log",
+  path_out = getwd(),
+  filename_add = "newlog",
+  quiet = TRUE)
