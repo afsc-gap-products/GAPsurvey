@@ -44,6 +44,7 @@ dsnTablet <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7"
 dsnDataEnt <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/data_ent.mdb"
 
 
+
 ############## QUESTIONS ####################
 
 # inst/documentation folder - what do we need here if anything?
@@ -94,6 +95,7 @@ library(pkgdown)
 
 # git rm -r --cached .
 
+# devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
 # devtools::build_vignettes()
 usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
