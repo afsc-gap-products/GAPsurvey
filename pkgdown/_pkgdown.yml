@@ -1,0 +1,57 @@
+url: https://emilymarkowitz-noaa.github.io/GAPsurvey/
+
+news:
+  one_page: true
+
+navbar:
+  left:
+    - text: "Functions"
+      icon: far fa-file-code fa-lg
+      href: reference/index.html
+    - text: "News"
+      icon: fas fa-bullhorn fa-lg
+      href: news/index.html
+  right:
+    - icon: fas fa-paper-plane fa-lg
+      href: mailto:emily.markowitz@noaa.gov
+    - icon: fas fa-question-circle fa-lg
+      href: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey/issues/
+    - icon: fab fa-github fa-lg
+      href: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
+    - icon: fa-fish
+      href: https://nmfs-general-modeling-tools.github.io/
+
+articles:
+  - title: "At-sea data management tools for RACE GAP surveys"
+    desc: >
+      There are no vignettes at this time. <br/>
+      <br/>
+
+reference:
+  - title: R-create BTH and BTD files from other sources
+    contents:
+      - '`TEDtoBTD`'
+      - '`CTDtoBTD`'
+  - title: R-create GPS files from LOG files
+    contents:
+      - '`LOGtoGPS`'
+  - title: Work with catch data
+    contents:
+      - '`lengthData`'
+      - '`specimenData`'  
+      - '`benthicData`'
+      - '`catchData`'  
+  - title: Manage DataEnt
+    contents:
+      - '`writeDataEnt`'
+      - '`deleteDataEnt`'
+      - '`selectDataEnt`'
+  - title: Helper Functions
+    contents:
+      - '`numbers0`'
+      - '`fix_path`'
+      - '`format_date`'
+  - title: Datasets
+    contents:
+      - '`PolySpecies`'
+

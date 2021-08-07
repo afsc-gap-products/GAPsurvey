@@ -61,6 +61,47 @@ setwd("..")
 install("GAPsurvey")
 3
 setwd(here::here())
+
+
+
+
+
+
+########### Document Package ############
+.rs.restartR()
+
+# options(rmarkdown.html_vignette.check_title = FALSE)
+Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.0.1/bin;', Sys.getenv('PATH')))
+library(here)
+library(devtools)
+library(roxygen2)
+devtools::document()
+setwd("..")
+install("NMFSReports")
+3
+setwd(here::here())
+# devtools::check()
+
+########### Create Documentation GitHub-Pages ############
+
+.rs.restartR()
+# devtools::install_github("rstudio/fontawesome", force = T)
+# library(fontawesome)
+library(here)
+library(usethis)
+library(pkgdown)
+# options(rmarkdown.html_vignette.check_title = FALSE)
+
+# git rm -r --cached .
+
+# pkgdown::build_favicons()
+# devtools::build_vignettes()
+usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
+pkgdown::build_site(pkg = here::here())
+usethis::use_github_action("pkgdown")
+
+# Save Package tar.gz
+
 # devtools::check()
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_2021.08.01.tar.gz"))

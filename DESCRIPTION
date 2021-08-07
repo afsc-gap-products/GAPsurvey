@@ -1,5 +1,5 @@
 Package: GAPsurvey
-Title: Provides data management tools for RACE GAP surveys
+Title: Provides at-sea data management tools for RACE GAP surveys
 Version: 2021.08.01
 Authors@R: 
   c(person(given = "Emily",
