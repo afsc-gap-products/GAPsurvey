@@ -40,7 +40,6 @@ vignettes/*.pdf
 .Rproj.user
 
 /old
-inst/doc
 /out
 # notes.R
 /installfiles
@@ -48,4 +47,3 @@ inst/doc
 #*.BTH
 #*.BTD
 *.rmd
-docs
