@@ -47,7 +47,7 @@ dsnDataEnt <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/data_ent.md
 
 ############## QUESTIONS ####################
 
-# inst/documentation folder - what do we need here if anything?
+# git rm -r --cached .
 
 ########### Document Package ############
 .rs.restartR()
@@ -72,9 +72,10 @@ setwd(here::here())
 library(here)
 library(usethis)
 library(pkgdown)
-# options(rmarkdown.html_vignette.check_title = FALSE)
+rmarkdown::render(input = "README.Rmd",
+                  output_dir = "./",
+                  output_file = "README.md")
 
-# git rm -r --cached .
 
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
@@ -84,8 +85,6 @@ pkgdown::build_site(pkg = here::here())
 usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-
-# devtools::check()
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
 devtools::build()
