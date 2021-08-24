@@ -62,25 +62,6 @@ setwd("..")
 install("GAPsurvey")
 3
 setwd(here::here())
-
-
-
-
-
-
-########### Document Package ############
-.rs.restartR()
-
-# options(rmarkdown.html_vignette.check_title = FALSE)
-Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.0.1/bin;', Sys.getenv('PATH')))
-library(here)
-library(devtools)
-library(roxygen2)
-devtools::document()
-setwd("..")
-install("NMFSReports")
-3
-setwd(here::here())
 # devtools::check()
 
 ########### Create Documentation GitHub-Pages ############
