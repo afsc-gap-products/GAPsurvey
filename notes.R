@@ -66,7 +66,7 @@ setwd(here::here())
 
 ########### Create Documentation GitHub-Pages ############
 
-.rs.restartR()
+# .rs.restartR()
 # devtools::install_github("rstudio/fontawesome", force = T)
 # library(fontawesome)
 library(here)
@@ -81,8 +81,8 @@ rmarkdown::render(input = "README.Rmd",
 # pkgdown::build_favicons()
 # devtools::build_vignettes()
 usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
-pkgdown::build_site(pkg = here::here())
-usethis::use_github_action("pkgdown")
+# pkgdown::build_site(pkg = here::here())
+# usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
