@@ -95,7 +95,7 @@ TEDtoBTD <- function(
   DATE_TIME_btd <- format(as.POSIXct(DATE_TIME, format = "%m/%d/%Y %H:%M:%S"), 
                           format = "%m/%d/%Y %H:%M:%S")
   
-  DATE_TIME_btd <- format.date(DATE_TIME_btd)
+  DATE_TIME_btd <- format_date(DATE_TIME_btd)
   DATE_TIME <- format(xx, format = "%m/%d/%y %H:%M:%S")
   
   HOST_TIME=max(DATE_TIME)
@@ -153,8 +153,18 @@ TEDtoBTD <- function(
 
 #' Convert CTD data in .cnv form to BTD and BTH
 #' 
-#' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.  This .cnv file must include columns for Time, Depth, Temperature, Pressure, and Conductivity.  To do this, use the SBE Data Processing Program, and in the Run menu select "1. Data conversion".  Under "Program setup file" select the .psa file, under "Instrument configuration file" select the .xmlcon file for the CTD, and under "Input directory" select the .hex file that is specific to the haul that you are missing data from.  Press "Start Process" button and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!   
-#' Note that if there are multiple observatios from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together). 
+#' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.  
+#' 
+#' To do this, 
+#' 1. use the SBE Data Processing Program, and in the "Run" menu select "1. Data conversion".  
+#' 2. Under "Program setup file" select the .psa file (should be DataCnv.psa located in CTD folder), under "Instrument configuration file" select the .xmlcon file for the CTD located in the 
+#' deployment_xmlcon folder- this is CTD specific, know your CTD's serial number, and under "Input directory" select the .hex file (from the CTD computer) that is specific to the haul that you are missing data.  Click "Start Process".
+#' The conversion program will ask you for outputs. At the prompt, Select and Add "Time, Elapsed, seconds", "Depth, salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
+#' 3. This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m". 
+#' 4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!   
+#' 5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files. 
+#' 
+#' Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together). 
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
@@ -180,6 +190,21 @@ TEDtoBTD <- function(
 #'    SERIAL_NUMBER = 789,
 #'    path_in = system.file(paste0("exdata/ctd2btd/",
 #'       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"), 
+#'        package = "GAPsurvey"),
+#'    path_out = getwd(),
+#'    filename_add = "newctd", 
+#'    quiet = TRUE)
+#'   
+#'  
+#' CTDtoBTD(
+#'    VESSEL = 94,
+#'    CRUISE = 202101,
+#'    HAUL = 107,
+#'    MODEL_NUMBER = "",
+#'    VERSION_NUMBER = "",
+#'    SERIAL_NUMBER = 8105,
+#'    path_in = system.file(paste0("exdata/ctd2btd/",
+#'      "SBE19plus_01908105_2021_06_25_94_0005.cnv"), 
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newctd", 
@@ -213,7 +238,8 @@ CTDtoBTD <- function(
     file.name <- path_in
   }
 
-  # make sure path_in comes in with correct format
+  # make sure path_in comes in with correct 
+  options(stringsAsFactors = FALSE) # die, factors, die!
   path_out <- fix_path(path_out)
   
   HAUL <- as.numeric(HAUL)
@@ -233,58 +259,60 @@ CTDtoBTD <- function(
   # headers<-headers[headers$ctd %in% header0,]
   headers<-headers[match(x = header0, table = headers$ctd), ]
   
-  data <- data0[(which(data0 == "*END*")+1):length(data0)]
-  # data <- unique(data)
+  data1 <- data0[(which(data0 == "*END*")+1):length(data0)]
+  # data1 <- unique(data1)
   
-  # datapasta::df_paste(input_table = data)
+  # datapasta::df_paste(input_table = data1)
   
-  data <- data.frame(matrix(data = unlist(strsplit(data, "\\s+")), 
+  data1 <- data.frame(matrix(data = unlist(strsplit(data1, "\\s+")), 
                     ncol = nrow(headers)+1, byrow = TRUE))
-  data$X1 <- NULL
-  names(data)<-headers$bth
-  # names(data) <- header0
+  data1$X1 <- NULL
+  names(data1)<-headers$bth
+  # names(data1) <- header0
   
 
-  # names(data) <- c("timeS", "depth", "temperature", "pressure", 
+  # names(data1) <- c("timeS", "depth", "temperature", "pressure", 
   #                  "conductivity", "flag") # , "salinity"
   
-  data$second <- floor(x = as.numeric(as.character(data$timeS)))
+  data1$second <- floor(x = as.numeric(as.character(data1$timeS)))
   
   
-  # data <- data %>%
-  #   group_by(data, second) %>% 
+  # data1 <- data1 %>%
+  #   group_by(data1, second) %>% 
   #   summarize(m_depth = mean(depth, na.rm = TRUE), 
   #             m_temperature = mean(temperature, na.rm = TRUE), 
   #             m_pressure = mean(pressure, na.rm = TRUE), 
   #             m_conductivity = mean(conductivity, na.rm = TRUE))
   
-  dat <- data[,c("depth", "temperature", "pressure", "conductivity", "second")]
+  dat <- data1[,c("depth", "temperature", "pressure", "conductivity", "second")]
   dat <- data.frame(base::sapply(X = dat, as.character))
   dat <- data.frame(base::sapply(X = dat, as.numeric))
   
-  data <- stats::aggregate.data.frame(x = dat[, c("depth", "temperature", 
+  data1 <- stats::aggregate.data.frame(x = dat[, c("depth", "temperature", 
                                            "pressure", "conductivity")],
-                       by = list(timeS = data$second), 
+                       by = list(timeS = data1$second), 
                        FUN = mean, 
                        na.rm = TRUE
                         )
 
   
-  # data$timeS <- as.POSIXct(data$timeS)
+  # data1$timeS <- as.POSIXct(data1$timeS)
   # data0 <- oce::read.ctd(file = file.name)
-  # data<-data.frame(data0@data)
+  # data1<-data.frame(data0@data1)
 
-  xx <- data0[(grepl(x = data0, pattern = "# datcnv_date = "))]
-  xx <- gsub(pattern = "# datcnv_date = ", replacement = "", x = xx)
+  xx <- data0[(grepl(x = data0, pattern = "* cast   "))]
+  xx <- gsub(pattern = "* cast   ", replacement = "", x = xx)
   xx <- strsplit(x = xx, split = ",")[[1]][1]
-  xx <- as.POSIXlt(xx, format = "%b %d %Y %H:%M:%S")
-  data$timeS <- as.numeric(as.character(data$timeS))
-  DATE_TIME <- format((xx + data$timeS),
+  xx <- strsplit(x = xx, split = " samples")[[1]][1]
+  xx <- gsub(pattern = "\\*[0-9]+ ", x = xx, replacement = "")
+  xx <- as.POSIXlt(xx, format = "%d %b %Y %H:%M:%S")
+  data1$timeS <- as.numeric(as.character(data1$timeS))
+  DATE_TIME <- format((xx + data1$timeS),
                                         format = "%Y-%m-%d %H:%M:%S")
   DATE_TIME_btd <- format(as.POSIXct(DATE_TIME),
                       format = "%m/%d/%Y %H:%M:%S")
 
-  DATE_TIME_btd <- format.date(DATE_TIME_btd)
+  DATE_TIME_btd <- format_date(DATE_TIME_btd)
 
   # DATE_TIME_btd <- gsub(pattern = "^0",
   #                       replacement = "",
@@ -295,20 +323,20 @@ CTDtoBTD <- function(
   DATE_TIME <- format(as.POSIXct(DATE_TIME),
                        format = "%m/%d/%y %H:%M:%S")
   
-  data$DATE_TIME <- DATE_TIME
+  data1$DATE_TIME <- DATE_TIME
   # xx <- as.POSIXlt(data0@metadata$startTime, 
   #                         format = "%Y-%m-%d %H:%M:%S") 
   #                         
   # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
-  # DATE_TIME <- data$DATE_TIME <- format((xx + data$timeS),
+  # DATE_TIME <- data1$DATE_TIME <- format((xx + data1$timeS),
   #                                       format = "%m/%d/%Y %H:%M:%S")
 
-  HOST_TIME=max(data$DATE_TIME)
-  LOGGER_TIME=max(data$DATE_TIME)
-  LOGGING_START=min(data$DATE_TIME)
-  LOGGING_END=max(data$DATE_TIME)
-  TEMPERATURE=data$temperature
-  DEPTH=data$depth
+  HOST_TIME=max(data1$DATE_TIME)
+  LOGGER_TIME=max(data1$DATE_TIME)
+  LOGGING_START=min(data1$DATE_TIME)
+  LOGGING_END=max(data1$DATE_TIME)
+  TEMPERATURE=data1$temperature
+  DEPTH=data1$depth
   SAMPLE_PERIOD=3  
   NUMBER_CHANNELS=2  
   NUMBER_SAMPLES=0  
@@ -836,7 +864,7 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' haul <- 59
 #' 
 #' # Import catch data 
-#' # catchData(haul,dsnTablet,dsnDataEnt,importLength)
+#' catchData(haul,dsnTablet,dsnDataEnt,importLength)
 #' # Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. 
 #' # Return to the tablet and edit the data there before running it through 
 #' # this function again. 
@@ -1098,8 +1126,11 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
 #' # There will need to be observations in the data_ent.mbd for this example to work. 
 #' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
 #' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
-#' haul <- 8
-#'  dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#' importLength <- TRUE 
+#' haul <- 8 # Define the current haul number
+#' catchData(haul,dsnTablet,dsnDataEnt,importLength) # Import catch data 
+#' 
+#' dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                        tablename = 'MIXTURE')
 #' dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                           tablename = 'MIXTURE_HEADER')
@@ -1217,7 +1248,7 @@ fix_path <- function(path) {
 
 
 
-format.date <- function(x, ...) {
+format_date <- function(x, ...) {
   tmp <- format(x, ...)
   tmp <- sub("^[0]+", "", tmp)
   tmp <- sub('/0', "/", tmp)

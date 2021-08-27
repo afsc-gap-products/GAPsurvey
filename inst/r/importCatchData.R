@@ -1,7 +1,7 @@
 # R Package "GAPsurvey"
 # Catch, Length, and Specimen Data 
 # Import Program Instructions
-# Last updated April 2021
+# Last updated August 2021
 
 
 # NOTES ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
 
 ## Make sure the necessary packages are installed ##
 install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
-install.packages("C:/R/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
+install.packages("C:/R/GAPsurvey_2021.08.01.tar.gz", repos = NULL, type = "source")
 
 # Run Functions as Needed ------------------------------------
 

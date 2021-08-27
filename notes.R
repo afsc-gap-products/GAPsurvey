@@ -38,11 +38,16 @@
 
 
 
+install.packages("C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/RODBC_1.3-16.zip", repos = NULL, type = "source")
+install.packages("C:/Users/liz.dawson/Work/R_Code/gapsurvey_20210607/GAPsurvey_2.4.00.tar.gz", repos = NULL, type = "source")
+dsnTablet <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7"
+dsnDataEnt <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/data_ent.mdb"
+
 
 
 ############## QUESTIONS ####################
 
-# inst/documentation folder - what do we need here if anything?
+# git rm -r --cached .
 
 ########### Document Package ############
 .rs.restartR()
@@ -58,11 +63,33 @@ install("GAPsurvey")
 3
 setwd(here::here())
 # devtools::check()
-file.remove(paste0(dirname(here::here()), "/GAPsurvey_2.4.00.tar.gz"))
-file.remove(paste0((here::here()), "/GAPsurvey_2.4.00.tar.gz"))
+
+########### Create Documentation GitHub-Pages ############
+
+# .rs.restartR()
+# devtools::install_github("rstudio/fontawesome", force = T)
+# library(fontawesome)
+library(here)
+library(usethis)
+library(pkgdown)
+rmarkdown::render(input = "README.Rmd",
+                  output_dir = "./",
+                  output_file = "README.md")
+
+
+# devtools::install_github("r-lib/pkgdown")
+# pkgdown::build_favicons()
+# devtools::build_vignettes()
+usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
+# pkgdown::build_site(pkg = here::here())
+# usethis::use_github_action("pkgdown")
+
+# Save Package tar.gz
+file.remove(paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
+file.remove(paste0((here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
 devtools::build()
-file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2.4.00.tar.gz"), 
-          to = paste0(here::here(), "/GAPsurvey_2.4.00.tar.gz"),
+file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"), 
+          to = paste0(here::here(), "/GAPsurvey_2021.08.01.tar.gz"),
           overwrite = TRUE)
 
 ########### Create Documentation GitHub-Pages ############
@@ -97,3 +124,27 @@ file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2.4.00.tar.gz"),
 # https://sourceforge.net/projects/qpdf/files/qpdf/10.0.1/
 # Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.0.1/bin;', Sys.getenv('PATH')))
 # Sys.which(Sys.getenv("R_QPDF", "qpdf"))
+
+
+CTDtoBTD(
+  VESSEL = 94,
+  CRUISE = 2001,
+  HAUL = 4,
+  MODEL_NUMBER = 123,
+  VERSION_NUMBER = 456,
+  SERIAL_NUMBER = 789,
+  path_in = system.file("exdata/ctd2btd/SBE19plus_01908103_2021_06_01_94_0004_raw.cnv", package = "GAPsurvey"),   
+  path_out = getwd(),
+  filename_add = "newctd", 
+  quiet = TRUE)
+
+
+LOGtoGPS(
+  VESSEL = 94,
+  CRUISE = 202101,
+  HAUL = 37,
+  DATE = "06/07/2021",
+  path_in = "C:/Users/emily.markowitz/Documents/Projects/GAPsurvey_general/GAPsurvey/inst/exdata/log2gps/Haul0037.log",
+  path_out = getwd(),
+  filename_add = "newlog",
+  quiet = TRUE)

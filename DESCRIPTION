@@ -1,23 +1,22 @@
 Package: GAPsurvey
-Title: Provides data management tools for RACE GAP surveys
-Version: 2.4.00
+Title: Provides at-sea data management tools for RACE GAP surveys
+Version: 2021.08.01
 Authors@R: 
-  c(person(given = "Jason",
-           family = "Conner",
-           email = "Jason.Conner@noaa.gov", 
-           role = c("aut", "cre")), 
-    person(given = "Emily",
+  c(person(given = "Emily",
            family = "Markowitz", 
-           role = c("aut"),
+           role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5757-4230"),
            email = "Emily.Markowitz@noaa.gov"),
     person(given = "Liz",
            family = "Dawson",
            role = "aut",
-           email = "Liz.Dawson@noaa.gov"))
-Description: Provides data management tools for RACE GAP surveys. 
-    And more!
-URL: https://gitlab-afsc.fisheries.noaa.gov/Jason.Conner/gapsurvey, https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
+           email = "Liz.Dawson@noaa.gov"), 
+    person(given = "Jason",
+           family = "Conner",
+           email = "Jason.Conner@noaa.gov", 
+           role = c("aut")))
+Description: Provides at-sea data management tools for RACE GAP surveys. 
+URL: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

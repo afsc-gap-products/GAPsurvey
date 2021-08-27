@@ -1,12 +1,14 @@
-GAPsurvey
-=========
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<!-- EDIT IN README.Rmd file ONLY! -->
-Catch, Length, and Specimen Data Import Program Instructions (R Package
-"GAPsurvey")
+# GAPsurvey <a href={https://emilymarkowitz-noaa.github.io/GAPsurvey}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo with an image of a NOAA Fisheries report" />
 
-R and Package Versions
-----------------------
+### *At-sea data management tools for RACE GAP surveys*
+
+[![](https://img.shields.io/badge/devel%20version-2021.08.01-blue.svg)](https://github.com/EmilyMarkowitz-NOAA/NMFSReports)
+[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
+[![](https://img.shields.io/github/last-commit/EmilyMarkowitz-NOAA/NMFSReports.svg)](https://github.com/EmilyMarkowitz-NOAA/NMFSReports/commits/main)
+
+## R and Package Versions
 
 [R 3.6.0 32 bit](https://cran.r-project.org/bin/windows/base/old/3.6.0/)
 \* 32-bit R Studio is required to run this program!
@@ -19,8 +21,7 @@ R and Package Versions
 Below is the annotated script for importing catch, length, and specimen
 data using the GAPsurvey package:
 
-Make sure the necessary packages are installed
-----------------------------------------------
+## Make sure the necessary packages are installed
 
     library(devtools)
 
@@ -29,6 +30,8 @@ Make sure the necessary packages are installed
 
     devtools::install_github("emilymarkowitz-noaa/GAPsurvey")
     library(GAPsurvey)
+    # Alternatively
+    remotes::install_github("EmilyMarkowitz-NOAA/GAPsurvey@main")
 
 Or, if you are installing from the catch computer/without internet
 connection, you can instally the packages like this:
@@ -38,19 +41,17 @@ connection, you can instally the packages like this:
 
     library("GAPsurvey", "RODBC")
 
-Directories
------------
+## Directories
 
 To use the program you must first:
 
 -   Bluetooth transfer all data from tablets (catch, length, and
     specimen) to catch computer (should automatically go into
     C:Users/NOAADATA/Documents/Bluetooth/inbox)
--   Open Rstudio script "importCatchData.R" (should be located on
+-   Open Rstudio script “importCatchData.R” (should be located on
     desktop)
 
-Examples
---------
+## Examples
 
 #### Workin with data\_ent.mbd
 
@@ -60,17 +61,19 @@ C:Users/NOAADATA/Documents/Bluetooth/inbox) \[each of these file names
 will begin with the tablet name and end with the haul number\]
 
 -   DATAENT\_CATCH\_xxxx.csv
--   DATAENT\_BBAG\_xxxx.csv -- If there was a benthic bag
--   RAW\_BBAG\_xxxx.csv -- If there was a benthic bag
+-   DATAENT\_BBAG\_xxxx.csv – If there was a benthic bag
+-   RAW\_BBAG\_xxxx.csv – If there was a benthic bag
 -   RAW\_CATCH\_HAUL\_xxxx.csv
 -   RAW\_CATCH\_HAUL\_ATTR\_xxxx.csv
 -   RAW\_CATCH\_SAMPLE\_xxxx.csv
 -   RAW\_CATCH\_VALUE\_xxxx.csv
--   SPECIMEN\_xxxx.csv -- The specimen data
--   HAUL\_xxxx.csv -- A length file for each tablet
+-   SPECIMEN\_xxxx.csv – The specimen data
+-   HAUL\_xxxx.csv – A length file for each tablet
 
 Point functions to correct directories - Note: for tablet data it is the
 directory for data\_ent include the file name
+
+### Catch, Length, and Specimen Data Import Program Instructions
 
     # Point functions to correct tablet directory and "dataEnt" file#
     dsnTablet <- "C:/Users/NOAADATA/Documents/Bluetooth/inbox"
@@ -98,15 +101,15 @@ afterward.
 After successfully running the import script, open DataEnt to complete
 the calculations and check the data. In DataEnt:
 
-1.  Click "EDIT", then "EDIT CATCH"
+1.  Click “EDIT”, then “EDIT CATCH”
 2.  Select current haul from the dropdown menu
 3.  Tab through each line of the catch and mixture data to complete
     extrapolation calculations
 4.  Visually inspect the data for accuracy
-5.  Click "QUIT" and "Yes" to exit
-6.  Click "EDIT LENGTH" and inspect the length data for completeness and
+5.  Click “QUIT” and “Yes” to exit
+6.  Click “EDIT LENGTH” and inspect the length data for completeness and
     accuracy
-7.  Click "EDIT SPECIMEN" and inspect the specimen data for completeness
+7.  Click “EDIT SPECIMEN” and inspect the specimen data for completeness
     and accuracy
 
 If you need to delete data from a haul and start over:
