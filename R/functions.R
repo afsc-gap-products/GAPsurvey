@@ -495,6 +495,54 @@ LOGtoGPS <- function(
 
 # Work with catch data ----------------------------------------------
 
+#' Check files before import
+#'
+#' @param haul Number of the haul you want to upload
+#' @param dsnTablet String for the drive folder (in R notation) where tablet files exist.
+#' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
+#'
+#' @return Print statements indicating if any raw data files are missing and which length tablet data are being used.
+#' @export
+#'
+#' @examples
+#' dsnTablet <- system.file("exdata/catch/GOA/", package = "GAPsurvey")
+#' dsnDataEnt <- system.file("exdata/catch/GOA/data_ent.mdb", package = "GAPsurvey")
+#'
+#' # Define the current haul number
+#' haul <- 8
+#'
+#' # Import length data
+#' checkFiles(haul, dsnTablet, dsnDataEnt)
+checkFiles <- function(haul, dsnTablet, dsnDataEnt) {
+  x <- list.files(path = dsnTablet, pattern = paste0(sprintf("%04d", haul)))
+  
+  reqd_files <- c("DATAENT_CATCH", "DATAENT_BBAG", "RAW_BBAG", "RAW_CATCH_HAUL", "RAW_CATCH_SAMPLE", "RAW_CATCH_VALUE", "RAW_BBAG", "S_SPECIMEN", "RAW_SPECIMEN")
+  
+  mf <- sapply(X = reqd_files, function(y) {
+    if (any(grepl(pattern = y, x = x))) {
+      0
+    } else {
+      1
+    }
+  })
+  
+  if (any(mf == 1)) {
+    print(paste("Missing", reqd_files[mf == 1], "file"))
+  }
+  
+  if (!any(grepl(pattern = "_HAUL", x = x))) {
+    print("Missing _HAUL files. These are from lengthing tablets (usually named green, orange, etc.)")
+  }
+  
+  # Print which length tablets are being used
+  lengthfiles <- list.files(path = dsnTablet, pattern = paste0("_HAUL", sprintf("%04d", haul)))
+  cat(
+    "Using length data from the following tablets: \n",
+    paste(sub("\\_HAUL.*", "", lengthfiles), "\n")
+  )
+}
+
+
 #' Import Length Tablet Files Into DataEnt.mdb
 #'
 #' NOTE: Must be run on 32-bit R!
