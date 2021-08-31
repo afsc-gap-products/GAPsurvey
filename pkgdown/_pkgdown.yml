@@ -37,10 +37,11 @@ reference:
       - '`LOGtoGPS`'
   - title: Work with catch data
     contents:
-      - '`lengthData`'
+      - '`catchData`'  
       - '`specimenData`'  
       - '`benthicData`'
-      - '`catchData`'  
+      - '`lengthData`'
+      - '`checkFiles`'
   - title: Manage DataEnt
     contents:
       - '`writeDataEnt`'

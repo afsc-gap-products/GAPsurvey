@@ -854,6 +854,20 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' # Import catch data 
 #' catchData(haul,dsnTablet,dsnDataEnt,importLength)
 #' 
+#' # Delete data for next example run
+#' dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                        tablename = 'MIXTURE')
+#' dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                           tablename = 'MIXTURE_HEADER')
+#' dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                         tablename = 'CATCH')
+#' dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                             tablename = 'CATCH_HEADER')
+#' dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                          tablename = 'LENGTH')
+#' dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
+#'                               haul, tablename = 'RAW_LENGTH')
+#'
 #' # Eastern Bering Sea Example (Will cause error)
 #' # Point functions to correct tablet directory and "dataEnt" file
 #' dsnTablet <- system.file("exdata/catch/EBS/", package = "GAPsurvey")
@@ -863,8 +877,8 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' # Define the current haul number
 #' haul <- 59
 #' 
-#' # Import catch data 
-#' catchData(haul,dsnTablet,dsnDataEnt,importLength)
+#' # Import catch data (This will error)
+#' # catchData(haul,dsnTablet,dsnDataEnt,importLength)
 #' # Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. 
 #' # Return to the tablet and edit the data there before running it through 
 #' # this function again. 
