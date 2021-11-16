@@ -1269,6 +1269,44 @@ format_date <- function(x, ...) {
   return(tmp)
 }
 
+
+get_station_history <- function(station_query = "264-150",
+                                grid_buffer = 3) {
+  y <- as.numeric(stringr::str_split(station_query, pattern = "-", simplify = TRUE))
+  if (grid_buffer != 3) {
+    stop("the grid cell buffer is fixed at 3 for now.")
+  }
+  possible_stations <- expand.grid(
+    data.frame(
+      rbind(
+        y + grid_buffer,
+        y + grid_buffer - 1,
+        y + grid_buffer - 2,
+        y,
+        y - grid_buffer,
+        y - grid_buffer - 1,
+        y - grid_buffer - 2
+      )
+    )
+  )
+  possible_stations$stationid <- paste(possible_stations$X1,
+                                       possible_stations$X2,
+                                       sep = "-"
+  )
+  
+  x <- dat %>%
+    filter(stationid %in% possible_stations$stationid) %>%
+    left_join(sp_table) %>%
+    group_by(haul, year, report_name_scientific, stationid) %>%
+    summarize(n = sum(number_fish), total_catch_kg = sum(weight)) %>%
+    ungroup() %>%
+    arrange(year, desc(total_catch_kg)) %>%
+    group_by(year) %>%
+    group_split()
+  
+  return(x)
+}
+
 # Data ------------------------------------------------------------------------------------
 
 
@@ -1292,3 +1330,47 @@ format_date <- function(x, ...) {
 #' @examples
 #' data(PolySpecies)
 "PolySpecies"
+
+
+
+
+#' RACEBASE Data Set
+#'
+#' @docType data
+#'
+#' @usage data(local_racebase)
+#' @author Margaret Siple (margaret.siple AT noaa.gov)
+#'
+#' @format One dataframe containing all the racebase tables (experimental: this might be a bad idea)
+#' \describe{
+#'   \item{region }{Cruise join var}
+#'   \item{vessel}{Vessel ID, numeric}
+#'   \item{cruise}{Six-digit cruise number}
+#'   \item{haul}{Haul number}
+#' }
+#'
+#' @keywords catch data
+#'
+#' @examples
+#' data(local_racebase)
+"local_racebase"
+
+
+#' Species ID table
+#'
+#' @docType data
+#'
+#' @usage data(sp_table)
+#' @author Margaret Siple (margaret.siple AT noaa.gov)
+#'
+#' @format One dataframe containing all the racebase tables (experimental: this might be a bad idea)
+#' \describe{
+#'   \item{species_code }{Poly species code}
+#'   \item{report_name_scientific}{Species scientific name}
+#' }
+#'
+#' @keywords taxonomic data
+#'
+#' @examples
+#' data(sp_table)
+"sp_table"
