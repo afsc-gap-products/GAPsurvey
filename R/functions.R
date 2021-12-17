@@ -51,7 +51,7 @@ TEDtoBTD <- function(
   path_out = "./",
   filename_add = "new",
   quiet = FALSE){
-
+  
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
@@ -62,15 +62,15 @@ TEDtoBTD <- function(
   # make sure path_in comes in with correct format
   path_in <- fix_path(path_in)
   path_out <- fix_path(path_out)
-
+  
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
-
+  
   file.name.ted <- paste(path_in,
                          CRUISE,"_",VESSEL,"_",shaul,".ted",sep="")
   file.name.tet <- paste(path_in,
                          CRUISE,"_",VESSEL,"_",shaul,".tet",sep="")
-
+  
   ted.file=utils::read.csv(file.name.ted,header=F)
   tet.file=utils::read.csv(file.name.tet,header=F)
   #ted.file$V4=as.numeric(strptime(ted.file[,4], format = "%m/%d/%Y %H:%M:%S"))
@@ -86,9 +86,9 @@ TEDtoBTD <- function(
   merged<-base::merge(ted.file,tet.file,all=T)
   # str(merged)
   # head(merged)
-
+  
   #which(ted.file[,4] %in% tet.file[,4])
-
+  
   xx=merged$date
   DATE_TIME <- format(xx, format = "%m/%d/%Y %H:%M:%S")
   
@@ -108,7 +108,7 @@ TEDtoBTD <- function(
   NUMBER_CHANNELS=2
   NUMBER_SAMPLES=0
   MODE=2
-
+  
   # Write BTD file
   DATE_TIME <- DATE_TIME_btd
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
@@ -121,9 +121,9 @@ TEDtoBTD <- function(
                 SAMPLE_PERIOD,NUMBER_CHANNELS,
                 NUMBER_SAMPLES,MODE)
   new.BTH <- data.frame(new.BTH)
-    
+  
   new.BTD=new.BTD[new.BTD$DEPTH!="2000",]
-
+  
   #head(new.BTD)
   #return(head(new.BTD))
   filename <- paste0(path_out, "HAUL",shaul,
@@ -134,18 +134,18 @@ TEDtoBTD <- function(
                    quote=F,
                    row.names=F,
                    eol=",\n"
-                   )
+  )
   
   utils::write.csv(x = new.BTH,
                    file = paste0(filename, ".BTH"),
                    quote=F,
                    row.names=F)
-
+  
   if(!quiet){
     tcltk::tkmessageBox(title = "Message",
                         message = paste0("Your new ", filename, 
                                          " .BTD and .BTH files are saved."),
-                 icon = "info", type = "ok")
+                        icon = "info", type = "ok")
   }
 }
 
@@ -220,7 +220,7 @@ CTDtoBTD <- function(
   path_out = "./",
   filename_add = "",
   quiet = FALSE){
-
+  
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
@@ -237,7 +237,7 @@ CTDtoBTD <- function(
     path_in <- fix_path(path_in)
     file.name <- path_in
   }
-
+  
   # make sure path_in comes in with correct 
   options(stringsAsFactors = FALSE) # die, factors, die!
   path_out <- fix_path(path_out)
@@ -247,7 +247,7 @@ CTDtoBTD <- function(
   
   data0 <- (readLines(file.name))
   header0<-data0[(which(data0 == "# units = specified")+1):
-                    (grep(pattern = "# span 0 =", x = data0)-1)]
+                   (grep(pattern = "# span 0 =", x = data0)-1)]
   header0 <- lapply(strsplit(x = header0, split = " = "), `[[`, 2)
   header0 <- unlist(lapply(strsplit(x = unlist(header0), split = " "), `[[`, 2))
   header0 <- gsub(pattern = ",", replacement = "", x = header0)
@@ -265,12 +265,12 @@ CTDtoBTD <- function(
   # datapasta::df_paste(input_table = data1)
   
   data1 <- data.frame(matrix(data = unlist(strsplit(data1, "\\s+")), 
-                    ncol = nrow(headers)+1, byrow = TRUE))
+                             ncol = nrow(headers)+1, byrow = TRUE))
   data1$X1 <- NULL
   names(data1)<-headers$bth
   # names(data1) <- header0
   
-
+  
   # names(data1) <- c("timeS", "depth", "temperature", "pressure", 
   #                  "conductivity", "flag") # , "salinity"
   
@@ -289,17 +289,17 @@ CTDtoBTD <- function(
   dat <- data.frame(base::sapply(X = dat, as.numeric))
   
   data1 <- stats::aggregate.data.frame(x = dat[, c("depth", "temperature", 
-                                           "pressure", "conductivity")],
-                       by = list(timeS = data1$second), 
-                       FUN = mean, 
-                       na.rm = TRUE
-                        )
-
+                                                   "pressure", "conductivity")],
+                                       by = list(timeS = data1$second), 
+                                       FUN = mean, 
+                                       na.rm = TRUE
+  )
+  
   
   # data1$timeS <- as.POSIXct(data1$timeS)
   # data0 <- oce::read.ctd(file = file.name)
   # data1<-data.frame(data0@data1)
-
+  
   xx <- data0[(grepl(x = data0, pattern = "* cast   "))]
   xx <- gsub(pattern = "* cast   ", replacement = "", x = xx)
   xx <- strsplit(x = xx, split = ",")[[1]][1]
@@ -308,12 +308,12 @@ CTDtoBTD <- function(
   xx <- as.POSIXlt(xx, format = "%d %b %Y %H:%M:%S")
   data1$timeS <- as.numeric(as.character(data1$timeS))
   DATE_TIME <- format((xx + data1$timeS),
-                                        format = "%Y-%m-%d %H:%M:%S")
+                      format = "%Y-%m-%d %H:%M:%S")
   DATE_TIME_btd <- format(as.POSIXct(DATE_TIME),
-                      format = "%m/%d/%Y %H:%M:%S")
-
+                          format = "%m/%d/%Y %H:%M:%S")
+  
   DATE_TIME_btd <- format_date(DATE_TIME_btd)
-
+  
   # DATE_TIME_btd <- gsub(pattern = "^0",
   #                       replacement = "",
   #                       x = DATE_TIME_btd)
@@ -321,7 +321,7 @@ CTDtoBTD <- function(
   #                       replacement = "",
   #                       x = DATE_TIME_btd)
   DATE_TIME <- format(as.POSIXct(DATE_TIME),
-                       format = "%m/%d/%y %H:%M:%S")
+                      format = "%m/%d/%y %H:%M:%S")
   
   data1$DATE_TIME <- DATE_TIME
   # xx <- as.POSIXlt(data0@metadata$startTime, 
@@ -330,7 +330,7 @@ CTDtoBTD <- function(
   # DATE_TIME = format(xx, format = "%m/%d/%Y %H:%M:%S")
   # DATE_TIME <- data1$DATE_TIME <- format((xx + data1$timeS),
   #                                       format = "%m/%d/%Y %H:%M:%S")
-
+  
   HOST_TIME=max(data1$DATE_TIME)
   LOGGER_TIME=max(data1$DATE_TIME)
   LOGGING_START=min(data1$DATE_TIME)
@@ -346,7 +346,7 @@ CTDtoBTD <- function(
   # DATE_TIME <- format(as.POSIXct(DATE_TIME, "%m/%d/%y %H:%M:%S"), 
   #                     format = "%m/%e/%Y %H:%M:%S")
   DATE_TIME<-DATE_TIME_btd
-
+  
   new.BTD=cbind(VESSEL,CRUISE,HAUL,SERIAL_NUMBER,DATE_TIME,TEMPERATURE,DEPTH)
   new.BTD[which(is.na(new.BTD))]=""
   new.BTD <- data.frame(new.BTD)
@@ -444,12 +444,12 @@ LOGtoGPS <- function(
   path_out = "./",
   filename_add = "",
   quiet = FALSE){
-
+  
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
   if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
-
+  
   if (is.na(path_in)) {
     tcltk::tkmessageBox(title = "Message",
                         message = paste0("In next window, open the file named ", gsub(pattern = "/", replacement = "", x = DATE), ".log."), 
@@ -465,9 +465,9 @@ LOGtoGPS <- function(
   
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
-
+  
   log.file<-utils::read.csv(file.name,header=F, sep=",")
-
+  
   only.GPRMC<-log.file[log.file$V1=="$GPRMC",]
   # head(only.GPRMC)
   only.GPRMC<-only.GPRMC[,c(2,4,5,6,7)]
@@ -476,24 +476,24 @@ LOGtoGPS <- function(
   infoselect<-cbind(info,only.GPRMC)
   colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
   # head(infoselect)
-
+  
   hh=as.numeric(substr(infoselect$"TIME",start=1, stop=2))
   hh=ifelse(hh<8,hh+24,hh)-8
   hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
   mm=substr(infoselect$"TIME",start=3, stop=4)
   ss=substr(infoselect$"TIME",start=5, stop=6)
   DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
-
+  
   lat1=as.numeric(as.character(infoselect$LAT1)) 
   LAT=ifelse(infoselect$"LAT2"=="N",lat1,-lat1)
   LAT <- formatC(x = LAT, digits = 4, format = "f")
-
+  
   long1=as.numeric(as.character(infoselect$LONG1)) 
   LONG=ifelse(infoselect$"LONG2"=="E",long1,-long1)
   LONG <- formatC(x = LONG, digits = 4, format = "f")
   
   new_gps <- cbind.data.frame(VESSEL, CRUISE, HAUL, DATE_TIME, LAT, LONG)
-
+  
   
   filename <- paste0(path_out, "HAUL",shaul,
                      ifelse(is.na(filename_add) | filename_add == "",
@@ -505,19 +505,19 @@ LOGtoGPS <- function(
   new_gps1 <- as.matrix(new_gps1)
   
   utils::write.table(x = new_gps1,
-                   file = filename,
-                   quote=FALSE,
-                   sep = ",",
-                   row.names=FALSE,
-                   col.names = FALSE,
-                   eol="\n")
-
+                     file = filename,
+                     quote=FALSE,
+                     sep = ",",
+                     row.names=FALSE,
+                     col.names = FALSE,
+                     eol="\n")
+  
   if (!quiet) {
     tcltk::tkmessageBox(title = "Message",
-                 message = paste0("Your new .gps files are saved to ", filename),
-                 icon = "info", type = "ok")
+                        message = paste0("Your new .gps files are saved to ", filename),
+                        icon = "info", type = "ok")
   }
-
+  
 }
 
 
@@ -610,58 +610,58 @@ checkFiles <- function(haul, dsnTablet, dsnDataEnt) {
 #' # Import length data
 #' lengthData(haul,dsnTablet,dsnDataEnt) 
 lengthData <- function(haul, dsnTablet, dsnDataEnt) {
-
+  
   PolySpecies <- GAPsurvey::PolySpecies
-
+  
   options(stringsAsFactors = F)
-
+  
   # Check to see if length files exist in data_ent.mdb for this haul
   entRawLength <- selectDataEnt(dsnDataEnt = dsnDataEnt, 
                                 query = paste0("select * from RAW_LENGTH where HAUL = ", haul))
   if (nrow(entRawLength) != 0) {
     stop("L1: stop! Length data already exist in data_ent.mdb")
   }
-
+  
   # Get starting index number from RAW_LENGTH
   i_rawLength <- as.numeric(selectDataEnt(dsnDataEnt, "select max(index) from RAW_LENGTH") + 1)
   i_rawLength <- ifelse(is.na(i_rawLength), 1, i_rawLength)
-
+  
   # Get list of tablet length files in folder
   lengthFiles <- list.files(path=dsnTablet, pattern=paste0("_HAUL",sprintf("%04d", haul)))
   if (length(lengthFiles) == 0) {
     stop("L2: stop! No tablet length files were found for this haul in the given DSN")
   }
-
+  
   tabRawLength <- data.frame(stringsAsFactors=F)
-
+  
   # Loop through each length file
   for (i in 1:length(lengthFiles)) {
     tabLength <- data.frame(stringsAsFactors=F)
     tabLength <- utils::read.csv(file.path(dsnTablet,lengthFiles[i]))[,c("HAUL","POLY_SPECIES_CODE","SEX","LENGTH","LENGTH_TYPE","POLY_NUMBER","TABLET_ID")]
     tabRawLength <- rbind(tabRawLength,tabLength)
   }
-
+  
   # Add index to raw length data
   entRawLength <- cbind(tabRawLength,
                         INDEX = seq(from=i_rawLength, 
                                     length.out=nrow(tabRawLength)))
-
+  
   # Calculate length frequencies
   tabRawLength$FREQUENCY <- 1
   entLengthFreq <- stats::aggregate.data.frame(tabRawLength$FREQUENCY,
                                                by = tabRawLength[c("HAUL","POLY_SPECIES_CODE","SEX","LENGTH")], 
                                                FUN = sum)
   colnames(entLengthFreq)[5] <- "FREQUENCY"
-
+  
   entLengthFreq <- base::merge(entLengthFreq, PolySpecies, 
                                by = "POLY_SPECIES_CODE")[,c("HAUL","SPECIES_CODE","SEX","LENGTH","FREQUENCY")]
   entLengthFreq$SUBSAMPLE_TYPE <- 1L
   entLengthFreq$LENGTH_TYPE <- NA
-
+  
   # Upload length data
   writeDataEnt(dsnDataEnt,entRawLength,"RAW_LENGTH")
   writeDataEnt(dsnDataEnt,entLengthFreq,"LENGTH")
-
+  
   # Verify lengths were uploaded
   checkRawLength <- selectDataEnt(dsnDataEnt, 
                                   paste0("select * from RAW_LENGTH where HAUL = ",haul))
@@ -670,7 +670,7 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
   } else {
     message("Something weird happened.")
   }
-
+  
   return(entLengthFreq)
 }
 
@@ -730,34 +730,34 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
 #' 
 specimenData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
-
+  
   # Check to see if specimen files exist in data_ent.mdb for this haul
   entSpecimen <- selectDataEnt(dsnDataEnt, paste0("select * from SPECIMEN where HAUL = ",haul))
   if (nrow(entSpecimen) != 0) {
     stop("S1: stop! Specimen data for this haul already exist in data_ent.mdb")
   }
-
+  
   # Get starting index number from RAW_LENGTH
   i_spec <- as.numeric(selectDataEnt(dsnDataEnt, "select max(ENTRY_ORDER) from SPECIMEN") + 1)
   i_spec <- ifelse(is.na(i_spec), 1, i_spec)
-
+  
   # Get list of tablet specimen files in folder
   specimenFiles <- list.files(path=dsnTablet, pattern=paste0("SPECIMEN_",sprintf("%04d", haul)))
   specimenFiles <- specimenFiles[!grepl("RAW",specimenFiles)]
-
+  
   # Import specimen files as a dataframe
   if (length(specimenFiles) == 0) {
     stop("S2: stop! No tablet specimen files were found for this haul in the given DSN")
   } else {
     tabSpec <- utils::read.csv(file.path(dsnTablet,specimenFiles))
   }
-
+  
   # Add index to specimen data from data_ent
   tabSpec$ENTRY_ORDER <- seq(from=i_spec, length.out=nrow(tabSpec))
-
+  
   # Upload specimen data
   writeDataEnt(dsnDataEnt,tabSpec,"SPECIMEN")
-
+  
 }
 
 
@@ -788,21 +788,21 @@ specimenData <- function(haul, dsnTablet, dsnDataEnt) {
 #' # benthicData(haul,dsnTablet,dsnDataEnt)
 benthicData <- function(haul, dsnTablet, dsnDataEnt) {
   options(stringsAsFactors = F)
-
+  
   # Grab data_ent formatted tablet data
   benthicFile <- list.files(path=dsnTablet, pattern=paste0("DATAENT_BBAG_",sprintf("%04d", haul)))
-
+  
   if (length(benthicFile) != 1) {
     stop("BB1: Benthic Bag file missing or duplicate")
   } else {
     tabBenthic <- utils::read.csv(file.path(dsnTablet,benthicFile))
   }
-
+  
   # Get benthic bag index
   i_benthic <- as.numeric(selectDataEnt(dsnDataEnt, "select max(ENTRY_ORDER) from BENTHIC_BAG") + 1)
   i_benthic <- ifelse(is.na(i_benthic), 1, i_benthic)
   tabBenthic$ENTRY_ORDER <- seq(from=i_benthic, length.out=nrow(tabBenthic))
-
+  
   # Upload benthic bag data
   tabBenthic[tabBenthic == 'null'] <- NA
   writeDataEnt(dsnDataEnt,tabBenthic,"BENTHIC_BAG")
@@ -914,9 +914,9 @@ catchData <- function(haul,
   if (sum((is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)))>0) {
     stop(paste0("C3c: Both SUBSAMPLE_WEIGHT and NONSUB_WEIGHT have no values for ", 
                 sum(is.na(tabCatch$SUBSAMPLE_WEIGHT) & is.na(tabCatch$NONSUB_WEIGHT)),
-                    " species. Delete species entry if added in error. A value is required for one or both types of weights (subsample or non-subsample). Correct data in tablet and try again."))
+                " species. Delete species entry if added in error. A value is required for one or both types of weights (subsample or non-subsample). Correct data in tablet and try again."))
   }
-
+  
   
   # If importLength = TRUE, upload length files first
   if (importLength) {
@@ -1111,14 +1111,14 @@ catchData <- function(haul,
 writeDataEnt <- function(dsnDataEnt, data, tablename) {
   odbcStr <- paste0("Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=",dsnDataEnt)
   dataEnt <- RODBC::odbcDriverConnect(odbcStr)
-
+  
   sqlReturn <- RODBC::sqlSave(dataEnt, data, tablename, append=T, rownames=F)
-
+  
   # FUTURE: SQLupdate version
   # sqlReturn <- RODBC::sqlUpdate(dataEnt, data, tablename, index=index)
-
+  
   RODBC::odbcClose(dataEnt)
-
+  
   return(sqlReturn)
 }
 
@@ -1159,13 +1159,13 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
 deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
   odbcStr <- paste0("Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=",dsnDataEnt)
   dataEnt <- RODBC::odbcDriverConnect(odbcStr)
-
+  
   deleteQuery <- paste0("delete from ",tablename," where haul = ", haul)
-
+  
   sqlReturn <- RODBC::sqlQuery(dataEnt, deleteQuery)
-
+  
   RODBC::odbcClose(dataEnt)
-
+  
   return(sqlReturn)
 }
 
@@ -1186,17 +1186,341 @@ deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
 selectDataEnt <- function(dsnDataEnt, query) {
   odbcStr <- paste0("Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=",dsnDataEnt)
   dataEnt <- RODBC::odbcDriverConnect(odbcStr)
-
+  
   sqlReturn <- RODBC::sqlQuery(dataEnt, query)
   RODBC::odbcClose(dataEnt)
-
+  
   return(sqlReturn)
 }
 
+# Estimate Net Spread ----------------------------------------------------------
+
+#' Calculate Net Spread for tows missing net width using a glm. 
+#' 
+#' The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean netspread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
+#' 
+#' In race_data, this will manifest as...
+#' net_mensuration_code = Net Mensuration Method
+#' 0* Unidentified method. Will make racebase.haul$net_mesured = "N".
+#' 1 Scanmar net mensuration - don't use, historical
+#' 2 NetMind net mensuration - don't use, historical
+#' 3 Furuno net mensuration - don't use, historical
+#' 4* Estimated from other hauls - when missing net spread, or spread and hieght. Will make racebase.haul$net_mesured = "N". Estimated using GLM
+#' 5* Estimated from warp angle - hopefully, will not come up and shouldn't be used
+#' 6 Marport net mensuration - shouldn't be there, indicates raw data
+#' 7* Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_mesured = "Y".
+#' 
+#' @param dat data.frame. This can be data from GIDES or race_data.hauls, including these columns: WIRE_OUT, NET_HEIGHT, NET_SPREAD
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' # Here is an example using 202101 Alaska Night Data from race_data.hauls:
+#' path <- system.file("exdata/netspread/VESTY202101_RACE_DATA.HAULS.csv", package = "GAPsurvey")
+#' dat <- read.csv(file=path, header=TRUE, sep=",", stringsAsFactors = FALSE)
+#' dat <- dat[dat$PERFORMANCE >= 0 & dat$HAUL_TYPE == 3,]
+#' dat[dat$NET_SPREAD_METHOD != 7, "NET_SPREAD"] <- NA # a normal net width
+#' dat[dat$NET_HEIGHT_METHOD != 6, "NET_HEIGHT"] <- NA # a normal net height
+#' netSpread(dat)
+netSpread <- function(dat) {
+  
+  dat0 <- dat[,names(dat) %in% 
+                c("HAUL", "NET_SPREAD",	"NET_HEIGHT",	"WIRE_OUT")]
+  dat0$NET_SPREAD_METHODS <- 7 # No Issues
+  dat0$NET_HEIGHT_METHOD <- 6 # No Issues  
+  dat0$WIRE_OUT_METHODS <- 5 # No Issues
+  
+  out <- data.frame("method_col" = c(),
+                    "method_code" = c(),
+                    "n" = c(), 
+                    "desc" = c())
+  # 7: NET_SPREAD_METHOD Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_mesured = "Y".
+  # if (nrow(dat0[complete.cases(dat0), ])>0) {
+  #   n7 <- nrow(dat0[complete.cases(dat0), ])
+  
+  if (sum(!is.na(dat0$NET_SPREAD), na.rm = TRUE)>0) {
+    n7 <- sum(!is.na(dat0$NET_SPREAD), na.rm = TRUE)
+    out <- rbind.data.frame(out, 
+                            data.frame("method_col" = "NET_SPREAD_METHOD",
+                                       "method_code" = 7,
+                                       "n" = n7, 
+                                       "desc" = paste0(
+                                         "There were ", 
+                                         n7,
+                                         " hauls successfully completed where the Marport sensor properly caclulated net mensuration using sequential outlier rejection, smoothed mean, and MKII offset adjustments (see AFSC Proc. Report Lauth & Kotwicki 2014).")
+                            ))
+  }
+  
+  # When NET_HEIGHT_METHOD != 6 (aka NA)
+  # TOLEDO: Will not work if there are no other tows with the same wire out!
+  if (nrow(dat0[!is.na(dat0$NET_HEIGHT), ]) != nrow(dat0)) {
+    scope_where_height_missing <- dat0$WIRE_OUT[is.na(dat0$NET_HEIGHT)]
+    # out$tows_without_height <- length(scope_where_height_missing)
+    dat0$NET_HEIGHT_METHOD[which(is.na(dat0$NET_HEIGHT))] <- 4
+    for (i in 1:length(unique(scope_where_height_missing))) {
+      dat0$NET_HEIGHT[which(is.na(dat0$NET_HEIGHT) & 
+                              dat0$WIRE_OUT == unique(scope_where_height_missing)[i])] <- 
+        mean(dat0$NET_HEIGHT[dat0$WIRE_OUT == unique(scope_where_height_missing)[i]], na.rm = TRUE)
+    }
+    
+    out <- rbind.data.frame(out, 
+                            data.frame("method_col" = "NET_HEIGHT_METHOD",
+                                       "method_code" = 4,
+                                       "n" = length(scope_where_height_missing), 
+                                       "desc" = paste0(
+                                         "There were ",
+                                         length(scope_where_height_missing),
+                                         " missing net height values estimated by averaging the net height of tows with the same wire out scope.")
+                            ))
+    
+  }
+  
+  # 4* NET_SPREAD_METHOD Estimated from other hauls - when missing net spread, or spread and height Will make racebase.haul$net_mesured = "N". Estimated using GLM
+  glm_param <- ""
+  if (nrow(dat0[!is.na(dat0$NET_SPREAD), ]) != nrow(dat0)) {
+    
+    # Find the best model
+    dat1 <- dat0[!is.na(dat0$NET_SPREAD),]
+    dat1$INVSCOPE <- 1/dat1$WIRE_OUT
+    glm1 = stats::glm(NET_SPREAD  ~ INVSCOPE + NET_HEIGHT + NET_HEIGHT*INVSCOPE, 
+                      data=c(dat1), family="gaussian")
+    glm2 = stats::glm(NET_SPREAD  ~ INVSCOPE + NET_HEIGHT, 
+                      data=c(dat1), family="gaussian")
+    glm3 = stats::glm(NET_SPREAD  ~ INVSCOPE + NET_HEIGHT*INVSCOPE, 
+                      data=c(dat1), family="gaussian")
+    glm4 = stats::glm(NET_SPREAD  ~ NET_HEIGHT + NET_HEIGHT*INVSCOPE, 
+                      data=c(dat1), family="gaussian")
+    glm5 = stats::glm(NET_SPREAD  ~ INVSCOPE, 
+                      data=c(dat1), family="gaussian")
+    glm6 = stats::glm(NET_SPREAD  ~ NET_HEIGHT, 
+                      data=c(dat1), family="gaussian")
+    glm7 = stats::glm(NET_SPREAD  ~ NET_HEIGHT*INVSCOPE, 
+                      data=c(dat1), family="gaussian")
+    
+    best_model <- data.frame(stats::AIC(glm1, glm2, glm3, glm4, glm5, glm6, glm7))
+    best_model<-best_model[best_model$AIC <= min(best_model$AIC)+3,] # +3 because basically the same if within 3 of min
+    best_model<-best_model[best_model$df <= min(best_model$df),]
+    best_model<-best_model[best_model$AIC <= min(best_model$AIC),]
+    
+    glm0 <- get(x = rownames(best_model)[1])
+    glm0_sum <- summary(glm0)
+    
+    # Predict data
+    dat0$NET_SPREAD_METHODS[is.na(dat0$NET_SPREAD)] <- 4
+    
+    dat1 <- dat0[is.na(dat0$NET_SPREAD),]
+    dat1$INVSCOPE <- 1/dat1$WIRE_OUT
+    n4 <- nrow(dat1)
+    
+    dat0$NET_SPREAD[is.na(dat0$NET_SPREAD)] <- 
+      stats::predict.glm(object = glm0, 
+                         newdata = dat1, 
+                         type="response")
+    
+    # Collect coeficents
+    glm0_param <- data.frame(glm0_sum$coefficients)
+    names(glm0_param) <- c("est0","se","tvalue","prob")
+    glm0_param$var <- rownames(glm0_param)
+    glm0_param$est <- round(x = glm0_param$est0, digits = 3) 
+    glm0_param$case <- NA
+    for (i in 1:nrow(glm0_param)) {
+      if (glm0_param$prob[i] < 0.001) {
+        glm0_param$case[i] <- "very signifcant (P < 0.001)" 
+        # } else if (glm0_param$prob[i] < 0.001) {
+        #   glm0_param$case[i] <- "mostly significant (P < 0.001)"
+      } else if (glm0_param$prob[i] < 0.01) {
+        glm0_param$case[i] <- "significant (P < 0.001)"
+      } else if (glm0_param$prob[i] < 0.05) {
+        glm0_param$case[i] <- "somewhat significant (P < 0.001)"
+      } 
+    }
+    glm0_param$var0 <- tolower(row.names(glm0_param))
+    glm0_param$var0 <- gsub(pattern = "(", 
+                            replacement = "", 
+                            x = glm0_param$var0, 
+                            fixed = TRUE)
+    glm0_param$var0 <- gsub(pattern = ")", 
+                            replacement = "", 
+                            x = glm0_param$var0, 
+                            fixed = TRUE)
+    glm0_param$var0 <- gsub(pattern = ":", 
+                            replacement = " x ", 
+                            x = glm0_param$var0, 
+                            fixed = TRUE)
+    glm0_param$var0 <- gsub(pattern = "invscope", 
+                            replacement = "inversed scope", 
+                            x = glm0_param$var0, 
+                            fixed = TRUE)
+    glm0_param$var0 <- gsub(pattern = "_", 
+                            replacement = " ", 
+                            x = glm0_param$var0, 
+                            fixed = TRUE)
+    
+    
+    
+    str0 <- c()
+    if (length(unique(glm0_param$case)) == 1) {
+      str0 <- paste0("both predictor variables and their interaction were significant (P < 0.001)")
+    } else {
+      for (i in 1:length(unique(glm0_param$case))) {
+        str0 <- c(str0, paste0(
+          text_list(glm0_param$var[glm0_param$case == unique(glm0_param$case)[i]]),
+          " were ", 
+          unique(glm0_param$case)[i]
+        ))
+      }
+      str0 <- text_list(str0)
+    }
+    
+    
+    fm <- as.character(glm0$formula)
+    fm <- paste0(fm[2], " ", 
+                 fm[1], " ", 
+                 glm0_param$est[glm0_param$var == "(Intercept)"], " + ", 
+                 fm[3])
+    
+    fm <- gsub(pattern = "NET_SPREAD", 
+               replacement = "w", 
+               x = fm, fixed = TRUE)
+    if (sum(glm0_param$var == "INVSCOPE:NET_HEIGHT")>0) {
+      fm <- gsub(pattern = "NET_HEIGHT * INVSCOPE", 
+                 replacement = paste0(glm0_param$est[glm0_param$var == "INVSCOPE:NET_HEIGHT"], 
+                                      " * (h/s)"), 
+                 x = fm, fixed = TRUE)
+    }
+    if (sum(glm0_param$var == "NET_HEIGHT")>0) {
+      fm <- gsub(pattern = "NET_HEIGHT", 
+                 replacement = paste0(glm0_param$est[glm0_param$var == "NET_HEIGHT"], 
+                                      " * h"), 
+                 x = fm, fixed = TRUE)
+    }
+    if (sum(glm0_param$var == "INVSCOPE")>0) {
+      fm <- gsub(pattern = "INVSCOPE", 
+                 replacement = paste0(glm0_param$est[glm0_param$var == "INVSCOPE"], 
+                                      "/s"), 
+                 x = fm, fixed = TRUE)
+    }
+    fm <- gsub(pattern = " + -", 
+               replacement = " - ", 
+               x = fm, fixed = TRUE)
+    
+    out <- rbind.data.frame(out, 
+                            data.frame("method_col" = "NET_SPREAD_METHOD",
+                                       "method_code" = 4,
+                                       "n" = n4, 
+                                       "desc" = paste0(fm, 
+                                                       ": For ", 
+                                                       n4,
+                                                       " hauls, the net width was estimated using a generalized linear model. The ", 
+                                                       str0)
+                            ))
+    
+    
+    # # if the interaction between INVSLOPE and HEIGHT are not significant
+    # if ((glm1_sum$coefficients[4,4]>0.05)) {
+    #   # Find the best model
+    #   glm2 = glm(SPREAD ~ INVSCOPE + HEIGHT, 
+    #              data=c(dat),family="gaussian")
+    #   glm2_sum <- summary(glm2)
+    #   glm0<-glm2
+    #   eq <- "w ~ 1/s + h: inverse scope and net height were significant (P < 0.001) but not their interaction term"
+    # }
+    # str <- paste0(str, eq, "
+    #               
+    #               ")
+  }
+  
+  # 0* Unidentified method. Will make racebase.haul$net_mesured = "N".
+  
+  # 5 Estimated from warp angle - hopefully, will not come up and shouldn't be used
+  
+  
+  out <- list(#"plot" = plot(dat$NET_SPREAD,1/dat$WIRE_OUT), 
+    "actions" = out,
+    "glm_summary" = glm0_param, 
+    "dat" = dat0)
+  
+  return(out)
+}
+
+# Check Past Tows --------------------------------------------------------------
+
+
+#' Title
+#'
+#' @param station_query 
+#' @param grid_buffer 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_station_history <- function(station_query = "264-150",
+                                grid_buffer = 3) {
+  y <- as.numeric(strsplit(x = station_query, split = "-", fixed = TRUE))
+  if (grid_buffer != 3) {
+    stop("the grid cell buffer is fixed at 3 for now.")
+  }
+  possible_stations <- expand.grid(
+    data.frame(
+      rbind(
+        y + grid_buffer,
+        y + grid_buffer - 1,
+        y + grid_buffer - 2,
+        y,
+        y - grid_buffer,
+        y - grid_buffer - 1,
+        y - grid_buffer - 2
+      )
+    )
+  )
+  possible_stations$stationid <- paste(possible_stations$X1,
+                                       possible_stations$X2,
+                                       sep = "-"
+  )
+  
+  x <- dat %>%
+    filter(stationid %in% possible_stations$stationid) %>%
+    left_join(sp_table) %>%
+    group_by(haul, year, report_name_scientific, stationid) %>%
+    summarize(n = sum(number_fish), total_catch_kg = sum(weight)) %>%
+    ungroup() %>%
+    arrange(year, desc(total_catch_kg)) %>%
+    group_by(year) %>%
+    group_split()
+  
+  return(x)
+}
 
 # Helper Functions ------------------------------------------------------------------------
 
-
+#' Takes a string of words and combines them into a sentance that lists them.
+#'
+#' This function alows you to take a string of words and combine them into a sentance list. For example, 'apples', 'oranges', 'pears' would become 'apples, oranges, and pears'. This function uses oxford commas.
+#' @param x Character strings you want in your string.
+#' @param oxford T/F: would you like to use an oxford comma? Default = TRUE
+#' @param sep string. default = "," but ";" might be what you need!
+#' @keywords strings
+#' @export
+#' @examples text_list(c(1,2,"hello",4,"world",6))
+text_list<-function(x, oxford = TRUE, sep = ",") {
+  x<-x[which(x!="")]
+  # x<-x[which(!is.null(x))]
+  x<-x[which(!is.na(x))]
+  # x<-x[order(x)]
+  if (length(x)==2) {
+    str1<-paste(x, collapse = " and ")
+  } else if (length(x)>2) {
+    str1<-paste(x[1:(length(x)-1)], collapse = paste0(sep, " "))
+    str1<-paste0(str1,
+                 ifelse(oxford == TRUE, sep, ""),
+                 " and ", x[length(x)])
+  } else {
+    str1<-x
+  }
+  return(str1)
+}
 
 #' Make numbers the same length preceeded by 0s
 #'
@@ -1270,43 +1594,6 @@ format_date <- function(x, ...) {
 }
 
 
-get_station_history <- function(station_query = "264-150",
-                                grid_buffer = 3) {
-  y <- as.numeric(stringr::str_split(station_query, pattern = "-", simplify = TRUE))
-  if (grid_buffer != 3) {
-    stop("the grid cell buffer is fixed at 3 for now.")
-  }
-  possible_stations <- expand.grid(
-    data.frame(
-      rbind(
-        y + grid_buffer,
-        y + grid_buffer - 1,
-        y + grid_buffer - 2,
-        y,
-        y - grid_buffer,
-        y - grid_buffer - 1,
-        y - grid_buffer - 2
-      )
-    )
-  )
-  possible_stations$stationid <- paste(possible_stations$X1,
-                                       possible_stations$X2,
-                                       sep = "-"
-  )
-  
-  x <- dat %>%
-    filter(stationid %in% possible_stations$stationid) %>%
-    left_join(sp_table) %>%
-    group_by(haul, year, report_name_scientific, stationid) %>%
-    summarize(n = sum(number_fish), total_catch_kg = sum(weight)) %>%
-    ungroup() %>%
-    arrange(year, desc(total_catch_kg)) %>%
-    group_by(year) %>%
-    group_split()
-  
-  return(x)
-}
-
 # Data ------------------------------------------------------------------------------------
 
 
@@ -1355,22 +1642,3 @@ get_station_history <- function(station_query = "264-150",
 #' data(local_racebase)
 "local_racebase"
 
-
-#' Species ID table
-#'
-#' @docType data
-#'
-#' @usage data(sp_table)
-#' @author Margaret Siple (margaret.siple AT noaa.gov)
-#'
-#' @format One dataframe containing all the racebase tables (experimental: this might be a bad idea)
-#' \describe{
-#'   \item{species_code }{Poly species code}
-#'   \item{report_name_scientific}{Species scientific name}
-#' }
-#'
-#' @keywords taxonomic data
-#'
-#' @examples
-#' data(sp_table)
-"sp_table"

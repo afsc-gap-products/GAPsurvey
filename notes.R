@@ -33,7 +33,7 @@
 # maybe that was less complicated to explain than I thought haha
 # Maybe we need to have this be a topic in a group meeting.  Especially for something like this package which has multiple authorship.  Especially since updating and maintaining packages seems to typically fall on the owner of the storage hub.
 # I think you're exactly right - Creating the physical account is easy, but no one wants to be the only person at the helm and we need to come up with a plan to work on it together. 
-                                                                                                # In this case, I've made Liz, cecilia, megsie, duane, and jason collaborators on the GAPsurvey github page, so if they want to, they will be able to make changes as needed and will get "credit" for making that change, but its on my page as opposed to a more centrailized location
+# In this case, I've made Liz, cecilia, megsie, duane, and jason collaborators on the GAPsurvey github page, so if they want to, they will be able to make changes as needed and will get "credit" for making that change, but its on my page as opposed to a more centrailized location
 # History is off. Messages may disappear before people see them. Conversations with no messages may disappear.
 
 
@@ -66,7 +66,7 @@ setwd(here::here())
 
 ########### Create Documentation GitHub-Pages ############
 
-# .rs.restartR()
+.rs.restartR()
 # devtools::install_github("rstudio/fontawesome", force = T)
 # library(fontawesome)
 library(here)
@@ -85,11 +85,12 @@ usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-file.remove(paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
-file.remove(paste0((here::here()), "/GAPsurvey_2021.08.01.tar.gz"))
+date0 <- "2021.12.01"
+file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
+file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
 devtools::build()
-file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_2021.08.01.tar.gz"), 
-          to = paste0(here::here(), "/GAPsurvey_2021.08.01.tar.gz"),
+file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"), 
+          to = paste0(here::here(), "/GAPsurvey_",date0,".tar.gz"),
           overwrite = TRUE)
 
 ########### Create Documentation GitHub-Pages ############
