@@ -1449,16 +1449,19 @@ netSpread <- function(dat) {
 
 #' Title
 #'
-#' @param station_query 
-#' @param grid_buffer 
+#' @param histdat (dataframe) A dataframe containing historical survey data
+#' @param station_query (character) A character string of the current station name (as a grid cell; e.g., "264-85")
+#' @param grid_buffer (numeric) The number of cells around the current station where you would like to see catches from
+#' @param topn (numeric) The number of rows of top catches in that area that you would like to see (e.g., the top 3 species in terms of catch or top 10)
 #'
 #' @return
 #' @export
 #'
 #' @examples
-get_station_history <- function(station_query = "264-150",
-                                grid_buffer = 3) {
-  y <- as.numeric(strsplit(x = station_query, split = "-", fixed = TRUE))
+get_station_history <- function(histdat = local_racebase, station_query = "264-150",
+                                grid_buffer = 3, topn = 10) {
+  
+  y <- as.numeric(stringr::str_split(station_query, pattern = "-", simplify = TRUE))
   if (grid_buffer != 3) {
     stop("the grid cell buffer is fixed at 3 for now.")
   }
@@ -1480,17 +1483,29 @@ get_station_history <- function(station_query = "264-150",
                                        sep = "-"
   )
   
-  x <- dat %>%
-    filter(stationid %in% possible_stations$stationid) %>%
-    left_join(sp_table) %>%
-    group_by(haul, year, report_name_scientific, stationid) %>%
-    summarize(n = sum(number_fish), total_catch_kg = sum(weight)) %>%
-    ungroup() %>%
-    arrange(year, desc(total_catch_kg)) %>%
-    group_by(year) %>%
-    group_split()
+  x <- histdat |>
+    filter(stationid %in% possible_stations$stationid) |>
+    merge(sp_table, by = "species_code", all.x = TRUE)
   
-  return(x)
+  aa <- aggregate(x[, c("number_fish", "weight")],
+                  by = list(
+                    haul = factor(x$haul),
+                    year = factor(x$year),
+                    report_name_scientific = factor(x$report_name_scientific),
+                    station_id = factor(x$stationid)
+                  ),
+                  sum
+  )
+  
+  names(aa)[names(aa) == "weight"] <- "total_catch_kg"
+  aa$year <- as.numeric(as.character(aa$year))
+  aa <- aa[order(-aa$year, -aa$total_catch_kg), ]
+  bb <- split(aa, aa$year)
+  cc <- lapply(bb, function(df) {
+    head(df[order(-df$year, -df$total_catch_kg), ], n = topn)
+  })
+  
+  return(cc)
 }
 
 # Helper Functions ------------------------------------------------------------------------
