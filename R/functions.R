@@ -1458,7 +1458,10 @@ netSpread <- function(dat) {
 #' @export
 #'
 #' @examples
-get_station_history <- function(histdat = local_racebase, station_query = "264-150",
+#' load("data/local_racebase.rda")
+#' load("data/sp_table.rda")
+#' get_station_history(station_query = "264-150", grid_buffer = 3, topn = 10)
+get_station_history <- function(histdat = local_racebase, sptable = sp_table, station_query = "264-150",
                                 grid_buffer = 3, topn = 10) {
   
   y <- as.numeric(stringr::str_split(station_query, pattern = "-", simplify = TRUE))
@@ -1478,21 +1481,22 @@ get_station_history <- function(histdat = local_racebase, station_query = "264-1
       )
     )
   )
+
   possible_stations$stationid <- paste(possible_stations$X1,
                                        possible_stations$X2,
                                        sep = "-"
   )
   
-  x <- histdat |>
-    filter(stationid %in% possible_stations$stationid) |>
-    merge(sp_table, by = "species_code", all.x = TRUE)
+  x <- subset(x = histdat, stationid %in% possible_stations$stationid) 
   
-  aa <- aggregate(x[, c("number_fish", "weight")],
+  xx <- merge(x, sptable, by = "species_code", all.x = TRUE)
+  
+  aa <- aggregate(xx[, c("number_fish", "weight")],
                   by = list(
-                    haul = factor(x$haul),
-                    year = factor(x$year),
-                    report_name_scientific = factor(x$report_name_scientific),
-                    station_id = factor(x$stationid)
+                    haul = factor(xx$haul),
+                    year = factor(xx$year),
+                    report_name_scientific = factor(xx$report_name_scientific),
+                    station_id = factor(xx$stationid)
                   ),
                   sum
   )
