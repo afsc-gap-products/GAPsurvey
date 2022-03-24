@@ -43,10 +43,8 @@ vignettes/*.pdf
 # notes.R
 /installfiles
 /exe
-#*.BTH
-#*.BTD
 *.rmd
-docs
 
 # renv items
 renv/
+docs

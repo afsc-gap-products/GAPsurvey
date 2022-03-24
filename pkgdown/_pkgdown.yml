@@ -47,9 +47,9 @@ reference:
       - '`writeDataEnt`'
       - '`deleteDataEnt`'
       - '`selectDataEnt`'
-  - title: Estimate Net Spread:
+  - title: Estimate Net Spread
       - '`netSpread`'
-  - title: Check Past Tows:
+  - title: Check Past Tows
       - '`get_station_history`'
   - title: Helper Functions
     contents:
@@ -60,4 +60,4 @@ reference:
     contents:
       - '`PolySpecies`'
       - '`local_racebase`'
-
+      - '`sp_table`'

@@ -31,15 +31,15 @@ haul <- 8 # Define the current haul number
 catchData(haul,dsnTablet,dsnDataEnt,importLength) # Import catch data 
 
 dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                       tablename = 'MIXTURE')
+                        tablename = 'MIXTURE')
 dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
                           tablename = 'MIXTURE_HEADER')
 dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                        tablename = 'CATCH')
+                         tablename = 'CATCH')
 dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                            tablename = 'CATCH_HEADER')
+                             tablename = 'CATCH_HEADER')
 dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                         tablename = 'LENGTH')
+                          tablename = 'LENGTH')
 dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
-                              haul, tablename = 'RAW_LENGTH')
+                               haul, tablename = 'RAW_LENGTH')
 }

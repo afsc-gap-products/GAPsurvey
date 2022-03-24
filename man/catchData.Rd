@@ -59,15 +59,15 @@ catchData(haul,dsnTablet,dsnDataEnt,importLength)
 dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
                        tablename = 'MIXTURE')
 dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                          tablename = 'MIXTURE_HEADER')
+                         tablename = 'MIXTURE_HEADER')
 dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                        tablename = 'CATCH')
+                         tablename = 'CATCH')
 dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                            tablename = 'CATCH_HEADER')
+                           tablename = 'CATCH_HEADER')
 dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-                         tablename = 'LENGTH')
+                        tablename = 'LENGTH')
 dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
-                              haul, tablename = 'RAW_LENGTH')
+#                              haul, tablename = 'RAW_LENGTH')
 
 # Eastern Bering Sea Example (Will cause error)
 # Point functions to correct tablet directory and "dataEnt" file

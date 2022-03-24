@@ -80,12 +80,12 @@ rmarkdown::render(input = "README.Rmd",
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
 # devtools::build_vignettes()
-usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
+# usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
 # pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2021.12.01"
+date0 <- "2022.04.01"
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
 devtools::build()

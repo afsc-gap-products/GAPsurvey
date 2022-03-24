@@ -9,7 +9,7 @@ selectDataEnt(dsnDataEnt, query)
 \arguments{
 \item{dsnDataEnt}{String for the drive folder (in R notation) - include full file name and extension.}
 
-\item{query}{A SQL query}
+\item{query}{A SQL query string}
 }
 \value{
 Changes to the data_ent.mbd file.

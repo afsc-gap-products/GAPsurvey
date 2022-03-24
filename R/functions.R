@@ -858,15 +858,15 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #' dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                        tablename = 'MIXTURE')
 #' dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                           tablename = 'MIXTURE_HEADER')
+#'                          tablename = 'MIXTURE_HEADER')
 #' dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                         tablename = 'CATCH')
+#'                          tablename = 'CATCH')
 #' dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                             tablename = 'CATCH_HEADER')
+#'                            tablename = 'CATCH_HEADER')
 #' dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                          tablename = 'LENGTH')
+#'                         tablename = 'LENGTH')
 #' dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
-#'                               haul, tablename = 'RAW_LENGTH')
+#'#                              haul, tablename = 'RAW_LENGTH')
 #'
 #' # Eastern Bering Sea Example (Will cause error)
 #' # Point functions to correct tablet directory and "dataEnt" file
@@ -920,6 +920,7 @@ catchData <- function(haul,
   
   # If importLength = TRUE, upload length files first
   if (importLength) {
+    
     lengthFreq <- lengthData(haul,dsnTablet, dsnDataEnt)
     
     lengthSum <- stats::aggregate.data.frame(lengthFreq$FREQUENCY,by=lengthFreq[c("SPECIES_CODE")], FUN = sum)
@@ -1145,17 +1146,17 @@ writeDataEnt <- function(dsnDataEnt, data, tablename) {
 #' catchData(haul,dsnTablet,dsnDataEnt,importLength) # Import catch data 
 #' 
 #' dMix <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                        tablename = 'MIXTURE')
+#'                         tablename = 'MIXTURE')
 #' dMixHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                           tablename = 'MIXTURE_HEADER')
 #' dCatch <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                         tablename = 'CATCH')
+#'                          tablename = 'CATCH')
 #' dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                             tablename = 'CATCH_HEADER')
+#'                              tablename = 'CATCH_HEADER')
 #' dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
-#'                          tablename = 'LENGTH')
+#'                           tablename = 'LENGTH')
 #' dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
-#'                               haul, tablename = 'RAW_LENGTH')
+#'                                haul, tablename = 'RAW_LENGTH')
 deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
   odbcStr <- paste0("Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=",dsnDataEnt)
   dataEnt <- RODBC::odbcDriverConnect(odbcStr)
@@ -1176,7 +1177,7 @@ deleteDataEnt <- function(dsnDataEnt, haul, tablename) {
 #'
 #' Executes SQL queries of data_ent.mdb
 #' @param dsnDataEnt String for the drive folder (in R notation) - include full file name and extension.
-#' @param query A SQL query
+#' @param query A SQL query string
 #'
 #' @return Changes to the data_ent.mbd file. 
 #' @export
@@ -1212,7 +1213,7 @@ selectDataEnt <- function(dsnDataEnt, query) {
 #' 
 #' @param dat data.frame. This can be data from GIDES or race_data.hauls, including these columns: WIRE_OUT, NET_HEIGHT, NET_SPREAD
 #'
-#' @return
+#' @return a list of equations
 #' @export
 #'
 #' @examples
@@ -1450,21 +1451,31 @@ netSpread <- function(dat) {
 #' Title
 #'
 #' @param histdat (dataframe) A dataframe containing historical survey data
+#' @param sptable (dataframe) A dataframe containing speices codes and scientific names
 #' @param station_query (character) A character string of the current station name (as a grid cell; e.g., "264-85")
 #' @param grid_buffer (numeric) The number of cells around the current station where you would like to see catches from
 #' @param topn (numeric) The number of rows of top catches in that area that you would like to see (e.g., the top 3 species in terms of catch or top 10)
 #'
-#' @return
+#' @return a data.frame of past catches
 #' @export
 #'
 #' @examples
-#' load("data/local_racebase.rda")
-#' load("data/sp_table.rda")
+#' load("./data/local_racebase.rda")
+#' load("./data/sp_table.rda")
 #' get_station_history(station_query = "264-150", grid_buffer = 3, topn = 10)
-get_station_history <- function(histdat = local_racebase, sptable = sp_table, station_query = "264-150",
-                                grid_buffer = 3, topn = 10) {
+get_station_history <- function(
+    histdat, 
+    sptable, 
+    station_query = "264-150",
+    grid_buffer = 3, 
+    topn = 10) {
   
-  y <- as.numeric(stringr::str_split(station_query, pattern = "-", simplify = TRUE))
+  # y <- as.numeric(stringr::str_split(
+  #   station_query,
+  #   pattern = "-",
+  #   simplify = TRUE))
+  y <- as.numeric(strsplit(x = station_query, split = "-", fixed = TRUE)[[1]])
+  
   if (grid_buffer != 3) {
     stop("the grid cell buffer is fixed at 3 for now.")
   }
@@ -1491,7 +1502,7 @@ get_station_history <- function(histdat = local_racebase, sptable = sp_table, st
   
   xx <- merge(x, sptable, by = "species_code", all.x = TRUE)
   
-  aa <- aggregate(xx[, c("number_fish", "weight")],
+  aa <- stats::aggregate(xx[, c("number_fish", "weight")],
                   by = list(
                     haul = factor(xx$haul),
                     year = factor(xx$year),
@@ -1506,7 +1517,7 @@ get_station_history <- function(histdat = local_racebase, sptable = sp_table, st
   aa <- aa[order(-aa$year, -aa$total_catch_kg), ]
   bb <- split(aa, aa$year)
   cc <- lapply(bb, function(df) {
-    head(df[order(-df$year, -df$total_catch_kg), ], n = topn)
+    utils::head(df[order(-df$year, -df$total_catch_kg), ], n = topn)
   })
   
   return(cc)
@@ -1619,6 +1630,14 @@ format_date <- function(x, ...) {
 #' PolySpecies Data Set
 #'
 #' @docType data
+#' 
+#' # library(GAPsurvey)
+#' # dsnDataEnt <- "C:/TEMPEDIT/CATCH"
+#' # PolySpecies <- selectDataEnt(dsnDataEnt, "select distinct a.species_code, a.poly_species_code, b.species_name, b.common_name
+#' #     from LENGTH_WEIGHT_PARAMETERS as a, species_list as b
+#' #     where a.SPECIES_CODE = b.SPECIES_CODE")
+#' # names(PolySpecies) <- toupper(names(PolySpecies))
+#' # devtools::use_data(PolySpecies, overwrite=T)
 #'
 #' @usage data(PolySpecies)
 #' @author Jason Conner (jason.conner AT noaa.gov)
@@ -1630,34 +1649,77 @@ format_date <- function(x, ...) {
 #'   \item{SPECIES_NAME}{Species scientific latin name}
 #'   \item{COMMON_NAME}{Species common names)}
 #' }
-#'
 #' @keywords catch data
-#'
 #' @examples
 #' data(PolySpecies)
 "PolySpecies"
 
 
-
-
-#' RACEBASE Data Set
-#'
-#' @docType data
-#'
+#' @title RACEBASE Data Set
+#' @description One dataframe containing all the racebase tables (experimental: this might be a bad idea)
 #' @usage data(local_racebase)
 #' @author Margaret Siple (margaret.siple AT noaa.gov)
-#'
-#' @format One dataframe containing all the racebase tables (experimental: this might be a bad idea)
+#' @format A data frame with 1613690 rows and 38 variables:
 #' \describe{
-#'   \item{region }{Cruise join var}
-#'   \item{vessel}{Vessel ID, numeric}
-#'   \item{cruise}{Six-digit cruise number}
-#'   \item{haul}{Haul number}
-#' }
-#'
+#'   \item{\code{cruisejoin}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{hauljoin}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{region}}{character Cruise join var}
+#'   \item{\code{vessel}}{integer ID number of the vessel used to collect data for that haul. The column “vessel_id” is associated with the “vessel_name” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{cruise}}{integer This is a six-digit number identifying the cruise number of the form: YYYY99 (where YYYY = year of the cruise; 99 = 2-digit number and is sequential; 01 denotes the first cruise that vessel made in this year, 02 is the second, etc.)}
+#'   \item{\code{haul}}{integer Haul number}
+#'   \item{\code{haul_type}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{performance}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{start_time}}{character The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul. }
+#'   \item{\code{duration}}{double This is the elapsed time between start and end of a haul (decimal hours). }
+#'   \item{\code{distance_fished}}{double Distance the net fished (thousandths of kilometers). }
+#'   \item{\code{net_width}}{double Measured or estimated distance (meters) between wingtips of the trawl.}
+#'   \item{\code{net_measured}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{net_height}}{double Measured or estimated distance (meters) between footrope and headrope of the trawl.}
+#'   \item{\code{stratum}}{integer RACE database statistical area for analyzing data. Strata were designed using bathymetry and other geographic and habitat-related elements. The strata are unique to each survey series. Stratum of value 0 indicates experimental tows. }
+#'   \item{\code{start_latitude}}{double Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{end_latitude}}{double Latitude (one hundred thousandth of a decimal degree) of the end of the haul.}
+#'   \item{\code{start_longitude}}{double Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{end_longitude}}{double Longitude (one hundred thousandth of a decimal degree) of the end of the haul.}
+#'   \item{\code{stationid}}{character Alpha-numeric designation for the station established in the design of a survey. }
+#'   \item{\code{gear_depth}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{bottom_depth}}{integer Bottom depth (tenths of a meter).}
+#'   \item{\code{bottom_type}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{surface_temperature}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{gear_temperature}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{wire_length}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{gear}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{accessories}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{subsample}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{abundance_haul}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{AreaSwept_km2}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{catchjoin}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{species_code}}{integer The species code of the organism associated with the “common_name” and “scientific_name” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{weight}}{double Weight (thousandths of a kilogram) of individuals in a haul by taxon. }
+#'   \item{\code{number_fish}}{double Total number of individuals caught in haul by taxon, represented in whole numbers. }
+#'   \item{\code{subsample_code}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{voucher}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{year}}{character Year the survey was conducted in.} 
+#'}
 #' @keywords catch data
-#'
 #' @examples
 #' data(local_racebase)
+#' @details DETAILS
 "local_racebase"
+
+
+
+#' @title species data cdes
+#' @description RACEBASE Species Codes and Scientific Names Data Set
+#' @usage data(sp_table)
+#' @author Margaret Siple (margaret.siple AT noaa.gov)
+#' @format A data frame with 2754 rows and 2 variables:
+#' \describe{
+#'   \item{\code{species_code}}{integer Species code}
+#'   \item{\code{report_name_scientific}}{Species scientific names} 
+#'}
+#' @details DETAILS
+#' @keywords species scientific code data
+#' @examples
+#' data(sp_table)
+"sp_table"
 

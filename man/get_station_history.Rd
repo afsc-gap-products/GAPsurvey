@@ -4,16 +4,33 @@
 \alias{get_station_history}
 \title{Title}
 \usage{
-get_station_history(station_query = "264-150", grid_buffer = 3)
+get_station_history(
+  histdat,
+  sptable,
+  station_query = "264-150",
+  grid_buffer = 3,
+  topn = 10
+)
 }
 \arguments{
-\item{station_query}{}
+\item{histdat}{(dataframe) A dataframe containing historical survey data}
 
-\item{grid_buffer}{}
+\item{sptable}{(dataframe) A dataframe containing speices codes and scientific names}
+
+\item{station_query}{(character) A character string of the current station name (as a grid cell; e.g., "264-85")}
+
+\item{grid_buffer}{(numeric) The number of cells around the current station where you would like to see catches from}
+
+\item{topn}{(numeric) The number of rows of top catches in that area that you would like to see (e.g., the top 3 species in terms of catch or top 10)}
 }
 \value{
-
+a data.frame of past catches
 }
 \description{
 Title
+}
+\examples{
+load("./data/local_racebase.rda")
+load("./data/sp_table.rda")
+get_station_history(station_query = "264-150", grid_buffer = 3, topn = 10)
 }

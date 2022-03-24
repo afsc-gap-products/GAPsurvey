@@ -10,7 +10,7 @@ netSpread(dat)
 \item{dat}{data.frame. This can be data from GIDES or race_data.hauls, including these columns: WIRE_OUT, NET_HEIGHT, NET_SPREAD}
 }
 \value{
-
+a list of equations
 }
 \description{
 The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean netspread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).

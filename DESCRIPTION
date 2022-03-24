@@ -1,6 +1,6 @@
 Package: GAPsurvey
 Title: Provides at-sea data management tools for RACE GAP surveys
-Version: 2021.08.01
+Version: 2022.04.01
 Authors@R: 
   c(person(given = "Emily",
            family = "Markowitz", 
@@ -27,4 +27,5 @@ Depends:
 Imports: 
     RODBC, 
     tcltk, 
-    stats
+    stats, 
+    utils

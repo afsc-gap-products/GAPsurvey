@@ -4,7 +4,7 @@
 
 ### *At-sea data management tools for RACE GAP surveys*
 
-[![](https://img.shields.io/badge/devel%20version-2021.08.01-blue.svg)](https://github.com/EmilyMarkowitz-NOAA/NMFSReports)
+[![](https://img.shields.io/badge/devel%20version-2022.04.01-blue.svg)](https://github.com/EmilyMarkowitz-NOAA/NMFSReports)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![](https://img.shields.io/github/last-commit/EmilyMarkowitz-NOAA/NMFSReports.svg)](https://github.com/EmilyMarkowitz-NOAA/NMFSReports/commits/main)
 
