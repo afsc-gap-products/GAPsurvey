@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GAPsurvey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2021.08.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2022.04.01</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 </li>
 <li>
   <a href="https://nmfs-general-modeling-tools.github.io/">
-    <span class="fas fa-fish"></span>
+    <span class="fa fa-fish"></span>
      
   </a>
 </li>
@@ -150,18 +150,18 @@
     <p>Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>CTDtoBTD</span><span class='op'>(</span>
-  VESSEL <span class='op'>=</span> <span class='cn'>NA</span>,
-  CRUISE <span class='op'>=</span> <span class='cn'>NA</span>,
-  HAUL <span class='op'>=</span> <span class='cn'>NA</span>,
-  MODEL_NUMBER <span class='op'>=</span> <span class='cn'>NA</span>,
-  VERSION_NUMBER <span class='op'>=</span> <span class='cn'>NA</span>,
-  SERIAL_NUMBER <span class='op'>=</span> <span class='cn'>NA</span>,
-  path_in <span class='op'>=</span> <span class='cn'>NA</span>,
-  path_out <span class='op'>=</span> <span class='st'>"./"</span>,
-  filename_add <span class='op'>=</span> <span class='st'>""</span>,
-  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>CTDtoBTD</span>(
+  <span class='kw'>VESSEL</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>CRUISE</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>HAUL</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>MODEL_NUMBER</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>VERSION_NUMBER</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>SERIAL_NUMBER</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>path_in</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>path_out</span> <span class='kw'>=</span> <span class='st'>"./"</span>,
+  <span class='kw'>filename_add</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,35 +226,34 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 <p>Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to &gt;1.0 will be averaged together).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>CTDtoBTD</span><span class='op'>(</span>
-   VESSEL <span class='op'>=</span> <span class='fl'>94</span>,
-   CRUISE <span class='op'>=</span> <span class='fl'>2001</span>,
-   HAUL <span class='op'>=</span> <span class='fl'>4</span>,
-   MODEL_NUMBER <span class='op'>=</span> <span class='fl'>123</span>,
-   VERSION_NUMBER <span class='op'>=</span> <span class='fl'>456</span>,
-   SERIAL_NUMBER <span class='op'>=</span> <span class='fl'>789</span>,
-   path_in <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"exdata/ctd2btd/"</span>,
-      <span class='st'>"SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"</span><span class='op'>)</span>, 
-       package <span class='op'>=</span> <span class='st'>"GAPsurvey"</span><span class='op'>)</span>,
-   path_out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>,
-   filename_add <span class='op'>=</span> <span class='st'>"newctd"</span>, 
-   quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-  
- 
-<span class='fu'>CTDtoBTD</span><span class='op'>(</span>
-   VESSEL <span class='op'>=</span> <span class='fl'>94</span>,
-   CRUISE <span class='op'>=</span> <span class='fl'>202101</span>,
-   HAUL <span class='op'>=</span> <span class='fl'>107</span>,
-   MODEL_NUMBER <span class='op'>=</span> <span class='st'>""</span>,
-   VERSION_NUMBER <span class='op'>=</span> <span class='st'>""</span>,
-   SERIAL_NUMBER <span class='op'>=</span> <span class='fl'>8105</span>,
-   path_in <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"exdata/ctd2btd/"</span>,
-     <span class='st'>"SBE19plus_01908105_2021_06_25_94_0005.cnv"</span><span class='op'>)</span>, 
-      package <span class='op'>=</span> <span class='st'>"GAPsurvey"</span><span class='op'>)</span>,
-   path_out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>,
-   filename_add <span class='op'>=</span> <span class='st'>"newctd"</span>, 
-   quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>CTDtoBTD</span>(
+   <span class='kw'>VESSEL</span> <span class='kw'>=</span> <span class='fl'>94</span>,
+   <span class='kw'>CRUISE</span> <span class='kw'>=</span> <span class='fl'>2001</span>,
+   <span class='kw'>HAUL</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+   <span class='kw'>MODEL_NUMBER</span> <span class='kw'>=</span> <span class='fl'>123</span>,
+   <span class='kw'>VERSION_NUMBER</span> <span class='kw'>=</span> <span class='fl'>456</span>,
+   <span class='kw'>SERIAL_NUMBER</span> <span class='kw'>=</span> <span class='fl'>789</span>,
+   <span class='kw'>path_in</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"exdata/ctd2btd/"</span>,
+      <span class='st'>"SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"</span>),
+       <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GAPsurvey"</span>),
+   <span class='kw'>path_out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
+   <span class='kw'>filename_add</span> <span class='kw'>=</span> <span class='st'>"newctd"</span>,
+   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+
+<span class='fu'>CTDtoBTD</span>(
+   <span class='kw'>VESSEL</span> <span class='kw'>=</span> <span class='fl'>94</span>,
+   <span class='kw'>CRUISE</span> <span class='kw'>=</span> <span class='fl'>202101</span>,
+   <span class='kw'>HAUL</span> <span class='kw'>=</span> <span class='fl'>107</span>,
+   <span class='kw'>MODEL_NUMBER</span> <span class='kw'>=</span> <span class='st'>""</span>,
+   <span class='kw'>VERSION_NUMBER</span> <span class='kw'>=</span> <span class='st'>""</span>,
+   <span class='kw'>SERIAL_NUMBER</span> <span class='kw'>=</span> <span class='fl'>8105</span>,
+   <span class='kw'>path_in</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"exdata/ctd2btd/"</span>,
+     <span class='st'>"SBE19plus_01908105_2021_06_25_94_0005.cnv"</span>),
+      <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GAPsurvey"</span>),
+   <span class='kw'>path_out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
+   <span class='kw'>filename_add</span> <span class='kw'>=</span> <span class='st'>"newctd"</span>,
+   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -266,11 +265,11 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 
       <footer>
       <div class="copyright">
-  <p>Developed by Emily Markowitz, Liz Dawson, Jason Conner.</p>
+  <p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson, Jason Conner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

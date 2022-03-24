@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{get_station_history}
 \alias{get_station_history}
-\title{Title}
+\title{Find catch data from previous years}
 \usage{
 get_station_history(
   histdat,
@@ -27,7 +27,7 @@ get_station_history(
 a data.frame of past catches
 }
 \description{
-Title
+Find catch data from previous years
 }
 \examples{
 load("./data/local_racebase.rda")

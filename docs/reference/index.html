@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GAPsurvey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2021.08.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2022.04.01</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
 </li>
 <li>
   <a href="https://nmfs-general-modeling-tools.github.io/">
-    <span class="fas fa-fish"></span>
+    <span class="fa fa-fish"></span>
      
   </a>
 </li>
@@ -210,9 +210,9 @@
       <tr>
         
         <td>
-          <p><code><a href="lengthData.html">lengthData()</a></code> </p>
+          <p><code><a href="catchData.html">catchData()</a></code> </p>
         </td>
-        <td><p>Import Length Tablet Files Into DataEnt.mdb</p></td>
+        <td><p>Import Catch Tablet Files Into DataEnt.mdb</p></td>
       </tr><tr>
         
         <td>
@@ -228,9 +228,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="catchData.html">catchData()</a></code> </p>
+          <p><code><a href="lengthData.html">lengthData()</a></code> </p>
         </td>
-        <td><p>Import Catch Tablet Files Into DataEnt.mdb</p></td>
+        <td><p>Import Length Tablet Files Into DataEnt.mdb</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="checkFiles.html">checkFiles()</a></code> </p>
+        </td>
+        <td><p>Check files before import</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -266,6 +272,44 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-estimate-net-spread" class="hasAnchor"><a href="#section-estimate-net-spread" class="anchor"></a>Estimate Net Spread</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="netSpread.html">netSpread()</a></code> </p>
+        </td>
+        <td><p>Calculate Net Spread for tows missing net width using a glm.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-check-past-tows" class="hasAnchor"><a href="#section-check-past-tows" class="anchor"></a>Check Past Tows</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="get_station_history.html">get_station_history()</a></code> </p>
+        </td>
+        <td><p>Find catch data from previous years</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-helper-functions" class="hasAnchor"><a href="#section-helper-functions" class="anchor"></a>Helper Functions</h2>
           <p class="section-desc"></p>
         </th>
@@ -287,6 +331,12 @@
           <p><code><a href="fix_path.html">fix_path()</a></code> </p>
         </td>
         <td><p>Make sure file path is complete</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="text_list.html">text_list()</a></code> </p>
+        </td>
+        <td><p>Takes a string of words and combines them into a sentance that lists them.</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -306,6 +356,18 @@
           <p><code><a href="PolySpecies.html">PolySpecies</a></code> </p>
         </td>
         <td><p>PolySpecies Data Set</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="local_racebase.html">local_racebase</a></code> </p>
+        </td>
+        <td><p>RACEBASE Data Set</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sp_table.html">sp_table</a></code> </p>
+        </td>
+        <td><p>species data cdes</p></td>
       </tr>
     </tbody>
     </table>
@@ -321,11 +383,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Emily Markowitz, Liz Dawson, Jason Conner.</p>
+  <p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson, Jason Conner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

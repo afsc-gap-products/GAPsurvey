@@ -48,14 +48,16 @@ reference:
       - '`deleteDataEnt`'
       - '`selectDataEnt`'
   - title: Estimate Net Spread
+    contents:
       - '`netSpread`'
   - title: Check Past Tows
+    contents:
       - '`get_station_history`'
   - title: Helper Functions
     contents:
       - '`numbers0`'
       - '`fix_path`'
-      - '`format_date`'
+      - '`text_list`'
   - title: Datasets
     contents:
       - '`PolySpecies`'

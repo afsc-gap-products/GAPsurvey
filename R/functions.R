@@ -52,6 +52,13 @@ TEDtoBTD <- function(
   filename_add = "new",
   quiet = FALSE){
   
+  format_date <- function(x, ...) {
+    tmp <- format(x, ...)
+    tmp <- sub("^[0]+", "", tmp)
+    tmp <- sub('/0', "/", tmp)
+    return(tmp)
+  }
+  
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
@@ -220,6 +227,13 @@ CTDtoBTD <- function(
   path_out = "./",
   filename_add = "",
   quiet = FALSE){
+  
+  format_date <- function(x, ...) {
+    tmp <- format(x, ...)
+    tmp <- sub("^[0]+", "", tmp)
+    tmp <- sub('/0', "/", tmp)
+    return(tmp)
+  }
   
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
@@ -1448,7 +1462,7 @@ netSpread <- function(dat) {
 # Check Past Tows --------------------------------------------------------------
 
 
-#' Title
+#' Find catch data from previous years
 #'
 #' @param histdat (dataframe) A dataframe containing historical survey data
 #' @param sptable (dataframe) A dataframe containing speices codes and scientific names
@@ -1615,40 +1629,27 @@ fix_path <- function(path) {
 }
 
 
-
-format_date <- function(x, ...) {
-  tmp <- format(x, ...)
-  tmp <- sub("^[0]+", "", tmp)
-  tmp <- sub('/0', "/", tmp)
-  return(tmp)
-}
-
-
 # Data ------------------------------------------------------------------------------------
 
-
-#' PolySpecies Data Set
-#'
-#' @docType data
-#' 
-#' # library(GAPsurvey)
+#' @title PolySpecies Data Set
+#' @description 
+#' #' # library(GAPsurvey)
 #' # dsnDataEnt <- "C:/TEMPEDIT/CATCH"
 #' # PolySpecies <- selectDataEnt(dsnDataEnt, "select distinct a.species_code, a.poly_species_code, b.species_name, b.common_name
 #' #     from LENGTH_WEIGHT_PARAMETERS as a, species_list as b
 #' #     where a.SPECIES_CODE = b.SPECIES_CODE")
 #' # names(PolySpecies) <- toupper(names(PolySpecies))
 #' # devtools::use_data(PolySpecies, overwrite=T)
-#'
 #' @usage data(PolySpecies)
 #' @author Jason Conner (jason.conner AT noaa.gov)
-#'
-#' @format A data frame with 172 obs. of  4 variables:
+#' @format A data frame with 172 rows and 4 variables:
 #' \describe{
-#'   \item{SPECIES_CODE}{Species code}
-#'   \item{POLY_SPECIES_CODE}{Poly species code}
-#'   \item{SPECIES_NAME}{Species scientific latin name}
-#'   \item{COMMON_NAME}{Species common names)}
-#' }
+#'   \item{\code{SPECIES_CODE}}{integer Species code}
+#'   \item{\code{POLY_SPECIES_CODE}}{integer Poly species code}
+#'   \item{\code{SPECIES_NAME}}{character Species scientific latin name}
+#'   \item{\code{COMMON_NAME}}{character Species common names} 
+#'}
+#' @details DETAILS
 #' @keywords catch data
 #' @examples
 #' data(PolySpecies)

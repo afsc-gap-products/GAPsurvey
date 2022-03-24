@@ -83,7 +83,7 @@ DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GAPsurvey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2021.08.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2022.04.01</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@ DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul." />
 </li>
 <li>
   <a href="https://nmfs-general-modeling-tools.github.io/">
-    <span class="fas fa-fish"></span>
+    <span class="fa fa-fish"></span>
      
   </a>
 </li>
@@ -152,7 +152,7 @@ DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul." />
 DATAENT_CATCH... and RAW_CATCH_HAUL... for the designated haul.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>catchData</span><span class='op'>(</span><span class='va'>haul</span>, <span class='va'>dsnTablet</span>, <span class='va'>dsnDataEnt</span>, importLength <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>catchData</span>(<span class='no'>haul</span>, <span class='no'>dsnTablet</span>, <span class='no'>dsnDataEnt</span>, <span class='kw'>importLength</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,33 +197,7 @@ HAUL_xxxx.csv             -- A length file for each tablet</p>
 <p>IF the catch was subsampled, the user will be given an option to define the subsample type (1 = 100% Processed (No subsample), 2 = Subsampled, Load cell estimate of total weight, 4 = Subsampled, Visual estimate of total weight, 6 = Subsampled, basket weights of both fractions (table split), 9 = Non-quantitative catch sampling, 12 = Volumetric method. Density from Density Lookup Table, 13 = Volumetric method. Density calculated on deck from haul sample).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Gulf of Alaska Example (without error)</span>
-<span class='co'># Point functions to correct tablet directory and "dataEnt" file</span>
-<span class='va'>dsnTablet</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"exdata/catch/GOA/"</span>, package <span class='op'>=</span> <span class='st'>"GAPsurvey"</span><span class='op'>)</span>
-<span class='va'>dsnDataEnt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"exdata/catch/GOA/data_ent.mdb"</span>, package <span class='op'>=</span> <span class='st'>"GAPsurvey"</span><span class='op'>)</span>
-<span class='va'>importLength</span> <span class='op'>&lt;-</span> <span class='cn'>TRUE</span> 
-
-<span class='co'># Define the current haul number</span>
-<span class='va'>haul</span> <span class='op'>&lt;-</span> <span class='fl'>8</span>
-
-<span class='co'># Import catch data </span>
-<span class='fu'>catchData</span><span class='op'>(</span><span class='va'>haul</span>,<span class='va'>dsnTablet</span>,<span class='va'>dsnDataEnt</span>,<span class='va'>importLength</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: [RODBC] ERROR: state IM002, code 0, message [Microsoft][ODBC Driver Manager] Data source name not found and no default driver specified</span></div><div class='output co'>#&gt; <span class='warning'>Warning: ODBC connection failed</span></div><div class='output co'>#&gt; <span class='error'>Error in RODBC::sqlQuery(dataEnt, query): first argument is not an open RODBC channel</span></div><div class='input'>
-<span class='co'># Eastern Bering Sea Example (Will cause error)</span>
-<span class='co'># Point functions to correct tablet directory and "dataEnt" file</span>
-<span class='va'>dsnTablet</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"exdata/catch/EBS/"</span>, package <span class='op'>=</span> <span class='st'>"GAPsurvey"</span><span class='op'>)</span>
-<span class='va'>dsnDataEnt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"exdata/catch/EBS/data_ent.mdb"</span>, package <span class='op'>=</span> <span class='st'>"GAPsurvey"</span><span class='op'>)</span>
-<span class='va'>importLength</span> <span class='op'>&lt;-</span> <span class='cn'>TRUE</span> 
-
-<span class='co'># Define the current haul number</span>
-<span class='va'>haul</span> <span class='op'>&lt;-</span> <span class='fl'>59</span>
-
-<span class='co'># Import catch data </span>
-<span class='fu'>catchData</span><span class='op'>(</span><span class='va'>haul</span>,<span class='va'>dsnTablet</span>,<span class='va'>dsnDataEnt</span>,<span class='va'>importLength</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in catchData(haul, dsnTablet, dsnDataEnt, importLength): C3c: Both SUBSAMPLE_WEIGHT and NONSUB_WEIGHT have no values for 1 species. Delete species entry if added in error. A value is required for one or both types of weights (subsample or non-subsample). Correct data in tablet and try again.</span></div><div class='input'><span class='co'># Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. </span>
-<span class='co'># Return to the tablet and edit the data there before running it through </span>
-<span class='co'># this function again. </span>
-</div></pre>
+    <pre class="examples"></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -235,11 +209,11 @@ HAUL_xxxx.csv             -- A length file for each tablet</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Emily Markowitz, Liz Dawson, Jason Conner.</p>
+  <p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson, Jason Conner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

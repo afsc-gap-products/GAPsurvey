@@ -80,8 +80,8 @@ rmarkdown::render(input = "README.Rmd",
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
 # devtools::build_vignettes()
-# usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
-# pkgdown::build_site(pkg = here::here())
+usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
+pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
