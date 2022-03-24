@@ -2,6 +2,22 @@
 
 # GAPsurvey <a href={https://emilymarkowitz-noaa.github.io/GAPsurvey}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo with an image of a NOAA Fisheries report" />
 
+## This code is primarally maintained by:
+
+**Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
+
+**Megsie Siple** (Margaret.Siple AT noaa.gov; @MargaretSiple-NOAA)
+
+**Liz Dawson** (Liz.Dawson AT noaa.gov; liz-dawson-NOAA)
+
+Alaska Fisheries Science Center,
+
+National Marine Fisheries Service,
+
+National Oceanic and Atmospheric Administration,
+
+Seattle, WA 98195
+
 ### *At-sea data management tools for RACE GAP surveys*
 
 [![](https://img.shields.io/badge/devel%20version-2022.04.01-blue.svg)](https://github.com/EmilyMarkowitz-NOAA/NMFSReports)

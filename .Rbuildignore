@@ -2,7 +2,7 @@
 ^renv\.lock$
 ^GAPsurvey\.Rproj$
 ^LICENSE\.md$
-^\.tar.gz$
+^\.tar\.gz$
 ^README\.Rmd$
 ^notes\.R$
 ^\.rmd$
