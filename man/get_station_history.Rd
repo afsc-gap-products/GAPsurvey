@@ -30,7 +30,9 @@ a data.frame of past catches
 Find catch data from previous years
 }
 \examples{
-load("./data/local_racebase.rda")
-load("./data/sp_table.rda")
+data("sp_table.rda", package = "GAPsurvey")
+data("local_racebase.rda", package = "GAPsurvey")
+# load("./data/local_racebase.rda")
+# load("./data/sp_table.rda")
 get_station_history(station_query = "264-150", grid_buffer = 3, topn = 10)
 }

@@ -53,6 +53,7 @@ reference:
   - title: Check Past Tows
     contents:
       - '`get_station_history`'
+      - '`get_catch_haul_history`'
   - title: Helper Functions
     contents:
       - '`numbers0`'
@@ -62,4 +63,5 @@ reference:
     contents:
       - '`PolySpecies`'
       - '`local_racebase`'
+      - '`public_data`'
       - '`sp_table`'

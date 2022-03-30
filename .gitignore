@@ -44,3 +44,4 @@ vignettes/*.pdf
 /installfiles
 /exe
 *.rmd
+docs

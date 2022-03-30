@@ -3,22 +3,15 @@
 \docType{data}
 \name{sp_table}
 \alias{sp_table}
-\title{species data cdes}
+\title{species data codes}
 \format{
-A data frame with 2754 rows and 2 variables:
-\describe{
-\item{\code{species_code}}{integer Species code}
-\item{\code{report_name_scientific}}{Species scientific names}
-}
+An object of class \code{data.frame} with 2754 rows and 2 columns.
 }
 \usage{
-data(sp_table)
+sp_table
 }
 \description{
-RACEBASE Species Codes and Scientific Names Data Set
-}
-\details{
-DETAILS
+species data codes
 }
 \examples{
 data(sp_table)
@@ -26,7 +19,4 @@ data(sp_table)
 \author{
 Margaret Siple (margaret.siple AT noaa.gov)
 }
-\keyword{code}
-\keyword{data}
-\keyword{scientific}
-\keyword{species}
+\keyword{datasets}

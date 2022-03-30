@@ -2,6 +2,8 @@
 
 # GAPsurvey <a href={https://emilymarkowitz-noaa.github.io/GAPsurvey}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo with an image of a NOAA Fisheries report" />
 
+> This code is always in development
+
 ## This code is primarally maintained by:
 
 **Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
