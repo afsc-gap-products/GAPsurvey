@@ -2,64 +2,48 @@
 % Please edit documentation in R/functions.R
 \name{get_catch_haul_history}
 \alias{get_catch_haul_history}
-\title{Find catch data from previous years v2}
+\title{Find historical catch data from previous years}
 \usage{
-get_catch_haul_history(
-  public_data,
-  survey,
-  years = NA,
-  station,
-  grid_buffer = NA
-)
+get_catch_haul_history(survey, years = NA, station, grid_buffer = NA)
 }
 \arguments{
-\item{public_data}{(dataframe) A dataframe containing historical survey data}
+\item{survey}{(character) A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS".}
 
-\item{years}{(numeric) the years you want returned in the output}
+\item{years}{(numeric) the years you want returned in the output. If years = NA, script will default to the last 10 years. If you would like to see all years, simply choose a large range that covers all years of the survey (e.g., 1970:2030)}
 
 \item{station}{(character) A character string of the current station name (as a grid cell; e.g., "264-85")}
 
-\item{grid_buffer}{(numeric) The number of cells around the current station where you would like to see catches from}
+\item{grid_buffer}{(numeric) GOA/AI only. The number of cells around the current station where you would like to see catches from. Typically, use grid_buffer = 3.}
 }
 \value{
 a data.frame of past catches and hauls
 }
 \description{
-Find catch data from previous years v2
+Find historical catch data from previous years
 }
 \examples{
-data("public_data", package = "GAPsurvey")
-
-# GOA
-get_catch_haul_history(public_data = public_data, 
-      survey = "GOA", 
-      years = 2019,
-      station = "264-150",
-      grid_buffer = 3)
-get_catch_haul_history(public_data = public_data, 
-      survey = "GOA", 
-      years = NA,
-      station = "264-150",
-      grid_buffer = 3)
-
-# AI
-get_catch_haul_history(public_data = public_data, 
+# AI (or GOA) ------------------------------------
+# for two years and nearby stations
+get_catch_haul_history(
       survey = "AI", 
-      years = 2018,
+      years = c(2018, 2016),
       station = "324-73",
       grid_buffer = 3)
-get_catch_haul_history(public_data = public_data, 
-      survey = "AI", 
-      years = NA,
-      station = "324-73",
-      grid_buffer = 3)
+# for default 10 years and nearby stations
+get_catch_haul_history(
+     survey = "AI", 
+     years = NA,
+     station = "324-73",
+     grid_buffer = 3)
 
-# EBS
-get_catch_haul_history(public_data = public_data, 
-      survey = "EBS", 
-      years = 2019:2021, 
-      station = "I-13")   
-get_catch_haul_history(public_data = public_data, 
+# EBS (or NBS) ------------------------------------
+# for one year and only 1 station
+get_catch_haul_history(
+     survey = "EBS", 
+     years = 2021, 
+     station = "I-13")   
+# for default 10 years and only 1 station
+get_catch_haul_history( 
       survey = "EBS", 
       station = "I-13")   
 }

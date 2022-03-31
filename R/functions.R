@@ -41,16 +41,16 @@
 #'    filename_add = "newted", 
 #'    quiet = TRUE)
 TEDtoBTD <- function(
-  VESSEL = NA,
-  CRUISE = NA,
-  HAUL = NA,
-  MODEL_NUMBER = NA,
-  VERSION_NUMBER = NA,
-  SERIAL_NUMBER = NA,
-  path_in = "C:/Program Files/Marport Server/Logs/",
-  path_out = "./",
-  filename_add = "new",
-  quiet = FALSE){
+    VESSEL = NA,
+    CRUISE = NA,
+    HAUL = NA,
+    MODEL_NUMBER = NA,
+    VERSION_NUMBER = NA,
+    SERIAL_NUMBER = NA,
+    path_in = "C:/Program Files/Marport Server/Logs/",
+    path_out = "./",
+    filename_add = "new",
+    quiet = FALSE){
   
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -217,16 +217,16 @@ TEDtoBTD <- function(
 #'    filename_add = "newctd", 
 #'    quiet = TRUE)
 CTDtoBTD <- function(
-  VESSEL = NA,
-  CRUISE = NA,
-  HAUL = NA,
-  MODEL_NUMBER = NA,
-  VERSION_NUMBER = NA,
-  SERIAL_NUMBER = NA,
-  path_in = NA,
-  path_out = "./",
-  filename_add = "",
-  quiet = FALSE){
+    VESSEL = NA,
+    CRUISE = NA,
+    HAUL = NA,
+    MODEL_NUMBER = NA,
+    VERSION_NUMBER = NA,
+    SERIAL_NUMBER = NA,
+    path_in = NA,
+    path_out = "./",
+    filename_add = "",
+    quiet = FALSE){
   
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -450,14 +450,14 @@ CTDtoBTD <- function(
 #'     filename_add = "newlog",
 #'     quiet = TRUE)
 LOGtoGPS <- function(
-  VESSEL = NA,
-  CRUISE = NA,
-  HAUL = NA,
-  DATE = NA,
-  path_in = NA,
-  path_out = "./",
-  filename_add = "",
-  quiet = FALSE){
+    VESSEL = NA,
+    CRUISE = NA,
+    HAUL = NA,
+    DATE = NA,
+    path_in = NA,
+    path_out = "./",
+    filename_add = "",
+    quiet = FALSE){
   
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
@@ -625,7 +625,7 @@ checkFiles <- function(haul, dsnTablet, dsnDataEnt) {
 #' lengthData(haul,dsnTablet,dsnDataEnt) 
 lengthData <- function(haul, dsnTablet, dsnDataEnt) {
   
-  PolySpecies <- GAPsurvey::PolySpecies
+  data("PolySpecies", package = "GAPsurvey")
   
   options(stringsAsFactors = F)
   
@@ -667,7 +667,8 @@ lengthData <- function(haul, dsnTablet, dsnDataEnt) {
                                                FUN = sum)
   colnames(entLengthFreq)[5] <- "FREQUENCY"
   
-  entLengthFreq <- base::merge(entLengthFreq, PolySpecies, 
+  entLengthFreq <- base::merge(x = entLengthFreq, 
+                               y = PolySpecies, 
                                by = "POLY_SPECIES_CODE")[,c("HAUL","SPECIES_CODE","SEX","LENGTH","FREQUENCY")]
   entLengthFreq$SUBSAMPLE_TYPE <- 1L
   entLengthFreq$LENGTH_TYPE <- NA
@@ -879,8 +880,8 @@ benthicData <- function(haul, dsnTablet, dsnDataEnt) {
 #'                            tablename = 'CATCH_HEADER')
 #' dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
 #'                         tablename = 'LENGTH')
-#' dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
-#'#                              haul, tablename = 'RAW_LENGTH')
+#' dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+#'                             tablename = 'RAW_LENGTH')
 #'
 #' # Eastern Bering Sea Example (Will cause error)
 #' # Point functions to correct tablet directory and "dataEnt" file
@@ -1462,150 +1463,64 @@ netSpread <- function(dat) {
 # Check Past Tows --------------------------------------------------------------
 
 
-#' Find catch data from previous years
+#' Find historical catch data from previous years
 #'
-#' @param histdat (dataframe) A dataframe containing historical survey data
-#' @param sptable (dataframe) A dataframe containing speices codes and scientific names
-#' @param station_query (character) A character string of the current station name (as a grid cell; e.g., "264-85")
-#' @param grid_buffer (numeric) The number of cells around the current station where you would like to see catches from
-#' @param topn (numeric) The number of rows of top catches in that area that you would like to see (e.g., the top 3 species in terms of catch or top 10)
-#'
-#' @return a data.frame of past catches
-#' @export
-#'
-#' @examples
-#' data("sp_table.rda", package = "GAPsurvey")
-#' data("local_racebase.rda", package = "GAPsurvey")
-#' # load("./data/local_racebase.rda")
-#' # load("./data/sp_table.rda")
-#' get_station_history(station_query = "264-150", grid_buffer = 3, topn = 10)
-get_station_history <- function(
-    histdat, 
-    sptable, 
-    station_query = "264-150",
-    grid_buffer = 3, 
-    topn = 10) {
-  
-  # y <- as.numeric(stringr::str_split(
-  #   station_query,
-  #   pattern = "-",
-  #   simplify = TRUE))
-  y <- as.numeric(strsplit(x = station_query, split = "-", fixed = TRUE)[[1]])
-  
-  if (grid_buffer != 3) {
-    stop("the grid cell buffer is fixed at 3 for now.")
-  }
-  possible_stations <- expand.grid(
-    data.frame(
-      rbind(
-        y + grid_buffer,
-        y + grid_buffer - 1,
-        y + grid_buffer - 2,
-        y,
-        y - grid_buffer,
-        y - grid_buffer - 1,
-        y - grid_buffer - 2
-      )
-    )
-  )
-
-  possible_stations$stationid <- paste(possible_stations$X1,
-                                       possible_stations$X2,
-                                       sep = "-"
-  )
-  
-  x <- subset(x = histdat, stationid %in% possible_stations$stationid) 
-  
-  xx <- merge(x, sptable, by = "species_code", all.x = TRUE)
-  
-  aa <- stats::aggregate(xx[, c("number_fish", "weight")],
-                  by = list(
-                    haul = factor(xx$haul),
-                    year = factor(xx$year),
-                    report_name_scientific = factor(xx$report_name_scientific),
-                    station_id = factor(xx$stationid)
-                  ),
-                  sum
-  )
-  
-  names(aa)[names(aa) == "weight"] <- "total_catch_kg"
-  aa$year <- as.numeric(as.character(aa$year))
-  aa <- aa[order(-aa$year, -aa$total_catch_kg), ]
-  bb <- split(aa, aa$year)
-  cc <- lapply(bb, function(df) {
-    utils::head(df[order(-df$year, -df$total_catch_kg), ], n = topn)
-  })
-  
-  return(cc)
-}
-
-
-#' Find catch data from previous years v2
-#'
-#' @param public_data (dataframe) A dataframe containing historical survey data
+#' @param survey (character) A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS". 
 #' @param station (character) A character string of the current station name (as a grid cell; e.g., "264-85")
-#' @param grid_buffer (numeric) The number of cells around the current station where you would like to see catches from
-#' @param years (numeric) the years you want returned in the output
+#' @param grid_buffer (numeric) GOA/AI only. The number of cells around the current station where you would like to see catches from. Typically, use grid_buffer = 3. 
+#' @param years (numeric) the years you want returned in the output. If years = NA, script will default to the last 10 years. If you would like to see all years, simply choose a large range that covers all years of the survey (e.g., 1970:2030)
 #'
 #' @return a data.frame of past catches and hauls
 #' @export
 #'
 #' @examples
-# # load("./data/public_data.rda")
-#' data("public_data", package = "GAPsurvey")
-#' 
-#' # GOA
-#' get_catch_haul_history(public_data = public_data, 
-#'       survey = "GOA", 
-#'       years = 2019,
-#'       station = "264-150",
-#'       grid_buffer = 3)
-#' # get_catch_haul_history(public_data = public_data, 
-#' #       survey = "GOA", 
-#' #       years = NA,
-#' #       station = "264-150",
-#' #       grid_buffer = 3)
-#'
-#' # AI
-#' get_catch_haul_history(public_data = public_data, 
+#' # AI (or GOA) ------------------------------------
+#' # for two years and nearby stations
+#' get_catch_haul_history(
 #'       survey = "AI", 
-#'       years = 2018,
+#'       years = c(2018, 2016),
 #'       station = "324-73",
 #'       grid_buffer = 3)
-#' # get_catch_haul_history(public_data = public_data, 
-#' #       survey = "AI", 
-#' #       years = NA,
-#' #       station = "324-73",
-#' #       grid_buffer = 3)
+#' # for default 10 years and nearby stations
+#' get_catch_haul_history(
+#'      survey = "AI", 
+#'      years = NA,
+#'      station = "324-73",
+#'      grid_buffer = 3)
 #' 
-#' # EBS
-#' # get_catch_haul_history(public_data = public_data, 
-#' #      survey = "EBS", 
-#' #      years = 2019:2021, 
-#' #      station = "I-13")   
-#' get_catch_haul_history(public_data = public_data, 
+#' # EBS (or NBS) ------------------------------------
+#' # for one year and only 1 station
+#' get_catch_haul_history(
+#'      survey = "EBS", 
+#'      years = 2021, 
+#'      station = "I-13")   
+#' # for default 10 years and only 1 station
+#' get_catch_haul_history( 
 #'       survey = "EBS", 
 #'       station = "I-13")   
 get_catch_haul_history <- function(
-    public_data, 
     survey, 
     years = NA,
     station,
     grid_buffer = NA) {
+  
+  # (dataframe) A dataframe containing historical survey data. We suggest you use `data("public_data", package = "GAPsurvey")`, which you can learn more about using `?GAPsurvey::public_data`
+  data("public_data", package = "GAPsurvey") 
+
   
   public_data0 <- 
     public_data[public_data$srvy == survey,
                 c("year", "srvy", "haul", "stratum", "station", 
                   "vessel_name", "vessel_id", "date_time", "latitude_dd", "longitude_dd", 
                   "species_code", "common_name", "scientific_name", "taxon_confidence", 
-                  "cpue_kgha", "cpue_kgkm2", "weight_kg", "count",
+                  "cpue_kgha", "cpue_noha", "weight_kg", "count",
                   "bottom_temperature_c", "surface_temperature_c", "depth_m", 
                   "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")]
   
   if (!is.na(years[1])) {
-    # public_data0 <- public_data0[public_data0$year == year,]
     public_data0 <- subset(x = public_data0, year %in% years)
-    
+  } else { # default: show 10 years average
+    public_data0 <- subset(x = public_data0, year %in% sort(unique(public_data$year), decreasing = TRUE)[1:10])
   }
   
   if(is.na(grid_buffer)) {
@@ -1654,7 +1569,7 @@ get_catch_haul_history <- function(
     
     xx <- subset(x = public_data0, station %in% possible_stations)
     
-    catch <- stats::aggregate(xx[, c("count", "weight_kg")],
+    catch <- stats::aggregate(xx[, c("count", "weight_kg", "cpue_kgha", "cpue_noha")],
                               by = list(
                                 haul = factor(xx$haul),
                                 year = factor(xx$year),
@@ -1663,14 +1578,14 @@ get_catch_haul_history <- function(
                               ),
                               sum
     )
-    haul <- unique(xx[,c("year", "haul", "station", "stratum", "station", 
+    haul <- unique(xx[,c("year", "haul", "station", "stratum", 
                          "vessel_name", "vessel_id", "date_time", "latitude_dd", "longitude_dd", 
                          "bottom_temperature_c", "surface_temperature_c", "depth_m", 
                          "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")])
     
   } else {
-    catch <- public_data0[,c("year", "haul", "station", "scientific_name", "count", "weight_kg")]
-    haul <- unique(public_data0[,c("year", "haul", "station", "stratum", "station", 
+    catch <- public_data0[,c("year", "station", "scientific_name", "count", "weight_kg", "cpue_kgha", "cpue_noha")]
+    haul <- unique(public_data0[,c("year", "haul", "station", "stratum", 
                                    "vessel_name", "vessel_id", "date_time", "latitude_dd", "longitude_dd", 
                                    "bottom_temperature_c", "surface_temperature_c", "depth_m", 
                                    "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")])
@@ -1678,10 +1593,30 @@ get_catch_haul_history <- function(
   
   catch$year <- as.numeric(as.character(catch$year))
   catch <- catch[order(-catch$year, -catch$weight_kg), ]
-  catch <- split(catch, catch$year)
-  cc <- lapply(catch, function(df) { (df[order(-df$year, -df$weight_kg), ]) })
+  cc <- split(catch, catch$year)
+  cc <- lapply(cc, function(df) { (df[order(-df$year, -df$weight_kg), names(catch) != c("year")]) })
+  
+  if (length(unique(catch$year))>1 | length(unique(catch$station))>1) {
+    catch_means <- base::merge(
+      x = stats::aggregate(catch[, c("count", "weight_kg", "cpue_kgha", "cpue_noha")],
+                           by = list(
+                             scientific_name = factor(catch$scientific_name),
+                             station = factor(catch$station)
+                           ),
+                           mean, na.rm = TRUE), 
+      y = data.frame(table(catch[,c("scientific_name")])), 
+      by.x = "scientific_name", 
+      by.y = "Var1")
+    catch_means <- catch_means[order(-catch_means$cpue_kgha),]
+    
+    
+  } else {
+    catch_means <- "A summary of catch data would not be helpful with your function parameters"
+  }
+  
   
   return(list("catch" = cc, 
+              "catch_means" = catch_means,
               "haul" = haul))
 }
 
@@ -1781,29 +1716,138 @@ fix_path <- function(path) {
 # Data ------------------------------------------------------------------------------------
 
 #' @title PolySpecies Data Set
+#' @description polynumbers
+#' @usage data(PolySpecies)
+#' @author Jason Conner (jason.conner AT noaa.gov)
+#' @format A data frame with 172 rows and 4 variables:
+#' \describe{
+#'   \item{\code{SPECIES_CODE}}{integer Species code}
+#'   \item{\code{POLY_SPECIES_CODE}}{integer Poly species code}
+#'   \item{\code{SPECIES_NAME}}{character Species scientific latin name}
+#'   \item{\code{COMMON_NAME}}{character Species common names} 
+#'}
+#' @details DETAILS
+#' @keywords catch data
 #' @examples
 #' data(PolySpecies)
 "PolySpecies"
 
 
+
 #' @title RACEBASE Data Set
+#' @description One dataframe containing all the racebase tables (experimental: this might be a bad idea)
+#' @usage data(local_racebase)
+#' @author Margaret Siple (margaret.siple AT noaa.gov)
+#' @format A data frame with 1613690 rows and 38 variables:
+#' \describe{
+#'   \item{\code{cruisejoin}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{hauljoin}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{region}}{character Cruise join var}
+#'   \item{\code{vessel}}{integer ID number of the vessel used to collect data for that haul. The column “vessel_id” is associated with the “vessel_name” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{cruise}}{integer This is a six-digit number identifying the cruise number of the form: YYYY99 (where YYYY = year of the cruise; 99 = 2-digit number and is sequential; 01 denotes the first cruise that vessel made in this year, 02 is the second, etc.)}
+#'   \item{\code{haul}}{integer Haul number}
+#'   \item{\code{haul_type}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{performance}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{start_time}}{character The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul. }
+#'   \item{\code{duration}}{double This is the elapsed time between start and end of a haul (decimal hours). }
+#'   \item{\code{distance_fished}}{double Distance the net fished (thousandths of kilometers). }
+#'   \item{\code{net_width}}{double Measured or estimated distance (meters) between wingtips of the trawl.}
+#'   \item{\code{net_measured}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{net_height}}{double Measured or estimated distance (meters) between footrope and headrope of the trawl.}
+#'   \item{\code{stratum}}{integer RACE database statistical area for analyzing data. Strata were designed using bathymetry and other geographic and habitat-related elements. The strata are unique to each survey series. Stratum of value 0 indicates experimental tows. }
+#'   \item{\code{start_latitude}}{double Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{end_latitude}}{double Latitude (one hundred thousandth of a decimal degree) of the end of the haul.}
+#'   \item{\code{start_longitude}}{double Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{end_longitude}}{double Longitude (one hundred thousandth of a decimal degree) of the end of the haul.}
+#'   \item{\code{stationid}}{character Alpha-numeric designation for the station established in the design of a survey. }
+#'   \item{\code{gear_depth}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{bottom_depth}}{integer Bottom depth (tenths of a meter).}
+#'   \item{\code{bottom_type}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{surface_temperature}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{gear_temperature}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{wire_length}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{gear}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{accessories}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{subsample}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{abundance_haul}}{character COLUMN_DESCRIPTION}
+#'   \item{\code{AreaSwept_km2}}{double COLUMN_DESCRIPTION}
+#'   \item{\code{catchjoin}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{species_code}}{integer The species code of the organism associated with the “common_name” and “scientific_name” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{weight}}{double Weight (thousandths of a kilogram) of individuals in a haul by taxon. }
+#'   \item{\code{number_fish}}{double Total number of individuals caught in haul by taxon, represented in whole numbers. }
+#'   \item{\code{subsample_code}}{logical COLUMN_DESCRIPTION}
+#'   \item{\code{voucher}}{integer COLUMN_DESCRIPTION}
+#'   \item{\code{year}}{character Year the survey was conducted in.} 
+#'}
+#' @keywords catch data
 #' @examples
 #' data(local_racebase)
+#' @details DETAILS
 "local_racebase"
 
 
 
 #' @title species data codes
+#' @description RACEBASE Species Codes and Scientific Names Data Set
+#' @usage data(sp_table)
 #' @author Margaret Siple (margaret.siple AT noaa.gov)
+#' @format A data frame with 2754 rows and 2 variables:
+#' \describe{
+#'   \item{\code{species_code}}{integer Species code}
+#'   \item{\code{report_name_scientific}}{Species scientific names} 
+#'}
+#' @details DETAILS
+#' @keywords species scientific code data
 #' @examples
-#' data(sp_table)
+#' utils::data(sp_table)
 "sp_table"
 
 
 
 #' @title Public data from FOSS
+#' @description
+#' @usage data("public_data")
 #' @author Emily Markowitz (emily.markowitz AT noaa.gov)
+#' @format A data frame with 878805 observations on the following 33 variables.
+#' \describe{
+#'   \item{\code{year}}{a numeric vector; Year the survey was conducted in. }
+#'   \item{\code{srvy}}{a character vector; Abbreviated survey names. The column “srvy” is associated with the “survey” and “survey_id” columns. Northern Bering Sea (NBS), Southeastern Bering Sea (EBS), Bering Sea Slope (BSS), Gulf of Alaska (GOA), Aleutian Islands (AI). }
+#'   \item{\code{survey}}{a character vector; Name and description of survey. The column “survey” is associated with the “srvy” and “survey_id” columns. }
+#'   \item{\code{survey_id}}{a numeric vector; This number uniquely identifies a survey. Name and description of survey. The column “survey_id” is associated with the “srvy” and “survey” columns. For a complete list of surveys go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{cruise}}{a numeric vector; This is a six-digit number identifying the cruise number of the form: YYYY99 (where YYYY = year of the cruise; 99 = 2-digit number and is sequential; 01 denotes the first cruise that vessel made in this year, 02 is the second, etc.)}
+#'   \item{\code{haul}}{a numeric vector; This number uniquely identifies a sampling event (haul) within a cruise. It is a sequential number, in chronological order of occurrence.}
+#'   \item{\code{stratum}}{a numeric vector; RACE database statistical area for analyzing data. Strata were designed using bathymetry and other geographic and habitat-related elements. The strata are unique to each survey series. Stratum of value 0 indicates experimental tows. }
+#'   \item{\code{station}}{a character vector; Alpha-numeric designation for the station established in the design of a survey. }
+#'   \item{\code{vessel_name}}{a character vector; Name of the vessel used to collect data for that haul. The column “vessel_name” is associated with the “vessel_id” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{vessel_id}}{a numeric vector; ID number of the vessel used to collect data for that haul. The column “vessel_id” is associated with the “vessel_name” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{date_time}}{a character vector; The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul. }
+#'   \item{\code{latitude_dd}}{a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{longitude_dd}}{a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{species_code}}{a numeric vector; The species code of the organism associated with the “common_name” and “scientific_name” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{common_name}}{a character vector; The common name of the marine organism associated with the “scientific_name” and “species_code” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{scientific_name}}{a character vector; The scientific name of the organism associated with the “common_name” and “species_code” columns. For a complete taxon list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+#'   \item{\code{taxon_confidence}}{a character vector; Confidence in the ability of the survey team to correctly identify the taxon to the specified level, based solely on identification skill (e.g., not likelihood of a taxon being caught at that station on a location-by-location basis). Quality codes follow: “High”: High confidence and consistency. Taxonomy is stable and reliable at this level, and field identification characteristics are well known and reliable. “Moderate”: Moderate confidence. Taxonomy may be questionable at this level, or field identification characteristics may be variable and difficult to assess consistently. “Low”: Low confidence. Taxonomy is incompletely known, or reliable field identification characteristics are unknown. Species identification confidence in the eastern Bering Sea shelf survey (1982-2008): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2009-04.pdf Species identification confidence in the eastern Bering Sea slope survey (1976-2010): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-05.pdf Species identification confidence in the Gulf of Alaska and Aleutian Islands surveys (1980-2011): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-01.pdf}
+#'   \item{\code{cpue_kgha}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (hectares) swept by the net. }
+#'   \item{\code{cpue_kgkm2}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (squared kilometers) swept by the net. }
+#'   \item{\code{cpue_kg1000km2}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (thousand square kilometers) swept by the net. }
+#'   \item{\code{cpue_noha}}{a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (hectares) swept by the net. }
+#'   \item{\code{cpue_nokm2}}{a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (squared kilometers) swept by the net. }
+#'   \item{\code{cpue_no1000km2}}{a numeric vector; Relative Abundance. Catch weight (in number of organisms) divided by area (thousand square kilometers) swept by the net.}
+#'   \item{\code{weight_kg}}{a numeric vector; Weight (thousandths of a kilogram) of individuals in a haul by taxon. }
+#'   \item{\code{count}}{a numeric vector; Total number of individuals caught in haul by taxon, represented in whole numbers. }
+#'   \item{\code{bottom_temperature_c}}{a numeric vector; Bottom temperature (tenths of a degree Celsius); NA indicates removed or missing values.}
+#'   \item{\code{surface_temperature_c}}{a numeric vector; Surface temperature (tenths of a degree Celsius); NA indicates removed or missing values. }
+#'   \item{\code{depth_m}}{a numeric vector; Bottom depth (tenths of a meter).}
+#'   \item{\code{distance_fished_km}}{a numeric vector; Distance the net fished (thousandths of kilometers). }
+#'   \item{\code{net_width_m}}{a numeric vector; Measured or estimated distance (meters) between wingtips of the trawl.}
+#'   \item{\code{net_height_m}}{a numeric vector; Measured or estimated distance (meters) between footrope and headrope of the trawl.}
+#'   \item{\code{area_swept_ha}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
+#'   \item{\code{duration_hr}}{a numeric vector; This is the elapsed time between start and end of a haul (decimal hours). }
+#'   }
+#' @source FOSS
+#' @keywords species code data
 #' @examples
 #' data(public_data)
+#' @details DETAILS
 "public_data"
 

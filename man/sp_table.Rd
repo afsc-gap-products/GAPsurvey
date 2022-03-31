@@ -5,18 +5,28 @@
 \alias{sp_table}
 \title{species data codes}
 \format{
-An object of class \code{data.frame} with 2754 rows and 2 columns.
+A data frame with 2754 rows and 2 variables:
+\describe{
+\item{\code{species_code}}{integer Species code}
+\item{\code{report_name_scientific}}{Species scientific names}
+}
 }
 \usage{
-sp_table
+data(sp_table)
 }
 \description{
-species data codes
+RACEBASE Species Codes and Scientific Names Data Set
+}
+\details{
+DETAILS
 }
 \examples{
-data(sp_table)
+utils::data(sp_table)
 }
 \author{
 Margaret Siple (margaret.siple AT noaa.gov)
 }
-\keyword{datasets}
+\keyword{code}
+\keyword{data}
+\keyword{scientific}
+\keyword{species}

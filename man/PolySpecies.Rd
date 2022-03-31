@@ -5,15 +5,28 @@
 \alias{PolySpecies}
 \title{PolySpecies Data Set}
 \format{
-An object of class \code{data.frame} with 172 rows and 4 columns.
+A data frame with 172 rows and 4 variables:
+\describe{
+\item{\code{SPECIES_CODE}}{integer Species code}
+\item{\code{POLY_SPECIES_CODE}}{integer Poly species code}
+\item{\code{SPECIES_NAME}}{character Species scientific latin name}
+\item{\code{COMMON_NAME}}{character Species common names}
+}
 }
 \usage{
-PolySpecies
+data(PolySpecies)
 }
 \description{
-PolySpecies Data Set
+polynumbers
+}
+\details{
+DETAILS
 }
 \examples{
 data(PolySpecies)
 }
-\keyword{datasets}
+\author{
+Jason Conner (jason.conner AT noaa.gov)
+}
+\keyword{catch}
+\keyword{data}

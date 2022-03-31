@@ -30,7 +30,7 @@
 
 ## Make sure the necessary packages are installed ##
 install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
-install.packages("C:/R/GAPsurvey_2021.08.01.tar.gz", repos = NULL, type = "source")
+install.packages("C:/R/GAPsurvey_2022.04.01.tar.gz", repos = NULL, type = "source")
 
 # Run Functions as Needed ------------------------------------
 

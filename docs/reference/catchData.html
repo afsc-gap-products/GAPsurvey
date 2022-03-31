@@ -197,7 +197,45 @@ HAUL_xxxx.csv             -- A length file for each tablet</p>
 <p>IF the catch was subsampled, the user will be given an option to define the subsample type (1 = 100% Processed (No subsample), 2 = Subsampled, Load cell estimate of total weight, 4 = Subsampled, Visual estimate of total weight, 6 = Subsampled, basket weights of both fractions (table split), 9 = Non-quantitative catch sampling, 12 = Volumetric method. Density from Density Lookup Table, 13 = Volumetric method. Density calculated on deck from haul sample).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='co'># Gulf of Alaska Example (without error)</span>
+<span class='co'># Point functions to correct tablet directory and "dataEnt" file</span>
+<span class='no'>dsnTablet</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"exdata/catch/GOA/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GAPsurvey"</span>)
+<span class='no'>dsnDataEnt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"exdata/catch/GOA/data_ent.mdb"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GAPsurvey"</span>)
+<span class='no'>importLength</span> <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
+
+<span class='co'># Define the current haul number</span>
+<span class='no'>haul</span> <span class='kw'>&lt;-</span> <span class='fl'>8</span>
+
+<span class='co'># Import catch data </span>
+<span class='fu'>catchData</span>(<span class='no'>haul</span>,<span class='no'>dsnTablet</span>,<span class='no'>dsnDataEnt</span>,<span class='no'>importLength</span>)</div><div class='output co'>#&gt; <span class='message'>Success! 526 rows inserted into data_ent.mdb</span></div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+<span class='co'># Delete data for next example run</span>
+<span class='no'>dMix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='deleteDataEnt.html'>deleteDataEnt</a></span>(<span class='kw'>dsnDataEnt</span> <span class='kw'>=</span> <span class='no'>dsnDataEnt</span>, <span class='kw'>haul</span> <span class='kw'>=</span> <span class='no'>haul</span>,
+                       <span class='kw'>tablename</span> <span class='kw'>=</span> <span class='st'>'MIXTURE'</span>)
+<span class='no'>dMixHead</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='deleteDataEnt.html'>deleteDataEnt</a></span>(<span class='kw'>dsnDataEnt</span> <span class='kw'>=</span> <span class='no'>dsnDataEnt</span>, <span class='kw'>haul</span> <span class='kw'>=</span> <span class='no'>haul</span>,
+                         <span class='kw'>tablename</span> <span class='kw'>=</span> <span class='st'>'MIXTURE_HEADER'</span>)
+<span class='no'>dCatch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='deleteDataEnt.html'>deleteDataEnt</a></span>(<span class='kw'>dsnDataEnt</span> <span class='kw'>=</span> <span class='no'>dsnDataEnt</span>, <span class='kw'>haul</span> <span class='kw'>=</span> <span class='no'>haul</span>,
+                         <span class='kw'>tablename</span> <span class='kw'>=</span> <span class='st'>'CATCH'</span>)
+<span class='no'>dCatchHead</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='deleteDataEnt.html'>deleteDataEnt</a></span>(<span class='kw'>dsnDataEnt</span> <span class='kw'>=</span> <span class='no'>dsnDataEnt</span>, <span class='kw'>haul</span> <span class='kw'>=</span> <span class='no'>haul</span>,
+                           <span class='kw'>tablename</span> <span class='kw'>=</span> <span class='st'>'CATCH_HEADER'</span>)
+<span class='no'>dLength</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='deleteDataEnt.html'>deleteDataEnt</a></span>(<span class='kw'>dsnDataEnt</span> <span class='kw'>=</span> <span class='no'>dsnDataEnt</span>, <span class='kw'>haul</span> <span class='kw'>=</span> <span class='no'>haul</span>,
+                        <span class='kw'>tablename</span> <span class='kw'>=</span> <span class='st'>'LENGTH'</span>)
+<span class='no'>dRawLength</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='deleteDataEnt.html'>deleteDataEnt</a></span>(<span class='kw'>dsnDataEnt</span> <span class='kw'>=</span> <span class='no'>dsnDataEnt</span>, <span class='kw'>haul</span> <span class='kw'>=</span> <span class='no'>haul</span>,
+                            <span class='kw'>tablename</span> <span class='kw'>=</span> <span class='st'>'RAW_LENGTH'</span>)
+
+<span class='co'># Eastern Bering Sea Example (Will cause error)</span>
+<span class='co'># Point functions to correct tablet directory and "dataEnt" file</span>
+<span class='no'>dsnTablet</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"exdata/catch/EBS/"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GAPsurvey"</span>)
+<span class='no'>dsnDataEnt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"exdata/catch/EBS/data_ent.mdb"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GAPsurvey"</span>)
+<span class='no'>importLength</span> <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
+
+<span class='co'># Define the current haul number</span>
+<span class='no'>haul</span> <span class='kw'>&lt;-</span> <span class='fl'>59</span>
+
+<span class='co'># Import catch data (This will error)</span>
+<span class='co'># catchData(haul,dsnTablet,dsnDataEnt,importLength)</span>
+<span class='co'># Row 33 for "empty bivalve shells" requires a value for SUBSAMPLE_WEIGHT. </span>
+<span class='co'># Return to the tablet and edit the data there before running it through </span>
+<span class='co'># this function again. </span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

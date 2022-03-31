@@ -66,8 +66,8 @@ dCatchHead <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul,
                            tablename = 'CATCH_HEADER')
 dLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
                         tablename = 'LENGTH')
-dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = 
-#                              haul, tablename = 'RAW_LENGTH')
+dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul = haul, 
+                            tablename = 'RAW_LENGTH')
 
 # Eastern Bering Sea Example (Will cause error)
 # Point functions to correct tablet directory and "dataEnt" file

@@ -5,13 +5,54 @@
 \alias{public_data}
 \title{Public data from FOSS}
 \format{
-An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 878805 rows and 33 columns.
+A data frame with 878805 observations on the following 33 variables.
+\describe{
+\item{\code{year}}{a numeric vector; Year the survey was conducted in. }
+\item{\code{srvy}}{a character vector; Abbreviated survey names. The column “srvy” is associated with the “survey” and “survey_id” columns. Northern Bering Sea (NBS), Southeastern Bering Sea (EBS), Bering Sea Slope (BSS), Gulf of Alaska (GOA), Aleutian Islands (AI). }
+\item{\code{survey}}{a character vector; Name and description of survey. The column “survey” is associated with the “srvy” and “survey_id” columns. }
+\item{\code{survey_id}}{a numeric vector; This number uniquely identifies a survey. Name and description of survey. The column “survey_id” is associated with the “srvy” and “survey” columns. For a complete list of surveys go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+\item{\code{cruise}}{a numeric vector; This is a six-digit number identifying the cruise number of the form: YYYY99 (where YYYY = year of the cruise; 99 = 2-digit number and is sequential; 01 denotes the first cruise that vessel made in this year, 02 is the second, etc.)}
+\item{\code{haul}}{a numeric vector; This number uniquely identifies a sampling event (haul) within a cruise. It is a sequential number, in chronological order of occurrence.}
+\item{\code{stratum}}{a numeric vector; RACE database statistical area for analyzing data. Strata were designed using bathymetry and other geographic and habitat-related elements. The strata are unique to each survey series. Stratum of value 0 indicates experimental tows. }
+\item{\code{station}}{a character vector; Alpha-numeric designation for the station established in the design of a survey. }
+\item{\code{vessel_name}}{a character vector; Name of the vessel used to collect data for that haul. The column “vessel_name” is associated with the “vessel_id” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+\item{\code{vessel_id}}{a numeric vector; ID number of the vessel used to collect data for that haul. The column “vessel_id” is associated with the “vessel_name” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+\item{\code{date_time}}{a character vector; The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul. }
+\item{\code{latitude_dd}}{a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+\item{\code{longitude_dd}}{a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+\item{\code{species_code}}{a numeric vector; The species code of the organism associated with the “common_name” and “scientific_name” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+\item{\code{common_name}}{a character vector; The common name of the marine organism associated with the “scientific_name” and “species_code” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+\item{\code{scientific_name}}{a character vector; The scientific name of the organism associated with the “common_name” and “species_code” columns. For a complete taxon list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
+\item{\code{taxon_confidence}}{a character vector; Confidence in the ability of the survey team to correctly identify the taxon to the specified level, based solely on identification skill (e.g., not likelihood of a taxon being caught at that station on a location-by-location basis). Quality codes follow: “High”: High confidence and consistency. Taxonomy is stable and reliable at this level, and field identification characteristics are well known and reliable. “Moderate”: Moderate confidence. Taxonomy may be questionable at this level, or field identification characteristics may be variable and difficult to assess consistently. “Low”: Low confidence. Taxonomy is incompletely known, or reliable field identification characteristics are unknown. Species identification confidence in the eastern Bering Sea shelf survey (1982-2008): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2009-04.pdf Species identification confidence in the eastern Bering Sea slope survey (1976-2010): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-05.pdf Species identification confidence in the Gulf of Alaska and Aleutian Islands surveys (1980-2011): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-01.pdf}
+\item{\code{cpue_kgha}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (hectares) swept by the net. }
+\item{\code{cpue_kgkm2}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (squared kilometers) swept by the net. }
+\item{\code{cpue_kg1000km2}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (thousand square kilometers) swept by the net. }
+\item{\code{cpue_noha}}{a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (hectares) swept by the net. }
+\item{\code{cpue_nokm2}}{a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (squared kilometers) swept by the net. }
+\item{\code{cpue_no1000km2}}{a numeric vector; Relative Abundance. Catch weight (in number of organisms) divided by area (thousand square kilometers) swept by the net.}
+\item{\code{weight_kg}}{a numeric vector; Weight (thousandths of a kilogram) of individuals in a haul by taxon. }
+\item{\code{count}}{a numeric vector; Total number of individuals caught in haul by taxon, represented in whole numbers. }
+\item{\code{bottom_temperature_c}}{a numeric vector; Bottom temperature (tenths of a degree Celsius); NA indicates removed or missing values.}
+\item{\code{surface_temperature_c}}{a numeric vector; Surface temperature (tenths of a degree Celsius); NA indicates removed or missing values. }
+\item{\code{depth_m}}{a numeric vector; Bottom depth (tenths of a meter).}
+\item{\code{distance_fished_km}}{a numeric vector; Distance the net fished (thousandths of kilometers). }
+\item{\code{net_width_m}}{a numeric vector; Measured or estimated distance (meters) between wingtips of the trawl.}
+\item{\code{net_height_m}}{a numeric vector; Measured or estimated distance (meters) between footrope and headrope of the trawl.}
+\item{\code{area_swept_ha}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
+\item{\code{duration_hr}}{a numeric vector; This is the elapsed time between start and end of a haul (decimal hours). }
+}
+}
+\source{
+FOSS
 }
 \usage{
-public_data
+data("public_data")
 }
 \description{
 Public data from FOSS
+}
+\details{
+DETAILS
 }
 \examples{
 data(public_data)
@@ -19,4 +60,6 @@ data(public_data)
 \author{
 Emily Markowitz (emily.markowitz AT noaa.gov)
 }
-\keyword{datasets}
+\keyword{code}
+\keyword{data}
+\keyword{species}

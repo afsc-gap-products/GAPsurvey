@@ -23,7 +23,6 @@ Description: Provides at-sea data management tools for RACE GAP surveys.
 URL: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Depends: 

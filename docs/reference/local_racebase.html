@@ -49,7 +49,7 @@
   
 
 <meta property="og:title" content="RACEBASE Data Set — local_racebase" />
-<meta property="og:description" content="RACEBASE Data Set" />
+<meta property="og:description" content="One dataframe containing all the racebase tables (experimental: this might be a bad idea)" />
 <meta property="og:image" content="https://emilymarkowitz-noaa.github.io/GAPsurvey/logo.png" />
 
 
@@ -147,15 +147,59 @@
     </div>
 
     <div class="ref-description">
-    <p>RACEBASE Data Set</p>
+    <p>One dataframe containing all the racebase tables (experimental: this might be a bad idea)</p>
     </div>
 
-    <pre class="usage"><span class='no'>local_racebase</span></pre>
+    <pre class="usage"><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>local_racebase</span>)</pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>data.frame</code> with 1613690 rows and 38 columns.</p>
+    <p>A data frame with 1613690 rows and 38 variables:</p><dl'>
+<dt><code>cruisejoin</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>hauljoin</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>region</code></dt><dd><p>character Cruise join var</p></dd>
+<dt><code>vessel</code></dt><dd><p>integer ID number of the vessel used to collect data for that haul. The column “vessel_id” is associated with the “vessel_name” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual</p></dd>
+<dt><code>cruise</code></dt><dd><p>integer This is a six-digit number identifying the cruise number of the form: YYYY99 (where YYYY = year of the cruise; 99 = 2-digit number and is sequential; 01 denotes the first cruise that vessel made in this year, 02 is the second, etc.)</p></dd>
+<dt><code>haul</code></dt><dd><p>integer Haul number</p></dd>
+<dt><code>haul_type</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>performance</code></dt><dd><p>double COLUMN_DESCRIPTION</p></dd>
+<dt><code>start_time</code></dt><dd><p>character The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul.</p></dd>
+<dt><code>duration</code></dt><dd><p>double This is the elapsed time between start and end of a haul (decimal hours).</p></dd>
+<dt><code>distance_fished</code></dt><dd><p>double Distance the net fished (thousandths of kilometers).</p></dd>
+<dt><code>net_width</code></dt><dd><p>double Measured or estimated distance (meters) between wingtips of the trawl.</p></dd>
+<dt><code>net_measured</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dt><code>net_height</code></dt><dd><p>double Measured or estimated distance (meters) between footrope and headrope of the trawl.</p></dd>
+<dt><code>stratum</code></dt><dd><p>integer RACE database statistical area for analyzing data. Strata were designed using bathymetry and other geographic and habitat-related elements. The strata are unique to each survey series. Stratum of value 0 indicates experimental tows.</p></dd>
+<dt><code>start_latitude</code></dt><dd><p>double Latitude (one hundred thousandth of a decimal degree) of the start of the haul.</p></dd>
+<dt><code>end_latitude</code></dt><dd><p>double Latitude (one hundred thousandth of a decimal degree) of the end of the haul.</p></dd>
+<dt><code>start_longitude</code></dt><dd><p>double Longitude (one hundred thousandth of a decimal degree) of the start of the haul.</p></dd>
+<dt><code>end_longitude</code></dt><dd><p>double Longitude (one hundred thousandth of a decimal degree) of the end of the haul.</p></dd>
+<dt><code>stationid</code></dt><dd><p>character Alpha-numeric designation for the station established in the design of a survey.</p></dd>
+<dt><code>gear_depth</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>bottom_depth</code></dt><dd><p>integer Bottom depth (tenths of a meter).</p></dd>
+<dt><code>bottom_type</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>surface_temperature</code></dt><dd><p>double COLUMN_DESCRIPTION</p></dd>
+<dt><code>gear_temperature</code></dt><dd><p>double COLUMN_DESCRIPTION</p></dd>
+<dt><code>wire_length</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>gear</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>accessories</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>subsample</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>abundance_haul</code></dt><dd><p>character COLUMN_DESCRIPTION</p></dd>
+<dt><code>AreaSwept_km2</code></dt><dd><p>double COLUMN_DESCRIPTION</p></dd>
+<dt><code>catchjoin</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>species_code</code></dt><dd><p>integer The species code of the organism associated with the “common_name” and “scientific_name” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual</p></dd>
+<dt><code>weight</code></dt><dd><p>double Weight (thousandths of a kilogram) of individuals in a haul by taxon.</p></dd>
+<dt><code>number_fish</code></dt><dd><p>double Total number of individuals caught in haul by taxon, represented in whole numbers.</p></dd>
+<dt><code>subsample_code</code></dt><dd><p>logical COLUMN_DESCRIPTION</p></dd>
+<dt><code>voucher</code></dt><dd><p>integer COLUMN_DESCRIPTION</p></dd>
+<dt><code>year</code></dt><dd><p>character Year the survey was conducted in.</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>DETAILS</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>local_racebase</span>)</div></pre>
