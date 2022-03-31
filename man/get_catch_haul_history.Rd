@@ -36,11 +36,11 @@ get_catch_haul_history(public_data = public_data,
       years = 2019,
       station = "264-150",
       grid_buffer = 3)
-get_catch_haul_history(public_data = public_data, 
-      survey = "GOA", 
-      years = NA,
-      station = "264-150",
-      grid_buffer = 3)
+# get_catch_haul_history(public_data = public_data, 
+#       survey = "GOA", 
+#       years = NA,
+#       station = "264-150",
+#       grid_buffer = 3)
 
 # AI
 get_catch_haul_history(public_data = public_data, 
@@ -48,17 +48,17 @@ get_catch_haul_history(public_data = public_data,
       years = 2018,
       station = "324-73",
       grid_buffer = 3)
-get_catch_haul_history(public_data = public_data, 
-      survey = "AI", 
-      years = NA,
-      station = "324-73",
-      grid_buffer = 3)
+# get_catch_haul_history(public_data = public_data, 
+#       survey = "AI", 
+#       years = NA,
+#       station = "324-73",
+#       grid_buffer = 3)
 
 # EBS
-get_catch_haul_history(public_data = public_data, 
-      survey = "EBS", 
-      years = 2019:2021, 
-      station = "I-13")   
+# get_catch_haul_history(public_data = public_data, 
+#      survey = "EBS", 
+#      years = 2019:2021, 
+#      station = "I-13")   
 get_catch_haul_history(public_data = public_data, 
       survey = "EBS", 
       station = "I-13")   
