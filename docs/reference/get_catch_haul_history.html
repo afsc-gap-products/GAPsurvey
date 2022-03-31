@@ -188,7 +188,174 @@
     <p>a data.frame of past catches and hauls</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># AI (or GOA) ---------------------------------------------------------------</span>
+    <pre class="examples"><div class='input'><span class='co'>#' # EBS (or NBS) --------------------------------------------------------------</span>
+
+<span class='co'>## for one year and only 1 station for all species --------------------------</span>
+<span class='fu'>get_catch_haul_history</span>(
+     <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"EBS"</span>,
+     <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2021</span>,
+     <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"I-13"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting row names on a tibble is deprecated.</span></div><div class='output co'>#&gt; $catch
+#&gt; $catch$`2021`
+#&gt; <span style='color: #949494;'># A tibble: 35 x 7</span>
+#&gt;    station scientific_name     common_name   count weight_kg cpue_kgha cpue_noha
+#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span> I-13    Gadus chalcogrammus walleye poll~   793     550.     115.      166.  
+#&gt; <span style='color: #BCBCBC;'> 2</span> I-13    Lepidopsetta polyx~ northern roc~  <span style='text-decoration: underline;'>1</span>530     214.      44.8     321.  
+#&gt; <span style='color: #BCBCBC;'> 3</span> I-13    Limanda aspera      yellowfin so~   584     140.      29.2     122.  
+#&gt; <span style='color: #BCBCBC;'> 4</span> I-13    Asterias amurensis  purple-orang~  <span style='text-decoration: underline;'>1</span>816     127.      26.6     380.  
+#&gt; <span style='color: #BCBCBC;'> 5</span> I-13    Bathyraja parmifera Alaska skate      6      42.0      8.79      1.26
+#&gt; <span style='color: #BCBCBC;'> 6</span> I-13    Gadus macrocephalus Pacific cod      91      31.1      6.52     19.1 
+#&gt; <span style='color: #BCBCBC;'> 7</span> I-13    Hippoglossus steno~ Pacific hali~    45      26.1      5.47      9.43
+#&gt; <span style='color: #BCBCBC;'> 8</span> I-13    Hippoglossoides el~ flathead sole    48      23.8      4.99     10.1 
+#&gt; <span style='color: #BCBCBC;'> 9</span> I-13    Paralithodes camts~ red king crab    18      19.4      4.06      3.77
+#&gt; <span style='color: #BCBCBC;'>10</span> I-13    Pleuronectes quadr~ Alaska plaice    47      16.9      3.55      9.85
+#&gt; <span style='color: #949494;'># ... with 25 more rows</span>
+#&gt; 
+#&gt; 
+#&gt; $catch_means
+#&gt; [1] "A summary of catch data would not be helpful with these function parameters"
+#&gt; 
+#&gt; $haul
+#&gt;   year station haul stratum   vessel_name           date_time latitude_dd
+#&gt; 1 2021    I-13    7      31 Alaska Knight 06/02/2021 12:05:29    57.65493
+#&gt;   longitude_dd bottom_temperature_c surface_temperature_c depth_m
+#&gt; 1    -160.2535                  4.4                   4.7      55
+#&gt;   distance_fished_km net_width_m net_height_m area_swept_ha duration_hr
+#&gt; 1              2.954      16.159        1.794      4.773369       0.522
+#&gt;   total_weight_kg
+#&gt; 1            1220
+#&gt; </div><div class='input'>
+<span class='co'>## for default 10 years and only 1 station  for PCOD and walleye pollock ----</span>
+<span class='fu'>get_catch_haul_history</span>(
+     <span class='kw'>species_codes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>21720</span>, <span class='fl'>21740</span>), <span class='co'># pacific cod and walleye pollock</span>
+      <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"EBS"</span>,
+      <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"I-13"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting row names on a tibble is deprecated.</span></div><div class='output co'>#&gt; $catch
+#&gt; $catch$`2011`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod        39     23.5       5.33      8.84
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock     9      7.60      1.72      2.04
+#&gt; 
+#&gt; $catch$`2012`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       149     25.1      7.64      45.3 
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock     5      2.38     0.723      1.52
+#&gt; 
+#&gt; $catch$`2013`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock    20      49.2     11.4       4.62
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod        68      30.7      7.09     15.7 
+#&gt; 
+#&gt; $catch$`2014`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       138      54.4     13.1       33.2
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock    65      41.5      9.98      15.6
+#&gt; 
+#&gt; $catch$`2015`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       827      443.      92.0     172. 
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock   363      377.      78.3      75.4
+#&gt; 
+#&gt; $catch$`2016`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       779    777.      167.      167.  
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock    37      7.04      1.51      7.95
+#&gt; 
+#&gt; $catch$`2017`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock   139      57.1     13.0      31.8 
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod        13       9.8      2.24      2.97
+#&gt; 
+#&gt; $catch$`2018`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock    95     80.0      16.9      20.0 
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod         8      5.05      1.06      1.68
+#&gt; 
+#&gt; $catch$`2019`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       118     43.1       9.46     25.9 
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock    31      6.92      1.52      6.81
+#&gt; 
+#&gt; $catch$`2021`
+#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
+#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock   793     550.     115.       166. 
+#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod        91      31.1      6.52      19.1
+#&gt; 
+#&gt; 
+#&gt; $catch_means
+#&gt;       scientific_name     common_name station count weight_kg cpue_kgha
+#&gt; 1 Gadus macrocephalus     Pacific cod    I-13 223.0    144.23     31.13
+#&gt; 2 Gadus chalcogrammus walleye pollock    I-13 155.7    117.91     25.04
+#&gt;   cpue_noha Freq
+#&gt; 1     49.20   10
+#&gt; 2     33.19   10
+#&gt; 
+#&gt; $haul
+#&gt;    year station haul stratum   vessel_name           date_time latitude_dd
+#&gt; 1  2011    I-13    8      31     Aldebaran 06/06/2011 11:50:05    57.68058
+#&gt; 2  2012    I-13   14      31 Alaska Knight 06/06/2012 17:54:37    57.65342
+#&gt; 3  2013    I-13    8      31     Aldebaran 06/10/2013 11:35:21    57.67621
+#&gt; 4  2014    I-13    8      31 Alaska Knight 06/09/2014 12:34:43    57.67458
+#&gt; 5  2015    I-13    9      31   Vesteraalen 06/04/2015 11:36:07    57.67938
+#&gt; 6  2016    I-13   12      31 Alaska Knight 06/02/2016 12:23:54    57.66506
+#&gt; 7  2017    I-13    8      31 Alaska Knight 06/05/2017 15:12:37    57.65211
+#&gt; 8  2018    I-13    9      31 Alaska Knight 06/04/2018 12:39:27    57.68093
+#&gt; 9  2019    I-13   11      31   Vesteraalen 06/04/2019 13:15:57    57.69052
+#&gt; 10 2021    I-13    7      31 Alaska Knight 06/02/2021 12:05:29    57.65493
+#&gt;    longitude_dd bottom_temperature_c surface_temperature_c depth_m
+#&gt; 1     -160.2722                  2.2                   2.3      55
+#&gt; 2     -160.2863                  0.8                   1.5      54
+#&gt; 3     -160.2702                  2.5                   3.0      56
+#&gt; 4     -160.2594                  5.0                   6.1      54
+#&gt; 5     -160.2449                  4.6                   7.5      55
+#&gt; 6     -160.2658                  6.0                   7.1      55
+#&gt; 7     -160.2444                  3.3                   3.5      53
+#&gt; 8     -160.2568                  4.3                   4.5      54
+#&gt; 9     -160.2580                  5.5                   7.5      54
+#&gt; 10    -160.2535                  4.4                   4.7      55
+#&gt;    distance_fished_km net_width_m net_height_m area_swept_ha duration_hr
+#&gt; 1               2.822      15.639        2.506      4.413326       0.526
+#&gt; 2               2.518      13.050        2.618      3.285990       0.452
+#&gt; 3               2.832      15.290        2.545      4.330128       0.498
+#&gt; 4               2.772      15.010        2.257      4.160772       0.503
+#&gt; 5               2.969      16.207        2.635      4.811858       0.527
+#&gt; 6               3.116      14.935        2.880      4.653746       0.545
+#&gt; 7               2.829      15.470        2.426      4.376463       0.518
+#&gt; 8               2.887      16.451        2.459      4.749404       0.515
+#&gt; 9               2.840      16.029        2.200      4.552236       0.520
+#&gt; 10              2.954      16.159        1.794      4.773369       0.522
+#&gt;    total_weight_kg
+#&gt; 1          1908.00
+#&gt; 2           924.63
+#&gt; 3          2118.00
+#&gt; 4          1456.00
+#&gt; 5          3026.00
+#&gt; 6          4480.00
+#&gt; 7          1296.00
+#&gt; 8           875.12
+#&gt; 9          3186.00
+#&gt; 10         1220.00
+#&gt; </div><div class='input'>
+<span class='co'># AI (or GOA) ---------------------------------------------------------------</span>
 
 <span class='co'>## for two specific years and nearby stations -------------------------------</span>
 <span class='fu'>get_catch_haul_history</span>(
@@ -815,7 +982,7 @@
 #&gt; 7          571.17
 #&gt; 8         1735.27
 #&gt; </div><div class='input'>
-<span class='co'>## for default 10 years and nearby stations for all species -----------------</span>
+<span class='co'>## for default 10 years and nearby stations for all species (a typical use-case) ----</span>
 <span class='fu'>get_catch_haul_history</span>(
      <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"AI"</span>,
      <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='co'># default</span>
@@ -3526,174 +3693,7 @@
      <span class='kw'>species_codes</span> <span class='kw'>=</span> <span class='fl'>10140</span>, <span class='co'># Bering flounder which would be VERY unlikely to be found</span>
      <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='co'># default</span>
      <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"324-73"</span>,
-     <span class='kw'>grid_buffer</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] "Your quiery returned 0 results."</div><div class='input'>
-<span class='co'># EBS (or NBS) --------------------------------------------------------------</span>
-
-<span class='co'>## for one year and only 1 station for all species --------------------------</span>
-<span class='fu'>get_catch_haul_history</span>(
-     <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"EBS"</span>,
-     <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>2021</span>,
-     <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"I-13"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting row names on a tibble is deprecated.</span></div><div class='output co'>#&gt; $catch
-#&gt; $catch$`2021`
-#&gt; <span style='color: #949494;'># A tibble: 35 x 7</span>
-#&gt;    station scientific_name     common_name   count weight_kg cpue_kgha cpue_noha
-#&gt;    <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>         <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span> I-13    Gadus chalcogrammus walleye poll~   793     550.     115.      166.  
-#&gt; <span style='color: #BCBCBC;'> 2</span> I-13    Lepidopsetta polyx~ northern roc~  <span style='text-decoration: underline;'>1</span>530     214.      44.8     321.  
-#&gt; <span style='color: #BCBCBC;'> 3</span> I-13    Limanda aspera      yellowfin so~   584     140.      29.2     122.  
-#&gt; <span style='color: #BCBCBC;'> 4</span> I-13    Asterias amurensis  purple-orang~  <span style='text-decoration: underline;'>1</span>816     127.      26.6     380.  
-#&gt; <span style='color: #BCBCBC;'> 5</span> I-13    Bathyraja parmifera Alaska skate      6      42.0      8.79      1.26
-#&gt; <span style='color: #BCBCBC;'> 6</span> I-13    Gadus macrocephalus Pacific cod      91      31.1      6.52     19.1 
-#&gt; <span style='color: #BCBCBC;'> 7</span> I-13    Hippoglossus steno~ Pacific hali~    45      26.1      5.47      9.43
-#&gt; <span style='color: #BCBCBC;'> 8</span> I-13    Hippoglossoides el~ flathead sole    48      23.8      4.99     10.1 
-#&gt; <span style='color: #BCBCBC;'> 9</span> I-13    Paralithodes camts~ red king crab    18      19.4      4.06      3.77
-#&gt; <span style='color: #BCBCBC;'>10</span> I-13    Pleuronectes quadr~ Alaska plaice    47      16.9      3.55      9.85
-#&gt; <span style='color: #949494;'># ... with 25 more rows</span>
-#&gt; 
-#&gt; 
-#&gt; $catch_means
-#&gt; [1] "A summary of catch data would not be helpful with these function parameters"
-#&gt; 
-#&gt; $haul
-#&gt;   year station haul stratum   vessel_name           date_time latitude_dd
-#&gt; 1 2021    I-13    7      31 Alaska Knight 06/02/2021 12:05:29    57.65493
-#&gt;   longitude_dd bottom_temperature_c surface_temperature_c depth_m
-#&gt; 1    -160.2535                  4.4                   4.7      55
-#&gt;   distance_fished_km net_width_m net_height_m area_swept_ha duration_hr
-#&gt; 1              2.954      16.159        1.794      4.773369       0.522
-#&gt;   total_weight_kg
-#&gt; 1            1220
-#&gt; </div><div class='input'>
-<span class='co'>## for default 10 years and only 1 station  for PCOD and walleye pollock ----</span>
-<span class='fu'>get_catch_haul_history</span>(
-     <span class='kw'>species_codes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>21720</span>, <span class='fl'>21740</span>), <span class='co'># pacific cod and walleye pollock</span>
-      <span class='kw'>survey</span> <span class='kw'>=</span> <span class='st'>"EBS"</span>,
-      <span class='kw'>station</span> <span class='kw'>=</span> <span class='st'>"I-13"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting row names on a tibble is deprecated.</span></div><div class='output co'>#&gt; $catch
-#&gt; $catch$`2011`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod        39     23.5       5.33      8.84
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock     9      7.60      1.72      2.04
-#&gt; 
-#&gt; $catch$`2012`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       149     25.1      7.64      45.3 
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock     5      2.38     0.723      1.52
-#&gt; 
-#&gt; $catch$`2013`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock    20      49.2     11.4       4.62
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod        68      30.7      7.09     15.7 
-#&gt; 
-#&gt; $catch$`2014`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       138      54.4     13.1       33.2
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock    65      41.5      9.98      15.6
-#&gt; 
-#&gt; $catch$`2015`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       827      443.      92.0     172. 
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock   363      377.      78.3      75.4
-#&gt; 
-#&gt; $catch$`2016`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       779    777.      167.      167.  
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock    37      7.04      1.51      7.95
-#&gt; 
-#&gt; $catch$`2017`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock   139      57.1     13.0      31.8 
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod        13       9.8      2.24      2.97
-#&gt; 
-#&gt; $catch$`2018`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock    95     80.0      16.9      20.0 
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod         8      5.05      1.06      1.68
-#&gt; 
-#&gt; $catch$`2019`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus macrocephalus Pacific cod       118     43.1       9.46     25.9 
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus chalcogrammus walleye pollock    31      6.92      1.52      6.81
-#&gt; 
-#&gt; $catch$`2021`
-#&gt; <span style='color: #949494;'># A tibble: 2 x 7</span>
-#&gt;   station scientific_name     common_name     count weight_kg cpue_kgha cpue_noha
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>1</span> I-13    Gadus chalcogrammus walleye pollock   793     550.     115.       166. 
-#&gt; <span style='color: #BCBCBC;'>2</span> I-13    Gadus macrocephalus Pacific cod        91      31.1      6.52      19.1
-#&gt; 
-#&gt; 
-#&gt; $catch_means
-#&gt;       scientific_name     common_name station count weight_kg cpue_kgha
-#&gt; 1 Gadus macrocephalus     Pacific cod    I-13 223.0    144.23     31.13
-#&gt; 2 Gadus chalcogrammus walleye pollock    I-13 155.7    117.91     25.04
-#&gt;   cpue_noha Freq
-#&gt; 1     49.20   10
-#&gt; 2     33.19   10
-#&gt; 
-#&gt; $haul
-#&gt;    year station haul stratum   vessel_name           date_time latitude_dd
-#&gt; 1  2011    I-13    8      31     Aldebaran 06/06/2011 11:50:05    57.68058
-#&gt; 2  2012    I-13   14      31 Alaska Knight 06/06/2012 17:54:37    57.65342
-#&gt; 3  2013    I-13    8      31     Aldebaran 06/10/2013 11:35:21    57.67621
-#&gt; 4  2014    I-13    8      31 Alaska Knight 06/09/2014 12:34:43    57.67458
-#&gt; 5  2015    I-13    9      31   Vesteraalen 06/04/2015 11:36:07    57.67938
-#&gt; 6  2016    I-13   12      31 Alaska Knight 06/02/2016 12:23:54    57.66506
-#&gt; 7  2017    I-13    8      31 Alaska Knight 06/05/2017 15:12:37    57.65211
-#&gt; 8  2018    I-13    9      31 Alaska Knight 06/04/2018 12:39:27    57.68093
-#&gt; 9  2019    I-13   11      31   Vesteraalen 06/04/2019 13:15:57    57.69052
-#&gt; 10 2021    I-13    7      31 Alaska Knight 06/02/2021 12:05:29    57.65493
-#&gt;    longitude_dd bottom_temperature_c surface_temperature_c depth_m
-#&gt; 1     -160.2722                  2.2                   2.3      55
-#&gt; 2     -160.2863                  0.8                   1.5      54
-#&gt; 3     -160.2702                  2.5                   3.0      56
-#&gt; 4     -160.2594                  5.0                   6.1      54
-#&gt; 5     -160.2449                  4.6                   7.5      55
-#&gt; 6     -160.2658                  6.0                   7.1      55
-#&gt; 7     -160.2444                  3.3                   3.5      53
-#&gt; 8     -160.2568                  4.3                   4.5      54
-#&gt; 9     -160.2580                  5.5                   7.5      54
-#&gt; 10    -160.2535                  4.4                   4.7      55
-#&gt;    distance_fished_km net_width_m net_height_m area_swept_ha duration_hr
-#&gt; 1               2.822      15.639        2.506      4.413326       0.526
-#&gt; 2               2.518      13.050        2.618      3.285990       0.452
-#&gt; 3               2.832      15.290        2.545      4.330128       0.498
-#&gt; 4               2.772      15.010        2.257      4.160772       0.503
-#&gt; 5               2.969      16.207        2.635      4.811858       0.527
-#&gt; 6               3.116      14.935        2.880      4.653746       0.545
-#&gt; 7               2.829      15.470        2.426      4.376463       0.518
-#&gt; 8               2.887      16.451        2.459      4.749404       0.515
-#&gt; 9               2.840      16.029        2.200      4.552236       0.520
-#&gt; 10              2.954      16.159        1.794      4.773369       0.522
-#&gt;    total_weight_kg
-#&gt; 1          1908.00
-#&gt; 2           924.63
-#&gt; 3          2118.00
-#&gt; 4          1456.00
-#&gt; 5          3026.00
-#&gt; 6          4480.00
-#&gt; 7          1296.00
-#&gt; 8           875.12
-#&gt; 9          3186.00
-#&gt; 10         1220.00
-#&gt; </div></pre>
+     <span class='kw'>grid_buffer</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] "Your quiery returned 0 results."</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

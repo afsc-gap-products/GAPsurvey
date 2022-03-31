@@ -1475,6 +1475,20 @@ netSpread <- function(dat) {
 #' @export
 #'
 #' @examples
+#' #' # EBS (or NBS) --------------------------------------------------------------
+#' 
+#' ## for one year and only 1 station for all species --------------------------
+#' get_catch_haul_history(
+#'      survey = "EBS", 
+#'      years = 2021, 
+#'      station = "I-13")   
+#'      
+#' ## for default 10 years and only 1 station  for PCOD and walleye pollock ----
+#' get_catch_haul_history( 
+#'      species_codes = c(21720, 21740), # pacific cod and walleye pollock
+#'       survey = "EBS", 
+#'       station = "I-13")
+#' 
 #' # AI (or GOA) ---------------------------------------------------------------
 #' 
 #' ## for two specific years and nearby stations -------------------------------
@@ -1484,7 +1498,7 @@ netSpread <- function(dat) {
 #'       station = "324-73",
 #'       grid_buffer = 3)
 #'       
-#' ## for default 10 years and nearby stations for all species -----------------
+#' ## for default 10 years and nearby stations for all species (a typical use-case) ----
 #' get_catch_haul_history(
 #'      survey = "AI", 
 #'      years = NA, # default
@@ -1498,20 +1512,6 @@ netSpread <- function(dat) {
 #'      years = NA, # default
 #'      station = "324-73",
 #'      grid_buffer = 3)
-#' 
-#' # EBS (or NBS) --------------------------------------------------------------
-#' 
-#' ## for one year and only 1 station for all species --------------------------
-#' get_catch_haul_history(
-#'      survey = "EBS", 
-#'      years = 2021, 
-#'      station = "I-13")   
-#'      
-#' ## for default 10 years and only 1 station  for PCOD and walleye pollock ----
-#' get_catch_haul_history( 
-#'      species_codes = c(21720, 21740), # pacific cod and walleye pollock
-#'       survey = "EBS", 
-#'       station = "I-13")   
 get_catch_haul_history <- function(
     survey, 
     species_codes = NA, 
