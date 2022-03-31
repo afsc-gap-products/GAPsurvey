@@ -1805,7 +1805,7 @@ fix_path <- function(path) {
 #'   \item{\code{area_swept_ha}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
 #'   \item{\code{duration_hr}}{a numeric vector; This is the elapsed time between start and end of a haul (decimal hours). }
 #'   }
-#' @source FOSS
+#' @source https://github.com/afsc-gap-products/gap_public_data
 #' @keywords species code data
 #' @examples
 #' data(public_data)

@@ -43,7 +43,7 @@ A data frame with 878805 observations on the following 33 variables.
 }
 }
 \source{
-FOSS
+https://github.com/afsc-gap-products/gap_public_data
 }
 \usage{
 data("public_data")
