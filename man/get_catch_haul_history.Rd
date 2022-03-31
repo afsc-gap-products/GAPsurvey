@@ -4,10 +4,18 @@
 \alias{get_catch_haul_history}
 \title{Find historical catch data from previous years}
 \usage{
-get_catch_haul_history(survey, years = NA, station, grid_buffer = NA)
+get_catch_haul_history(
+  survey,
+  species_codes = NA,
+  years = NA,
+  station,
+  grid_buffer = NA
+)
 }
 \arguments{
 \item{survey}{(character) A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS".}
+
+\item{species_codes}{(numeric) A species code number of a species or species you are specifically interested in reviewing data from. If NA/not entered, the function will return data for all species caught in the haul.}
 
 \item{years}{(numeric) the years you want returned in the output. If years = NA, script will default to the last 10 years. If you would like to see all years, simply choose a large range that covers all years of the survey (e.g., 1970:2030)}
 
@@ -31,23 +39,32 @@ get_catch_haul_history(
       station = "324-73",
       grid_buffer = 3)
       
-## for default 10 years and nearby stations ---------------------------------
+## for default 10 years and nearby stations for all species -----------------
 get_catch_haul_history(
      survey = "AI", 
-     years = NA,
+     years = NA, # default
+     station = "324-73",
+     grid_buffer = 3)
+     
+## for default 10 years and nearby stations for Bering Flounder (0 results returned!) ---
+get_catch_haul_history(
+     survey = "AI", 
+     species_codes = 10140, # Bering flounder which would be VERY unlikely to be found
+     years = NA, # default
      station = "324-73",
      grid_buffer = 3)
 
 # EBS (or NBS) --------------------------------------------------------------
 
-## for one year and only 1 station ------------------------------------------
+## for one year and only 1 station for all species --------------------------
 get_catch_haul_history(
      survey = "EBS", 
      years = 2021, 
      station = "I-13")   
      
-## for default 10 years and only 1 station ----------------------------------
+## for default 10 years and only 1 station  for PCOD and walleye pollock ----
 get_catch_haul_history( 
+     species_codes = c(21720, 21740), # pacific cod and walleye pollock
       survey = "EBS", 
       station = "I-13")   
 }

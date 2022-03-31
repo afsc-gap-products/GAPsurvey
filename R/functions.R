@@ -1466,6 +1466,7 @@ netSpread <- function(dat) {
 #' Find historical catch data from previous years
 #'
 #' @param survey (character) A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS". 
+#' @param species_codes (numeric) A species code number of a species or species you are specifically interested in reviewing data from. If NA/not entered, the function will return data for all species caught in the haul. 
 #' @param station (character) A character string of the current station name (as a grid cell; e.g., "264-85")
 #' @param grid_buffer (numeric) GOA/AI only. The number of cells around the current station where you would like to see catches from. Typically, use grid_buffer = 3. 
 #' @param years (numeric) the years you want returned in the output. If years = NA, script will default to the last 10 years. If you would like to see all years, simply choose a large range that covers all years of the survey (e.g., 1970:2030)
@@ -1483,34 +1484,44 @@ netSpread <- function(dat) {
 #'       station = "324-73",
 #'       grid_buffer = 3)
 #'       
-#' ## for default 10 years and nearby stations ---------------------------------
+#' ## for default 10 years and nearby stations for all species -----------------
 #' get_catch_haul_history(
 #'      survey = "AI", 
-#'      years = NA,
+#'      years = NA, # default
+#'      station = "324-73",
+#'      grid_buffer = 3)
+#'      
+#' ## for default 10 years and nearby stations for Bering Flounder (0 results returned!) ---
+#' get_catch_haul_history(
+#'      survey = "AI", 
+#'      species_codes = 10140, # Bering flounder which would be VERY unlikely to be found
+#'      years = NA, # default
 #'      station = "324-73",
 #'      grid_buffer = 3)
 #' 
 #' # EBS (or NBS) --------------------------------------------------------------
 #' 
-#' ## for one year and only 1 station ------------------------------------------
+#' ## for one year and only 1 station for all species --------------------------
 #' get_catch_haul_history(
 #'      survey = "EBS", 
 #'      years = 2021, 
 #'      station = "I-13")   
 #'      
-#' ## for default 10 years and only 1 station ----------------------------------
+#' ## for default 10 years and only 1 station  for PCOD and walleye pollock ----
 #' get_catch_haul_history( 
+#'      species_codes = c(21720, 21740), # pacific cod and walleye pollock
 #'       survey = "EBS", 
 #'       station = "I-13")   
 get_catch_haul_history <- function(
     survey, 
+    species_codes = NA, 
     years = NA,
     station,
     grid_buffer = NA) {
   
   # (dataframe) A dataframe containing historical survey data. We suggest you use `data("public_data", package = "GAPsurvey")`, which you can learn more about using `?GAPsurvey::public_data`
   data("public_data", package = "GAPsurvey") 
-
+  
   
   public_data0 <- 
     public_data[public_data$srvy == survey,
@@ -1524,11 +1535,17 @@ get_catch_haul_history <- function(
   if (!is.na(years[1])) {
     public_data0 <- subset(x = public_data0, year %in% years)
   } else { # default: show 10 years average
-    public_data0 <- subset(x = public_data0, year %in% sort(unique(public_data$year), decreasing = TRUE)[1:10])
+    public_data0 <- subset(x = public_data0, year %in% sort(unique(public_data0$year), decreasing = TRUE)[1:10])
   }
   
-  if(is.na(grid_buffer)) {
+  if (is.na(grid_buffer)) {
     public_data0 <- public_data0[public_data0$station == station,]
+  }
+  
+  public_data1 <- public_data0 # so we can calculate the total_weight_kg
+  
+  if (!is.na(species_codes[1])) {
+    public_data0 <- subset(x = public_data0, species_code %in% species_codes)
   }
   
   # if (survey == "EBS" | survey == "NBS") {
@@ -1545,6 +1562,10 @@ get_catch_haul_history <- function(
   #   
   # }
   
+  if (nrow(public_data0) == 0) {
+    out <- "Your quiery returned 0 results."
+  } else {
+    
   if (survey == "AI" | survey == "GOA"){
     
     y <- as.numeric(strsplit(x = station, split = "-", fixed = TRUE)[[1]])
@@ -1572,6 +1593,8 @@ get_catch_haul_history <- function(
     possible_stations <- possible_stations$station
     
     xx <- subset(x = public_data0, station %in% possible_stations)
+    public_data1 <- subset(x = public_data1, station %in% possible_stations) # for calc total weight of haul
+    
     
     catch <- stats::aggregate(xx[, c("count", "weight_kg", "cpue_kgha", "cpue_noha")],
                               by = list(
@@ -1583,17 +1606,31 @@ get_catch_haul_history <- function(
                               sum)
     
     haul <- unique(xx[,c("year", "haul", "station", "stratum", 
-                         "vessel_name", "vessel_id", "date_time", "latitude_dd", "longitude_dd", 
+                         "vessel_name", "date_time", "latitude_dd", "longitude_dd", 
                          "bottom_temperature_c", "surface_temperature_c", "depth_m", 
                          "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")])
     
   } else {
     catch <- public_data0[,c("year", "station", "scientific_name", "common_name", "count", "weight_kg", "cpue_kgha", "cpue_noha")]
     haul <- unique(public_data0[,c("year", "haul", "station", "stratum", 
-                                   "vessel_name", "vessel_id", "date_time", "latitude_dd", "longitude_dd", 
+                                   "vessel_name", "date_time", "latitude_dd", "longitude_dd", 
                                    "bottom_temperature_c", "surface_temperature_c", "depth_m", 
                                    "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")])
   }
+  
+
+    # add total weight to haul table
+  haul <- base::merge(
+    x = haul,
+    y = stats::aggregate(public_data1[, c("weight_kg")],
+                     by = list(
+                       year = factor(public_data1$year),
+                       station = factor(public_data1$station)),
+                     sum, na.rm = TRUE), 
+  by = c("year", "station"))
+  names(haul)[names(haul) == "weight_kg"] <- "total_weight_kg"
+  haul$total_weight_kg <- round(x = haul$total_weight_kg, digits = 2)
+  
   
   catch$year <- as.numeric(as.character(catch$year))
   catch <- catch[order(-catch$year, -catch$weight_kg), ]
@@ -1602,7 +1639,7 @@ get_catch_haul_history <- function(
   
   cc <- split(catch, catch$year)
   cc <- lapply(cc, function(df) { (df[order(-df$year, -df$weight_kg), names(catch) != c("year")]) })
-
+  
   if (length(unique(catch$year))>1 | length(unique(catch$station))>1) {
     catch_means <- base::merge(
       x = stats::aggregate(catch[, c("count", "weight_kg", "cpue_kgha", "cpue_noha")],
@@ -1614,25 +1651,32 @@ get_catch_haul_history <- function(
       y = data.frame(table(catch[,c("scientific_name")])), 
       by.x = "scientific_name", 
       by.y = "Var1")
-    catch_means <- catch_means[order(-catch_means$cpue_kgha),]
-    
-    catch_means$count <- round(x = catch_means$count, digits = 1)
-    catch_means$weight_kg <- round(x = catch_means$weight_kg, digits = 2)
-    catch_means$cpue_kgha <- round(x = catch_means$cpue_kgha, digits = 2)
-    catch_means$cpue_noha <- round(x = catch_means$cpue_noha, digits = 2)
-    rownames(catch_means) <- 1:nrow(catch_means)
-    
-  } else {
-    catch_means <- "A summary of catch data would not be helpful with your function parameters"
-  }
+    if (nrow(catch_means) == 0) {
+      catch_means <- "There was no data available for these function parameters"
+    } else {    
+      catch_means <- catch_means[order(-catch_means$cpue_kgha),]
+      catch_means$count <- round(x = catch_means$count, digits = 1)
+      catch_means$weight_kg <- round(x = catch_means$weight_kg, digits = 2)
+      catch_means$cpue_kgha <- round(x = catch_means$cpue_kgha, digits = 2)
+      catch_means$cpue_noha <- round(x = catch_means$cpue_noha, digits = 2)
+      rownames(catch_means) <- 1:nrow(catch_means)
+      
+    }
 
+  } else {
+    catch_means <- "A summary of catch data would not be helpful with these function parameters"
+  }
+  
   catch$weight_kg <- round(x = catch$weight_kg, digits = 2)
   catch$cpue_kgha <- round(x = catch$cpue_kgha, digits = 2)
   catch$cpue_noha <- round(x = catch$cpue_noha, digits = 2)
   
-  return(list("catch" = cc, 
+  out <- list("catch" = cc, 
               "catch_means" = catch_means,
-              "haul" = haul))
+              "haul" = haul)
+  }
+  
+  return(out)
 }
 
 

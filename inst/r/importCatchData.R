@@ -1,11 +1,17 @@
 # R Package "GAPsurvey"
 # Catch, Length, and Specimen Data 
 # Import Program Instructions
-# Last updated August 2021
+# Last updated April 2022
 
 
-# NOTES ------------------------------------------------------------------------
+# Notes ------------------------------------------------------------------------
 
+
+# Open Rstudio script "importCatchData.R" (should be located on desktop,
+# if you have this opened in R, you are already here! This is the importCatchData.R file!)
+
+# Below is the annotated script for importing catch, length, and specimen 
+# data using the GAPsurvey package:
 
 #---> 32-bit R Studio is required to run this program
 #
@@ -25,38 +31,34 @@
 #     HAUL_xxxx.csv             -- A length file for each tablet
 
 
-# LOAD Packages (only need to do this once) ------------------------------------
-
+# Load Packages (only need to do this once) ------------------------------------
 
 ## Make sure the necessary packages are installed ##
 install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
 install.packages("C:/R/GAPsurvey_2022.04.01.tar.gz", repos = NULL, type = "source")
 
-# Run Functions as Needed ------------------------------------
+# Load libraries as needed -----------------------------------------------------
 
-# Open Rstudio script "importCatchData.R" (should be located on desktop, if you have this opened in R, you are already here!  This is the importCatchData.R file!)
-
-
-# Below is the annotated script for importing catch, length, and specimen 
-# data using the GAPsurvey package:
-
-
-# Load package libraries #
 library("GAPsurvey", "RODBC")
 
+## What have we historically caught at this station? ---------------------------
+
+# Learn more about and find examples for functions in GAPsurvey using...
+# ?get_catch_haul_history # look here for examples of how to use this function
+
+get_catch_haul_history( 
+  # years = 2021, # optional; if you only want to see a specific year, not the last 10
+  # species_codes = c(21720, 21740), # optional; pacific cod and walleye pollock ONLY
+  survey = "EBS", # for example
+  station = "I-13") # for example
+
+
+## Modify data_ent.mdb ---------------------------------------------------------
 
 # Learn more about and find examples for functions in GAPsurvey using...
 # ?catchData
 # ?specimenData
 # ?deleteDataEnt
-# ?CTDtoBTD
-# ?TEDtoBTD
-# ?LOGtoGPS
-
-
-
-# *** Modify data_ent.mdb ------------------------------------------------------
-
 
 # Point functions to correct tablet directory and "dataEnt" file
 dsnTablet <- "C:/Users/NOAADATA/Documents/Bluetooth/inbox"
@@ -65,7 +67,6 @@ importLength <- TRUE ## Change this "T" to "F" if not importing length data ##
 
 # Define the current haul number to import #
 haul <- 59
-
 
 # Import catch, length, and specimen data #
 catchData(haul,dsnTablet,dsnDataEnt,importLength)
@@ -104,13 +105,15 @@ dRawLength <- deleteDataEnt(dsnDataEnt = dsnDataEnt, haul =
 #  Click "EDIT SPECIMEN" and inspect the specimen data for completeness and accuracy
 
 
-
-
-# *** Convert other sources to wheelhouse formats (.BTD/.BTH) ------------------
+## Convert other sources to wheelhouse formats (.BTD/.BTH) ---------------------
 
 
 # For conversion of wheelhouse data run the appropriate function:
 
+# Learn more about and find examples for functions in GAPsurvey using...
+# ?CTDtoBTD
+# ?TEDtoBTD
+# ?LOGtoGPS
 
 # CTDtoBTD()
 # TEDtoBTD()
