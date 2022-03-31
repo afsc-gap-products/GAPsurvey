@@ -22,27 +22,31 @@ a data.frame of past catches and hauls
 Find historical catch data from previous years
 }
 \examples{
-# AI (or GOA) ------------------------------------
-# for two years and nearby stations
+# AI (or GOA) ---------------------------------------------------------------
+
+## for two specific years and nearby stations -------------------------------
 get_catch_haul_history(
       survey = "AI", 
-      years = c(2018, 2016),
+      years = c(2016, 2018),
       station = "324-73",
       grid_buffer = 3)
-# for default 10 years and nearby stations
+      
+## for default 10 years and nearby stations ---------------------------------
 get_catch_haul_history(
      survey = "AI", 
      years = NA,
      station = "324-73",
      grid_buffer = 3)
 
-# EBS (or NBS) ------------------------------------
-# for one year and only 1 station
+# EBS (or NBS) --------------------------------------------------------------
+
+## for one year and only 1 station ------------------------------------------
 get_catch_haul_history(
      survey = "EBS", 
      years = 2021, 
      station = "I-13")   
-# for default 10 years and only 1 station
+     
+## for default 10 years and only 1 station ----------------------------------
 get_catch_haul_history( 
       survey = "EBS", 
       station = "I-13")   

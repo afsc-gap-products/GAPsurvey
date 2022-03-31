@@ -61,6 +61,5 @@ reference:
   - title: Datasets
     contents:
       - '`PolySpecies`'
-      - '`local_racebase`'
       - '`public_data`'
       - '`sp_table`'
