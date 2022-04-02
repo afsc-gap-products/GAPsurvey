@@ -3,9 +3,7 @@
 # Import Program Instructions
 # Last updated April 2022
 
-
 # Notes ------------------------------------------------------------------------
-
 
 # Open Rstudio script "importCatchData.R" (should be located on desktop,
 # if you have this opened in R, you are already here! This is the importCatchData.R file!)
