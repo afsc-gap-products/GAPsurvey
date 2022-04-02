@@ -49,6 +49,22 @@ dsnDataEnt <- "C:/Users/liz.dawson/Desktop/AKKNIGHT2021CATCHHAULS1-7/data_ent.md
 
 # git rm -r --cached .
 
+# # create a list of all installed packages
+# ip <- as.data.frame(installed.packages())
+# head(ip)
+# # if you use MRO, make sure that no packages in this library will be removed
+# ip <- subset(ip, !grepl("MRO", ip$LibPath))
+# # we don't want to remove base or recommended packages either\
+# ip <- ip[!(ip[,"Priority"] %in% c("base", "recommended")),]
+# # determine the library where the packages are installed
+# path.lib <- unique(ip$LibPath)
+# # create a vector with all the names of the packages you want to remove
+# pkgs.to.remove <- ip[,1]
+# head(pkgs.to.remove)
+# # remove the packages
+# sapply(pkgs.to.remove, remove.packages, lib = path.lib)
+install.packages("~/Projects/GAPsurvey_general/installfiles/packages/RODBC_1.3-16.zip", repos = NULL, type = "win.binary")
+
 ########### Document Package ############
 .rs.restartR()
 
@@ -57,6 +73,7 @@ Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH
 library(here)
 library(devtools)
 library(roxygen2)
+library(RODBC)
 devtools::document()
 setwd("..")
 install("GAPsurvey")

@@ -1522,7 +1522,6 @@ get_catch_haul_history <- function(
   # (dataframe) A dataframe containing historical survey data. We suggest you use `data("public_data", package = "GAPsurvey")`, which you can learn more about using `?GAPsurvey::public_data`
   data("public_data", package = "GAPsurvey") 
   
-  
   public_data0 <- 
     public_data[public_data$srvy == survey,
                 c("year", "srvy", "haul", "stratum", "station", 
@@ -1629,7 +1628,7 @@ get_catch_haul_history <- function(
                      sum, na.rm = TRUE), 
   by = c("year", "station"))
   names(haul)[names(haul) == "weight_kg"] <- "total_weight_kg"
-  haul$total_weight_kg <- round(x = haul$total_weight_kg, digits = 2)
+  haul[,ncol(haul)] <- round(x = haul[,ncol(haul)], digits = 2)
   
   
   catch$year <- as.numeric(as.character(catch$year))
@@ -1810,7 +1809,7 @@ fix_path <- function(path) {
 
 
 #' @title Public data from FOSS
-#' @description
+#' @description Public data from FOSS
 #' @usage data("public_data")
 #' @author Emily Markowitz (emily.markowitz AT noaa.gov)
 #' @format A data frame with 878805 observations on the following 33 variables.
