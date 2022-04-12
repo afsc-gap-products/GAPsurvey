@@ -32,8 +32,8 @@
 # Load Packages (only need to do this once) ------------------------------------
 
 ## Make sure the necessary packages are installed ##
-install.packages("C:/R/RODBC_1.3-16.zip", repos = NULL, type = "source")
-install.packages("C:/R/GAPsurvey_2022.04.01.tar.gz", repos = NULL, type = "source")
+install.packages("C:/RACE_Survey_App_RMarkdown/forms_files/Manuals/R/GAPsurvey/RODBC_1.3-16.zip", repos = NULL, type = "source")
+install.packages("C:/RACE_Survey_App_RMarkdown/forms_files/Manuals/R/GAPsurvey/GAPsurvey_2022.04.01.tar.gz", repos = NULL, type = "source")
 
 # Load libraries as needed -----------------------------------------------------
 
