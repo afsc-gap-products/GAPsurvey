@@ -1,6 +1,7 @@
 Package: GAPsurvey
+Type: Package
 Title: Provides at-sea data management tools for RACE GAP surveys
-Version: 2022.04.01
+Version: 2022.09.01
 Authors@R: 
   c(person(given = "Emily",
            family = "Markowitz", 
@@ -14,21 +15,24 @@ Authors@R:
     person(given = "Liz",
            family = "Dawson",
            role = "aut",
-           email = "Liz.Dawson@noaa.gov"), 
-    person(given = "Jason",
-           family = "Conner",
-           email = "Jason.Conner@noaa.gov", 
-           role = c("aut")))
+           email = "Liz.Dawson@noaa.gov"))
+URL: https://github.com/afsc-gap-products/GAPsurvey
+License: MIT
 Description: Provides at-sea data management tools for RACE GAP surveys. 
-URL: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
-License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
-Depends: 
-    R (>= 2.10)
+LazyData: true
 Imports: 
-    RODBC, 
-    tcltk, 
+    lubridate,
+    maptools, 
+    rstudioapi, 
+    sp, 
     stats, 
-    utils
+    utils, 
+    raster, 
+    dplyr, 
+    sf, 
+    gstat, 
+    stars, 
+    magrittr, 
+    methods
+RoxygenNote: 7.2.1

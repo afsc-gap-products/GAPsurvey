@@ -17,10 +17,9 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Provides at-sea data management tools for RACE GAP surveys">
+<script src="pkgdown.js"></script><meta property="og:title" content="Provides at-sea data management tools for RACE GAP surveys">
 <meta property="og:description" content="Provides at-sea data management tools for RACE GAP surveys. ">
-<meta property="og:image" content="https://emilymarkowitz-noaa.github.io/GAPsurvey/logo.png">
+<meta property="og:image" content="https://afsc-gap-products.github.io/GAPsurvey/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">GAPsurvey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2022.04.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2022.09.01</span>
       </span>
     </div>
 
@@ -70,13 +69,13 @@
   </a>
 </li>
 <li>
-  <a href="https://github.com/EmilyMarkowitz-NOAA/GAPsurvey/issues/" class="external-link">
+  <a href="https://github.com/afsc-gap-products/GAPsurvey/issues/" class="external-link">
     <span class="fas fa-question-circle fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/EmilyMarkowitz-NOAA/GAPsurvey" class="external-link">
+  <a href="https://github.com/afsc-gap-products/GAPsurvey" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -100,8 +99,7 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="gapsurvey-">GAPsurvey
-<a href="%7Bhttps://emilymarkowitz-noaa.github.io/GAPsurvey%7D"><img src="reference/figures/logo.png" align="right" width="139" height="139" alt="logo with an image of a NOAA Fisheries report"></a>
+<div class="page-header"><h1 id="gapsurvey-">GAPsurvey <a href="%7Bhttps://afsc-gap-products.github.io/GAPsurvey%7D"><img src="reference/figures/logo.png" align="right" width="139" height="139" alt="logo with an image of a NOAA Fisheries report"></a>
 <a class="anchor" aria-label="anchor" href="#gapsurvey-"></a>
 </h1></div>
 <blockquote>
@@ -110,12 +108,9 @@
 <div class="section level2">
 <h2 id="this-code-is-primarally-maintained-by">This code is primarally maintained by:<a class="anchor" aria-label="anchor" href="#this-code-is-primarally-maintained-by"></a>
 </h2>
-<p><strong>Emily Markowitz</strong> (Emily.Markowitz AT noaa.gov;
-@EmilyMarkowitz-NOAA)</p>
-<p><strong>Megsie Siple</strong> (Margaret.Siple AT noaa.gov;
-@MargaretSiple-NOAA)</p>
-<p><strong>Liz Dawson</strong> (Liz.Dawson AT noaa.gov;
-liz-dawson-NOAA)</p>
+<p><strong>Emily Markowitz</strong> (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)</p>
+<p><strong>Megsie Siple</strong> (Margaret.Siple AT noaa.gov; @MargaretSiple-NOAA)</p>
+<p><strong>Liz Dawson</strong> (Liz.Dawson AT noaa.gov; @liz-dawson-NOAA)</p>
 <p>Alaska Fisheries Science Center,</p>
 <p>National Marine Fisheries Service,</p>
 <p>National Oceanic and Atmospheric Administration,</p>
@@ -124,146 +119,30 @@ liz-dawson-NOAA)</p>
 <h3 id="at-sea-data-management-tools-for-race-gap-surveys">
 <em>At-sea data management tools for RACE GAP surveys</em><a class="anchor" aria-label="anchor" href="#at-sea-data-management-tools-for-race-gap-surveys"></a>
 </h3>
-<p><a href="https://github.com/EmilyMarkowitz-NOAA/NMFSReports" class="external-link"><img src="https://img.shields.io/badge/devel%20version-2022.04.01-blue.svg"></a>
-<a href="https://lifecycle.r-lib.org/articles/stages.html#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a> <a href="https://github.com/EmilyMarkowitz-NOAA/NMFSReports/commits/main" class="external-link"><img src="https://img.shields.io/github/last-commit/EmilyMarkowitz-NOAA/NMFSReports.svg"></a></p>
+<p><a href="https://github.com/afsc-gap-products/GAPsurvey" class="external-link"><img src="https://img.shields.io/badge/devel%20version-2022.09.01-blue.svg"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a> <a href="https://github.com/afsc-gap-products/GAPsurvey/commits/main" class="external-link"><img src="https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg"></a></p>
 </div>
-</div>
-<div class="section level2">
-<h2 id="r-and-package-versions">R and Package Versions<a class="anchor" aria-label="anchor" href="#r-and-package-versions"></a>
-</h2>
-<p><a href="https://cran.r-project.org/bin/windows/base/old/3.6.0/" class="external-link">R
-3.6.0 32 bit</a> * 32-bit R Studio is required to run this program!</p>
-<p><a href="https://www.npackd.org/p/rstudio/1.1.463" class="external-link">RStudio Desktop
-1.1.463</a></p>
-<p><a href="https://cran.r-project.org/bin/windows/Rtools/history.html" class="external-link">RTools35
-for R 3.3.x to 3.6.x</a></p>
-<p>Below is the annotated script for importing catch, length, and
-specimen data using the GAPsurvey package:</p>
 </div>
 <div class="section level2">
 <h2 id="make-sure-the-necessary-packages-are-installed">Make sure the necessary packages are installed<a class="anchor" aria-label="anchor" href="#make-sure-the-necessary-packages-are-installed"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_version</span>(<span class="st">"RODBC"</span>, <span class="at">version =</span> <span class="st">"1.3-16"</span>, <span class="at">repos =</span> <span class="st">"http://cran.us.r-project.org"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RODBC)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"emilymarkowitz-noaa/GAPsurvey"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GAPsurvey)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"EmilyMarkowitz-NOAA/GAPsurvey@main"</span>)</span></code></pre></div>
-<p>Or, if you are installing from the catch computer/without internet
-connection, you can instally the packages like this:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"C:/R/GAPsurvey_2.4.00.tar.gz"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"C:/R/RODBC_1.3-16.zip"</span>, <span class="at">repos =</span> <span class="cn">NULL</span>, <span class="at">type =</span> <span class="st">"source"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"GAPsurvey"</span>, <span class="st">"RODBC"</span>)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GAPsurvey)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternatively</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey@main"</span>)</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="directories">Directories<a class="anchor" aria-label="anchor" href="#directories"></a>
+<h2 id="noaa-readme">NOAA README<a class="anchor" aria-label="anchor" href="#noaa-readme"></a>
 </h2>
-<p>To use the program you must first:</p>
-<ul>
-<li>Bluetooth transfer all data from tablets (catch, length, and
-specimen) to catch computer (should automatically go into
-C:Users/NOAADATA/Documents/Bluetooth/inbox)</li>
-<li>Open Rstudio script “importCatchData.R” (should be located on
-desktop)</li>
-</ul>
+<p>This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.</p>
 </div>
 <div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
 </h2>
-<div class="section level4">
-<h4 id="workin-with-data_entmbd">Workin with data_ent.mbd<a class="anchor" aria-label="anchor" href="#workin-with-data_entmbd"></a>
-</h4>
-<p>Bluetooth transfer the following files from tablets to catch computer
-(should automatically go into
-C:Users/NOAADATA/Documents/Bluetooth/inbox) [each of these file names
-will begin with the tablet name and end with the haul number]</p>
-<ul>
-<li>DATAENT_CATCH_xxxx.csv</li>
-<li>DATAENT_BBAG_xxxx.csv – If there was a benthic bag</li>
-<li>RAW_BBAG_xxxx.csv – If there was a benthic bag</li>
-<li>RAW_CATCH_HAUL_xxxx.csv</li>
-<li>RAW_CATCH_HAUL_ATTR_xxxx.csv</li>
-<li>RAW_CATCH_SAMPLE_xxxx.csv</li>
-<li>RAW_CATCH_VALUE_xxxx.csv</li>
-<li>SPECIMEN_xxxx.csv – The specimen data</li>
-<li>HAUL_xxxx.csv – A length file for each tablet</li>
-</ul>
-<p>Point functions to correct directories - Note: for tablet data it is
-the directory for data_ent include the file name</p>
-</div>
-<div class="section level3">
-<h3 id="catch-length-and-specimen-data-import-program-instructions">Catch, Length, and Specimen Data Import Program Instructions<a class="anchor" aria-label="anchor" href="#catch-length-and-specimen-data-import-program-instructions"></a>
-</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Point functions to correct tablet directory and "dataEnt" file#</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dsnTablet <span class="ot">&lt;-</span> <span class="st">"C:/Users/NOAADATA/Documents/Bluetooth/inbox"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dsnDataEnt <span class="ot">&lt;-</span> <span class="st">"C:/Data/data_ent.mdb"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>importLength <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="do">## Change this "T" to "F" if not importing length data ##</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the current haul number to import #</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>haul <span class="ot">&lt;-</span> <span class="dv">59</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Import catch, length, and specimen data #</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">catchData</span>(haul,dsnTablet,dsnDataEnt,importLength)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">specimenData</span>(haul,dsnTablet,dsnDataEnt)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># benthicData(haul,dsnTablet,dsnDataEnt) # GOA and AI surveys only</span></span></code></pre></div>
-<p>If an error occurs where there is a mismatch with species in length
-and catch, the length data should already be uploaded, but you will have
-to re-upload the catch data with:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>lengthData <span class="ot">&lt;-</span> F</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">catchData</span>(haul,dsnTablet,dsnDataEnt,lengthData)</span></code></pre></div>
-<p>and enter the subsample numbers manually in the data_ent application
-afterward.</p>
-<p>After successfully running the import script, open DataEnt to
-complete the calculations and check the data. In DataEnt:</p>
-<ol style="list-style-type: decimal">
-<li>Click “EDIT”, then “EDIT CATCH”</li>
-<li>Select current haul from the dropdown menu</li>
-<li>Tab through each line of the catch and mixture data to complete
-extrapolation calculations</li>
-<li>Visually inspect the data for accuracy</li>
-<li>Click “QUIT” and “Yes” to exit</li>
-<li>Click “EDIT LENGTH” and inspect the length data for completeness and
-accuracy</li>
-<li>Click “EDIT SPECIMEN” and inspect the specimen data for completeness
-and accuracy</li>
-</ol>
-<p>If you need to delete data from a haul and start over:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete previously loaded data from data_ent.mdb (use if data was partially </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># transferred and trying to re-transfer all data).</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>dMix <span class="ot">&lt;-</span> <span class="fu">deleteDataEnt</span>(<span class="at">dsnDataEnt =</span> dsnDataEnt, <span class="at">haul =</span> haul, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">tablename =</span> <span class="st">'MIXTURE'</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dMixHead <span class="ot">&lt;-</span> <span class="fu">deleteDataEnt</span>(<span class="at">dsnDataEnt =</span> dsnDataEnt, <span class="at">haul =</span> haul, </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">tablename =</span> <span class="st">'MIXTURE_HEADER'</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>dCatch <span class="ot">&lt;-</span> <span class="fu">deleteDataEnt</span>(<span class="at">dsnDataEnt =</span> dsnDataEnt, <span class="at">haul =</span> haul, </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">tablename =</span> <span class="st">'CATCH'</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>dCatchHead <span class="ot">&lt;-</span> <span class="fu">deleteDataEnt</span>(<span class="at">dsnDataEnt =</span> dsnDataEnt, <span class="at">haul =</span> haul, </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">tablename =</span> <span class="st">'CATCH_HEADER'</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>dLength <span class="ot">&lt;-</span> <span class="fu">deleteDataEnt</span>(<span class="at">dsnDataEnt =</span> dsnDataEnt, <span class="at">haul =</span> haul, </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">tablename =</span> <span class="st">'LENGTH'</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>dRawLength <span class="ot">&lt;-</span> <span class="fu">deleteDataEnt</span>(<span class="at">dsnDataEnt =</span> dsnDataEnt, <span class="at">haul =</span> </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                              haul, <span class="at">tablename =</span> <span class="st">'RAW_LENGTH'</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Specimen data must be manually deleted. </span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="convert-other-sources-to-wheelhouse-formats-btdbth">Convert other sources to wheelhouse formats (.BTD/.BTH)<a class="anchor" aria-label="anchor" href="#convert-other-sources-to-wheelhouse-formats-btdbth"></a>
-</h3>
-<p>For conversion of wheelhouse data run the appropriate function:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert CTD data in XML form to BTD and BTH</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ?CTDtoBTD</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">CTDtoBTD</span>()</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># BVDR Conversion to Create BTD data</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ?TEDtoBTD</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">TEDtoBTD</span>()</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Recover position data from Globe.log file</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ?LOGtoGPS</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">LOGtoGPS</span>()</span></code></pre></div>
-</div>
+<p>Software code created by U.S. Government employees is not subject to copyright in the United States (17 U.S.C. §105). The United States/Department of Commerce reserve all rights to seek and obtain copyright protection in countries other than the United States for Software authored in its entirety by the Department of Commerce. To this end, the Department of Commerce hereby grants to Recipient a royalty-free, nonexclusive license to use, copy, and create derivative works of the Software outside of the United States.</p>
+<p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"></p>
+<p><a href="https://www.commerce.gov/" class="external-link">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov" class="external-link">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/" class="external-link">NOAA Fisheries</a></p>
 </div>
 </div>
   </div>
@@ -272,15 +151,14 @@ and accuracy</li>
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/EmilyMarkowitz-NOAA/GAPsurvey/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/afsc-gap-products/GAPsurvey/" class="external-link">Browse source code</a></li>
 </ul>
 </div>
 
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a></li>
 </ul>
 </div>
 
@@ -298,7 +176,6 @@ and accuracy</li>
 <li>Emily Markowitz <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5757-4230" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Margaret Siple <br><small class="roles"> Author </small>  </li>
 <li>Liz Dawson <br><small class="roles"> Author </small>  </li>
-<li>Jason Conner <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -310,14 +187,12 @@ and accuracy</li>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson, Jason
-Conner.</p>
+<p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

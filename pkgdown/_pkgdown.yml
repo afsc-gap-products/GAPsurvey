@@ -1,4 +1,4 @@
-url: https://emilymarkowitz-noaa.github.io/GAPsurvey/
+url: https://afsc-gap-products.github.io/GAPsurvey/
 
 news:
   one_page: true
@@ -15,9 +15,9 @@ navbar:
     - icon: fas fa-paper-plane fa-lg
       href: mailto:emily.markowitz@noaa.gov
     - icon: fas fa-question-circle fa-lg
-      href: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey/issues/
+      href: https://github.com/afsc-gap-products/GAPsurvey/issues/
     - icon: fab fa-github fa-lg
-      href: https://github.com/EmilyMarkowitz-NOAA/GAPsurvey
+      href: https://github.com/afsc-gap-products/GAPsurvey
     - icon: fa-fish
       href: https://nmfs-general-modeling-tools.github.io/
 
@@ -28,38 +28,27 @@ articles:
       <br/>
 
 reference:
-  - title: R-create BTH and BTD files from other sources
+  - title: Converters
     contents:
       - '`TEDtoBTD`'
       - '`CTDtoBTD`'
-  - title: R-create GPS files from LOG files
-    contents:
+      - '`BVDRtoMARP`'
       - '`LOGtoGPS`'
-  - title: Work with catch data
-    contents:
-      - '`catchData`'  
-      - '`specimenData`'  
-      - '`benthicData`'
-      - '`lengthData`'
-      - '`checkFiles`'
-  - title: Manage DataEnt
-    contents:
-      - '`writeDataEnt`'
-      - '`deleteDataEnt`'
-      - '`selectDataEnt`'
-  - title: Estimate Net Spread
+  - title: Estimate Values
     contents:
       - '`netSpread`'
-  - title: Check Past Tows
+      - '`volumetric_tow`'
+  - title: Resources
     contents:
       - '`get_catch_haul_history`'
-  - title: Helper Functions
-    contents:
-      - '`numbers0`'
-      - '`fix_path`'
-      - '`text_list`'
+      - '`get_sunrise_sunset`'
   - title: Datasets
     contents:
       - '`PolySpecies`'
       - '`public_data`'
       - '`sp_table`'
+  - title: Helper Functions
+    contents:
+      - '`numbers0`'
+      - '`fix_path`'
+      - '`text_list`'

@@ -46,15 +46,13 @@ Before running this CTDtoBTD function, you will need to use the CTD laptop to co
 }
 \details{
 To do this,
-\enumerate{
-\item use the SBE Data Processing Program, and in the "Run" menu select "1. Data conversion".
-\item Under "Program setup file" select the .psa file (should be DataCnv.psa located in CTD folder), under "Instrument configuration file" select the .xmlcon file for the CTD located in the
+1. use the SBE Data Processing Program, and in the "Run" menu select "1. Data conversion".
+2. Under "Program setup file" select the .psa file (should be DataCnv.psa located in CTD folder), under "Instrument configuration file" select the .xmlcon file for the CTD located in the
 deployment_xmlcon folder- this is CTD specific, know your CTD's serial number, and under "Input directory" select the .hex file (from the CTD computer) that is specific to the haul that you are missing data.  Click "Start Process".
 The conversion program will ask you for outputs. At the prompt, Select and Add "Time, Elapsed, seconds", "Depth, salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
-\item This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
-\item Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!
-\item Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files.
-}
+3. This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
+4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!
+5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files.
 
 Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together).
 }
@@ -66,14 +64,14 @@ CTDtoBTD(
    MODEL_NUMBER = 123, # for example, also can make up
    VERSION_NUMBER = 456, # for example, also can make up
    SERIAL_NUMBER = 789, # for example, also can make up
-   path_in = system.file(paste0("exdata/ctd2btd/",
-      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"), 
+   path_in = system.file(paste0("exdata/CTDtoBTD/",
+      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
        package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newctd", 
+   filename_add = "newctd",
    quiet = TRUE)
-  
- 
+
+
 CTDtoBTD(
    VESSEL = 94,
    CRUISE = 202101,
@@ -81,10 +79,10 @@ CTDtoBTD(
    MODEL_NUMBER = "", # for example, also can make up
    VERSION_NUMBER = "", # for example, also can make up
    SERIAL_NUMBER = 8105, # for example, also can make up
-   path_in = system.file(paste0("exdata/ctd2btd/",
-     "SBE19plus_01908105_2021_06_25_94_0005.cnv"), 
+   path_in = system.file(paste0("exdata/CTDtoBTD/",
+     "SBE19plus_01908105_2021_06_25_94_0005.cnv"),
       package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newctd", 
+   filename_add = "newctd",
    quiet = TRUE)
 }

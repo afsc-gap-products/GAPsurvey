@@ -38,17 +38,15 @@ A .GPS file to the path_out directory.
 \description{
 In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
 To get a .log file that is usable in this function,
-\enumerate{
-\item Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
-\item Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
-\item LOGtoGPS()will prompt you for Vessel code, Cruise no., Haul no. and Date
-\item The final prompt will ask for the location of the GLOBE LOG file
-\item LOGtoGPS()will create csv file in the R directory with filename "new.gps"
-\item Rename "new.gps" to HAULXXXX.GPS where XXXX is the haul number
-\item Upload HAULXXXX.GPS into WHEELHOUSE
-\item NOTE: The raw GLOBE log data are in GMT time (-8 hrs or 4PM AKDT prior day to 4PM current day. Hence if haul with missing GPS spans the 4PM hour (e.g.,3:45-4:30 PM),YOU WILL HAVE TO CONVERT TWO GLG files (current day and next day)and run LOGtoGPS()twice & manually combine the two GPS files
-\item ALSO NOTE: You may have to shut down GLOBE or wait until after 4pm on following day before all the incoming NMEA data are written to the GLG file.
-}
+1) Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
+2) Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
+3) LOGtoGPS()will prompt you for Vessel code, Cruise no., Haul no. and Date
+4) The final prompt will ask for the location of the GLOBE LOG file
+5) LOGtoGPS()will create csv file in the R directory with filename "new.gps"
+6) Rename "new.gps" to HAULXXXX.GPS where XXXX is the haul number
+7) Upload HAULXXXX.GPS into WHEELHOUSE
+8) NOTE: The raw GLOBE log data are in GMT time (-8 hrs or 4PM AKDT prior day to 4PM current day. Hence if haul with missing GPS spans the 4PM hour (e.g.,3:45-4:30 PM),YOU WILL HAVE TO CONVERT TWO GLG files (current day and next day)and run LOGtoGPS()twice & manually combine the two GPS files
+9) ALSO NOTE: You may have to shut down GLOBE or wait until after 4pm on following day before all the incoming NMEA data are written to the GLG file.
 }
 \details{
 Now that you have a .log file, you can RUN the function by putting your cursor on the "LOGtoGPS()" line below & press CTRL+R.
@@ -59,18 +57,18 @@ LOGtoGPS(
     CRUISE = 201901,
     HAUL = 3,
     DATE = "06/06/2017",
-    path_in = system.file("exdata/log2gps/06062017.log", 
+    path_in = system.file("exdata/LOGtoGPS/06062017.log",
         package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "newlog",
     quiet = TRUE)
-    
+
     LOGtoGPS(
     VESSEL = 94,
     CRUISE = 202101,
     HAUL = 37,
     DATE = "06/07/2021",
-    path_in = system.file("exdata/log2gps/Haul0037.log", 
+    path_in = system.file("exdata/LOGtoGPS/Haul0037.log",
         package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "newlog",

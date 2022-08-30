@@ -1,84 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/404.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/404.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/authors.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/authors.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/index.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/index.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/LICENSE-text.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/BVDRtoMARP.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/LICENSE.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/CTDtoBTD.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/benthicData.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/fix_path.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/catchData.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/get_catch_haul_history.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/checkFiles.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/get_sunrise_sunset.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/CTDtoBTD.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/deleteDataEnt.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/LOGtoGPS.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/fix_path.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/netSpread.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/get_catch_haul_history.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/numbers0.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/get_station_history.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/PolySpecies.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/index.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/public_data.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/lengthData.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/sp_table.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/local_racebase.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/TEDtoBTD.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/LOGtoGPS.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/text_list.html</loc>
   </url>
   <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/netSpread.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/numbers0.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/PolySpecies.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/public_data.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/selectDataEnt.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/specimenData.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/sp_table.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/TEDtoBTD.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/text_list.html</loc>
-  </url>
-  <url>
-    <loc>https://emilymarkowitz-noaa.github.io/GAPsurvey/reference/writeDataEnt.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/volumetric_tow.html</loc>
   </url>
 </urlset>

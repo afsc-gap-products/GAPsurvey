@@ -52,8 +52,8 @@ TEDtoBTD(
    MODEL_NUMBER = 123,
    VERSION_NUMBER = 456,
    SERIAL_NUMBER = 789,
-   path_in = system.file("exdata/bvdr2btd/", package = "GAPsurvey"),
+   path_in = system.file("exdata/BVDRtoBTD/", package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newted", 
+   filename_add = "newted",
    quiet = TRUE)
 }

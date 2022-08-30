@@ -7,10 +7,10 @@
 \format{
 A data frame with 172 rows and 4 variables:
 \describe{
-\item{\code{SPECIES_CODE}}{integer Species code}
-\item{\code{POLY_SPECIES_CODE}}{integer Poly species code}
-\item{\code{SPECIES_NAME}}{character Species scientific latin name}
-\item{\code{COMMON_NAME}}{character Species common names}
+  \item{\code{SPECIES_CODE}}{integer Species code}
+  \item{\code{POLY_SPECIES_CODE}}{integer Poly species code}
+  \item{\code{SPECIES_NAME}}{character Species scientific latin name}
+  \item{\code{COMMON_NAME}}{character Species common names}
 }
 }
 \usage{
