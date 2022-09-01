@@ -20,7 +20,7 @@ Before using this script,
 For an example of what a proper .marp file looks like, refer to system.file("exdata/BVDRtoMARP/HAUL0001.marp", package = "GAPsurvey")
 }
 \examples{
-BVDRtoMARP(path_bvdr = system.file("exdata/BVDRtoMARP/20220811-00Za.bvdr",
+head(BVDRtoMARP(path_bvdr = system.file("exdata/BVDRtoMARP/20220811-00Za.bvdr",
                                   package = "GAPsurvey"),
-          verbose = TRUE)
+          verbose = TRUE), 20)
 }

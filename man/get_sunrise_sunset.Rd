@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{get_sunrise_sunset}
 \alias{get_sunrise_sunset}
-\title{Get sunrise/sunset}
+\title{Get sunrise and sunset times by day, latitude, and longitude}
 \usage{
 get_sunrise_sunset(chosen_date, latitude, longitude, verbose = FALSE)
 }
@@ -19,7 +19,7 @@ get_sunrise_sunset(chosen_date, latitude, longitude, verbose = FALSE)
 Time of sunrise and sunset in text. Also shows a pop-up with sunrise and sunset times.
 }
 \description{
-Get sunrise/sunset
+Get sunrise and sunset times by day, latitude, and longitude
 }
 \examples{
 get_sunrise_sunset(chosen_date = Sys.Date(), latitude = 63, longitude = 170)

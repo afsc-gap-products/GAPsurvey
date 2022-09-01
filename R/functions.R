@@ -549,9 +549,9 @@ LOGtoGPS <- function(
 #'
 #' @export
 #' @examples
-#' BVDRtoMARP(path_bvdr = system.file("exdata/BVDRtoMARP/20220811-00Za.bvdr",
+#' head(BVDRtoMARP(path_bvdr = system.file("exdata/BVDRtoMARP/20220811-00Za.bvdr",
 #'                                   package = "GAPsurvey"),
-#'           verbose = TRUE)
+#'           verbose = TRUE), 20)
 BVDRtoMARP <- function(path_bvdr,
                        verbose = FALSE) {
 
@@ -660,7 +660,6 @@ BVDRtoMARP <- function(path_bvdr,
 #'                              # for width of board in middle
 #'                heights_in_bin = heights_in_bin, # measured in cm
 #'                density = density_prop)
-#' # ANS: 3631.6 kg/m3
 #'
 #' # Using other methods
 #' volumetric_tow(volume_method = "average",
@@ -675,7 +674,6 @@ BVDRtoMARP <- function(path_bvdr,
 #'                density = 775.8343)
 #'                        # if you measured the density directly (this happens
 #'                        # to be what the proportions above would solve for)
-#' # ANS: 4464.263 kg/m3
 #'
 #' # Using other methods
 #' volumetric_tow(volume_method = "average",
@@ -688,7 +686,6 @@ BVDRtoMARP <- function(path_bvdr,
 #'                density = 775.8343)
 #'                        # if you measured the density directly (this happens
 #'                        # to be what the proportions above would solve for)
-#' # ANS: 4464.262 kg/m3
 #'
 #' # F/V Vesteraalen Haul 128 EBS 2022
 #' volumetric_tow( # volume_method = "average",
@@ -1131,7 +1128,7 @@ netSpread <- function(dat) {
 
 # Check Past Tows --------------------------------------------------------------
 
-#' Get sunrise/sunset
+#' Get sunrise and sunset times by day, latitude, and longitude
 #'
 #' @param chosen_date Date, formatted as YYYY-MM-DD
 #' @param latitude Numeric latitude in either decimal degrees or a character latitude in degrees and decimal minutes
