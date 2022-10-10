@@ -13,6 +13,7 @@ CTDtoBTD(
   SERIAL_NUMBER = NA,
   path_in = NA,
   path_out = "./",
+  path_xmlcon = NULL,
   filename_add = "",
   quiet = FALSE
 )
@@ -30,9 +31,11 @@ CTDtoBTD(
 
 \item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
-\item{path_in}{Optional. Default = "./., or the local working directory but any path (as a string) may be entered.}
+\item{path_in}{Optional. Default = "./., or the local working directory but any path (as a string) may be entered. Can accept a .hex file if SBE Data Processing software is installed and path_xmlcon is specified.}
 
 \item{path_out}{Optional. The default is the local working directory but may be specified with a string.}
+
+\item{path_xmlcon}{Optional. Filepath to the CTD configuration file (.xmlcon)}
 
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.}
 
@@ -85,4 +88,22 @@ CTDtoBTD(
    path_out = getwd(),
    filename_add = "newctd",
    quiet = TRUE)
+
+# Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.
+
+# Copy system files to working directory for example
+file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey"),
+          to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
+                    replacement = getwd(),
+                    x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey")))
+
+file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey"),
+          to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
+                    replacement = getwd(),
+                    x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey")))
+
+# Run CTDtoBTD on .hex file and .xmlcon file
+
+GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",
+                    path_xmlcon = "19-8102_Deploy2021.xmlcon")
 }
