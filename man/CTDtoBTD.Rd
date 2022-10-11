@@ -70,6 +70,9 @@ CTDtoBTD(
    path_in = system.file(paste0("exdata/CTDtoBTD/",
       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
        package = "GAPsurvey"),
+   path_xmlcon = system.file(paste0("exdata/CTDtoBTD/",
+     "19-8102_Deploy2021.xmlcon"),
+      package = "GAPsurvey"),
    path_out = getwd(),
    filename_add = "newctd",
    quiet = TRUE)
@@ -83,27 +86,38 @@ CTDtoBTD(
    VERSION_NUMBER = "", # for example, also can make up
    SERIAL_NUMBER = 8105, # for example, also can make up
    path_in = system.file(paste0("exdata/CTDtoBTD/",
-     "SBE19plus_01908105_2021_06_25_94_0005.cnv"),
+     "2021_06_13_0003.hex"),
+      package = "GAPsurvey"),
+   path_xmlcon = system.file(paste0("exdata/CTDtoBTD/",
+     "19-8102_Deploy2021.xmlcon"),
       package = "GAPsurvey"),
    path_out = getwd(),
    filename_add = "newctd",
    quiet = TRUE)
 
-# Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.
-
 # Copy system files to working directory for example
-file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey"),
-          to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
-                    replacement = getwd(),
-                    x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey")))
+file.copy(
+   from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+                      package = "GAPsurvey"),
+   to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+             package = "GAPsurvey"),
+             replacement = getwd(),
+             x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+                                     package = "GAPsurvey")))
 
-file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey"),
-          to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
+file.copy(
+   from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+                       package = "GAPsurvey"),
+          to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+                    package = "GAPsurvey"),
                     replacement = getwd(),
-                    x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey")))
+                    x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+                                    package = "GAPsurvey")))
 
 # Run CTDtoBTD on .hex file and .xmlcon file
+# Not run:
+# GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",
+#                     path_xmlcon = "19-8102_Deploy2021.xmlcon")
+# Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.
 
-GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",
-                    path_xmlcon = "19-8102_Deploy2021.xmlcon")
 }

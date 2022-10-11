@@ -199,6 +199,9 @@ TEDtoBTD <- function(
 #'    path_in = system.file(paste0("exdata/CTDtoBTD/",
 #'       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
 #'        package = "GAPsurvey"),
+#'    path_xmlcon = system.file(paste0("exdata/CTDtoBTD/",
+#'      "19-8102_Deploy2021.xmlcon"),
+#'       package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newctd",
 #'    quiet = TRUE)
@@ -212,29 +215,41 @@ TEDtoBTD <- function(
 #'    VERSION_NUMBER = "", # for example, also can make up
 #'    SERIAL_NUMBER = 8105, # for example, also can make up
 #'    path_in = system.file(paste0("exdata/CTDtoBTD/",
-#'      "SBE19plus_01908105_2021_06_25_94_0005.cnv"),
+#'      "2021_06_13_0003.hex"),
+#'       package = "GAPsurvey"),
+#'    path_xmlcon = system.file(paste0("exdata/CTDtoBTD/",
+#'      "19-8102_Deploy2021.xmlcon"),
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newctd",
 #'    quiet = TRUE)
 #'
-#' # Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.
-#'
 #' # Copy system files to working directory for example
-#' file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey"),
-#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
-#'                     replacement = getwd(),
-#'                     x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey")))
+#' file.copy(
+#'    from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#'                       package = "GAPsurvey"),
+#'    to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+#'              package = "GAPsurvey"),
+#'              replacement = getwd(),
+#'              x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#'                                      package = "GAPsurvey")))
 #'
-#' file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey"),
-#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
+#' file.copy(
+#'    from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'                        package = "GAPsurvey"),
+#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+#'                     package = "GAPsurvey"),
 #'                     replacement = getwd(),
-#'                     x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey")))
+#'                     x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'                                     package = "GAPsurvey")))
 #'
 #' # Run CTDtoBTD on .hex file and .xmlcon file
+#' # Not run:
+#' # GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",
+#' #                     path_xmlcon = "19-8102_Deploy2021.xmlcon")
+#' # Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.
 #'
-#' GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",
-#'                     path_xmlcon = "19-8102_Deploy2021.xmlcon")
+
 CTDtoBTD <- function(
     VESSEL = NA,
     CRUISE = NA,
@@ -272,19 +287,19 @@ CTDtoBTD <- function(
     file.name <- path_in
   }
 
-  if(grepl(pattern = ".hex", x = path_in)) {
+  if (grepl(pattern = ".hex", x = path_in)) {
 
     stopifnot("CTDtoBTD: Must provide path_xmlcon if path_in is a .hex file." = !is.null(path_xmlcon))
     stopifnot("CTDtoBTD: Must provide path_xmlcon if path_in is a .hex file." = file.exists(path_xmlcon))
 
-    file.name <- GAPsurvey:::convert_ctd_hex(hex_file_path = path_in,
+    file.name <- GAPsurvey::convert_ctd_hex(hex_file_path = path_in,
                                              xmlcon_path = path_xmlcon,
                                              bat_file = NULL,
                                              datcnv_file = NULL)
   }
 
   # make sure path_in comes in with correct
-  options(stringsAsFactors = FALSE) # die, factors, die!
+  # options(stringsAsFactors = FALSE) # die, factors, die!
   path_out <- fix_path(path_out)
 
   HAUL <- as.numeric(HAUL)
@@ -443,22 +458,26 @@ CTDtoBTD <- function(
 #'
 #' @examples
 #' # Copy system files to working directory for example
-#' file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey"),
+#' file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#' package = "GAPsurvey"),
 #' to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
 #'           replacement = getwd(),
-#'           x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex", package = "GAPsurvey")))
+#'           x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#'           package = "GAPsurvey")))
 #'
-#' file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey"),
-#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
-#'                     replacement = getwd(),
-#'                     x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon", package = "GAPsurvey")))
+#' file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'                              package = "GAPsurvey"),
+#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+#'                                            package = "GAPsurvey"),
+#'                                            replacement = getwd(),
+#'                     x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'                                     package = "GAPsurvey")))
 #'
 #' # Run convert_ctd_hex()
-#' GAPsurvey:::convert_ctd_hex(hex_file_path = "2021_06_13_0003.hex",
+#' GAPsurvey::convert_ctd_hex(hex_file_path = "2021_06_13_0003.hex",
 #'                             xmlcon_path = "19-8102_Deploy2021.xmlcon",
 #'                             bat_file = NULL,
 #'                             datcnv_file = NULL)
-
 convert_ctd_hex <- function(hex_file_path,
                             xmlcon_path,
                             bat_file = NULL,

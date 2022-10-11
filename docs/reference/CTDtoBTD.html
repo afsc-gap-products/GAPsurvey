@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GAPsurvey</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2022.09.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2022.10.01</span>
       </span>
     </div>
 
@@ -88,6 +88,7 @@
 <span>  SERIAL_NUMBER <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  path_in <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  path_out <span class="op">=</span> <span class="st">"./"</span>,</span>
+<span>  path_xmlcon <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  filename_add <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -120,11 +121,15 @@
 
 
 <dt>path_in</dt>
-<dd><p>Optional. Default = "./., or the local working directory but any path (as a string) may be entered.</p></dd>
+<dd><p>Optional. Default = "./., or the local working directory but any path (as a string) may be entered. Can accept a .hex file if SBE Data Processing software is installed and path_xmlcon is specified.</p></dd>
 
 
 <dt>path_out</dt>
 <dd><p>Optional. The default is the local working directory but may be specified with a string.</p></dd>
+
+
+<dt>path_xmlcon</dt>
+<dd><p>Optional. Filepath to the CTD configuration file (.xmlcon)</p></dd>
 
 
 <dt>filename_add</dt>
@@ -166,6 +171,9 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 <span class="r-in"><span>   path_in <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/"</span>,</span></span>
 <span class="r-in"><span>      <span class="st">"SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>       package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   path_xmlcon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/"</span>,</span></span>
+<span class="r-in"><span>     <span class="st">"19-8102_Deploy2021.xmlcon"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>   path_out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>   filename_add <span class="op">=</span> <span class="st">"newctd"</span>,</span></span>
 <span class="r-in"><span>   quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -179,11 +187,44 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 <span class="r-in"><span>   VERSION_NUMBER <span class="op">=</span> <span class="st">""</span>, <span class="co"># for example, also can make up</span></span></span>
 <span class="r-in"><span>   SERIAL_NUMBER <span class="op">=</span> <span class="fl">8105</span>, <span class="co"># for example, also can make up</span></span></span>
 <span class="r-in"><span>   path_in <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/"</span>,</span></span>
-<span class="r-in"><span>     <span class="st">"SBE19plus_01908105_2021_06_25_94_0005.cnv"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>     <span class="st">"2021_06_13_0003.hex"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>      package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   path_xmlcon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/"</span>,</span></span>
+<span class="r-in"><span>     <span class="st">"19-8102_Deploy2021.xmlcon"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>   path_out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>   filename_add <span class="op">=</span> <span class="st">"newctd"</span>,</span></span>
 <span class="r-in"><span>   quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> convert_ctd_hex: Attempting to convert C:/Users/emily.markowitz/AppData/Local/Temp/RtmpkVdIwe/temp_libpath4b8871d73de1/GAPsurvey/exdata/CTDtoBTD/2021_06_13_0003.hex to .cnv</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> convert_ctd_hex: .cnv file created at C:/Users/emily.markowitz/AppData/Local/Temp/RtmpkVdIwe/temp_libpath4b8871d73de1/GAPsurvey/exdata/CTDtoBTD/2021_06_13_0003_raw.cnv.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Copy system files to working directory for example</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/2021_06_13_0003.hex"</span>,</span></span>
+<span class="r-in"><span>                      package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>   to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/"</span>,</span></span>
+<span class="r-in"><span>             package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             replacement <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>             x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/2021_06_13_0003.hex"</span>,</span></span>
+<span class="r-in"><span>                                     package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>   from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon"</span>,</span></span>
+<span class="r-in"><span>                       package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/"</span>,</span></span>
+<span class="r-in"><span>                    package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    replacement <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon"</span>,</span></span>
+<span class="r-in"><span>                                    package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run CTDtoBTD on .hex file and .xmlcon file</span></span></span>
+<span class="r-in"><span><span class="co"># Not run:</span></span></span>
+<span class="r-in"><span><span class="co"># GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",</span></span></span>
+<span class="r-in"><span><span class="co">#                     path_xmlcon = "19-8102_Deploy2021.xmlcon")</span></span></span>
+<span class="r-in"><span><span class="co"># Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

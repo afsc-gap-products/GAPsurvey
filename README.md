@@ -22,7 +22,7 @@ Seattle, WA 98195
 
 ### *At-sea data management tools for RACE GAP surveys*
 
-[![](https://img.shields.io/badge/devel%20version-2022.09.01-blue.svg)](https://github.com/afsc-gap-products/GAPsurvey)
+[![](https://img.shields.io/badge/devel%20version-2022.10.01-blue.svg)](https://github.com/afsc-gap-products/GAPsurvey)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![](https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg)](https://github.com/afsc-gap-products/GAPsurvey/commits/main)
 
