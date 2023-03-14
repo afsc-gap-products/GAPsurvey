@@ -82,6 +82,8 @@ install("GAPsurvey")
 setwd(here::here())
 # devtools::check()
 
+# Catch is Windows 10, Wheelhouse is Windows 7
+
 ########### Create Documentation GitHub-Pages ############
 
 .rs.restartR()
@@ -104,7 +106,7 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2022.10.01"
+date0 <- "2023.04.01"
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
 devtools::build()

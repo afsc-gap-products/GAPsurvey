@@ -22,7 +22,7 @@ Seattle, WA 98195
 
 ### *At-sea data management tools for RACE GAP surveys*
 
-[![](https://img.shields.io/badge/devel%20version-2022.10.01-blue.svg)](https://github.com/afsc-gap-products/GAPsurvey)
+[![](https://img.shields.io/badge/devel%20version-2023.04.01-blue.svg)](https://github.com/afsc-gap-products/GAPsurvey)
 [![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
 [![](https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg)](https://github.com/afsc-gap-products/GAPsurvey/commits/main)
 
@@ -39,9 +39,9 @@ Seattle, WA 98195
 
 This package was last produced using:
 
-    #> R version 4.2.0 (2022-04-22 ucrt)
+    #> R version 4.2.2 (2022-10-31 ucrt)
     #> Platform: x86_64-w64-mingw32/x64 (64-bit)
-    #> Running under: Windows 10 x64 (build 19044)
+    #> Running under: Windows 10 x64 (build 19045)
     #> 
     #> Matrix products: default
     #> 
@@ -54,29 +54,26 @@ This package was last produced using:
     #> [1] stats     graphics  grDevices utils     datasets  methods   base     
     #> 
     #> other attached packages:
-    #> [1] pkgdown_2.0.6 usethis_2.1.6 here_1.0.1    badger_0.2.1  ggplot2_3.3.6
+    #> [1] badger_0.2.3   ggplot2_3.4.1  pkgdown_2.0.7  RODBC_1.3-20   roxygen2_7.2.3 devtools_2.4.5 usethis_2.1.6 
+    #> [8] here_1.0.1    
     #> 
     #> loaded via a namespace (and not attached):
-    #>  [1] Rcpp_1.0.9          gert_1.9.1          gitcreds_0.1.2      prettyunits_1.1.1  
-    #>  [5] ps_1.7.1            assertthat_0.2.1    rprojroot_2.0.3     digest_0.6.29      
-    #>  [9] utf8_1.2.2          mime_0.12           R6_2.5.1            sys_3.4            
-    #> [13] evaluate_0.17       httr_1.4.4          pillar_1.8.1        yulab.utils_0.0.5  
-    #> [17] rlang_1.0.6         curl_4.3.3          rstudioapi_0.14     miniUI_0.1.1.1     
-    #> [21] callr_3.7.2         urlchecker_1.0.1    rmarkdown_2.17      desc_1.4.2         
-    #> [25] devtools_2.4.4      stringr_1.4.1       htmlwidgets_1.5.4   dlstats_0.1.5      
-    #> [29] munsell_0.5.0       shiny_1.7.2         compiler_4.2.0      httpuv_1.6.6       
-    #> [33] xfun_0.33           askpass_1.1         pkgconfig_2.0.3     pkgbuild_1.3.1     
-    #> [37] htmltools_0.5.3     openssl_2.0.3       tidyselect_1.2.0    tibble_3.1.8       
-    #> [41] fansi_1.0.3         crayon_1.5.2        dplyr_1.0.10        withr_2.5.0        
-    #> [45] later_1.3.0         grid_4.2.0          jsonlite_1.8.2      xtable_1.8-4       
-    #> [49] gtable_0.3.1        lifecycle_1.0.3     DBI_1.1.3           magrittr_2.0.3     
-    #> [53] credentials_1.3.2   scales_1.2.1        cli_3.4.1           stringi_1.7.8      
-    #> [57] cachem_1.0.6        fs_1.5.2            promises_1.2.0.1    remotes_2.4.2      
-    #> [61] ellipsis_0.3.2      rvcheck_0.2.1       generics_0.1.3      vctrs_0.4.2        
-    #> [65] gh_1.3.1            RColorBrewer_1.1-3  tools_4.2.0         glue_1.6.2         
-    #> [69] purrr_0.3.5         processx_3.7.0      pkgload_1.3.0       fastmap_1.1.0      
-    #> [73] yaml_2.3.5          colorspace_2.0-3    BiocManager_1.30.18 sessioninfo_1.2.2  
-    #> [77] memoise_2.0.1       knitr_1.40          profvis_0.3.7
+    #>  [1] pkgload_1.3.2       jsonlite_1.8.4      shiny_1.7.4         askpass_1.1         BiocManager_1.30.20
+    #>  [6] rvcheck_0.2.1       yulab.utils_0.0.6   yaml_2.3.7          remotes_2.4.2       sessioninfo_1.2.2  
+    #> [11] pillar_1.8.1        glue_1.6.2          digest_0.6.31       RColorBrewer_1.1-3  promises_1.2.0.1   
+    #> [16] colorspace_2.1-0    htmltools_0.5.4     httpuv_1.6.9        pkgconfig_2.0.3     purrr_1.0.1        
+    #> [21] xtable_1.8-4        gitcreds_0.1.2      scales_1.2.1        processx_3.8.0      later_1.3.0        
+    #> [26] tibble_3.1.8        openssl_2.0.5       generics_0.1.3      ellipsis_0.3.2      cachem_1.0.6       
+    #> [31] withr_2.5.0         credentials_1.3.2   cli_3.6.0           magrittr_2.0.3      crayon_1.5.2       
+    #> [36] mime_0.12           memoise_2.0.1       evaluate_0.20       ps_1.7.2            fs_1.6.1           
+    #> [41] fansi_1.0.4         xml2_1.3.3          pkgbuild_1.4.0      httr2_0.2.2         profvis_0.3.7      
+    #> [46] tools_4.2.2         gh_1.4.0            prettyunits_1.1.1   lifecycle_1.0.3     gert_1.9.2         
+    #> [51] stringr_1.5.0       munsell_0.5.0       callr_3.7.3         compiler_4.2.2      rlang_1.0.6        
+    #> [56] grid_4.2.2          rstudioapi_0.14     sys_3.4.1           rappdirs_0.3.3      htmlwidgets_1.6.1  
+    #> [61] miniUI_0.1.1.1      rmarkdown_2.20      gtable_0.3.1        curl_5.0.0          R6_2.5.1           
+    #> [66] knitr_1.42          dplyr_1.1.0         fastmap_1.1.0       utf8_1.2.3          rprojroot_2.0.3    
+    #> [71] dlstats_0.1.6       desc_1.4.2          stringi_1.7.12      Rcpp_1.0.10         vctrs_0.5.2        
+    #> [76] tidyselect_1.2.0    xfun_0.37           urlchecker_1.0.1
 
 ## NOAA README
 
