@@ -13,7 +13,7 @@
 
 #' BVDR Conversion to Create BTD data
 #'
-#' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the TEDtoBTD() function here!
+#' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
@@ -29,18 +29,18 @@
 #' @export
 #'
 #' @examples
-#' TEDtoBTD(
+#' convert_ted_btd(
 #'    VESSEL = 94,
 #'    CRUISE = 201901,
 #'    HAUL = 3,
 #'    MODEL_NUMBER = 123,
 #'    VERSION_NUMBER = 456,
 #'    SERIAL_NUMBER = 789,
-#'    path_in = system.file("exdata/BVDRtoBTD/", package = "GAPsurvey"),
+#'    path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newted",
 #'    quiet = TRUE)
-TEDtoBTD <- function(
+convert_ted_btd <- function(
     VESSEL = NA,
     CRUISE = NA,
     HAUL = NA,
@@ -160,7 +160,7 @@ TEDtoBTD <- function(
 
 #' Convert CTD data in .cnv form to BTD and BTH
 #'
-#' Before running this CTDtoBTD function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.
+#' Before running this convert_ctd_btd function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.
 #'
 #' To do this,
 #' 1. use the SBE Data Processing Program, and in the "Run" menu select "1. Data conversion".
@@ -168,7 +168,7 @@ TEDtoBTD <- function(
 #' deployment_xmlcon folder- this is CTD specific, know your CTD's serial number, and under "Input directory" select the .hex file (from the CTD computer) that is specific to the haul that you are missing data.  Click "Start Process".
 #' The conversion program will ask you for outputs. At the prompt, Select and Add "Time, Elapsed, seconds", "Depth, salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
 #' 3. This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
-#' 4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this CTDtoBTD() function!
+#' 4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this convert_ctd_btd() function!
 #' 5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files.
 #'
 #' Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together).
@@ -189,17 +189,17 @@ TEDtoBTD <- function(
 #' @export
 #'
 #' @examples
-#' CTDtoBTD(
+#' convert_ctd_btd(
 #'    VESSEL = 94,
 #'    CRUISE = 2001,
 #'    HAUL = 4,
 #'    MODEL_NUMBER = 123, # for example, also can make up
 #'    VERSION_NUMBER = 456, # for example, also can make up
 #'    SERIAL_NUMBER = 789, # for example, also can make up
-#'    path_in = system.file(paste0("exdata/CTDtoBTD/",
+#'    path_in = system.file(paste0("exdata/convert_ctd_btd/",
 #'       "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
 #'        package = "GAPsurvey"),
-#'    path_xmlcon = system.file(paste0("exdata/CTDtoBTD/",
+#'    path_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
 #'      "19-8102_Deploy2021.xmlcon"),
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
@@ -207,17 +207,17 @@ TEDtoBTD <- function(
 #'    quiet = TRUE)
 #'
 #'
-#' CTDtoBTD(
+#' convert_ctd_btd(
 #'    VESSEL = 94,
 #'    CRUISE = 202101,
 #'    HAUL = 107,
 #'    MODEL_NUMBER = "", # for example, also can make up
 #'    VERSION_NUMBER = "", # for example, also can make up
 #'    SERIAL_NUMBER = 8105, # for example, also can make up
-#'    path_in = system.file(paste0("exdata/CTDtoBTD/",
+#'    path_in = system.file(paste0("exdata/convert_ctd_btd/",
 #'      "2021_06_13_0003.hex"),
 #'       package = "GAPsurvey"),
-#'    path_xmlcon = system.file(paste0("exdata/CTDtoBTD/",
+#'    path_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
 #'      "19-8102_Deploy2021.xmlcon"),
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
@@ -226,31 +226,28 @@ TEDtoBTD <- function(
 #'
 #' # Copy system files to working directory for example
 #' file.copy(
-#'    from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#'    from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 #'                       package = "GAPsurvey"),
-#'    to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+#'    to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
 #'              package = "GAPsurvey"),
 #'              replacement = getwd(),
-#'              x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#'              x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 #'                                      package = "GAPsurvey")))
 #'
 #' file.copy(
-#'    from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'    from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
 #'                        package = "GAPsurvey"),
-#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+#'           to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
 #'                     package = "GAPsurvey"),
 #'                     replacement = getwd(),
-#'                     x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'                     x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
 #'                                     package = "GAPsurvey")))
 #'
-#' # Run CTDtoBTD on .hex file and .xmlcon file
-#' # Not run:
-#' # GAPsurvey::CTDtoBTD(path_in = "2021_06_13_0003.hex",
-#' #                     path_xmlcon = "19-8102_Deploy2021.xmlcon")
-#' # Convert directly from .hex file by using CTDtoBTD to run SBE Data Processing.
-#'
-
-CTDtoBTD <- function(
+#' # Run convert_ctd_btd on .hex file and .xmlcon file
+#' GAPsurvey::convert_ctd_btd(path_in = "2021_06_13_0003.hex",
+#'                    path_xmlcon = "19-8102_Deploy2021.xmlcon")
+#' # Convert directly from .hex file by using convert_ctd_btd to run SBE Data Processing.
+convert_ctd_btd <- function(
     VESSEL = NA,
     CRUISE = NA,
     HAUL = NA,
@@ -289,8 +286,8 @@ CTDtoBTD <- function(
 
   if (grepl(pattern = ".hex", x = path_in)) {
 
-    stopifnot("CTDtoBTD: Must provide path_xmlcon if path_in is a .hex file." = !is.null(path_xmlcon))
-    stopifnot("CTDtoBTD: Must provide path_xmlcon if path_in is a .hex file." = file.exists(path_xmlcon))
+    stopifnot("convert_ctd_btd: Must provide path_xmlcon if path_in is a .hex file." = !is.null(path_xmlcon))
+    stopifnot("convert_ctd_btd: Must provide path_xmlcon if path_in is a .hex file." = file.exists(path_xmlcon))
 
     file.name <- GAPsurvey::convert_ctd_hex(hex_file_path = path_in,
                                              xmlcon_path = path_xmlcon,
@@ -447,7 +444,7 @@ CTDtoBTD <- function(
 
 #' Convert CTD .hex file to .cnv using SBE Data Processing
 #'
-#' Converts SBE19plus V2 CTD hex file to cnv using Sea-Bird Data Processing software. cnv files generated with this function will be properly formatted for conversion to BTD using CTDtoBTD().
+#' Converts SBE19plus V2 CTD hex file to cnv using Sea-Bird Data Processing software. cnv files generated with this function will be properly formatted for conversion to BTD using convert_ctd_btd().
 #'
 #' @param hex_file_path Path to a single .hex file from the CTD.
 #' @param xmlcon_path Path to CTD the config file (.xmlcon) for the CTD that was used to collect data in the .hex file.
@@ -458,19 +455,19 @@ CTDtoBTD <- function(
 #'
 #' @examples
 #' # Copy system files to working directory for example
-#' file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#' file.copy(from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 #' package = "GAPsurvey"),
-#' to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
+#' to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
 #'           replacement = getwd(),
-#'           x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+#'           x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 #'           package = "GAPsurvey")))
 #'
-#' file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#' file.copy(from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
 #'                              package = "GAPsurvey"),
-#'           to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+#'           to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
 #'                                            package = "GAPsurvey"),
 #'                                            replacement = getwd(),
-#'                     x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+#'                     x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
 #'                                     package = "GAPsurvey")))
 #'
 #' # Run convert_ctd_hex()
@@ -506,11 +503,11 @@ convert_ctd_hex <- function(hex_file_path,
 
   # Specify paths to .bat and .psa files for SBE data processing
   if(is.null(bat_file)) {
-    bat_file <- system.file("exdata/CTDtoBTD/atsea_getdata.bat", package = "GAPsurvey")
+    bat_file <- system.file("exdata/convert_ctd_btd/atsea_getdata.bat", package = "GAPsurvey")
   }
 
   if(is.null(datcnv_file)) {
-    datcnv_file <- system.file("exdata/CTDtoBTD/DatCnv.psa", package = "GAPsurvey")
+    datcnv_file <- system.file("exdata/convert_ctd_btd/DatCnv.psa", package = "GAPsurvey")
   }
 
   # Run SBE data processing
@@ -534,19 +531,19 @@ convert_ctd_hex <- function(hex_file_path,
 
 #' Recover position data from Globe .log file
 #'
-#' In the event that the MARPORT server GPS fails or is incomplete, "LOGtoGPS()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
+#' In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
 #' To get a .log file that is usable in this function,
 #' 1) Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
 #' 2) Use GLOBE Files>Logs> to convert .GLG (binary) to a .LOG (.csv) file
-#' 3) LOGtoGPS()will prompt you for Vessel code, Cruise no., Haul no. and Date
+#' 3) convert_log_gps()will prompt you for Vessel code, Cruise no., Haul no. and Date
 #' 4) The final prompt will ask for the location of the GLOBE LOG file
-#' 5) LOGtoGPS()will create csv file in the R directory with filename "new.gps"
+#' 5) convert_log_gps()will create csv file in the R directory with filename "new.gps"
 #' 6) Rename "new.gps" to HAULXXXX.GPS where XXXX is the haul number
 #' 7) Upload HAULXXXX.GPS into WHEELHOUSE
-#' 8) NOTE: The raw GLOBE log data are in GMT time (-8 hrs or 4PM AKDT prior day to 4PM current day. Hence if haul with missing GPS spans the 4PM hour (e.g.,3:45-4:30 PM),YOU WILL HAVE TO CONVERT TWO GLG files (current day and next day)and run LOGtoGPS()twice & manually combine the two GPS files
+#' 8) NOTE: The raw GLOBE log data are in GMT time (-8 hrs or 4PM AKDT prior day to 4PM current day. Hence if haul with missing GPS spans the 4PM hour (e.g.,3:45-4:30 PM),YOU WILL HAVE TO CONVERT TWO GLG files (current day and next day)and run convert_log_gps()twice & manually combine the two GPS files
 #' 9) ALSO NOTE: You may have to shut down GLOBE or wait until after 4pm on following day before all the incoming NMEA data are written to the GLG file.
 #'
-#' Now that you have a .log file, you can RUN the function by putting your cursor on the "LOGtoGPS()" line below & press CTRL+R.
+#' Now that you have a .log file, you can RUN the function by putting your cursor on the "convert_log_gps()" line below & press CTRL+R.
 #'
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.
@@ -561,28 +558,28 @@ convert_ctd_hex <- function(hex_file_path,
 #' @export
 #'
 #' @examples
-#' LOGtoGPS(
+#' convert_log_gps(
 #'     VESSEL = 94,
 #'     CRUISE = 201901,
 #'     HAUL = 3,
 #'     DATE = "06/06/2017",
-#'     path_in = system.file("exdata/LOGtoGPS/06062017.log",
+#'     path_in = system.file("exdata/convert_log_gps/06062017.log",
 #'         package = "GAPsurvey"),
 #'     path_out = getwd(),
 #'     filename_add = "newlog",
 #'     quiet = TRUE)
 #'
-#'     LOGtoGPS(
+#'  convert_log_gps(
 #'     VESSEL = 94,
 #'     CRUISE = 202101,
 #'     HAUL = 37,
 #'     DATE = "06/07/2021",
-#'     path_in = system.file("exdata/LOGtoGPS/Haul0037.log",
+#'     path_in = system.file("exdata/convert_log_gps/Haul0037.log",
 #'         package = "GAPsurvey"),
 #'     path_out = getwd(),
 #'     filename_add = "newlog",
 #'     quiet = TRUE)
-LOGtoGPS <- function(
+convert_log_gps <- function(
     VESSEL = NA,
     CRUISE = NA,
     HAUL = NA,
@@ -665,6 +662,8 @@ LOGtoGPS <- function(
                         icon = "info", type = "ok")
   }
 
+  message(paste0("Your new .gps files are saved to ", filename))
+
 }
 
 
@@ -676,16 +675,16 @@ LOGtoGPS <- function(
 #' 1. Open the .bvdr file in Notepad ++ or a similar text editor.
 #' 2. Find the uninterpretable character symbol. Often, depending on the editor, this will look like a box or the highlighted letters "SUB". Find and delete (via replace) these characters for the whole document. An error will appear and only part of the file will be read (stopping at the line before where this unsupported symbol is) if you do not edit the data ahead of time.
 #' 3. Save the .bvdr file with these changes and use the link to that file below for path_bvdr
-#' For an example of what a proper .marp file looks like, refer to system.file("exdata/BVDRtoMARP/HAUL0001.marp", package = "GAPsurvey")
-#' @param path_bvdr Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr <- system.file("exdata/BVDRtoMARP/20220811-00Za.bvdr", package = "GAPsurvey")
+#' For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
+#' @param path_bvdr Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey")
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
 #'
 #' @export
 #' @examples
-#' head(BVDRtoMARP(path_bvdr = system.file("exdata/BVDRtoMARP/20220811-00Za.bvdr",
+#' head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
 #'                                   package = "GAPsurvey"),
 #'           verbose = TRUE), 20)
-BVDRtoMARP <- function(path_bvdr,
+convert_bvdr_marp <- function(path_bvdr,
                        verbose = FALSE) {
 
   dat <- readLines(con = path_bvdr, skipNul = TRUE)
@@ -778,7 +777,7 @@ BVDRtoMARP <- function(path_bvdr,
 #'                                     0.022022, 0.0000398))
 #' # Prefered/easiest
 #'
-#' volumetric_tow(volume_method = "contour",
+#' calc_volumetric_tow(volume_method = "contour",
 #'                              # Using function to develop an IDW
 #'                              # contour over the heights for estimating volume.
 #'                density_method = "estimated",
@@ -795,7 +794,7 @@ BVDRtoMARP <- function(path_bvdr,
 #'                density = density_prop)
 #'
 #' # Using other methods
-#' volumetric_tow(volume_method = "average",
+#' calc_volumetric_tow(volume_method = "average",
 #'                        # Averaging the 4 quadrants of the bin to find volume
 #'                density_method = "observed",
 #'                        # Directly measured density. See documentation in RACE
@@ -809,7 +808,7 @@ BVDRtoMARP <- function(path_bvdr,
 #'                        # to be what the proportions above would solve for)
 #'
 #' # Using other methods
-#' volumetric_tow(volume_method = "average",
+#' calc_volumetric_tow(volume_method = "average",
 #'                        # Averaging the 4 quadrants of the bin to find volume
 #'                density_method = "observed",
 #'                        # Directly measured density. See documentation in
@@ -821,7 +820,7 @@ BVDRtoMARP <- function(path_bvdr,
 #'                        # to be what the proportions above would solve for)
 #'
 #' # F/V Vesteraalen Haul 128 EBS 2022
-#' volumetric_tow( # volume_method = "average",
+#' calc_volumetric_tow( # volume_method = "average",
 #'   bin_dimentions = 94,
 #'   heights_in_bin = list( # in cm
 #'     "ss" = 50, # stern starbord
@@ -836,9 +835,7 @@ BVDRtoMARP <- function(path_bvdr,
 #'  density = data.frame("taxon" = c("pollock", "pcod", "Atka mackerel",
 #'     "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"),
 #'     "prop" = c(1, 0, 0, 0, 0, 0, 0, 0)))
-#' # ANS where volume_method = "contour": 5546.316 kg/m3
-#' # ANS where volume_method = "average": 5594.936 kg/m3
-volumetric_tow <- function(volume_method = "contour",
+calc_volumetric_tow <- function(volume_method = "contour",
                            density_method = "estimated",
                            bin_dimentions = NULL,
                            area_of_bin = NULL,
@@ -1012,7 +1009,7 @@ volumetric_tow <- function(volume_method = "contour",
 
 #' Calculate Net Spread for tows missing net width using a glm.
 #'
-#' The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean netspread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
+#' The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean calc_net_spread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
 #'
 #' In race_data, this will manifest as...
 #' net_mensuration_code = Net Mensuration Method
@@ -1032,13 +1029,14 @@ volumetric_tow <- function(volume_method = "contour",
 #'
 #' @examples
 #' # Here is an example using 202101 Alaska Night Data from race_data.hauls:
-#' path <- system.file("exdata/netspread/VESTY202101_RACE_DATA.HAULS.csv", package = "GAPsurvey")
+#' path <- system.file("exdata/calc_net_spread/VESTY202101_RACE_DATA.HAULS.csv",
+#'                     package = "GAPsurvey")
 #' dat <- read.csv(file=path, header=TRUE, sep=",", stringsAsFactors = FALSE)
 #' dat <- dat[dat$PERFORMANCE >= 0 & dat$HAUL_TYPE == 3,]
 #' dat[dat$NET_SPREAD_METHOD != 7, "NET_SPREAD"] <- NA # a normal net width
 #' dat[dat$NET_HEIGHT_METHOD != 6, "NET_HEIGHT"] <- NA # a normal net height
-#' netSpread(dat)
-netSpread <- function(dat) {
+#' calc_net_spread(dat)
+calc_net_spread <- function(dat) {
 
   dat0 <- dat[,names(dat) %in%
                 c("HAUL", "NET_SPREAD",	"NET_HEIGHT",	"WIRE_OUT")]
@@ -1322,17 +1320,6 @@ get_sunrise_sunset <- function(chosen_date, latitude, longitude, verbose = FALSE
   sunrise <- lubridate::with_tz(sunrise, tzone = "US/Alaska")
   sunset <- lubridate::with_tz(sunset, tzone = "US/Alaska")
 
-  if (verbose) {
-  if(rstudioapi::isAvailable()){
-    rstudioapi::showDialog(
-      title = "",
-      message = paste(
-        "<p> <b>Sunrise</b> is at", sunrise, "AKST </p>",
-        "<p> <b>Sunset</b> is at", sunset, "AKST </p>"
-      )
-    )
-  }
-  }
   message(
     "Sunrise is at ", sunrise, "AKST",
     "\n Sunset is at ", sunset, "AKST"
@@ -1404,7 +1391,7 @@ get_catch_haul_history <- function(
   public_data0 <-
     GAPsurvey::public_data[GAPsurvey::public_data$srvy == survey,
                 c("year", "srvy", "haul", "stratum", "station",
-                  "vessel_name", "vessel_id", "date_time", "latitude_dd", "longitude_dd",
+                  "vessel_name", "vessel_id", "date_time", "latitude_dd_start", "longitude_dd_start",
                   "species_code", "common_name", "scientific_name", "taxon_confidence",
                   "cpue_kgha", "cpue_noha", "weight_kg", "count",
                   "bottom_temperature_c", "surface_temperature_c", "depth_m",
@@ -1429,15 +1416,15 @@ get_catch_haul_history <- function(
 
   # if (survey == "EBS" | survey == "NBS") {
   #
-  #   lat <- mean(unique(public_data0$latitude_dd[public_data0$station == station]), na.rm = TRUE)
-  #   lon <- mean(unique(public_data0$longitude_dd[public_data0$station == station]), na.rm = TRUE)
+  #   lat <- mean(unique(public_data0$latitude_dd_start[public_data0$station == station]), na.rm = TRUE)
+  #   lon <- mean(unique(public_data0$longitude_dd_start[public_data0$station == station]), na.rm = TRUE)
   #
   #   possible_stations <-
   #   unique(public_data0$station[
-  #     (public_data0$latitude_dd >= lat-deg_range &
-  #        public_data0$latitude_dd <= lat+deg_range) &
-  #       (public_data0$longitude_dd >= lon-deg_range &
-  #          public_data0$longitude_dd <= lon+deg_range)])
+  #     (public_data0$latitude_dd_start >= lat-deg_range &
+  #        public_data0$latitude_dd_start <= lat+deg_range) &
+  #       (public_data0$longitude_dd_start >= lon-deg_range &
+  #          public_data0$longitude_dd_start <= lon+deg_range)])
   #
   # }
 
@@ -1484,7 +1471,7 @@ get_catch_haul_history <- function(
                                 sum)
 
       haul <- unique(xx[,c("year", "haul", "station", "stratum",
-                           "vessel_name", "date_time", "latitude_dd", "longitude_dd",
+                           "vessel_name", "date_time", "latitude_dd_start", "longitude_dd_start",
                            "bottom_temperature_c", "surface_temperature_c", "depth_m",
                            "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")])
 
@@ -1492,7 +1479,7 @@ get_catch_haul_history <- function(
       catch <- public_data0[,c("year", "station", "scientific_name", "common_name",
                                "count", "weight_kg", "cpue_kgha", "cpue_noha")]
       haul <- unique(public_data0[,c("year", "haul", "station", "stratum",
-                                     "vessel_name", "date_time", "latitude_dd", "longitude_dd",
+                                     "vessel_name", "date_time", "latitude_dd_start", "longitude_dd_start",
                                      "bottom_temperature_c", "surface_temperature_c", "depth_m",
                                      "distance_fished_km", "net_width_m", "net_height_m",
                                      "area_swept_ha", "duration_hr")])
@@ -1657,7 +1644,6 @@ fix_path <- function(path) {
   return(path0)
 }
 
-
 # Data ------------------------------------------------------------------------------------
 
 #' @title PolySpecies Data Set
@@ -1680,20 +1666,20 @@ fix_path <- function(path) {
 
 #' @title species data codes
 #' @description RACEBASE Species Codes and Scientific Names Data Set
-#' @usage data(sp_table)
-#' @author Margaret Siple (margaret.siple AT noaa.gov)
-#' @format A data frame with 2754 rows and 2 variables:
+#' @usage data(species_data)
+#' @author Sarah Friedman (sarah.friedman AT noaa.gov)
+#' @format A data frame with 172 rows and 4 variables:
 #' \describe{
 #'   \item{\code{species_code}}{integer Species code}
-#'   \item{\code{report_name_scientific}}{Species scientific names}
+#'   \item{\code{common_name}}{integer Poly species code}
+#'   \item{\code{scientific_name}}{character Species scientific latin name}
+#'   \item{\code{scientific_name_old}}{character Species scientific latin name used previously}
 #'}
 #' @details DETAILS
 #' @keywords species scientific code data
 #' @examples
-#' utils::data(sp_table)
-"sp_table"
-
-
+#' data(species_data)
+"species_data"
 
 #' @title Public data from FOSS
 #' @description Public data from FOSS
@@ -1712,18 +1698,16 @@ fix_path <- function(path) {
 #'   \item{\code{vessel_name}}{a character vector; Name of the vessel used to collect data for that haul. The column “vessel_name” is associated with the “vessel_id” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
 #'   \item{\code{vessel_id}}{a numeric vector; ID number of the vessel used to collect data for that haul. The column “vessel_id” is associated with the “vessel_name” column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID codes: https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
 #'   \item{\code{date_time}}{a character vector; The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul. }
-#'   \item{\code{latitude_dd}}{a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
-#'   \item{\code{longitude_dd}}{a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{latitude_dd_start}}{a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{longitude_dd_start}}{a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{latitude_dd_end}}{a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.}
+#'   \item{\code{longitude_dd_end}}{a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.}
 #'   \item{\code{species_code}}{a numeric vector; The species code of the organism associated with the “common_name” and “scientific_name” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
 #'   \item{\code{common_name}}{a character vector; The common name of the marine organism associated with the “scientific_name” and “species_code” columns. For a complete species list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
 #'   \item{\code{scientific_name}}{a character vector; The scientific name of the organism associated with the “common_name” and “species_code” columns. For a complete taxon list go to https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual}
 #'   \item{\code{taxon_confidence}}{a character vector; Confidence in the ability of the survey team to correctly identify the taxon to the specified level, based solely on identification skill (e.g., not likelihood of a taxon being caught at that station on a location-by-location basis). Quality codes follow: “High”: High confidence and consistency. Taxonomy is stable and reliable at this level, and field identification characteristics are well known and reliable. “Moderate”: Moderate confidence. Taxonomy may be questionable at this level, or field identification characteristics may be variable and difficult to assess consistently. “Low”: Low confidence. Taxonomy is incompletely known, or reliable field identification characteristics are unknown. Species identification confidence in the eastern Bering Sea shelf survey (1982-2008): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2009-04.pdf Species identification confidence in the eastern Bering Sea slope survey (1976-2010): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-05.pdf Species identification confidence in the Gulf of Alaska and Aleutian Islands surveys (1980-2011): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-01.pdf}
-#'   \item{\code{cpue_kgha}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (hectares) swept by the net. }
 #'   \item{\code{cpue_kgkm2}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (squared kilometers) swept by the net. }
-#'   \item{\code{cpue_kg1000km2}}{a numeric vector; Relative Density. Catch weight (kilograms) divided by area (thousand square kilometers) swept by the net. }
-#'   \item{\code{cpue_noha}}{a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (hectares) swept by the net. }
 #'   \item{\code{cpue_nokm2}}{a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (squared kilometers) swept by the net. }
-#'   \item{\code{cpue_no1000km2}}{a numeric vector; Relative Abundance. Catch weight (in number of organisms) divided by area (thousand square kilometers) swept by the net.}
 #'   \item{\code{weight_kg}}{a numeric vector; Weight (thousandths of a kilogram) of individuals in a haul by taxon. }
 #'   \item{\code{count}}{a numeric vector; Total number of individuals caught in haul by taxon, represented in whole numbers. }
 #'   \item{\code{bottom_temperature_c}}{a numeric vector; Bottom temperature (tenths of a degree Celsius); NA indicates removed or missing values.}
@@ -1741,4 +1725,5 @@ fix_path <- function(path) {
 #' data(public_data)
 #' @details DETAILS
 "public_data"
+
 

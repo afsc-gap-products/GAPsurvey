@@ -16,7 +16,25 @@
     <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/BVDRtoMARP.html</loc>
   </url>
   <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/calc_net_spread.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/calc_volumetric_tow.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_bvdr_marp.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ctd_btd.html</loc>
+  </url>
+  <url>
     <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ctd_hex.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_log_gps.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ted_btd.html</loc>
   </url>
   <url>
     <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/CTDtoBTD.html</loc>
@@ -47,6 +65,9 @@
   </url>
   <url>
     <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/public_data.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/species_data.html</loc>
   </url>
   <url>
     <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/sp_table.html</loc>

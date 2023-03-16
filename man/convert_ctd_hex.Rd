@@ -24,23 +24,23 @@ convert_ctd_hex(
 Writes decoded CTD data to a cnv file and returns the path to the file as a 1L character vector.
 }
 \description{
-Converts SBE19plus V2 CTD hex file to cnv using Sea-Bird Data Processing software. cnv files generated with this function will be properly formatted for conversion to BTD using CTDtoBTD().
+Converts SBE19plus V2 CTD hex file to cnv using Sea-Bird Data Processing software. cnv files generated with this function will be properly formatted for conversion to BTD using convert_ctd_btd().
 }
 \examples{
 # Copy system files to working directory for example
-file.copy(from = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+file.copy(from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 package = "GAPsurvey"),
-to = gsub(pattern = system.file("exdata/CTDtoBTD/", package = "GAPsurvey"),
+to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
           replacement = getwd(),
-          x = system.file("exdata/CTDtoBTD/2021_06_13_0003.hex",
+          x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
           package = "GAPsurvey")))
 
-file.copy(from = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+file.copy(from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
                              package = "GAPsurvey"),
-          to = gsub(pattern = system.file("exdata/CTDtoBTD/",
+          to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
                                            package = "GAPsurvey"),
                                            replacement = getwd(),
-                    x = system.file("exdata/CTDtoBTD/19-8102_Deploy2021.xmlcon",
+                    x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
                                     package = "GAPsurvey")))
 
 # Run convert_ctd_hex()

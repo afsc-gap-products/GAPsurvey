@@ -24,7 +24,6 @@ LazyData: true
 Imports: 
     lubridate,
     maptools, 
-    rstudioapi, 
     sp, 
     stats, 
     utils, 

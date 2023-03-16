@@ -117,10 +117,16 @@
   <dt><code>date_time</code></dt>
 <dd><p>a character vector; The date (MM/DD/YYYY) and time (HH:MM) of the beginning of the haul.</p></dd>
 
-  <dt><code>latitude_dd</code></dt>
+  <dt><code>latitude_dd_start</code></dt>
 <dd><p>a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.</p></dd>
 
-  <dt><code>longitude_dd</code></dt>
+  <dt><code>longitude_dd_start</code></dt>
+<dd><p>a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.</p></dd>
+
+  <dt><code>latitude_dd_end</code></dt>
+<dd><p>a numeric vector; Latitude (one hundred thousandth of a decimal degree) of the start of the haul.</p></dd>
+
+  <dt><code>longitude_dd_end</code></dt>
 <dd><p>a numeric vector; Longitude (one hundred thousandth of a decimal degree) of the start of the haul.</p></dd>
 
   <dt><code>species_code</code></dt>
@@ -135,23 +141,11 @@
   <dt><code>taxon_confidence</code></dt>
 <dd><p>a character vector; Confidence in the ability of the survey team to correctly identify the taxon to the specified level, based solely on identification skill (e.g., not likelihood of a taxon being caught at that station on a location-by-location basis). Quality codes follow: “High”: High confidence and consistency. Taxonomy is stable and reliable at this level, and field identification characteristics are well known and reliable. “Moderate”: Moderate confidence. Taxonomy may be questionable at this level, or field identification characteristics may be variable and difficult to assess consistently. “Low”: Low confidence. Taxonomy is incompletely known, or reliable field identification characteristics are unknown. Species identification confidence in the eastern Bering Sea shelf survey (1982-2008): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2009-04.pdf Species identification confidence in the eastern Bering Sea slope survey (1976-2010): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-05.pdf Species identification confidence in the Gulf of Alaska and Aleutian Islands surveys (1980-2011): http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-01.pdf</p></dd>
 
-  <dt><code>cpue_kgha</code></dt>
-<dd><p>a numeric vector; Relative Density. Catch weight (kilograms) divided by area (hectares) swept by the net.</p></dd>
-
   <dt><code>cpue_kgkm2</code></dt>
 <dd><p>a numeric vector; Relative Density. Catch weight (kilograms) divided by area (squared kilometers) swept by the net.</p></dd>
 
-  <dt><code>cpue_kg1000km2</code></dt>
-<dd><p>a numeric vector; Relative Density. Catch weight (kilograms) divided by area (thousand square kilometers) swept by the net.</p></dd>
-
-  <dt><code>cpue_noha</code></dt>
-<dd><p>a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (hectares) swept by the net.</p></dd>
-
   <dt><code>cpue_nokm2</code></dt>
 <dd><p>a numeric vector; Relative Abundance. Catch number (in number of organisms) per area (squared kilometers) swept by the net.</p></dd>
-
-  <dt><code>cpue_no1000km2</code></dt>
-<dd><p>a numeric vector; Relative Abundance. Catch weight (in number of organisms) divided by area (thousand square kilometers) swept by the net.</p></dd>
 
   <dt><code>weight_kg</code></dt>
 <dd><p>a numeric vector; Weight (thousandths of a kilogram) of individuals in a haul by taxon.</p></dd>

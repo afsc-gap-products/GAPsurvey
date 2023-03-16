@@ -30,15 +30,15 @@ articles:
 reference:
   - title: Converters
     contents:
-      - '`TEDtoBTD`'
-      - '`CTDtoBTD`'
+      - '`convert_ted_btd`'
+      - '`convert_ctd_btd`'
       - '`convert_ctd_hex`'
-      - '`BVDRtoMARP`'
-      - '`LOGtoGPS`'
+      - '`convert_bvdr_marp`'
+      - '`convert_log_gps`'
   - title: Estimate Values
     contents:
-      - '`netSpread`'
-      - '`volumetric_tow`'
+      - '`calc_net_spread`'
+      - '`calc_volumetric_tow`'
   - title: Resources
     contents:
       - '`get_catch_haul_history`'
@@ -47,7 +47,7 @@ reference:
     contents:
       - '`PolySpecies`'
       - '`public_data`'
-      - '`sp_table`'
+      - '`species_data`'
   - title: Helper Functions
     contents:
       - '`numbers0`'

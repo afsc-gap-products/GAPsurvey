@@ -4,3 +4,5 @@
 ^docs$
 ^pkgdown$
 ^\./pkgdown/_pkgdown\.yml$
+
+^notforgit$
