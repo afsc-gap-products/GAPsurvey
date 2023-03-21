@@ -4,7 +4,13 @@
 \alias{get_sunrise_sunset}
 \title{Get sunrise and sunset times by day, latitude, and longitude}
 \usage{
-get_sunrise_sunset(chosen_date, latitude, longitude, verbose = FALSE)
+get_sunrise_sunset(
+  chosen_date,
+  latitude,
+  longitude,
+  verbose = FALSE,
+  timezone = "US/Alaska"
+)
 }
 \arguments{
 \item{chosen_date}{Date, formatted as YYYY-MM-DD}
@@ -14,6 +20,8 @@ get_sunrise_sunset(chosen_date, latitude, longitude, verbose = FALSE)
 \item{longitude}{Numeric longitude in either decimal degrees or a character longitude in degrees and decimal minutes}
 
 \item{verbose}{Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.}
+
+\item{timezone}{Character. Default = "US/Alaska"}
 }
 \value{
 Time of sunrise and sunset in text. Also shows a pop-up with sunrise and sunset times.
@@ -22,5 +30,6 @@ Time of sunrise and sunset in text. Also shows a pop-up with sunrise and sunset 
 Get sunrise and sunset times by day, latitude, and longitude
 }
 \examples{
-get_sunrise_sunset(chosen_date = Sys.Date(), latitude = 63, longitude = 170)
+get_sunrise_sunset(chosen_date = Sys.Date(), latitude = 63.3, longitude = -170.5)
+get_sunrise_sunset(chosen_date = as.character(Sys.Date()), latitude = 63.3, longitude = -170.5)
 }

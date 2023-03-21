@@ -723,6 +723,8 @@ convert_bvdr_marp <- function(path_bvdr,
   }
 }
 
+# Calculate during hauls -------------------------------------------------------
+
 # Volumentric Tows
 
 #' Volumetric Tow Calculator
@@ -1005,7 +1007,6 @@ calc_volumetric_tow <- function(volume_method = "contour",
 }
 
 
-# Estimate Net Spread ----------------------------------------------------------
 
 #' Calculate Net Spread for tows missing net width using a glm.
 #'
@@ -1257,7 +1258,7 @@ calc_net_spread <- function(dat) {
   return(out)
 }
 
-# Check Past Tows --------------------------------------------------------------
+
 
 #' Get sunrise and sunset times by day, latitude, and longitude
 #'
@@ -1265,19 +1266,24 @@ calc_net_spread <- function(dat) {
 #' @param latitude Numeric latitude in either decimal degrees or a character latitude in degrees and decimal minutes
 #' @param longitude Numeric longitude in either decimal degrees or a character longitude in degrees and decimal minutes
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
+#' @param timezone Character. Default = "US/Alaska"
 #'
 #' @return Time of sunrise and sunset in text. Also shows a pop-up with sunrise and sunset times.
 #' @export
 #'
 #' @examples
-#' get_sunrise_sunset(chosen_date = Sys.Date(), latitude = 63, longitude = 170)
-get_sunrise_sunset <- function(chosen_date, latitude, longitude, verbose = FALSE) {
+#' get_sunrise_sunset(chosen_date = Sys.Date(), latitude = 63.3, longitude = -170.5)
+#' get_sunrise_sunset(chosen_date = as.character(Sys.Date()), latitude = 63.3, longitude = -170.5)
+get_sunrise_sunset <- function(
+    chosen_date,
+    latitude,
+    longitude,
+    verbose = FALSE,
+    timezone = "US/Alaska") {
+
+    chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
+
   # Are lat/long in degrees and decimal mins? If so, convert to decimal degrees.
-
-  if (!(methods::is(object = chosen_date, class2 = "POSIXct"))) {
-    chosen_date <- as.POSIXct(chosen_date)
-  }
-
   ddm <- is.character(latitude) | is.character(longitude)
   if (ddm) {
     if (!grepl(" ", x = latitude) | !grepl(" ", x = longitude)) {
@@ -1292,33 +1298,22 @@ get_sunrise_sunset <- function(chosen_date, latitude, longitude, verbose = FALSE
     longitude <- lon_deg + lon_min
   }
 
+  crds0 = matrix(c(longitude, latitude),
+                 nrow = 1)
+
   sunrise <- maptools::sunriset(
-    crds = sp::SpatialPoints(
-      matrix(c(longitude, latitude),
-             ncol = 2
-      ),
-      proj4string = sp::CRS("+proj=longlat +datum=WGS84")
-    ),
+    crds = crds0,
     dateTime = chosen_date,
     direction = "sunrise",
     POSIXct.out = TRUE
   )$time
 
   sunset <- maptools::sunriset(
-    crds = sp::SpatialPoints(
-      matrix(c(longitude, latitude),
-             ncol = 2
-      ),
-      proj4string = sp::CRS("+proj=longlat +datum=WGS84")
-    ),
+    crds = crds0,
     dateTime = chosen_date,
     direction = "sunset",
     POSIXct.out = TRUE
   )$time
-
-  # fix time zone to Dutch/Anchorage (AKST)
-  sunrise <- lubridate::with_tz(sunrise, tzone = "US/Alaska")
-  sunset <- lubridate::with_tz(sunset, tzone = "US/Alaska")
 
   message(
     "Sunrise is at ", sunrise, "AKST",
@@ -1326,7 +1321,7 @@ get_sunrise_sunset <- function(chosen_date, latitude, longitude, verbose = FALSE
   )
 }
 
-
+# Check Past Tows --------------------------------------------------------------
 
 
 #' Find historical catch data from previous years

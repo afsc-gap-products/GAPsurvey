@@ -22,9 +22,7 @@ Description: Provides at-sea data management tools for RACE GAP surveys.
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    lubridate,
     maptools, 
-    sp, 
     stats, 
     utils, 
     raster, 
