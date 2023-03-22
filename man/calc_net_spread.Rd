@@ -2,30 +2,40 @@
 % Please edit documentation in R/functions.R
 \name{calc_net_spread}
 \alias{calc_net_spread}
-\title{Calculate Net Spread for tows missing net width using a glm.}
+\title{Volumetric Tow Calculator}
 \usage{
 calc_net_spread(dat)
 }
 \arguments{
 \item{dat}{data.frame. This can be data from GIDES or race_data.hauls, including these columns: WIRE_OUT, NET_HEIGHT, NET_SPREAD}
+
+\item{volume_method}{Character: "average" (default) or "contour". If "contour", an inverse-distance weighted interpolation will be applied to the heights across the bin and summed to find volume.
+If "average", the bin heights will be averaged in 4 area quadrants (as done in old documentation) to find volume.}
+
+\item{density_method}{Character: "estimated" (default) or "observed". For "observed", add a numeric of the observed (calculated by you on deck) density. For "estimated", create a 2 column data.frame with "taxon" and "prop" (proportion) of each fish caught in the survey: "pollock", "pcod", "Atka mackerel", "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"}
+
+\item{bin_dimentions}{list of 3 items (length of "bow" side of shape, length of "stern" side of shape, and the "height"s between them) or NULL (default).}
+
+\item{area_of_bin}{A single numeric with the area, or the bin in cm3 or NULL (default). If null, area will be calculated from the bin_dimensions. Will be used instead of bin_dimentions if not NULL.}
+
+\item{heights_in_bin}{List of 9 items. See example below for structure. 9 hieghts from the bin should be taken from the stern starbord, center starbord, bow starbord, stern center, center center, bow center, stern port, center port, bow port}
+
+\item{density}{Dataframe or numeric. For density_method = "observed", add a numeric of the observed (calculated by you on deck) density. For density_method = "estimated", create a 2 column data.frame with "taxon" and "prop" (proportion) of each fish caught in the survey: "pollock", "pcod", "Atka mackerel", "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"}
 }
 \value{
 a list of equations
 }
 \description{
-The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean calc_net_spread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
-}
-\details{
-In race_data, this will manifest as...
-net_mensuration_code = Net Mensuration Method
-0* Unidentified method. Will make racebase.haul$net_mesured = "N".
-1 Scanmar net mensuration - don't use, historical
-2 NetMind net mensuration - don't use, historical
-3 Furuno net mensuration - don't use, historical
-4* Estimated from other hauls - when missing net spread, or spread and hieght. Will make racebase.haul$net_mesured = "N". Estimated using GLM
-5* Estimated from warp angle - hopefully, will not come up and shouldn't be used
-6 Marport net mensuration - shouldn't be there, indicates raw data
-7* Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_mesured = "Y".
+recall on a boat...
+    bow
+port   starbord
+   stern
+thus heights in the bin should be taken like this:
+                    ...bow...
+bow-port (bp)       bow-center (bc)      bow-starbord (bs)
+center-port (cp)    center-center (cc)   center-starbord (cs)
+stern-port (sp)     stern-center (sc)    stern-starbord (ss)
+                    ...stern...
 }
 \examples{
 # Here is an example using 202101 Alaska Night Data from race_data.hauls:

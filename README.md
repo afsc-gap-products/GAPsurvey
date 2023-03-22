@@ -39,22 +39,23 @@ Seattle, WA 98195
 
 This package was last produced using:
 
-    #> R version 4.2.2 (2022-10-31 ucrt)
+    #> R version 4.2.3 (2023-03-15 ucrt)
     #> Platform: x86_64-w64-mingw32/x64 (64-bit)
     #> Running under: Windows 10 x64 (build 19045)
     #> 
     #> Matrix products: default
     #> 
     #> locale:
-    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
-    #> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
+    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8   
+    #> [3] LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                          
+    #> [5] LC_TIME=English_United States.utf8    
     #> 
     #> attached base packages:
     #> [1] stats     graphics  grDevices utils     datasets  methods   base     
     #> 
     #> other attached packages:
-    #> [1] badger_0.2.3         ggplot2_3.4.1        pkgdown_2.0.7        GAPsurvey_2023.04.01 RODBC_1.3-20        
-    #> [6] roxygen2_7.2.3       devtools_2.4.5       usethis_2.1.6        here_1.0.1          
+    #> [1] badger_0.2.3   ggplot2_3.4.1  pkgdown_2.0.7  RODBC_1.3-20   roxygen2_7.2.3 devtools_2.4.5 usethis_2.1.6 
+    #> [8] here_1.0.1    
     #> 
     #> loaded via a namespace (and not attached):
     #>  [1] pkgload_1.3.2       jsonlite_1.8.4      shiny_1.7.4         askpass_1.1         BiocManager_1.30.20
@@ -66,10 +67,10 @@ This package was last produced using:
     #> [31] ellipsis_0.3.2      cachem_1.0.6        withr_2.5.0         janitor_2.2.0       credentials_1.3.2  
     #> [36] cli_3.6.0           magrittr_2.0.3      crayon_1.5.2        mime_0.12           memoise_2.0.1      
     #> [41] evaluate_0.20       ps_1.7.2            fs_1.6.1            fansi_1.0.4         xml2_1.3.3         
-    #> [46] pkgbuild_1.4.0      httr2_0.2.2         gh_1.4.0            profvis_0.3.7       tools_4.2.2        
+    #> [46] pkgbuild_1.4.0      httr2_0.2.2         gh_1.4.0            profvis_0.3.7       tools_4.2.3        
     #> [51] prettyunits_1.1.1   lifecycle_1.0.3     gert_1.9.2          stringr_1.5.0       munsell_0.5.0      
-    #> [56] callr_3.7.3         compiler_4.2.2      rlang_1.0.6         grid_4.2.2          sys_3.4.1          
-    #> [61] rstudioapi_0.14     rappdirs_0.3.3      htmlwidgets_1.6.1   miniUI_0.1.1.1      rmarkdown_2.20     
+    #> [56] callr_3.7.3         compiler_4.2.3      rlang_1.0.6         grid_4.2.3          rstudioapi_0.14    
+    #> [61] sys_3.4.1           rappdirs_0.3.3      htmlwidgets_1.6.1   miniUI_0.1.1.1      rmarkdown_2.20     
     #> [66] gtable_0.3.1        curl_5.0.0          R6_2.5.1            lubridate_1.9.2     knitr_1.42         
     #> [71] dplyr_1.1.0         fastmap_1.1.0       utf8_1.2.3          rprojroot_2.0.3     dlstats_0.1.6      
     #> [76] desc_1.4.2          stringi_1.7.12      Rcpp_1.0.10         vctrs_0.5.2         tidyselect_1.2.0   

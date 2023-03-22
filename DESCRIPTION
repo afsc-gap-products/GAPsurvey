@@ -22,14 +22,7 @@ Description: Provides at-sea data management tools for RACE GAP surveys.
 Encoding: UTF-8
 LazyData: true
 Imports: 
-    maptools, 
     stats, 
     utils, 
-    raster, 
-    dplyr, 
-    sf, 
-    gstat, 
-    stars, 
-    magrittr, 
     methods
 RoxygenNote: 7.2.3

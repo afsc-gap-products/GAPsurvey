@@ -148,12 +148,12 @@ convert_ted_btd <- function(
                    quote=F,
                    row.names=F)
 
-  if(!quiet){
-    tcltk::tkmessageBox(title = "Message",
-                        message = paste0("Your new ", filename,
-                                         " .BTD and .BTH files are saved."),
-                        icon = "info", type = "ok")
-  }
+  # if(!quiet){
+  #   tcltk::tkmessageBox(title = "Message",
+  #                       message = paste0("Your new ", filename,
+  #                                        " .BTD and .BTH files are saved."),
+  #                       icon = "info", type = "ok")
+  # }
 }
 
 
@@ -274,15 +274,15 @@ convert_ctd_btd <- function(
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of CTD:  ") }
 
-  if (is.na(path_in)) {
-    tcltk::tkmessageBox(title = "Message",
-                        message = "In next window open the CTD .cnv file",
-                        icon = "info", type = "ok")
-    file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
-  } else {
+  # if (is.na(path_in)) {
+  #   tcltk::tkmessageBox(title = "Message",
+  #                       message = "In next window open the CTD .cnv file",
+  #                       icon = "info", type = "ok")
+  #   file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
+  # } else {
     path_in <- fix_path(path_in)
     file.name <- path_in
-  }
+  # }
 
   if (grepl(pattern = ".hex", x = path_in)) {
 
@@ -431,12 +431,12 @@ convert_ctd_btd <- function(
                    quote=F,
                    row.names=F)
 
-  if(!quiet){
-    tcltk::tkmessageBox(title = "Message",
-                        message = paste0("Your new ", filename,
-                                         " .BTD and .BTH files are saved."),
-                        icon = "info", type = "ok")
-  }
+  # if(!quiet){
+  #   tcltk::tkmessageBox(title = "Message",
+  #                       message = paste0("Your new ", filename,
+  #                                        " .BTD and .BTH files are saved."),
+  #                       icon = "info", type = "ok")
+  # }
 
 }
 
@@ -747,7 +747,6 @@ convert_bvdr_marp <- function(path_bvdr,
 #' @param heights_in_bin List of 9 items. See example below for structure. 9 hieghts from the bin should be taken from the stern starbord, center starbord, bow starbord, stern center, center center, bow center, stern port, center port, bow port
 #' @param density Dataframe or numeric. For density_method = "observed", add a numeric of the observed (calculated by you on deck) density. For density_method = "estimated", create a 2 column data.frame with "taxon" and "prop" (proportion) of each fish caught in the survey: "pollock", "pcod", "Atka mackerel", "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"
 #'
-#' @importFrom magrittr %>%
 #' @export
 #'
 #' @examples
@@ -837,174 +836,174 @@ convert_bvdr_marp <- function(path_bvdr,
 #'  density = data.frame("taxon" = c("pollock", "pcod", "Atka mackerel",
 #'     "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"),
 #'     "prop" = c(1, 0, 0, 0, 0, 0, 0, 0)))
-calc_volumetric_tow <- function(volume_method = "contour",
-                           density_method = "estimated",
-                           bin_dimentions = NULL,
-                           area_of_bin = NULL,
-                           heights_in_bin,
-                           density = NULL) {
-
-  if (is.null(area_of_bin)) {
-  if (methods::is(object = bin_dimentions, class2 = "list")) {
-    bin_dimentions <- bin_dimentions
-  } else if (bin_dimentions == 162) { # F/V Alaska Knight
-    bin_dimentions <- list("bow" = 420,
-                           "stern" = 355,
-                           # "port" = 310,
-                           # "starbord" = 330,
-                           "height" = 315.5) # actually 320, but subtract 4.5 for width of board in middle
-  } else if (bin_dimentions == 148) { # F/V Ocean Explorer
-    # 29.785 m2
-    bin_dimentions <- list("bow" = 440,
-                           "stern" = 365,
-                           "height" = 740) # actually 320, but subtract 4.5 for width of board in middle
-  } else if (bin_dimentions == 94) { # F/V Vesteraalen
-    # 29.785 m2
-    bin_dimentions <- list("bow" = 320,
-                           "stern" = 345,
-                           "height" = 325) # actually 320, but subtract 4.5 for width of board in middle
-  }
-}
-  # I. Calculate Catch Volume
-  # - Dump the catch into a bin, such that the height (depth) of the catch is maximized (e.g., >3 ft deep).
-  # - Level the catch.
-  # - Draw diagram of bin area to be used (on back of this form).
-  # - Measure the horizontal dimensions (Width and Length) of the bin for the bin area using a tape measure. (for irregular bins, e.g., trapezoids, use the average of unequal Widths and/or Lengths).
-  # - Measure the bin Height at multiple positions (perimeter and interior) using a meter stick. Average the Height.
-  # - Volume of the bin = Width x Length x Height.
-  # An accurate way to estimate the volume of the catch is to imagine the bin as four (or more) rectangles with a corner of each meeting in the middle of the bin. Measure the catch height at each of the four corners of each rectangle. For a bin with four rectangles this is a minimum of 9 catch height estimates (six rectangles is minimum of 12 height measurements). Average the heights from each of the four corners and multiply times the width and length for each of the rectangles to get the volume.
-
-  if (volume_method == "average") {
-
-    if (is.null(area_of_bin)) {
-
-      area_of_bin <- ((bin_dimentions$bow+bin_dimentions$stern)/2)*bin_dimentions$height
-    }
-
-    q1 <- (heights_in_bin$bp + heights_in_bin$bc + heights_in_bin$cp + heights_in_bin$cc)/4
-    q2 <- (heights_in_bin$cp + heights_in_bin$cc + heights_in_bin$sp + heights_in_bin$cs)/4
-    q3 <- (heights_in_bin$bc + heights_in_bin$cc + heights_in_bin$bs + heights_in_bin$sc)/4
-    q4 <- (heights_in_bin$cc+ heights_in_bin$sc + heights_in_bin$sc + heights_in_bin$ss)/4
-
-    volume_of_bin <- ( (q1*(area_of_bin/4)) + (q2*(area_of_bin/4)) +
-                         (q3*(area_of_bin/4)) + (q4*(area_of_bin/4)) ) * 1e-6
-
-  } else if (volume_method == "contour") {
-
-    bow_stern_diff <- round((bin_dimentions$bow - bin_dimentions$stern)/2, digits = 2)
-
-    df <- heights_in_bin1 <- data.frame("x" = c(bin_dimentions$stern+bow_stern_diff, round(bin_dimentions$stern+(bow_stern_diff/2)), bin_dimentions$bow,
-                                                round(bin_dimentions$bow/2), round(bin_dimentions$bow/2), round(bin_dimentions$bow/2),
-                                                bow_stern_diff, round(bow_stern_diff/2), 1),
-                                        "y" = c(bin_dimentions$h, round(bin_dimentions$h/2), 1,
-                                                bin_dimentions$h, round(bin_dimentions$h/2), 1,
-                                                bin_dimentions$h, round(bin_dimentions$h/2), 1),
-                                        "vals" = (unlist(heights_in_bin)))
-
-    idw.nmax = 4
-    grid.cell <- c(10,10)
-
-    bin_polygon <- df
-    bin_polygon <- bin_polygon[!grepl(pattern = "m", x = rownames(bin_polygon)),]
-    bin_polygon <- bin_polygon[!grepl(pattern = "c", x = rownames(bin_polygon)),]
-    bin_polygon <- bin_polygon %>%
-      dplyr::arrange(x) %>%
-      dplyr::mutate(group = 1) %>%
-      sf::st_as_sf(coords = c("x", "y")) %>%
-      dplyr::group_by(group) %>%
-      dplyr::summarise(geometry = sf::st_combine(geometry)) %>%
-      sf::st_cast("POLYGON") #%>%
-    # plot()
-
-    x <- df
-    colnames(x) <- c("LONGITUDE", "LATITUDE", "CPUE_KGHA")
-    x <- sf::st_as_sf(x,
-                      coords = c(x = "LONGITUDE", y = "LATITUDE"))
-
-    extrap.box <- sf::st_bbox(x)
-
-    idw_fit <- gstat::gstat(formula = CPUE_KGHA ~ 1, locations = x,
-                            nmax = idw.nmax)
-
-    stn.predict <- stats::predict(idw_fit, x)
-
-    sp_extrap.raster <- raster::raster(xmn = extrap.box["xmin"],
-                                       xmx = extrap.box["xmax"],
-                                       ymn = extrap.box["ymin"],
-                                       ymx = extrap.box["ymax"],
-                                       ncol = (extrap.box["xmax"] - extrap.box["xmin"])/grid.cell[1],
-                                       nrow = (extrap.box["ymax"] - extrap.box["ymin"])/grid.cell[2])
-
-    extrap.grid <- stats::predict(idw_fit, methods::as(sp_extrap.raster, "SpatialPoints")) %>%
-      sf::st_as_sf() %>%
-      stars::st_rasterize()
-
-    extrap.grid.crop <-  sf::st_crop(x = extrap.grid, y = bin_polygon)
-
-    volume_of_bin <- sum(extrap.grid.crop$var1.pred, na.rm = TRUE) * 1e-6 *
-      grid.cell[1] * grid.cell[2]
-
-    # ggplot() +
-    #   # stars::geom_stars(data = extrap.grid)  +
-    #   stars::geom_stars(data = extrap.grid.crop) +
-    #   geom_sf(data = bin_polygon, fill = NA)
-
-  }
-
-  # II. Calculate Catch Density
-
-  if (density_method == "estimated") {
-    # - Determine the predominant species in the catch, and use following table below to apply a density estimate.
-
-    if (methods::is(object = density, class2 = "data.frame")) {
-    # Density (kg/m3)
-    density_est <- data.frame(taxon = c("pollock", "pcod", "Atka mackerel",
-                                        "pop", "nrf", "Giant grenadier",
-                                        "flatfish", "snow crab"),
-                              dens = c(950, 900, 900,
-                                       800, 840, 980,
-                                       945, 654))
-
-    # - If the catch consists of a mix of several of the above species, use the proportion of each species to
-    # calculate density, e.g., 60% POP and 40% pollock: (0.6 x 800) + (0.4 x 950) = 860.
-    dens <- dplyr::left_join(density %>%
-                               dplyr::mutate(taxon = tolower(taxon)),
-                             density_est %>%
-                               dplyr::mutate(taxon = tolower(taxon)))
-    dens$density <- dens$dens * dens$prop
-
-    density_of_bin <- sum(dens$density)
-    }
-
-  } else if (density_method == "observed") {
-
-    # Method 2:
-    #   -Measure the density directly. If the catch does not fit easily into one of the above single species or species
-    # mixes (e.g., sponge tow), measure the density by filling a deep container of known volume with a random
-    # portion of the catch, then weigh that subsample. Density = Weight / Volume = kg/m3.
-    # The chemical tote, for example, is a good deep container that allows for an accurate measurement of volume.
-    # To get the weight, weigh the tote with the catch (using sling & load-cell), discard the catch (or dump it on the
-    # sorting table as part of your normal catch subsample), then weigh the empty tote and subtract that weight.
-    # ***Remember to measure your main bin volume first before removing a subsample***
-
-    if (methods::is(object = density, class2 = "numeric") & length(density) == 1) {
-      density_of_bin <- density
-    }
-
-  }
-  # III. Total Catch Weight (kg) = Density x Volume
-  # Helpful suggestion: For larger catches, dump only a portion of the catch into the bin for the volumetric estimate, then weigh
-  # the remaining portion of the catch still in the trawl net with the crane/load-cell (subtracting the weight of the net). Total
-  # Catch weight is then the addition of the remaining net catch weight + bin-volume-estimated weight. The catch subsample
-  # can be taken from either portion, but the catch composition needs to be random throughout.
-
-  weight_of_bin <- # kg
-    density_of_bin * # m3
-    volume_of_bin # kg/m3
-
-  return(weight_of_bin)
-
-}
+# calc_volumetric_tow <- function(volume_method = "contour",
+#                            density_method = "estimated",
+#                            bin_dimentions = NULL,
+#                            area_of_bin = NULL,
+#                            heights_in_bin,
+#                            density = NULL) {
+#
+#   if (is.null(area_of_bin)) {
+#   if (methods::is(object = bin_dimentions, class2 = "list")) {
+#     bin_dimentions <- bin_dimentions
+#   } else if (bin_dimentions == 162) { # F/V Alaska Knight
+#     bin_dimentions <- list("bow" = 420,
+#                            "stern" = 355,
+#                            # "port" = 310,
+#                            # "starbord" = 330,
+#                            "height" = 315.5) # actually 320, but subtract 4.5 for width of board in middle
+#   } else if (bin_dimentions == 148) { # F/V Ocean Explorer
+#     # 29.785 m2
+#     bin_dimentions <- list("bow" = 440,
+#                            "stern" = 365,
+#                            "height" = 740) # actually 320, but subtract 4.5 for width of board in middle
+#   } else if (bin_dimentions == 94) { # F/V Vesteraalen
+#     # 29.785 m2
+#     bin_dimentions <- list("bow" = 320,
+#                            "stern" = 345,
+#                            "height" = 325) # actually 320, but subtract 4.5 for width of board in middle
+#   }
+# }
+#   # I. Calculate Catch Volume
+#   # - Dump the catch into a bin, such that the height (depth) of the catch is maximized (e.g., >3 ft deep).
+#   # - Level the catch.
+#   # - Draw diagram of bin area to be used (on back of this form).
+#   # - Measure the horizontal dimensions (Width and Length) of the bin for the bin area using a tape measure. (for irregular bins, e.g., trapezoids, use the average of unequal Widths and/or Lengths).
+#   # - Measure the bin Height at multiple positions (perimeter and interior) using a meter stick. Average the Height.
+#   # - Volume of the bin = Width x Length x Height.
+#   # An accurate way to estimate the volume of the catch is to imagine the bin as four (or more) rectangles with a corner of each meeting in the middle of the bin. Measure the catch height at each of the four corners of each rectangle. For a bin with four rectangles this is a minimum of 9 catch height estimates (six rectangles is minimum of 12 height measurements). Average the heights from each of the four corners and multiply times the width and length for each of the rectangles to get the volume.
+#
+#   if (volume_method == "average") {
+#
+#     if (is.null(area_of_bin)) {
+#
+#       area_of_bin <- ((bin_dimentions$bow+bin_dimentions$stern)/2)*bin_dimentions$height
+#     }
+#
+#     q1 <- (heights_in_bin$bp + heights_in_bin$bc + heights_in_bin$cp + heights_in_bin$cc)/4
+#     q2 <- (heights_in_bin$cp + heights_in_bin$cc + heights_in_bin$sp + heights_in_bin$cs)/4
+#     q3 <- (heights_in_bin$bc + heights_in_bin$cc + heights_in_bin$bs + heights_in_bin$sc)/4
+#     q4 <- (heights_in_bin$cc+ heights_in_bin$sc + heights_in_bin$sc + heights_in_bin$ss)/4
+#
+#     volume_of_bin <- ( (q1*(area_of_bin/4)) + (q2*(area_of_bin/4)) +
+#                          (q3*(area_of_bin/4)) + (q4*(area_of_bin/4)) ) * 1e-6
+#
+#   } else if (volume_method == "contour") {
+#
+#     bow_stern_diff <- round((bin_dimentions$bow - bin_dimentions$stern)/2, digits = 2)
+#
+#     df <- heights_in_bin1 <- data.frame("x" = c(bin_dimentions$stern+bow_stern_diff, round(bin_dimentions$stern+(bow_stern_diff/2)), bin_dimentions$bow,
+#                                                 round(bin_dimentions$bow/2), round(bin_dimentions$bow/2), round(bin_dimentions$bow/2),
+#                                                 bow_stern_diff, round(bow_stern_diff/2), 1),
+#                                         "y" = c(bin_dimentions$h, round(bin_dimentions$h/2), 1,
+#                                                 bin_dimentions$h, round(bin_dimentions$h/2), 1,
+#                                                 bin_dimentions$h, round(bin_dimentions$h/2), 1),
+#                                         "vals" = (unlist(heights_in_bin)))
+#
+#     idw.nmax = 4
+#     grid.cell <- c(10,10)
+#
+#     bin_polygon <- df
+#     bin_polygon <- bin_polygon[!grepl(pattern = "m", x = rownames(bin_polygon)),]
+#     bin_polygon <- bin_polygon[!grepl(pattern = "c", x = rownames(bin_polygon)),]
+#     bin_polygon <- bin_polygon %>%
+#       dplyr::arrange(x) %>%
+#       dplyr::mutate(group = 1) %>%
+#       sf::st_as_sf(coords = c("x", "y")) %>%
+#       dplyr::group_by(group) %>%
+#       dplyr::summarise(geometry = sf::st_combine(geometry)) %>%
+#       sf::st_cast("POLYGON") #%>%
+#     # plot()
+#
+#     x <- df
+#     colnames(x) <- c("LONGITUDE", "LATITUDE", "CPUE_KGHA")
+#     x <- sf::st_as_sf(x,
+#                       coords = c(x = "LONGITUDE", y = "LATITUDE"))
+#
+#     extrap.box <- sf::st_bbox(x)
+#
+#     idw_fit <- gstat::gstat(formula = CPUE_KGHA ~ 1, locations = x,
+#                             nmax = idw.nmax)
+#
+#     stn.predict <- stats::predict(idw_fit, x)
+#
+#     sp_extrap.raster <- raster::raster(xmn = extrap.box["xmin"],
+#                                        xmx = extrap.box["xmax"],
+#                                        ymn = extrap.box["ymin"],
+#                                        ymx = extrap.box["ymax"],
+#                                        ncol = (extrap.box["xmax"] - extrap.box["xmin"])/grid.cell[1],
+#                                        nrow = (extrap.box["ymax"] - extrap.box["ymin"])/grid.cell[2])
+#
+#     extrap.grid <- stats::predict(idw_fit, methods::as(sp_extrap.raster, "SpatialPoints")) %>%
+#       sf::st_as_sf() %>%
+#       stars::st_rasterize()
+#
+#     extrap.grid.crop <-  sf::st_crop(x = extrap.grid, y = bin_polygon)
+#
+#     volume_of_bin <- sum(extrap.grid.crop$var1.pred, na.rm = TRUE) * 1e-6 *
+#       grid.cell[1] * grid.cell[2]
+#
+#     # ggplot() +
+#     #   # stars::geom_stars(data = extrap.grid)  +
+#     #   stars::geom_stars(data = extrap.grid.crop) +
+#     #   geom_sf(data = bin_polygon, fill = NA)
+#
+#   }
+#
+#   # II. Calculate Catch Density
+#
+#   if (density_method == "estimated") {
+#     # - Determine the predominant species in the catch, and use following table below to apply a density estimate.
+#
+#     if (methods::is(object = density, class2 = "data.frame")) {
+#     # Density (kg/m3)
+#     density_est <- data.frame(taxon = c("pollock", "pcod", "Atka mackerel",
+#                                         "pop", "nrf", "Giant grenadier",
+#                                         "flatfish", "snow crab"),
+#                               dens = c(950, 900, 900,
+#                                        800, 840, 980,
+#                                        945, 654))
+#
+#     # - If the catch consists of a mix of several of the above species, use the proportion of each species to
+#     # calculate density, e.g., 60% POP and 40% pollock: (0.6 x 800) + (0.4 x 950) = 860.
+#     dens <- dplyr::left_join(density %>%
+#                                dplyr::mutate(taxon = tolower(taxon)),
+#                              density_est %>%
+#                                dplyr::mutate(taxon = tolower(taxon)))
+#     dens$density <- dens$dens * dens$prop
+#
+#     density_of_bin <- sum(dens$density)
+#     }
+#
+#   } else if (density_method == "observed") {
+#
+#     # Method 2:
+#     #   -Measure the density directly. If the catch does not fit easily into one of the above single species or species
+#     # mixes (e.g., sponge tow), measure the density by filling a deep container of known volume with a random
+#     # portion of the catch, then weigh that subsample. Density = Weight / Volume = kg/m3.
+#     # The chemical tote, for example, is a good deep container that allows for an accurate measurement of volume.
+#     # To get the weight, weigh the tote with the catch (using sling & load-cell), discard the catch (or dump it on the
+#     # sorting table as part of your normal catch subsample), then weigh the empty tote and subtract that weight.
+#     # ***Remember to measure your main bin volume first before removing a subsample***
+#
+#     if (methods::is(object = density, class2 = "numeric") & length(density) == 1) {
+#       density_of_bin <- density
+#     }
+#
+#   }
+#   # III. Total Catch Weight (kg) = Density x Volume
+#   # Helpful suggestion: For larger catches, dump only a portion of the catch into the bin for the volumetric estimate, then weigh
+#   # the remaining portion of the catch still in the trawl net with the crane/load-cell (subtracting the weight of the net). Total
+#   # Catch weight is then the addition of the remaining net catch weight + bin-volume-estimated weight. The catch subsample
+#   # can be taken from either portion, but the catch composition needs to be random throughout.
+#
+#   weight_of_bin <- # kg
+#     density_of_bin * # m3
+#     volume_of_bin # kg/m3
+#
+#   return(weight_of_bin)
+#
+# }
 
 
 
@@ -1625,7 +1624,6 @@ astrcalc4r <- function (day, month, year, hour, timezone, lat, lon, withinput = 
 #' @param grid_buffer (numeric) GOA/AI only. The number of cells around the current station where you would like to see catches from. Typically, use grid_buffer = 3.
 #' @param years (numeric) the years you want returned in the output. If years = NA, script will default to the last 10 years. If you would like to see all years, simply choose a large range that covers all years of the survey (e.g., 1970:2030)
 #'
-#' @importFrom magrittr "%>%"
 #' @export
 #' @return a data.frame of past catches and hauls
 #'
