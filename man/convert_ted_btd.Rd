@@ -13,8 +13,7 @@ convert_ted_btd(
   SERIAL_NUMBER = NA,
   path_in = "C:/Program Files/Marport Server/Logs/",
   path_out = "./",
-  filename_add = "new",
-  quiet = FALSE
+  filename_add = "new"
 )
 }
 \arguments{
@@ -35,8 +34,6 @@ convert_ted_btd(
 \item{path_out}{Optional. The default is the local working directory but can be specified with a string.}
 
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.}
-
-\item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
 \value{
 .BTH and .BTD files to the path_out directory.
@@ -54,6 +51,5 @@ convert_ted_btd(
    SERIAL_NUMBER = 789,
    path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newted",
-   quiet = TRUE)
+   filename_add = "newted")
 }

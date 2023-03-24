@@ -23,7 +23,6 @@
 #' @param path_in Optional. The default is the location on the catch computer ("C:/Program Files/Marport Server/Logs/") but any path can be entered.
 #' @param path_out Optional. The default is the local working directory but can be specified with a string.
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.
-#' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
 #' @return .BTH and .BTD files to the path_out directory.
 #' @export
@@ -38,8 +37,7 @@
 #'    SERIAL_NUMBER = 789,
 #'    path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "newted",
-#'    quiet = TRUE)
+#'    filename_add = "newted")
 convert_ted_btd <- function(
     VESSEL = NA,
     CRUISE = NA,
@@ -49,8 +47,7 @@ convert_ted_btd <- function(
     SERIAL_NUMBER = NA,
     path_in = "C:/Program Files/Marport Server/Logs/",
     path_out = "./",
-    filename_add = "new",
-    quiet = FALSE){
+    filename_add = "new"){
 
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -148,12 +145,8 @@ convert_ted_btd <- function(
                    quote=F,
                    row.names=F)
 
-  # if(!quiet){
-  #   tcltk::tkmessageBox(title = "Message",
-  #                       message = paste0("Your new ", filename,
-  #                                        " .BTD and .BTH files are saved."),
-  #                       icon = "info", type = "ok")
-  # }
+  message(paste0("Your new ", filename, " .BTD and .BTH files are saved."))
+
 }
 
 
@@ -183,7 +176,6 @@ convert_ted_btd <- function(
 #' @param path_out Optional. The default is the local working directory but may be specified with a string.
 #' @param path_xmlcon Optional. Filepath to the CTD configuration file (.xmlcon)
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.
-#' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
 #' @return .BTH and .BTD files to the path_out directory.
 #' @export
@@ -203,8 +195,7 @@ convert_ted_btd <- function(
 #'      "19-8102_Deploy2021.xmlcon"),
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "newctd",
-#'    quiet = TRUE)
+#'    filename_add = "newctd")
 #'
 #'
 #' convert_ctd_btd(
@@ -221,8 +212,7 @@ convert_ted_btd <- function(
 #'      "19-8102_Deploy2021.xmlcon"),
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
-#'    filename_add = "newctd",
-#'    quiet = TRUE)
+#'    filename_add = "newctd")
 #'
 #' # Copy system files to working directory for example
 #' file.copy(
@@ -254,11 +244,10 @@ convert_ctd_btd <- function(
     MODEL_NUMBER = NA,
     VERSION_NUMBER = NA,
     SERIAL_NUMBER = NA,
-    path_in = NA,
+    path_in,
     path_out = "./",
     path_xmlcon = NULL,
-    filename_add = "",
-    quiet = FALSE){
+    filename_add = ""){
 
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -274,15 +263,8 @@ convert_ctd_btd <- function(
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of CTD:  ") }
 
-  # if (is.na(path_in)) {
-  #   tcltk::tkmessageBox(title = "Message",
-  #                       message = "In next window open the CTD .cnv file",
-  #                       icon = "info", type = "ok")
-  #   file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
-  # } else {
     path_in <- fix_path(path_in)
     file.name <- path_in
-  # }
 
   if (grepl(pattern = ".hex", x = path_in)) {
 
@@ -431,12 +413,7 @@ convert_ctd_btd <- function(
                    quote=F,
                    row.names=F)
 
-  # if(!quiet){
-  #   tcltk::tkmessageBox(title = "Message",
-  #                       message = paste0("Your new ", filename,
-  #                                        " .BTD and .BTH files are saved."),
-  #                       icon = "info", type = "ok")
-  # }
+message(paste0("Your new ", filename," .BTD and .BTH files are saved."))
 
 }
 
@@ -552,7 +529,6 @@ convert_ctd_hex <- function(hex_file_path,
 #' @param path_in Optional. Default = "./., or the local working directory but any path (as a string) may be entered.
 #' @param path_out Optional. The default is the local working directory but may be specified with a string.
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.
-#' @param quiet Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.
 #'
 #' @return A .GPS file to the path_out directory.
 #' @export
@@ -566,8 +542,7 @@ convert_ctd_hex <- function(hex_file_path,
 #'     path_in = system.file("exdata/convert_log_gps/06062017.log",
 #'         package = "GAPsurvey"),
 #'     path_out = getwd(),
-#'     filename_add = "newlog",
-#'     quiet = TRUE)
+#'     filename_add = "newlog")
 #'
 #'  convert_log_gps(
 #'     VESSEL = 94,
@@ -577,32 +552,23 @@ convert_ctd_hex <- function(hex_file_path,
 #'     path_in = system.file("exdata/convert_log_gps/Haul0037.log",
 #'         package = "GAPsurvey"),
 #'     path_out = getwd(),
-#'     filename_add = "newlog",
-#'     quiet = TRUE)
+#'     filename_add = "newlog")
 convert_log_gps <- function(
     VESSEL = NA,
     CRUISE = NA,
     HAUL = NA,
     DATE = NA,
-    path_in = NA,
+    path_in,
     path_out = "./",
-    filename_add = "",
-    quiet = FALSE){
+    filename_add = ""){
 
   if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
   if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
 
-  if (is.na(path_in)) {
-    tcltk::tkmessageBox(title = "Message",
-                        message = paste0("In next window, open the file named ", gsub(pattern = "/", replacement = "", x = DATE), ".log."),
-                        icon = "info", type = "ok")
-    file.name <- tcltk::tclvalue(tcltk::tkgetOpenFile())
-  } else {
     path_in <- fix_path(path_in)
     file.name <- path_in
-  }
 
   # make sure path_in comes in with correct format
   path_out <- fix_path(path_out)
@@ -655,12 +621,6 @@ convert_log_gps <- function(
                      row.names=FALSE,
                      col.names = FALSE,
                      eol="\n")
-
-  if (!quiet) {
-    tcltk::tkmessageBox(title = "Message",
-                        message = paste0("Your new .gps files are saved to ", filename),
-                        icon = "info", type = "ok")
-  }
 
   message(paste0("Your new .gps files are saved to ", filename))
 
@@ -724,287 +684,6 @@ convert_bvdr_marp <- function(path_bvdr,
 }
 
 # Calculate during hauls -------------------------------------------------------
-
-# Volumentric Tows
-
-#' Volumetric Tow Calculator
-#' @description
-#' recall on a boat...
-#'     bow
-#' port   starbord
-#'    stern
-#' thus heights in the bin should be taken like this:
-#'                     ...bow...
-#' bow-port (bp)       bow-center (bc)      bow-starbord (bs)
-#' center-port (cp)    center-center (cc)   center-starbord (cs)
-#' stern-port (sp)     stern-center (sc)    stern-starbord (ss)
-#'                     ...stern...
-#' @param volume_method Character: "average" (default) or "contour". If "contour", an inverse-distance weighted interpolation will be applied to the heights across the bin and summed to find volume.
-#' If "average", the bin heights will be averaged in 4 area quadrants (as done in old documentation) to find volume.
-#' @param density_method Character: "estimated" (default) or "observed". For "observed", add a numeric of the observed (calculated by you on deck) density. For "estimated", create a 2 column data.frame with "taxon" and "prop" (proportion) of each fish caught in the survey: "pollock", "pcod", "Atka mackerel", "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"
-#' @param bin_dimentions list of 3 items (length of "bow" side of shape, length of "stern" side of shape, and the "height"s between them) or NULL (default).
-#' @param area_of_bin A single numeric with the area, or the bin in cm3 or NULL (default). If null, area will be calculated from the bin_dimensions. Will be used instead of bin_dimentions if not NULL.
-#' @param heights_in_bin List of 9 items. See example below for structure. 9 hieghts from the bin should be taken from the stern starbord, center starbord, bow starbord, stern center, center center, bow center, stern port, center port, bow port
-#' @param density Dataframe or numeric. For density_method = "observed", add a numeric of the observed (calculated by you on deck) density. For density_method = "estimated", create a 2 column data.frame with "taxon" and "prop" (proportion) of each fish caught in the survey: "pollock", "pcod", "Atka mackerel", "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"
-#'
-#' @export
-#'
-#' @examples
-#' # Example from EBS 2022 Alaska Knight Haul 144 where a large bag (4650 kg)
-#' # was weighed by a load cell but volumetric measurements were also taken for
-#' # comparison and study.
-#'
-#' # 9 heights from the bin at each location described below
-#' # see notes above for boat layout.
-#' heights_in_bin <- list( # in cm
-#'  "ss" = 65, # stern starbord
-#'  "cs" = 55, # center starbord
-#'  "bs" = 43, # bow starbord
-#'  "sc" = 51, # stern center
-#'  "cc" = 34, # center center
-#'  "bc" = 27, # bow center
-#'  "sp" = 20, # stern port
-#'  "cp" = 29, # center port
-#'  "bp" = 31) # bow port
-#'
-#' # develop a dataframe of the taxon groups below and proportions found from
-#' # sample bag (be sure not to include weights of organisms rescued from the bin!)
-#'
-#' density_prop <- data.frame(taxon = c("pollock", "pcod", "Atka mackerel",
-#'                                      "pop", "nrf", "Giant grenadier",
-#'                                      "flatfish", "snow crab"),
-#'                            prop = c(0.045011, 0.00533, 0,
-#'                                     0.8843, 0, 0,
-#'                                     0.022022, 0.0000398))
-#' # Prefered/easiest
-#'
-#' calc_volumetric_tow(volume_method = "contour",
-#'                              # Using function to develop an IDW
-#'                              # contour over the heights for estimating volume.
-#'                density_method = "estimated",
-#'                              # Determining density proportions to apply to
-#'                              # known densities of fish
-#'                bin_dimentions = # Dimensions for the Alaska Knight's
-#'                                 # trapezoidal bin, measured in cm
-#'                                 list("bow" = 420,
-#'                                      "stern" = 355,
-#'                                      "height" = 315.5),
-#'                              # the height is actually 320, but subtract 4.5
-#'                              # for width of board in middle
-#'                heights_in_bin = heights_in_bin, # measured in cm
-#'                density = density_prop)
-#'
-#' # Using other methods
-#' calc_volumetric_tow(volume_method = "average",
-#'                        # Averaging the 4 quadrants of the bin to find volume
-#'                density_method = "observed",
-#'                        # Directly measured density. See documentation in RACE
-#'                        # Survey app for more details.
-#'                bin_dimentions = 162,
-#'                        # Alaska Knight Vessel code - bin_dimensions stored in
-#'                        # the function and this vessel code will look them up
-#'                heights_in_bin = heights_in_bin, # Measured in cm
-#'                density = 775.8343)
-#'                        # if you measured the density directly (this happens
-#'                        # to be what the proportions above would solve for)
-#'
-#' # Using other methods
-#' calc_volumetric_tow(volume_method = "average",
-#'                        # Averaging the 4 quadrants of the bin to find volume
-#'                density_method = "observed",
-#'                        # Directly measured density. See documentation in
-#'                        # RACE Survey app for more details.
-#'                area_of_bin = 122256.2,  # calculated area of the bin.
-#'                heights_in_bin = heights_in_bin, # Measured in cm
-#'                density = 775.8343)
-#'                        # if you measured the density directly (this happens
-#'                        # to be what the proportions above would solve for)
-#'
-#' # F/V Vesteraalen Haul 128 EBS 2022
-#' calc_volumetric_tow( # volume_method = "average",
-#'   bin_dimentions = 94,
-#'   heights_in_bin = list( # in cm
-#'     "ss" = 50, # stern starbord
-#'     "cs" = 63, # center starbord
-#'     "bs" = 56, # bow starbord
-#'     "sc" = 50, # stern center
-#'     "cc" = 60, # center center
-#'     "bc" = 61, # bow center
-#'     "sp" = 50, # stern port
-#'     "cp" = 50, # center port
-#'     "bp" = 41), # bow port,
-#'  density = data.frame("taxon" = c("pollock", "pcod", "Atka mackerel",
-#'     "pop", "nrf", "Giant grenadier", "flatfish", "snow crab"),
-#'     "prop" = c(1, 0, 0, 0, 0, 0, 0, 0)))
-# calc_volumetric_tow <- function(volume_method = "contour",
-#                            density_method = "estimated",
-#                            bin_dimentions = NULL,
-#                            area_of_bin = NULL,
-#                            heights_in_bin,
-#                            density = NULL) {
-#
-#   if (is.null(area_of_bin)) {
-#   if (methods::is(object = bin_dimentions, class2 = "list")) {
-#     bin_dimentions <- bin_dimentions
-#   } else if (bin_dimentions == 162) { # F/V Alaska Knight
-#     bin_dimentions <- list("bow" = 420,
-#                            "stern" = 355,
-#                            # "port" = 310,
-#                            # "starbord" = 330,
-#                            "height" = 315.5) # actually 320, but subtract 4.5 for width of board in middle
-#   } else if (bin_dimentions == 148) { # F/V Ocean Explorer
-#     # 29.785 m2
-#     bin_dimentions <- list("bow" = 440,
-#                            "stern" = 365,
-#                            "height" = 740) # actually 320, but subtract 4.5 for width of board in middle
-#   } else if (bin_dimentions == 94) { # F/V Vesteraalen
-#     # 29.785 m2
-#     bin_dimentions <- list("bow" = 320,
-#                            "stern" = 345,
-#                            "height" = 325) # actually 320, but subtract 4.5 for width of board in middle
-#   }
-# }
-#   # I. Calculate Catch Volume
-#   # - Dump the catch into a bin, such that the height (depth) of the catch is maximized (e.g., >3 ft deep).
-#   # - Level the catch.
-#   # - Draw diagram of bin area to be used (on back of this form).
-#   # - Measure the horizontal dimensions (Width and Length) of the bin for the bin area using a tape measure. (for irregular bins, e.g., trapezoids, use the average of unequal Widths and/or Lengths).
-#   # - Measure the bin Height at multiple positions (perimeter and interior) using a meter stick. Average the Height.
-#   # - Volume of the bin = Width x Length x Height.
-#   # An accurate way to estimate the volume of the catch is to imagine the bin as four (or more) rectangles with a corner of each meeting in the middle of the bin. Measure the catch height at each of the four corners of each rectangle. For a bin with four rectangles this is a minimum of 9 catch height estimates (six rectangles is minimum of 12 height measurements). Average the heights from each of the four corners and multiply times the width and length for each of the rectangles to get the volume.
-#
-#   if (volume_method == "average") {
-#
-#     if (is.null(area_of_bin)) {
-#
-#       area_of_bin <- ((bin_dimentions$bow+bin_dimentions$stern)/2)*bin_dimentions$height
-#     }
-#
-#     q1 <- (heights_in_bin$bp + heights_in_bin$bc + heights_in_bin$cp + heights_in_bin$cc)/4
-#     q2 <- (heights_in_bin$cp + heights_in_bin$cc + heights_in_bin$sp + heights_in_bin$cs)/4
-#     q3 <- (heights_in_bin$bc + heights_in_bin$cc + heights_in_bin$bs + heights_in_bin$sc)/4
-#     q4 <- (heights_in_bin$cc+ heights_in_bin$sc + heights_in_bin$sc + heights_in_bin$ss)/4
-#
-#     volume_of_bin <- ( (q1*(area_of_bin/4)) + (q2*(area_of_bin/4)) +
-#                          (q3*(area_of_bin/4)) + (q4*(area_of_bin/4)) ) * 1e-6
-#
-#   } else if (volume_method == "contour") {
-#
-#     bow_stern_diff <- round((bin_dimentions$bow - bin_dimentions$stern)/2, digits = 2)
-#
-#     df <- heights_in_bin1 <- data.frame("x" = c(bin_dimentions$stern+bow_stern_diff, round(bin_dimentions$stern+(bow_stern_diff/2)), bin_dimentions$bow,
-#                                                 round(bin_dimentions$bow/2), round(bin_dimentions$bow/2), round(bin_dimentions$bow/2),
-#                                                 bow_stern_diff, round(bow_stern_diff/2), 1),
-#                                         "y" = c(bin_dimentions$h, round(bin_dimentions$h/2), 1,
-#                                                 bin_dimentions$h, round(bin_dimentions$h/2), 1,
-#                                                 bin_dimentions$h, round(bin_dimentions$h/2), 1),
-#                                         "vals" = (unlist(heights_in_bin)))
-#
-#     idw.nmax = 4
-#     grid.cell <- c(10,10)
-#
-#     bin_polygon <- df
-#     bin_polygon <- bin_polygon[!grepl(pattern = "m", x = rownames(bin_polygon)),]
-#     bin_polygon <- bin_polygon[!grepl(pattern = "c", x = rownames(bin_polygon)),]
-#     bin_polygon <- bin_polygon %>%
-#       dplyr::arrange(x) %>%
-#       dplyr::mutate(group = 1) %>%
-#       sf::st_as_sf(coords = c("x", "y")) %>%
-#       dplyr::group_by(group) %>%
-#       dplyr::summarise(geometry = sf::st_combine(geometry)) %>%
-#       sf::st_cast("POLYGON") #%>%
-#     # plot()
-#
-#     x <- df
-#     colnames(x) <- c("LONGITUDE", "LATITUDE", "CPUE_KGHA")
-#     x <- sf::st_as_sf(x,
-#                       coords = c(x = "LONGITUDE", y = "LATITUDE"))
-#
-#     extrap.box <- sf::st_bbox(x)
-#
-#     idw_fit <- gstat::gstat(formula = CPUE_KGHA ~ 1, locations = x,
-#                             nmax = idw.nmax)
-#
-#     stn.predict <- stats::predict(idw_fit, x)
-#
-#     sp_extrap.raster <- raster::raster(xmn = extrap.box["xmin"],
-#                                        xmx = extrap.box["xmax"],
-#                                        ymn = extrap.box["ymin"],
-#                                        ymx = extrap.box["ymax"],
-#                                        ncol = (extrap.box["xmax"] - extrap.box["xmin"])/grid.cell[1],
-#                                        nrow = (extrap.box["ymax"] - extrap.box["ymin"])/grid.cell[2])
-#
-#     extrap.grid <- stats::predict(idw_fit, methods::as(sp_extrap.raster, "SpatialPoints")) %>%
-#       sf::st_as_sf() %>%
-#       stars::st_rasterize()
-#
-#     extrap.grid.crop <-  sf::st_crop(x = extrap.grid, y = bin_polygon)
-#
-#     volume_of_bin <- sum(extrap.grid.crop$var1.pred, na.rm = TRUE) * 1e-6 *
-#       grid.cell[1] * grid.cell[2]
-#
-#     # ggplot() +
-#     #   # stars::geom_stars(data = extrap.grid)  +
-#     #   stars::geom_stars(data = extrap.grid.crop) +
-#     #   geom_sf(data = bin_polygon, fill = NA)
-#
-#   }
-#
-#   # II. Calculate Catch Density
-#
-#   if (density_method == "estimated") {
-#     # - Determine the predominant species in the catch, and use following table below to apply a density estimate.
-#
-#     if (methods::is(object = density, class2 = "data.frame")) {
-#     # Density (kg/m3)
-#     density_est <- data.frame(taxon = c("pollock", "pcod", "Atka mackerel",
-#                                         "pop", "nrf", "Giant grenadier",
-#                                         "flatfish", "snow crab"),
-#                               dens = c(950, 900, 900,
-#                                        800, 840, 980,
-#                                        945, 654))
-#
-#     # - If the catch consists of a mix of several of the above species, use the proportion of each species to
-#     # calculate density, e.g., 60% POP and 40% pollock: (0.6 x 800) + (0.4 x 950) = 860.
-#     dens <- dplyr::left_join(density %>%
-#                                dplyr::mutate(taxon = tolower(taxon)),
-#                              density_est %>%
-#                                dplyr::mutate(taxon = tolower(taxon)))
-#     dens$density <- dens$dens * dens$prop
-#
-#     density_of_bin <- sum(dens$density)
-#     }
-#
-#   } else if (density_method == "observed") {
-#
-#     # Method 2:
-#     #   -Measure the density directly. If the catch does not fit easily into one of the above single species or species
-#     # mixes (e.g., sponge tow), measure the density by filling a deep container of known volume with a random
-#     # portion of the catch, then weigh that subsample. Density = Weight / Volume = kg/m3.
-#     # The chemical tote, for example, is a good deep container that allows for an accurate measurement of volume.
-#     # To get the weight, weigh the tote with the catch (using sling & load-cell), discard the catch (or dump it on the
-#     # sorting table as part of your normal catch subsample), then weigh the empty tote and subtract that weight.
-#     # ***Remember to measure your main bin volume first before removing a subsample***
-#
-#     if (methods::is(object = density, class2 = "numeric") & length(density) == 1) {
-#       density_of_bin <- density
-#     }
-#
-#   }
-#   # III. Total Catch Weight (kg) = Density x Volume
-#   # Helpful suggestion: For larger catches, dump only a portion of the catch into the bin for the volumetric estimate, then weigh
-#   # the remaining portion of the catch still in the trawl net with the crane/load-cell (subtracting the weight of the net). Total
-#   # Catch weight is then the addition of the remaining net catch weight + bin-volume-estimated weight. The catch subsample
-#   # can be taken from either portion, but the catch composition needs to be random throughout.
-#
-#   weight_of_bin <- # kg
-#     density_of_bin * # m3
-#     volume_of_bin # kg/m3
-#
-#   return(weight_of_bin)
-#
-# }
-
 
 
 #' Calculate Net Spread for tows missing net width using a glm.
@@ -1327,7 +1006,7 @@ get_sunrise_sunset <- function(
 
   date_vec <- unlist(strsplit(as.character(chosen_date), split = ""))
 
-  ac4r_output <- GAPsurvey:::astrcalc4r(day = as.numeric(paste(date_vec[9:10], collapse = "")),
+  ac4r_output <- astrcalc4r(day = as.numeric(paste(date_vec[9:10], collapse = "")),
                          month = as.numeric(paste(date_vec[6:7], collapse = "")),
                          year = as.numeric(paste(date_vec[1:4], collapse = "")),
                          hour = 7,
@@ -1679,7 +1358,7 @@ get_catch_haul_history <- function(
                 c("year", "srvy", "haul", "stratum", "station",
                   "vessel_name", "vessel_id", "date_time", "latitude_dd_start", "longitude_dd_start",
                   "species_code", "common_name", "scientific_name", "taxon_confidence",
-                  "cpue_kgha", "cpue_noha", "weight_kg", "count",
+                  "cpue_kgkm2", "cpue_nokm2", "weight_kg", "count",
                   "bottom_temperature_c", "surface_temperature_c", "depth_m",
                   "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")]
 
@@ -1747,7 +1426,7 @@ get_catch_haul_history <- function(
       xx <- public_data0[public_data0$station %in% possible_stations,]
       public_data1 <- public_data1[public_data1$station %in% possible_stations,] # for calc total weight of haul
 
-      catch <- stats::aggregate(xx[, c("count", "weight_kg", "cpue_kgha", "cpue_noha")],
+      catch <- stats::aggregate(xx[, c("count", "weight_kg", "cpue_kgkm2", "cpue_nokm2")],
                                 by = list(
                                   haul = factor(xx$haul),
                                   year = factor(xx$year),
@@ -1763,7 +1442,7 @@ get_catch_haul_history <- function(
 
     } else if (survey == "EBS" | survey == "NBS") {
       catch <- public_data0[,c("year", "station", "scientific_name", "common_name",
-                               "count", "weight_kg", "cpue_kgha", "cpue_noha")]
+                               "count", "weight_kg", "cpue_kgkm2", "cpue_nokm2")]
       haul <- unique(public_data0[,c("year", "haul", "station", "stratum",
                                      "vessel_name", "date_time", "latitude_dd_start", "longitude_dd_start",
                                      "bottom_temperature_c", "surface_temperature_c", "depth_m",
@@ -1799,7 +1478,7 @@ get_catch_haul_history <- function(
         names(temp)[names(temp) == "Var1"] <- "scientific_name"
       }
       catch_means <- base::merge(
-        x = stats::aggregate(catch[, c("count", "weight_kg", "cpue_kgha", "cpue_noha")],
+        x = stats::aggregate(catch[, c("count", "weight_kg", "cpue_kgkm2", "cpue_nokm2")],
                              by = list(
                                scientific_name = factor(catch$scientific_name),
                                common_name = factor(catch$common_name),
@@ -1813,11 +1492,11 @@ get_catch_haul_history <- function(
       if (nrow(catch_means) == 0) {
         catch_means <- "There was no data available for these function parameters"
       } else {
-        catch_means <- catch_means[order(-catch_means$cpue_kgha),]
+        catch_means <- catch_means[order(-catch_means$cpue_kgkm2),]
         catch_means$count <- round(x = catch_means$count, digits = 1)
         catch_means$weight_kg <- round(x = catch_means$weight_kg, digits = 2)
-        catch_means$cpue_kgha <- round(x = catch_means$cpue_kgha, digits = 2)
-        catch_means$cpue_noha <- round(x = catch_means$cpue_noha, digits = 2)
+        catch_means$cpue_kgkm2 <- round(x = catch_means$cpue_kgkm2, digits = 2)
+        catch_means$cpue_nokm2 <- round(x = catch_means$cpue_nokm2, digits = 2)
         rownames(catch_means) <- 1:nrow(catch_means)
 
       }
@@ -1827,8 +1506,8 @@ get_catch_haul_history <- function(
     }
 
     catch$weight_kg <- round(x = catch$weight_kg, digits = 2)
-    catch$cpue_kgha <- round(x = catch$cpue_kgha, digits = 2)
-    catch$cpue_noha <- round(x = catch$cpue_noha, digits = 2)
+    catch$cpue_kgkm2 <- round(x = catch$cpue_kgkm2, digits = 2)
+    catch$cpue_nokm2 <- round(x = catch$cpue_nokm2, digits = 2)
 
     out <- list("catch" = cc,
                 "catch_means" = catch_means,

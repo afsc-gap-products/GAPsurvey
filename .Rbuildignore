@@ -6,3 +6,6 @@
 ^\./pkgdown/_pkgdown\.yml$
 
 ^notforgit$
+^\.README\.Rmd$
+^\.notes\.R$
+

@@ -56,7 +56,7 @@ species_data <- GAP_PRODUCTS_OLD_TAXONOMICS_WORMS0 %>%
                 scientific_name_old = survey_name)
 save(species_data, file = "./data/species_data.rda")
 
-## Document Package ---------------------------------------------------
+# Document Package ---------------------------------------------------
 .rs.restartR()
 
 # options(rmarkdown.html_vignette.check_title = FALSE)
