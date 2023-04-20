@@ -936,26 +936,42 @@ calc_net_spread <- function(dat) {
   return(out)
 }
 
-
-
 #' Get sunrise and sunset times by day, latitude, and longitude
 #'
-#' @param chosen_date Date, formatted as YYYY-MM-DD
-#' @param latitude Numeric latitude in either decimal degrees or a character latitude in degrees and decimal minutes
-#' @param longitude Numeric longitude in either decimal degrees or a character longitude in degrees and decimal minutes
+#' @param chosen_date Date or charater. Formatted as "YYYY-MM-DD"
+#' @param latitude Numeric. Fill in only if survey and station are not entered. latitude in either decimal degrees or a character latitude in degrees and decimal minutes
+#' @param longitude Numeric. Fill in only if survey and station are not entered. Longitude in either decimal degrees or a character longitude in degrees and decimal minutes
+#' @param survey Character. Fill in only if latitude and longitude are not entered. A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS".
+#' @param station Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85")
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
-#' @param timezone Character. Default = "US/Alaska"
+#' @param timezone Character. Default = "US/Alaska." Other options include: "US/Aleutian"
 #'
 #' @return Time of sunrise and sunset in text. Also shows a pop-up with sunrise and sunset times.
 #' @export
 #'
 #' @examples
-#' get_sunrise_sunset(chosen_date = Sys.Date(), latitude = 63.3, longitude = -170.5)
-#' get_sunrise_sunset(chosen_date = as.character(Sys.Date()), latitude = 63.3, longitude = -170.5)
+#' get_sunrise_sunset(chosen_date = Sys.Date(),
+#'                    latitude = 63.3,
+#'                    longitude = -170.5)
+#' get_sunrise_sunset(chosen_date = as.character(Sys.Date()),
+#'                    latitude = 63.3,
+#'                    longitude = -170.5)
+#' get_sunrise_sunset(chosen_date = Sys.Date(),
+#'                    survey = "EBS",
+#'                    station = "I-13")
+#' get_sunrise_sunset(chosen_date = Sys.Date(),
+#'                    survey = "GOA",
+#'                    station = "7-7")
+#' get_sunrise_sunset(chosen_date = "2023-06-10",
+#'                    survey = "AI",
+#'                    station = "324-73",
+#'                    timezone = "US/Aleutian")
 get_sunrise_sunset <- function(
     chosen_date,
-    latitude,
-    longitude,
+    latitude = NULL,
+    longitude = NULL,
+    survey = NULL,
+    station = NULL,
     verbose = FALSE,
     timezone = "US/Alaska") {
 
@@ -963,9 +979,7 @@ get_sunrise_sunset <- function(
   format_date <- function(x) {
 
     hour <- floor(x)
-
     min_vec <- c("0", "0")
-
     minutes <- unlist(strsplit(as.character(round(x%%1*60)), split = ""))
 
     if(length(minutes) == 2) {
@@ -977,16 +991,19 @@ get_sunrise_sunset <- function(
     out <- paste0(hour, ":", paste(min_vec, collapse = ""))
 
     return(out)
-
   }
 
     chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
 
-    if(timezone == "US/Alaska") {
+    if (timezone == "US/Alaska") {
       sel_tz <- -8
+    } else if (timezone == "US/Aleutian") {
+      sel_tz <- -9
     }
 
   # Are lat/long in degrees and decimal mins? If so, convert to decimal degrees.
+    if (!is.null(latitude) | !is.null(longitude)) {
+      message("Using latitude and longitude to calcualte sunrise and sunset. ")
   ddm <- is.character(latitude) | is.character(longitude)
   if (ddm) {
     if (!grepl(" ", x = latitude) | !grepl(" ", x = longitude)) {
@@ -1000,6 +1017,28 @@ get_sunrise_sunset <- function(
     lon_min <- as.numeric(gsub("^\\S+\\s+", "", longitude)) / 60
     longitude <- lon_deg + lon_min
   }
+    }
+
+    if (!is.null(survey) | !is.null(station)) {
+
+      utils::data("public_data", envir=environment())
+
+      public_data0 <-
+        GAPsurvey::public_data[GAPsurvey::public_data$srvy == survey &
+                                 GAPsurvey::public_data$station == station,
+                               c("srvy", "station",
+                                 "latitude_dd_start", "longitude_dd_start")]
+      if (nrow(public_data0) == 0) {
+        stop("This station does not exist in this survey. ")
+      }
+
+      latitude <- mean(public_data0$latitude_dd_start, na.rm = TRUE)
+      longitude <- mean(public_data0$longitude_dd_start, na.rm = TRUE)
+      message(paste0("Using average survey station location information (lat = ",
+                     latitude,", lon = ",longitude,
+                     ") to calcualte sunrise and sunset. "))
+
+    }
 
   # crds0 = matrix(c(longitude, latitude),
   #                nrow = 1)
@@ -1290,9 +1329,6 @@ astrcalc4r <- function (day, month, year, hour, timezone, lat, lon, withinput = 
   else return(output)
 }
 
-
-
-# Check Past Tows --------------------------------------------------------------
 
 
 #' Find historical catch data from previous years
