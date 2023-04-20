@@ -81,8 +81,10 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span></span>
 <span>  <span class="va">chosen_date</span>,</span>
-<span>  <span class="va">latitude</span>,</span>
-<span>  <span class="va">longitude</span>,</span>
+<span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  survey <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  station <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  timezone <span class="op">=</span> <span class="st">"US/Alaska"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -91,15 +93,23 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>chosen_date</dt>
-<dd><p>Date, formatted as YYYY-MM-DD</p></dd>
+<dd><p>Date or charater. Formatted as "YYYY-MM-DD"</p></dd>
 
 
 <dt>latitude</dt>
-<dd><p>Numeric latitude in either decimal degrees or a character latitude in degrees and decimal minutes</p></dd>
+<dd><p>Numeric. Fill in only if survey and station are not entered. latitude in either decimal degrees or a character latitude in degrees and decimal minutes</p></dd>
 
 
 <dt>longitude</dt>
-<dd><p>Numeric longitude in either decimal degrees or a character longitude in degrees and decimal minutes</p></dd>
+<dd><p>Numeric. Fill in only if survey and station are not entered. Longitude in either decimal degrees or a character longitude in degrees and decimal minutes</p></dd>
+
+
+<dt>survey</dt>
+<dd><p>Character. Fill in only if latitude and longitude are not entered. A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS".</p></dd>
+
+
+<dt>station</dt>
+<dd><p>Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85")</p></dd>
 
 
 <dt>verbose</dt>
@@ -107,7 +117,7 @@
 
 
 <dt>timezone</dt>
-<dd><p>Character. Default = "US/Alaska"</p></dd>
+<dd><p>Character. Default = "US/Alaska." Other options include: "US/Aleutian"</p></dd>
 
 </dl></div>
     <div id="value">
@@ -119,12 +129,37 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, latitude <span class="op">=</span> <span class="fl">63.3</span>, longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 8:48 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:05 AKST</span>
-<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>, latitude <span class="op">=</span> <span class="fl">63.3</span>, longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 8:48 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:05 AKST</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   latitude <span class="op">=</span> <span class="fl">63.3</span>,</span></span>
+<span class="r-in"><span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using latitude and longitude to calcualte sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:37 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 23:05 AKST</span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   latitude <span class="op">=</span> <span class="fl">63.3</span>,</span></span>
+<span class="r-in"><span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using latitude and longitude to calcualte sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:37 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 23:05 AKST</span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   survey <span class="op">=</span> <span class="st">"EBS"</span>,</span></span>
+<span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"I-13"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using average survey station location information (lat = 57.6709745126945, lon = -160.265447567568) to calcualte sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:18 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:02 AKST</span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                   survey <span class="op">=</span> <span class="st">"GOA"</span>,</span></span>
+<span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"7-7"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using average survey station location information (lat = 52.6006646808511, lon = -169.436484042553) to calcualte sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 8:09 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:25 AKST</span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2023-06-10"</span>,</span></span>
+<span class="r-in"><span>                   survey <span class="op">=</span> <span class="st">"AI"</span>,</span></span>
+<span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"324-73"</span>,</span></span>
+<span class="r-in"><span>                   timezone <span class="op">=</span> <span class="st">"US/Aleutian"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using average survey station location information (lat = 54.2058070714286, lon = -165.745076285714) to calcualte sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 5:30 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:35 AKST</span>
 </code></pre></div>
     </div>
   </div>
