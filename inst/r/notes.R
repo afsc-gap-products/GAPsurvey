@@ -14,8 +14,7 @@ for (i in 1:length(locations)){
 }
 
 locations<-c(
-  "RACEBASE_FOSS.JOIN_FOSS_CPUE_CATCH",
-  "RACEBASE_FOSS.JOIN_FOSS_CPUE_HAUL",
+  "RACEBASE_FOSS.FOSS_CPUE_PRESONLY",
   "GAP_PRODUCTS.OLD_TAXONOMICS_WORMS"
 )
 
@@ -38,13 +37,13 @@ for (i in 1:length(a)){
   assign(x = gsub(pattern = "\\.csv", replacement = "", x = paste0(a[i], "0")), value = b)
 }
 
-public_data <- racebase_foss_join_foss_cpue_catch0 %>%
-  dplyr::filter(
-    !(count %in% c(NA, 0) & # this will remove 0-filled values
-        weight_kg %in% c(NA, 0)) ) %>% # which shouldn't happen, but good to double check
-  dplyr::left_join(x = .,
-                   y = racebase_foss_join_foss_cpue_haul0,
-                   by = "hauljoin")
+public_data <- racebase_foss_foss_cpue_presonly0 #%>%
+  # dplyr::filter(
+  #   !(count %in% c(NA, 0) & # this will remove 0-filled values
+  #       weight_kg %in% c(NA, 0)) ) %>% # which shouldn't happen, but good to double check
+  # dplyr::left_join(x = .,
+  #                  y = racebase_foss_join_foss_cpue_haul0,
+  #                  by = "hauljoin")
 save(public_data, file = "./data/public_data.rda")
 
 

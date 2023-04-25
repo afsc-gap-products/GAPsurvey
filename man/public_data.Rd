@@ -36,7 +36,7 @@ A data frame with 878805 observations on the following 33 variables.
   \item{\code{distance_fished_km}}{a numeric vector; Distance the net fished (thousandths of kilometers). }
   \item{\code{net_width_m}}{a numeric vector; Measured or estimated distance (meters) between wingtips of the trawl.}
   \item{\code{net_height_m}}{a numeric vector; Measured or estimated distance (meters) between footrope and headrope of the trawl.}
-  \item{\code{area_swept_ha}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
+  \item{\code{area_swept_km2}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
   \item{\code{duration_hr}}{a numeric vector; This is the elapsed time between start and end of a haul (decimal hours). }
   }
 }

@@ -1396,7 +1396,7 @@ get_catch_haul_history <- function(
                   "species_code", "common_name", "scientific_name", "taxon_confidence",
                   "cpue_kgkm2", "cpue_nokm2", "weight_kg", "count",
                   "bottom_temperature_c", "surface_temperature_c", "depth_m",
-                  "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")]
+                  "distance_fished_km", "net_width_m", "net_height_m", "area_swept_km2", "duration_hr")]
 
   if (!is.na(years[1])) {
     public_data0 <- public_data0[public_data0$year %in% years,]
@@ -1474,7 +1474,7 @@ get_catch_haul_history <- function(
       haul <- unique(xx[,c("year", "haul", "station", "stratum",
                            "vessel_name", "date_time", "latitude_dd_start", "longitude_dd_start",
                            "bottom_temperature_c", "surface_temperature_c", "depth_m",
-                           "distance_fished_km", "net_width_m", "net_height_m", "area_swept_ha", "duration_hr")])
+                           "distance_fished_km", "net_width_m", "net_height_m", "area_swept_km2", "duration_hr")])
 
     } else if (survey == "EBS" | survey == "NBS") {
       catch <- public_data0[,c("year", "station", "scientific_name", "common_name",
@@ -1483,7 +1483,7 @@ get_catch_haul_history <- function(
                                      "vessel_name", "date_time", "latitude_dd_start", "longitude_dd_start",
                                      "bottom_temperature_c", "surface_temperature_c", "depth_m",
                                      "distance_fished_km", "net_width_m", "net_height_m",
-                                     "area_swept_ha", "duration_hr")])
+                                     "area_swept_km2", "duration_hr")])
     }
 
     # add total weight to haul table
@@ -1717,7 +1717,7 @@ fix_path <- function(path) {
 #'   \item{\code{distance_fished_km}}{a numeric vector; Distance the net fished (thousandths of kilometers). }
 #'   \item{\code{net_width_m}}{a numeric vector; Measured or estimated distance (meters) between wingtips of the trawl.}
 #'   \item{\code{net_height_m}}{a numeric vector; Measured or estimated distance (meters) between footrope and headrope of the trawl.}
-#'   \item{\code{area_swept_ha}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
+#'   \item{\code{area_swept_km2}}{a numeric vector; The area the net covered while the net was fishing (hectares), defined as the distance fished times the net width. }
 #'   \item{\code{duration_hr}}{a numeric vector; This is the elapsed time between start and end of a haul (decimal hours). }
 #'   }
 #' @source https://github.com/afsc-gap-products/gap_public_data
