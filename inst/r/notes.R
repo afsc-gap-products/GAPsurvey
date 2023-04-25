@@ -37,15 +37,41 @@ for (i in 1:length(a)){
   assign(x = gsub(pattern = "\\.csv", replacement = "", x = paste0(a[i], "0")), value = b)
 }
 
+## public data -----------------------------------------------------------------\
+
+oracle_dl_metadata(
+  locations = "RACEBASE_FOSS",
+  channel = channel,
+  dir_out = paste0("../notforgit/"))
+
 public_data <- racebase_foss_foss_cpue_presonly0 #%>%
-  # dplyr::filter(
-  #   !(count %in% c(NA, 0) & # this will remove 0-filled values
-  #       weight_kg %in% c(NA, 0)) ) %>% # which shouldn't happen, but good to double check
-  # dplyr::left_join(x = .,
-  #                  y = racebase_foss_join_foss_cpue_haul0,
-  #                  by = "hauljoin")
 save(public_data, file = "./data/public_data.rda")
 
+column <- read_csv(file = "../notforgit/metadata_column_current.csv")
+column <- column[column$TABLE_NAME == "FOSS_CPUE_PRESONLY",]
+column$col_name <- names(public_data)
+table <- read_csv(file = "../notforgit/metadata_table_current.csv")
+
+str0 <- paste0("#' @title Public data from FOSS
+#' @description ",table$COMMENTS[table$TABLE_NAME == "FOSS_CPUE_PRESONLY"],"
+#' @usage data('public_data')
+#' @author Emily Markowitz (emily.markowitz AT noaa.gov)
+#' @format A data frame with ",nrow(public_data)," observations on the following ",ncol(public_data)," variables.
+#' \\describe{
+",
+paste0(paste0("#'   \\item{\\code{",column$col_name,"}}{",column$COMMENTS,"}"), collapse = "\n"),
+"#'   }
+#' @source https://github.com/afsc-gap-products/gap_public_data
+#' @keywords species code data
+#' @examples
+#' data(public_data)
+#' @details DETAILS
+'public_data'")
+
+write.table(str0, file = "./R/public_data.R", sep = "\t",
+            row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+## Taxonomic data --------------------------------------------------------------
 
 species_data <- GAP_PRODUCTS_OLD_TAXONOMICS_WORMS0 %>%
   dplyr::filter(is.na(reason)) %>%
