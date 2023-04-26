@@ -950,18 +950,23 @@ calc_net_spread <- function(dat) {
 #' @export
 #'
 #' @examples
+#' # Find times based on lat/lon for today's date, where date is a date object
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
+#' # Find times based on lat/lon for today's date, where date is a character
 #' get_sunrise_sunset(chosen_date = as.character(Sys.Date()),
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
+#' # Find times based on a survey (EBS) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "EBS",
 #'                    station = "I-13")
+#' # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "GOA",
 #'                    station = "7-7")
+#' # Find times based on a survey (AI) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = "2023-06-10",
 #'                    survey = "AI",
 #'                    station = "324-73",
