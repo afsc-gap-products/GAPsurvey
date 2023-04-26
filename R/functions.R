@@ -953,9 +953,12 @@ calc_net_spread <- function(dat) {
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
-#' get_sunrise_sunset(chosen_date = as.character(Sys.Date()),
+#' get_sunrise_sunset(chosen_date = "2023-06-05",
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
+#' get_sunrise_sunset(chosen_date = "2023-06-05",
+#'                    latitude = "63 18.0",
+#'                    longitude = "-170 30.0")
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "EBS",
 #'                    station = "I-13")
@@ -964,8 +967,7 @@ calc_net_spread <- function(dat) {
 #'                    station = "7-7")
 #' get_sunrise_sunset(chosen_date = "2023-06-10",
 #'                    survey = "AI",
-#'                    station = "324-73",
-#'                    timezone = "US/Aleutian")
+#'                    station = "324-73")
 
 get_sunrise_sunset <- function(
     chosen_date,
@@ -979,6 +981,24 @@ get_sunrise_sunset <- function(
   # Function to format dates
   format_date <- function(x) {
 
+    if(x > 24) {
+      x <- x - 24
+    }
+
+    hour <- unlist(strsplit(as.character(floor(x)), split = ""))
+
+    hour_vec <- c("0", "0")
+
+    if(length(hour) == 2) {
+      hour_vec <- hour
+    } else {
+      hour_vec[2] <- hour
+    }
+
+    min_vec <- c("0", "0")
+
+    minutes <- unlist(strsplit(as.character(floor(x%%1*60)), split = ""))
+
     if(length(minutes) == 2) {
       min_vec <- minutes
     } else {
@@ -988,6 +1008,7 @@ get_sunrise_sunset <- function(
     out <- paste0(paste(hour_vec, collapse = ""), ":", paste(min_vec, collapse = ""))
 
     return(out)
+
   }
 
     chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
