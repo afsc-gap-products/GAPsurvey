@@ -2,6 +2,7 @@ Package: GAPsurvey
 Type: Package
 Title: Provides at-sea data management tools for RACE GAP surveys
 Version: 2023.04.01
+License: GPL-3
 Authors@R: 
   c(person(given = "Emily",
            family = "Markowitz", 
@@ -17,12 +18,10 @@ Authors@R:
            role = "aut",
            email = "Liz.Dawson@noaa.gov"))
 URL: https://github.com/afsc-gap-products/GAPsurvey
-License: GPL3
 Description: Provides at-sea data management tools for RACE GAP surveys. 
 Encoding: UTF-8
 LazyData: true
 Imports: 
     stats, 
-    utils, 
-    methods
+    utils
 RoxygenNote: 7.2.3

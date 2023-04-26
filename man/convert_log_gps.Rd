@@ -9,10 +9,9 @@ convert_log_gps(
   CRUISE = NA,
   HAUL = NA,
   DATE = NA,
-  path_in = NA,
+  path_in,
   path_out = "./",
-  filename_add = "",
-  quiet = FALSE
+  filename_add = ""
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ convert_log_gps(
 \item{path_out}{Optional. The default is the local working directory but may be specified with a string.}
 
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.}
-
-\item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
 \value{
 A .GPS file to the path_out directory.
@@ -60,8 +57,7 @@ convert_log_gps(
     path_in = system.file("exdata/convert_log_gps/06062017.log",
         package = "GAPsurvey"),
     path_out = getwd(),
-    filename_add = "newlog",
-    quiet = TRUE)
+    filename_add = "newlog")
 
  convert_log_gps(
     VESSEL = 94,
@@ -71,6 +67,5 @@ convert_log_gps(
     path_in = system.file("exdata/convert_log_gps/Haul0037.log",
         package = "GAPsurvey"),
     path_out = getwd(),
-    filename_add = "newlog",
-    quiet = TRUE)
+    filename_add = "newlog")
 }

@@ -11,11 +11,10 @@ convert_ctd_btd(
   MODEL_NUMBER = NA,
   VERSION_NUMBER = NA,
   SERIAL_NUMBER = NA,
-  path_in = NA,
+  path_in,
   path_out = "./",
   path_xmlcon = NULL,
-  filename_add = "",
-  quiet = FALSE
+  filename_add = ""
 )
 }
 \arguments{
@@ -38,8 +37,6 @@ convert_ctd_btd(
 \item{path_xmlcon}{Optional. Filepath to the CTD configuration file (.xmlcon)}
 
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.}
-
-\item{quiet}{Optional logical TRUE/FALSE. Default = FALSE. If FALSE, will print a statement or a pop-up window will let the user know where the file has been saved to.}
 }
 \value{
 .BTH and .BTD files to the path_out directory.
@@ -74,8 +71,7 @@ convert_ctd_btd(
      "19-8102_Deploy2021.xmlcon"),
       package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newctd",
-   quiet = TRUE)
+   filename_add = "newctd")
 
 
 convert_ctd_btd(
@@ -92,8 +88,7 @@ convert_ctd_btd(
      "19-8102_Deploy2021.xmlcon"),
       package = "GAPsurvey"),
    path_out = getwd(),
-   filename_add = "newctd",
-   quiet = TRUE)
+   filename_add = "newctd")
 
 # Copy system files to working directory for example
 file.copy(

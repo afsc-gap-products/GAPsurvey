@@ -40,10 +40,8 @@ vignettes/*.pdf
 
 /old
 /out
-# notes.R
 /installfiles
 /exe
-*.rmd
 
 
 /notforgit
