@@ -1054,7 +1054,7 @@ get_sunrise_sunset <- function(
       longitude <- mean(public_data0$longitude_dd_start, na.rm = TRUE)
       message(paste0("Using average survey station location information (lat = ",
                      latitude,", lon = ",longitude,
-                     ") to calcualte sunrise and sunset. "))
+                     ") to calculate sunrise and sunset. "))
 
     }
 
