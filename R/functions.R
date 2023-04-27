@@ -954,10 +954,15 @@ calc_net_spread <- function(dat) {
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
+#'
 #' # Find times based on lat/lon for today's date, where date is a character
-#' get_sunrise_sunset(chosen_date = as.character(Sys.Date()),
+#' get_sunrise_sunset(chosen_date = "2023-06-05",
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
+#' # Find times based on lat/lon for today's date, where date is a character and lat/lon in degree decimal-minutes
+#' #' get_sunrise_sunset(chosen_date = "2023-06-05",
+#'                    latitude = "63 18.0",
+#'                    longitude = "-170 30.0")
 #' # Find times based on a survey (EBS) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "EBS",
@@ -969,8 +974,8 @@ calc_net_spread <- function(dat) {
 #' # Find times based on a survey (AI) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = "2023-06-10",
 #'                    survey = "AI",
-#'                    station = "324-73",
-#'                    timezone = "US/Aleutian")
+#'                    station = "324-73")
+
 get_sunrise_sunset <- function(
     chosen_date,
     latitude = NULL,
@@ -983,9 +988,23 @@ get_sunrise_sunset <- function(
   # Function to format dates
   format_date <- function(x) {
 
-    hour <- floor(x)
+    if(x > 24) {
+      x <- x - 24
+    }
+
+    hour <- unlist(strsplit(as.character(floor(x)), split = ""))
+
+    hour_vec <- c("0", "0")
+
+    if(length(hour) == 2) {
+      hour_vec <- hour
+    } else {
+      hour_vec[2] <- hour
+    }
+
     min_vec <- c("0", "0")
-    minutes <- unlist(strsplit(as.character(round(x%%1*60)), split = ""))
+
+    minutes <- unlist(strsplit(as.character(floor(x%%1*60)), split = ""))
 
     if(length(minutes) == 2) {
       min_vec <- minutes
@@ -993,9 +1012,10 @@ get_sunrise_sunset <- function(
       min_vec[2] <- minutes
     }
 
-    out <- paste0(hour, ":", paste(min_vec, collapse = ""))
+    out <- paste0(paste(hour_vec, collapse = ""), ":", paste(min_vec, collapse = ""))
 
     return(out)
+
   }
 
     chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
@@ -1041,7 +1061,7 @@ get_sunrise_sunset <- function(
       longitude <- mean(public_data0$longitude_dd_start, na.rm = TRUE)
       message(paste0("Using average survey station location information (lat = ",
                      latitude,", lon = ",longitude,
-                     ") to calcualte sunrise and sunset. "))
+                     ") to calculate sunrise and sunset. "))
 
     }
 
