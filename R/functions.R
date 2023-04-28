@@ -263,8 +263,8 @@ convert_ctd_btd <- function(
   if (is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number:  ") }
   if (is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of CTD:  ") }
 
-    path_in <- fix_path(path_in)
-    file.name <- path_in
+  path_in <- fix_path(path_in)
+  file.name <- path_in
 
   if (grepl(pattern = ".hex", x = path_in)) {
 
@@ -272,9 +272,9 @@ convert_ctd_btd <- function(
     stopifnot("convert_ctd_btd: Must provide path_xmlcon if path_in is a .hex file." = file.exists(path_xmlcon))
 
     file.name <- GAPsurvey::convert_ctd_hex(hex_file_path = path_in,
-                                             xmlcon_path = path_xmlcon,
-                                             bat_file = NULL,
-                                             datcnv_file = NULL)
+                                            xmlcon_path = path_xmlcon,
+                                            bat_file = NULL,
+                                            datcnv_file = NULL)
   }
 
   # make sure path_in comes in with correct
@@ -413,7 +413,7 @@ convert_ctd_btd <- function(
                    quote=F,
                    row.names=F)
 
-message(paste0("Your new ", filename," .BTD and .BTH files are saved."))
+  message(paste0("Your new ", filename," .BTD and .BTH files are saved."))
 
 }
 
@@ -567,8 +567,8 @@ convert_log_gps <- function(
   if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
   if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
 
-    path_in <- fix_path(path_in)
-    file.name <- path_in
+  path_in <- fix_path(path_in)
+  file.name <- path_in
 
   # make sure path_in comes in with correct format
   path_out <- fix_path(path_out)
@@ -645,7 +645,7 @@ convert_log_gps <- function(
 #'                                   package = "GAPsurvey"),
 #'           verbose = TRUE), 20)
 convert_bvdr_marp <- function(path_bvdr,
-                       verbose = FALSE) {
+                              verbose = FALSE) {
 
   dat <- readLines(con = path_bvdr, skipNul = TRUE)
   dat1 <- strsplit(x = dat, split = "\\$G")
@@ -942,7 +942,7 @@ calc_net_spread <- function(dat) {
 #' @param latitude Numeric. Fill in only if survey and station are not entered. latitude in either decimal degrees or a character latitude in degrees and decimal minutes
 #' @param longitude Numeric. Fill in only if survey and station are not entered. Longitude in either decimal degrees or a character longitude in degrees and decimal minutes
 #' @param survey Character. Fill in only if latitude and longitude are not entered. A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS".
-#' @param station Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85")
+#' @param station Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85"). Stations defined in the station_coords dataset.
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
 #' @param timezone Character. Default = "US/Alaska." Other options include: "US/Aleutian"
 #'
@@ -959,8 +959,9 @@ calc_net_spread <- function(dat) {
 #' get_sunrise_sunset(chosen_date = "2023-06-05",
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
-#' # Find times based on lat/lon for today's date, where date is a character and lat/lon in degree decimal-minutes
-#' #' get_sunrise_sunset(chosen_date = "2023-06-05",
+#' # Find times based on lat/lon for today's date, where date is a character
+#' # and lat/lon in degree decimal-minutes
+#' get_sunrise_sunset(chosen_date = "2023-06-05",
 #'                    latitude = "63 18.0",
 #'                    longitude = "-170 30.0")
 #' # Find times based on a survey (EBS) station's recorded lat/lon for today's date
@@ -970,11 +971,11 @@ calc_net_spread <- function(dat) {
 #' # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "GOA",
-#'                    station = "7-7")
+#'                    station = "323-176")
 #' # Find times based on a survey (AI) station's recorded lat/lon for today's date
-#' get_sunrise_sunset(chosen_date = "2023-06-10",
-#'                    survey = "AI",
-#'                    station = "324-73")
+#' # get_sunrise_sunset(chosen_date = "2023-06-10",
+#' #                     survey = "AI",
+#' #                    station = "33-47")
 
 get_sunrise_sunset <- function(
     chosen_date,
@@ -1018,68 +1019,79 @@ get_sunrise_sunset <- function(
 
   }
 
-    chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
+  chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
 
-    if (timezone == "US/Alaska") {
-      sel_tz <- -8
-    } else if (timezone == "US/Aleutian") {
-      sel_tz <- -9
-    }
+  if (timezone == "US/Alaska") {
+    sel_tz <- -8
+  } else if (timezone == "US/Aleutian") {
+    sel_tz <- -9
+  }
 
   # Are lat/long in degrees and decimal mins? If so, convert to decimal degrees.
-    if (!is.null(latitude) | !is.null(longitude)) {
-      message("Using latitude and longitude to calcualte sunrise and sunset. ")
-  ddm <- is.character(latitude) | is.character(longitude)
-  if (ddm) {
-    if (!grepl(" ", x = latitude) | !grepl(" ", x = longitude)) {
-      stop("You have chosen degrees and decimal minutes but have no space in the character string you entered. Please format your lat and/or long as D mm.m OR enter a numeric value for decimal degrees")
-    }
-    lat_deg <- as.numeric(gsub(" .*$", "", latitude))
-    lat_min <- as.numeric(gsub("^\\S+\\s+", "", latitude)) / 60
-    latitude <- lat_deg + lat_min
-
-    lon_deg <- as.numeric(gsub(" .*$", "", longitude))
-    lon_min <- as.numeric(gsub("^\\S+\\s+", "", longitude)) / 60
-    longitude <- lon_deg + lon_min
-  }
-    }
-
-    if (!is.null(survey) | !is.null(station)) {
-
-      utils::data("public_data", envir=environment())
-
-      public_data0 <-
-        GAPsurvey::public_data[GAPsurvey::public_data$srvy == survey &
-                                 GAPsurvey::public_data$station == station,
-                               c("srvy", "station",
-                                 "latitude_dd_start", "longitude_dd_start")]
-      if (nrow(public_data0) == 0) {
-        stop("This station does not exist in this survey. ")
+  if (!is.null(latitude) | !is.null(longitude)) {
+    message("Using latitude and longitude to calcualte sunrise and sunset. ")
+    ddm <- is.character(latitude) | is.character(longitude)
+    if (ddm) {
+      if (!grepl(" ", x = latitude) | !grepl(" ", x = longitude)) {
+        stop("You have chosen degrees and decimal minutes but have no space in the character string you entered. Please format your lat and/or long as D mm.m OR enter a numeric value for decimal degrees")
       }
+      lat_deg <- as.numeric(gsub(" .*$", "", latitude))
+      lat_min <- as.numeric(gsub("^\\S+\\s+", "", latitude)) / 60
+      latitude <- lat_deg + lat_min
 
-      latitude <- mean(public_data0$latitude_dd_start, na.rm = TRUE)
-      longitude <- mean(public_data0$longitude_dd_start, na.rm = TRUE)
-      message(paste0("Using average survey station location information (lat = ",
-                     latitude,", lon = ",longitude,
-                     ") to calculate sunrise and sunset. "))
-
+      lon_deg <- as.numeric(gsub(" .*$", "", longitude))
+      lon_min <- as.numeric(gsub("^\\S+\\s+", "", longitude)) / 60
+      longitude <- lon_deg + lon_min
     }
+  }
+
+  if (!is.null(survey) | !is.null(station)) {
+
+    utils::data("station_coords", envir=environment())
+
+    station_coords0 <-
+      GAPsurvey::station_coords[GAPsurvey::station_coords$srvy == survey &
+                                  GAPsurvey::station_coords$station == station,
+                                c("srvy", "station",
+                                  "latitude_dd", "longitude_dd")]
+    if (nrow(station_coords0) == 0) {
+      stop("This station does not exist in this survey. ")
+    }
+
+    latitude <- mean(station_coords0$latitude, na.rm = TRUE)
+    longitude <- mean(station_coords0$longitude, na.rm = TRUE)
+    message(paste0("Using survey station (",survey,
+                   " ",station,
+                   ") centroid location information (lat = ",
+                   round(x = latitude, digits = 3),
+                   ", lon = ",
+                   round(x = longitude, digits = 3),
+                   ") to calculate sunrise and sunset. "))
+
+  }
 
   # crds0 = matrix(c(longitude, latitude),
   #                nrow = 1)
 
   date_vec <- unlist(strsplit(as.character(chosen_date), split = ""))
 
-  ac4r_output <- astrcalc4r(day = as.numeric(paste(date_vec[9:10], collapse = "")),
-                         month = as.numeric(paste(date_vec[6:7], collapse = "")),
-                         year = as.numeric(paste(date_vec[1:4], collapse = "")),
-                         hour = 7,
-                         timezone = sel_tz,
-                         lat = latitude,
-                         lon = longitude,
-                         withinput = FALSE,
-                         seaorland = "maritime",
-                         acknowledgment = FALSE)
+  ac4r_output <- astrcalc4r(
+    day = as.numeric(paste(date_vec[9:10], collapse = "")),
+    month = as.numeric(paste(date_vec[6:7], collapse = "")),
+    year = as.numeric(paste(date_vec[1:4], collapse = "")),
+    hour = 7,
+    # Arguments longitude and timezone must have the same sign if input time is
+    # not UTC (timezone != 0).  In particular, if timezone !=0, both lon and timezone must
+    # be negative for locations in western hemisphere and positive for locations in the
+    # eastern hemisphere.  Check and fix input data if warranted. If data are correct
+    # then convert input time (argument hour) to UTC and use timezone=zero.
+    # This problem  occurs  1  times at rows:  1
+    timezone = sel_tz,
+    lat = latitude,
+    lon = longitude,
+    withinput = FALSE,
+    seaorland = "maritime",
+    acknowledgment = FALSE)
 
   sunrise <- format_date(ac4r_output$sunrise)
   sunset <- format_date(ac4r_output$sunset)
@@ -1416,12 +1428,12 @@ get_catch_haul_history <- function(
 
   public_data0 <-
     GAPsurvey::public_data[GAPsurvey::public_data$srvy == survey,
-                c("year", "srvy", "haul", "stratum", "station",
-                  "vessel_name", "vessel_id", "date_time", "latitude_dd_start", "longitude_dd_start",
-                  "species_code", "common_name", "scientific_name", "taxon_confidence",
-                  "cpue_kgkm2", "cpue_nokm2", "weight_kg", "count",
-                  "bottom_temperature_c", "surface_temperature_c", "depth_m",
-                  "distance_fished_km", "net_width_m", "net_height_m", "area_swept_km2", "duration_hr")]
+                           c("year", "srvy", "haul", "stratum", "station",
+                             "vessel_name", "vessel_id", "date_time", "latitude_dd_start", "longitude_dd_start",
+                             "species_code", "common_name", "scientific_name", "taxon_confidence",
+                             "cpue_kgkm2", "cpue_nokm2", "weight_kg", "count",
+                             "bottom_temperature_c", "surface_temperature_c", "depth_m",
+                             "distance_fished_km", "net_width_m", "net_height_m", "area_swept_km2", "duration_hr")]
 
   if (!is.na(years[1])) {
     public_data0 <- public_data0[public_data0$year %in% years,]
@@ -1549,7 +1561,7 @@ get_catch_haul_history <- function(
         by = "scientific_name"#,
         # by.x = "scientific_name",
         # by.y = "Var1"
-        )
+      )
       if (nrow(catch_means) == 0) {
         catch_means <- "There was no data available for these function parameters"
       } else {

@@ -14,8 +14,9 @@ for (i in 1:length(locations)){
 }
 
 locations<-c(
-  "RACEBASE_FOSS.FOSS_CPUE_PRESONLY",
-  "GAP_PRODUCTS.OLD_TAXONOMICS_WORMS"
+  # "RACEBASE_FOSS.FOSS_CPUE_PRESONLY",
+  # "GAP_PRODUCTS.OLD_TAXONOMICS_WORMS",
+  "GAP_PRODUCTS.METADATA_COLUMN"
 )
 
 oracle_dl(
@@ -47,9 +48,14 @@ oracle_dl_metadata(
 public_data <- racebase_foss_foss_cpue_presonly0 #%>%
 save(public_data, file = "./data/public_data.rda")
 
-column <- read_csv(file = "../notforgit/metadata_column_current.csv")
-column <- column[column$TABLE_NAME == "FOSS_CPUE_PRESONLY",]
-column$col_name <- names(public_data)
+column <- gap_products_metadata_column0 %>%
+  dplyr::filter(metadata_colname %in% toupper(names(public_data))) %>%
+  dplyr::mutate(metadata_colname = tolower(metadata_colname)) %>%
+  dplyr::distinct()
+
+# column <- read_csv(file = "../notforgit/metadata_column_current.csv")
+# column <- column[column$TABLE_NAME == "FOSS_CPUE_PRESONLY",]
+# column$col_name <- names(public_data)
 table <- read_csv(file = "../notforgit/metadata_table_current.csv")
 
 str0 <- paste0("#' @title Public data from FOSS
@@ -59,7 +65,7 @@ str0 <- paste0("#' @title Public data from FOSS
 #' @format A data frame with ",nrow(public_data)," observations on the following ",ncol(public_data)," variables.
 #' \\describe{
 ",
-paste0(paste0("#'   \\item{\\code{",column$col_name,"}}{",column$COMMENTS,"}"), collapse = "\n"),
+paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ", column$metadata_colname_desc,"}"), collapse = "\n"),
 "#'   }
 #' @source https://github.com/afsc-gap-products/gap_public_data
 #' @keywords species code data
@@ -69,6 +75,66 @@ paste0(paste0("#'   \\item{\\code{",column$col_name,"}}{",column$COMMENTS,"}"), 
 'public_data'")
 
 write.table(str0, file = "./R/public_data.R", sep = "\t",
+            row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+
+## Station centroid data -------------------------------------------------------
+
+library(akgfmaps)
+
+sel_region <- c("ai", "goa", "ebs", "nbs")
+stn_col <- c("ID", "ID", "STATIONID", "STATIONID")
+
+station_coords <- data.frame()
+
+for(ii in 1:length(sel_region)) {
+  map_layers <- akgfmaps::get_base_layers(select.region = sel_region[ii], set.crs = "EPSG:4326")
+
+  station_center <- map_layers$survey.grid |>
+    sf::st_make_valid() |>
+    sf::st_centroid()
+
+  station_center <- data.frame(station = station_center[[stn_col[ii]]]) |>
+    dplyr::bind_cols(sf::st_coordinates(station_center)) |>
+    dplyr::rename(longitude_dd = X, latitude_dd = Y) |>
+    dplyr::mutate(srvy = toupper(sel_region[ii]))
+
+  station_coords <- station_coords |>
+    dplyr::bind_rows(station_center)
+}
+
+station_coords <- station_coords %>%
+  dplyr::filter(!is.na(srvy)) %>%
+  dplyr::filter(!is.na(station)) %>%
+  dplyr::filter(!is.na(longitude_dd)) %>%
+  dplyr::filter(!is.na(latitude_dd))
+
+save(station_coords, file = "./data/station_coords.rda")
+
+column <- gap_products_metadata_column0 %>%
+  dplyr::filter(metadata_colname %in% toupper(names(station_coords))) %>%
+  dplyr::mutate(metadata_colname = tolower(metadata_colname)) %>%
+  dplyr::distinct()
+
+table <- "Station centroid coordinates for each station for all surveys, as defined by the {akgfmaps} package. "
+
+str0 <- paste0("#' @title Station centroid locations for each station from akgfmaps
+#' @description ",table,"
+#' @usage data('station_coords')
+#' @author Sean Rohan (sean.rohan AT noaa.gov)
+#' @format A data frame with ",nrow(station_coords)," observations on the following ",ncol(station_coords)," variables.
+#' \\describe{
+",
+paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ", column$metadata_colname_desc,"}"), collapse = "\n"),
+"#'   }
+#' @source https://github.com/afsc-gap-products/akgfmaps
+#' @keywords station survey data
+#' @examples
+#' data(station_coords)
+#' @details DETAILS
+'station_coords'")
+
+write.table(str0, file = "./R/station_coords.R", sep = "\t",
             row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 ## Taxonomic data --------------------------------------------------------------

@@ -109,7 +109,7 @@
 
 
 <dt>station</dt>
-<dd><p>Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85")</p></dd>
+<dd><p>Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85"). Stations defined in the station_coords dataset.</p></dd>
 
 
 <dt>verbose</dt>
@@ -129,37 +129,47 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Find times based on lat/lon for today's date, where date is a date object</span></span></span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   latitude <span class="op">=</span> <span class="fl">63.3</span>,</span></span>
 <span class="r-in"><span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using latitude and longitude to calcualte sunrise and sunset. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:20 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 23:20 AKST</span>
-<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 07:09 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 23:29 AKST</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Find times based on lat/lon for today's date, where date is a character</span></span></span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2023-06-05"</span>,</span></span>
 <span class="r-in"><span>                   latitude <span class="op">=</span> <span class="fl">63.3</span>,</span></span>
 <span class="r-in"><span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using latitude and longitude to calcualte sunrise and sunset. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:20 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 23:20 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 05:22 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 01:18 AKST</span>
+<span class="r-in"><span><span class="co"># Find times based on lat/lon for today's date, where date is a character</span></span></span>
+<span class="r-in"><span><span class="co"># and lat/lon in degree decimal-minutes</span></span></span>
+<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2023-06-05"</span>,</span></span>
+<span class="r-in"><span>                   latitude <span class="op">=</span> <span class="st">"63 18.0"</span>,</span></span>
+<span class="r-in"><span>                   longitude <span class="op">=</span> <span class="st">"-170 30.0"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using latitude and longitude to calcualte sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 05:18 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 01:14 AKST</span>
+<span class="r-in"><span><span class="co"># Find times based on a survey (EBS) station's recorded lat/lon for today's date</span></span></span>
 <span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   survey <span class="op">=</span> <span class="st">"EBS"</span>,</span></span>
 <span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"I-13"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using average survey station location information (lat = 57.6709745126945, lon = -160.265447567568) to calcualte sunrise and sunset. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:05 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:13 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using survey station (EBS I-13) centroid location information (lat = 57.667, lon = -160.23) to calculate sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 06:57 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:19 AKST</span>
+<span class="r-in"><span><span class="co"># Find times based on a survey (GOA) station's recorded lat/lon for today's date</span></span></span>
 <span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   survey <span class="op">=</span> <span class="st">"GOA"</span>,</span></span>
-<span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"7-7"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using average survey station location information (lat = 52.6006646808511, lon = -169.436484042553) to calcualte sunrise and sunset. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 7:58 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:33 AKST</span>
-<span class="r-in"><span><span class="fu">get_sunrise_sunset</span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2023-06-10"</span>,</span></span>
-<span class="r-in"><span>                   survey <span class="op">=</span> <span class="st">"AI"</span>,</span></span>
-<span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"324-73"</span>,</span></span>
-<span class="r-in"><span>                   timezone <span class="op">=</span> <span class="st">"US/Aleutian"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Using average survey station location information (lat = 54.2058070714286, lon = -165.745076285714) to calcualte sunrise and sunset. </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 5:30 AKST</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 22:35 AKST</span>
+<span class="r-in"><span>                   station <span class="op">=</span> <span class="st">"323-176"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Using survey station (GOA 323-176) centroid location information (lat = 60.052, lon = -143.311) to calculate sunrise and sunset. </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunrise is at 05:38 AKST</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Sunset is at 21:22 AKST</span>
+<span class="r-in"><span><span class="co"># Find times based on a survey (AI) station's recorded lat/lon for today's date</span></span></span>
+<span class="r-in"><span><span class="co"># get_sunrise_sunset(chosen_date = "2023-06-10",</span></span></span>
+<span class="r-in"><span><span class="co">#                     survey = "AI",</span></span></span>
+<span class="r-in"><span><span class="co">#                    station = "33-47")</span></span></span>
 </code></pre></div>
     </div>
   </div>

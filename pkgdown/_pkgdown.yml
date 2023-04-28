@@ -47,6 +47,7 @@ reference:
       - '`PolySpecies`'
       - '`public_data`'
       - '`species_data`'
+      - '`station_coords`'
   - title: Helper Functions
     contents:
       - '`numbers0`'

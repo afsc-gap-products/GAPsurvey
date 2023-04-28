@@ -23,7 +23,7 @@ get_sunrise_sunset(
 
 \item{survey}{Character. Fill in only if latitude and longitude are not entered. A character string of the survey you are interested in reivewing. Options are those from public_data$survey, which are "AI", "GOA", "EBS", "NBS", "BSS".}
 
-\item{station}{Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85")}
+\item{station}{Character. Fill in only if latitude and longitude are not entered. A character string of the current station name (as a grid cell; e.g., "264-85"). Stations defined in the station_coords dataset.}
 
 \item{verbose}{Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.}
 
@@ -36,20 +36,30 @@ Time of sunrise and sunset in text. Also shows a pop-up with sunrise and sunset 
 Get sunrise and sunset times by day, latitude, and longitude
 }
 \examples{
+# Find times based on lat/lon for today's date, where date is a date object
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    latitude = 63.3,
                    longitude = -170.5)
-get_sunrise_sunset(chosen_date = as.character(Sys.Date()),
+
+# Find times based on lat/lon for today's date, where date is a character
+get_sunrise_sunset(chosen_date = "2023-06-05",
                    latitude = 63.3,
                    longitude = -170.5)
+# Find times based on lat/lon for today's date, where date is a character
+# and lat/lon in degree decimal-minutes
+get_sunrise_sunset(chosen_date = "2023-06-05",
+                   latitude = "63 18.0",
+                   longitude = "-170 30.0")
+# Find times based on a survey (EBS) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "EBS",
                    station = "I-13")
+# Find times based on a survey (GOA) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "GOA",
-                   station = "7-7")
-get_sunrise_sunset(chosen_date = "2023-06-10",
-                   survey = "AI",
-                   station = "324-73",
-                   timezone = "US/Aleutian")
+                   station = "323-176")
+# Find times based on a survey (AI) station's recorded lat/lon for today's date
+# get_sunrise_sunset(chosen_date = "2023-06-10",
+#                     survey = "AI",
+#                    station = "33-47")
 }
