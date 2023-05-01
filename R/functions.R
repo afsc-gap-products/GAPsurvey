@@ -1058,8 +1058,8 @@ get_sunrise_sunset <- function(
       stop("This station does not exist in this survey. ")
     }
 
-    latitude <- mean(station_coords0$latitude, na.rm = TRUE)
-    longitude <- mean(station_coords0$longitude, na.rm = TRUE)
+    latitude <- station_coords0$latitude[1]
+    longitude <- station_coords0$longitude[1]
     message(paste0("Using survey station (",survey,
                    " ",station,
                    ") centroid location information (lat = ",

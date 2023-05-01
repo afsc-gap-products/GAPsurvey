@@ -2,7 +2,7 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2023-04-28T17:53Z
+last_built: 2023-04-28T19:14Z
 urls:
   reference: https://afsc-gap-products.github.io/GAPsurvey/reference
   article: https://afsc-gap-products.github.io/GAPsurvey/articles
