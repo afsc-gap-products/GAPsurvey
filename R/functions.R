@@ -488,13 +488,14 @@ convert_ctd_hex <- function(hex_file_path,
   }
 
   # Run SBE data processing
-  system(command = paste0("sbebatch ",
-                          bat_file, " ",
-                          hex_file_path, " ",
-                          datcnv_file, " ",
-                          xmlcon_path, " ",
-                          sub("/[^/]+$", "", hex_file_path)
-  ))
+  system(command = paste0("sbebatch \"",
+                          bat_file, "\" \"",
+                          hex_file_path, "\" \"",
+                          datcnv_file, "\" \"",
+                          xmlcon_path, "\" \"",
+                          sub("/[^/]+$", "", hex_file_path), "\""
+  )
+  )
 
   if(file.exists(out_path)) {
     message("convert_ctd_hex: .cnv file created at ", out_path, ".")
