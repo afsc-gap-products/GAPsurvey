@@ -28,24 +28,25 @@ Converts SBE19plus V2 CTD hex file to cnv using Sea-Bird Data Processing softwar
 }
 \examples{
 # Copy system files to working directory for example
-file.copy(from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-package = "GAPsurvey"),
-to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
-          replacement = getwd(),
+file.copy(
+  from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+                     package = "GAPsurvey"),
+ to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
+          replacement = dirname(getwd()), # getwd(),
           x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
           package = "GAPsurvey")))
 
-file.copy(from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-                             package = "GAPsurvey"),
-          to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
-                                           package = "GAPsurvey"),
-                                           replacement = getwd(),
-                    x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-                                    package = "GAPsurvey")))
+file.copy(
+  from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+                      package = "GAPsurvey"),
+  to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
+            replacement = dirname(getwd()), # getwd(),
+            x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+                            package = "GAPsurvey")))
 
-# Run convert_ctd_hex()
-GAPsurvey::convert_ctd_hex(hex_file_path = "2021_06_13_0003.hex",
-                            xmlcon_path = "19-8102_Deploy2021.xmlcon",
-                            bat_file = NULL,
-                            datcnv_file = NULL)
+# # NOT RUN: Run convert_ctd_hex()
+# GAPsurvey::convert_ctd_hex(hex_file_path = paste0(dirname(getwd()), "/2021_06_13_0003.hex"),
+#                            xmlcon_path = paste0(dirname(getwd()), "/19-8102_Deploy2021.xmlcon"),
+#                            bat_file = NULL,
+#                            datcnv_file = NULL)
 }

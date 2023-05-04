@@ -26,6 +26,8 @@ library("badger", quietly = TRUE)
 
 **Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
 
+**Sean Rohan** (Sean.Rohan AT noaa.gov; @MargaretSiple-NOAA)
+
 **Megsie Siple** (Margaret.Siple AT noaa.gov; @MargaretSiple-NOAA)
 
 **Liz Dawson** (Liz.Dawson AT noaa.gov; @liz-dawson-NOAA)

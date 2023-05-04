@@ -180,12 +180,12 @@ convert_ted_btd <- function(
 #' @export
 #'
 #' @examples
-#'
 #' # Convert directly .hex to .btd and .bth using convert_ctd_btd to run SBE Data Processing.
-#' GAPsurvey::convert_ctd_btd(path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-#'                       package = "GAPsurvey"),
-#'                    path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-#'                                     package = "GAPsurvey"))
+#' GAPsurvey::convert_ctd_btd(
+#'     path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+#'                           package = "GAPsurvey"),
+#'     path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+#'                               package = "GAPsurvey"))
 #'
 #' convert_ctd_btd(
 #'    VESSEL = 94,
@@ -203,7 +203,6 @@ convert_ted_btd <- function(
 #'    path_out = getwd(),
 #'    filename_add = "newctd")
 #'
-#'
 #' # Convert a .cnv file (after .hex files has already converted using SBE Data Processing)
 #' convert_ctd_btd(
 #'    VESSEL = 94,
@@ -220,9 +219,6 @@ convert_ted_btd <- function(
 #'       package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newctd")
-#'
-#'
-
 convert_ctd_btd <- function(
     VESSEL = NA,
     CRUISE = NA,
@@ -418,26 +414,27 @@ convert_ctd_btd <- function(
 #'
 #' @examples
 #' # Copy system files to working directory for example
-#' file.copy(from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-#' package = "GAPsurvey"),
-#' to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
-#'           replacement = getwd(),
+#' file.copy(
+#'   from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+#'                      package = "GAPsurvey"),
+#'  to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
+#'           replacement = dirname(getwd()), # getwd(),
 #'           x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 #'           package = "GAPsurvey")))
 #'
-#' file.copy(from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-#'                              package = "GAPsurvey"),
-#'           to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
-#'                                            package = "GAPsurvey"),
-#'                                            replacement = getwd(),
-#'                     x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-#'                                     package = "GAPsurvey")))
+#' file.copy(
+#'   from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+#'                       package = "GAPsurvey"),
+#'   to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
+#'             replacement = dirname(getwd()), # getwd(),
+#'             x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+#'                             package = "GAPsurvey")))
 #'
-#' # Run convert_ctd_hex()
-#' GAPsurvey::convert_ctd_hex(hex_file_path = "2021_06_13_0003.hex",
-#'                             xmlcon_path = "19-8102_Deploy2021.xmlcon",
-#'                             bat_file = NULL,
-#'                             datcnv_file = NULL)
+#' # # NOT RUN: Run convert_ctd_hex()
+#' # GAPsurvey::convert_ctd_hex(hex_file_path = paste0(dirname(getwd()), "/2021_06_13_0003.hex"),
+#' #                            xmlcon_path = paste0(dirname(getwd()), "/19-8102_Deploy2021.xmlcon"),
+#' #                            bat_file = NULL,
+#' #                            datcnv_file = NULL)
 convert_ctd_hex <- function(hex_file_path,
                             xmlcon_path,
                             bat_file = NULL,
@@ -457,7 +454,8 @@ convert_ctd_hex <- function(hex_file_path,
   }
 
   if(!file.exists(hex_file_path)) {
-    stop("convert_ctd_hex: Specified hex_file_path (", hex_file_path,  ") does not exist. Please replace with a valid path to a .hex file.")
+    stop("convert_ctd_hex: Specified hex_file_path (", hex_file_path,
+         ") does not exist. Please replace with a valid path to a .hex file.")
   }
 
   message("convert_ctd_hex: Attempting to convert ", hex_file_path, " to .cnv")
@@ -466,11 +464,13 @@ convert_ctd_hex <- function(hex_file_path,
 
   # Specify paths to .bat and .psa files for SBE data processing
   if(is.null(bat_file)) {
-    bat_file <- system.file("exdata/convert_ctd_btd/atsea_getdata.bat", package = "GAPsurvey")
+    bat_file <- system.file("exdata/convert_ctd_btd/atsea_getdata.bat",
+                            package = "GAPsurvey")
   }
 
   if(is.null(datcnv_file)) {
-    datcnv_file <- system.file("exdata/convert_ctd_btd/DatCnv.psa", package = "GAPsurvey")
+    datcnv_file <- system.file("exdata/convert_ctd_btd/DatCnv.psa",
+                               package = "GAPsurvey")
   }
 
   # Run SBE data processing
@@ -479,9 +479,7 @@ convert_ctd_hex <- function(hex_file_path,
                           hex_file_path, "\" \"",
                           datcnv_file, "\" \"",
                           xmlcon_path, "\" \"",
-                          sub("/[^/]+$", "", hex_file_path), "\""
-  )
-  )
+                          sub("/[^/]+$", "", hex_file_path), "\"") )
 
   if(file.exists(out_path)) {
     message("convert_ctd_hex: .cnv file created at ", out_path, ".")

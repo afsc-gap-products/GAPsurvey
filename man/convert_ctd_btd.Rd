@@ -55,12 +55,12 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files.
 }
 \examples{
-
 # Convert directly .hex to .btd and .bth using convert_ctd_btd to run SBE Data Processing.
-GAPsurvey::convert_ctd_btd(path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-                      package = "GAPsurvey"),
-                   path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-                                    package = "GAPsurvey"))
+GAPsurvey::convert_ctd_btd(
+    path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+                          package = "GAPsurvey"),
+    path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+                              package = "GAPsurvey"))
 
 convert_ctd_btd(
    VESSEL = 94,
@@ -78,7 +78,6 @@ convert_ctd_btd(
    path_out = getwd(),
    filename_add = "newctd")
 
-
 # Convert a .cnv file (after .hex files has already converted using SBE Data Processing)
 convert_ctd_btd(
    VESSEL = 94,
@@ -95,6 +94,4 @@ convert_ctd_btd(
       package = "GAPsurvey"),
    path_out = getwd(),
    filename_add = "newctd")
-
-
 }
