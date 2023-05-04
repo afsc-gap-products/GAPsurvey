@@ -18,11 +18,11 @@ convert_ctd_btd(
 )
 }
 \arguments{
-\item{VESSEL}{Optional. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.}
+\item{VESSEL}{Required. Default = NA. The vessel number (e.g., 94). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{CRUISE}{Optional. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.}
+\item{CRUISE}{Required. Default = NA. The cruise number, which is usually the year date (e.g., 201901). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{HAUL}{Optional. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
+\item{HAUL}{Required. Default = NA. The haul number, aka the iterative number of this haul (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
 
 \item{MODEL_NUMBER}{Optional. Default = NA. The model number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
@@ -30,11 +30,11 @@ convert_ctd_btd(
 
 \item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the CTD (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).}
 
-\item{path_in}{Optional. Default = "./., or the local working directory but any path (as a string) may be entered. Can accept a .hex file if SBE Data Processing software is installed and path_xmlcon is specified.}
+\item{path_in}{Required. Filepath to the SBE19plus hexadecimal (.hex) file from a single cast as a character vector (e.g. "C:/CTD/202301_162_L1/sbe19plus01908091_05_04_0001.hex")/.}
 
 \item{path_out}{Optional. The default is the local working directory but may be specified with a string.}
 
-\item{path_xmlcon}{Optional. Filepath to the CTD configuration file (.xmlcon)}
+\item{path_xmlcon}{Required. Filepath to the CTD configuration file (.xmlcon) for the CTD used for the cast (e.g. serial number 8091 would use the file with 8091 in the name ("C:/CTD/xmlcon configuration files/SBE19plusV2_8091.xmlcon").}
 
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.}
 }
@@ -42,10 +42,10 @@ convert_ctd_btd(
 .BTH and .BTD files to the path_out directory.
 }
 \description{
-Before running this convert_ctd_btd function, you will need to use the CTD laptop to convert the raw CTD data to a .cnv file.
+This function uses SBE Data Processing software to convert a CTD binary-formatted .hex (hexadecimal) file to bathythermic data (.btd) and bathythermic header files (.bth). If you are unable to convert your file, please contact sean.rohan@noaa.gov.
 }
 \details{
-To do this,
+If SBE Data Processing software is not installed on the same computer as the GAPsurvey package or if you encounter errors, you may need to convert the .hex file manual using SBE Data Processing software:
 1. use the SBE Data Processing Program, and in the "Run" menu select "1. Data conversion".
 2. Under "Program setup file" select the .psa file (should be DataCnv.psa located in CTD folder), under "Instrument configuration file" select the .xmlcon file for the CTD located in the
 deployment_xmlcon folder- this is CTD specific, know your CTD's serial number, and under "Input directory" select the .hex file (from the CTD computer) that is specific to the haul that you are missing data.  Click "Start Process".
@@ -53,26 +53,14 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 3. This .cnv file must include columns for "Time, Elapsed, seconds", "Depth , salt water, m", "Temperature, ITS-90, deg C", "Pressure, Strain Gauge, db", and "Conductivity, S/m".
 4. Press "Start Process" button again and a .cnv file should appear in your selected output directory.  The .cnv file can then be used for this convert_ctd_btd() function!
 5. Look in your output directory (usually the "Documents" folder, but you can find it using getwd()) for your new .BTD and .BTH files.
-
-Note that if there are multiple observations from the CTD per second, that they will be averaged by second (e.g., any observations from seconds 0 to >1.0 will be averaged together).
 }
 \examples{
-convert_ctd_btd(
-   VESSEL = 94,
-   CRUISE = 2001,
-   HAUL = 4,
-   MODEL_NUMBER = 123, # for example, also can make up
-   VERSION_NUMBER = 456, # for example, also can make up
-   SERIAL_NUMBER = 789, # for example, also can make up
-   path_in = system.file(paste0("exdata/convert_ctd_btd/",
-      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
-       package = "GAPsurvey"),
-   path_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-     "19-8102_Deploy2021.xmlcon"),
-      package = "GAPsurvey"),
-   path_out = getwd(),
-   filename_add = "newctd")
 
+# Convert directly .hex to .btd and .bth using convert_ctd_btd to run SBE Data Processing.
+GAPsurvey::convert_ctd_btd(path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+                      package = "GAPsurvey"),
+                   path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+                                    package = "GAPsurvey"))
 
 convert_ctd_btd(
    VESSEL = 94,
@@ -90,27 +78,23 @@ convert_ctd_btd(
    path_out = getwd(),
    filename_add = "newctd")
 
-# Copy system files to working directory for example
-file.copy(
-   from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-                      package = "GAPsurvey"),
-   to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
-             package = "GAPsurvey"),
-             replacement = getwd(),
-             x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-                                     package = "GAPsurvey")))
 
-file.copy(
-   from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-                       package = "GAPsurvey"),
-          to = gsub(pattern = system.file("exdata/convert_ctd_btd/",
-                    package = "GAPsurvey"),
-                    replacement = getwd(),
-                    x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-                                    package = "GAPsurvey")))
+# Convert a .cnv file (after .hex files has already converted using SBE Data Processing)
+convert_ctd_btd(
+   VESSEL = 94,
+   CRUISE = 2001,
+   HAUL = 4,
+   MODEL_NUMBER = 123, # for example, also can make up
+   VERSION_NUMBER = 456, # for example, also can make up
+   SERIAL_NUMBER = 789, # for example, also can make up
+   path_in = system.file(paste0("exdata/convert_ctd_btd/",
+      "SBE19plus_01908103_2021_06_01_94_0004_raw.cnv"),
+       package = "GAPsurvey"),
+   path_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+     "19-8102_Deploy2021.xmlcon"),
+      package = "GAPsurvey"),
+   path_out = getwd(),
+   filename_add = "newctd")
 
-# Run convert_ctd_btd on .hex file and .xmlcon file
-GAPsurvey::convert_ctd_btd(path_in = "2021_06_13_0003.hex",
-                   path_xmlcon = "19-8102_Deploy2021.xmlcon")
-# Convert directly from .hex file by using convert_ctd_btd to run SBE Data Processing.
+
 }
