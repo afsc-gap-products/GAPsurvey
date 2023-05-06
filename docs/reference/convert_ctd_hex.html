@@ -114,32 +114,30 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Copy system files to working directory for example</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/2021_06_13_0003.hex"</span>,</span></span>
-<span class="r-in"><span>package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/"</span>, package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          replacement <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/2021_06_13_0003.hex"</span>,</span></span>
-<span class="r-in"><span>          package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon"</span>,</span></span>
-<span class="r-in"><span>                             package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/"</span>,</span></span>
-<span class="r-in"><span>                                           package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                                           replacement <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon"</span>,</span></span>
-<span class="r-in"><span>                                    package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Run convert_ctd_hex()</span></span></span>
-<span class="r-in"><span><span class="fu">GAPsurvey</span><span class="fu">::</span><span class="fu">convert_ctd_hex</span><span class="op">(</span>hex_file_path <span class="op">=</span> <span class="st">"2021_06_13_0003.hex"</span>,</span></span>
-<span class="r-in"><span>                            xmlcon_path <span class="op">=</span> <span class="st">"19-8102_Deploy2021.xmlcon"</span>,</span></span>
-<span class="r-in"><span>                            bat_file <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                            datcnv_file <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> convert_ctd_hex: Attempting to convert C:/Users/emily.markowitz/Documents/Projects/GAPsurvey_general/GAPsurvey/docs/reference/2021_06_13_0003.hex to .cnv</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> convert_ctd_hex: .cnv file created at C:/Users/emily.markowitz/Documents/Projects/GAPsurvey_general/GAPsurvey/docs/reference/2021_06_13_0003_raw.cnv.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "C:/Users/emily.markowitz/Documents/Projects/GAPsurvey_general/GAPsurvey/docs/reference/2021_06_13_0003_raw.cnv"</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Not run:</span></span></span>
+<span class="r-in"><span><span class="co">## Copy system files to working directory for example</span></span></span>
+<span class="r-in"><span><span class="co">#  file.copy(</span></span></span>
+<span class="r-in"><span><span class="co">#    from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",</span></span></span>
+<span class="r-in"><span><span class="co">#                       package = "GAPsurvey"),</span></span></span>
+<span class="r-in"><span><span class="co">#   to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),</span></span></span>
+<span class="r-in"><span><span class="co">#            replacement = getwd(),</span></span></span>
+<span class="r-in"><span><span class="co">#            x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",</span></span></span>
+<span class="r-in"><span><span class="co">#            package = "GAPsurvey")))</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">#  file.copy(</span></span></span>
+<span class="r-in"><span><span class="co">#    from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",</span></span></span>
+<span class="r-in"><span><span class="co">#                        package = "GAPsurvey"),</span></span></span>
+<span class="r-in"><span><span class="co">#    to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),</span></span></span>
+<span class="r-in"><span><span class="co">#              replacement = getwd(),</span></span></span>
+<span class="r-in"><span><span class="co">#              x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",</span></span></span>
+<span class="r-in"><span><span class="co">#                              package = "GAPsurvey")))</span></span></span>
+<span class="r-in"><span><span class="co">#</span></span></span>
+<span class="r-in"><span><span class="co">## Run convert_ctd_hex()</span></span></span>
+<span class="r-in"><span><span class="co"># convert_ctd_hex(hex_file_path = paste0(dirname(getwd()), "/2021_06_13_0003.hex"),</span></span></span>
+<span class="r-in"><span><span class="co">#                            xmlcon_path = paste0(dirname(getwd()), "/19-8102_Deploy2021.xmlcon"),</span></span></span>
+<span class="r-in"><span><span class="co">#                            bat_file = NULL,</span></span></span>
+<span class="r-in"><span><span class="co">#                            datcnv_file = NULL)</span></span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
@@ -150,11 +148,11 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson.</p>
+  <p></p><p>Developed by Emily Markowitz, Sean Rohan, Margaret Siple, Liz Dawson.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>

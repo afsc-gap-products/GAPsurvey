@@ -105,29 +105,10 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">convert_bvdr_marp</span><span class="op">(</span>path_bvdr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_bvdr_marp/20220811-00Za.bvdr"</span>,</span></span>
-<span class="r-in"><span>                                  package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">20</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "$GPZDA,000000.000,11,08,2022,,*5C"                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "$GPGGA,000000.000,6320.1187,N,17321.1769,W,1,08,1.2,8.4,M,5.9,M,,0000*72"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "$GPGLL,6320.1187,N,17321.1769,W,000000.000,A,A*4C"                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "$GPRMC,000000.000,A,6320.1187,N,17321.1769,W,10.34,273.17,100822,,,A*44" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "$GPVTG,273.17,T,,M,10.34,N,19.1,K,A*02"                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "$GPZDA,000001.000,11,08,2022,,*5D"                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "$GPGGA,000001.000,6320.1188,N,17321.1835,W,1,08,1.2,8.2,M,5.9,M,,0000*7C"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "$GPGLL,6320.1188,N,17321.1835,W,000001.000,A,A*44"                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "$GPRMC,000001.000,A,6320.1188,N,17321.1835,W,10.77,271.04,110822,,,A*4A" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "$GPVTG,271.04,T,,M,10.77,N,20.0,K,A*0E"                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "$GPZDA,000002.000,11,08,2022,,*5E"                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "$GPGGA,000002.000,6320.1189,N,17321.1900,W,1,08,1.2,8.5,M,5.9,M,,0000*7E"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "$GPGLL,6320.1189,N,17321.1900,W,000002.000,A,A*41"                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [14] "$GPRMC,000002.000,A,6320.1189,N,17321.1900,W,9.97,270.27,110822,,,A*79"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "$GPVTG,270.27,T,,M,9.97,N,18.5,K,A*36"                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "$GPZDA,000003.000,11,08,2022,,*5F"                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "$GPGGA,000003.000,6320.1191,N,17321.1962,W,1,08,1.2,8.9,M,5.9,M,,0000*7E"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "$GPGLL,6320.1191,N,17321.1962,W,000003.000,A,A*4D"                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "$GPRMC,000003.000,A,6320.1191,N,17321.1962,W,9.56,272.06,110822,,,A*79"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "$GPVTG,272.06,T,,M,9.56,N,17.7,K,A*37"                                   </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",</span></span></span>
+<span class="r-in"><span><span class="co">#                                   package = "GAPsurvey"),</span></span></span>
+<span class="r-in"><span><span class="co">#           verbose = TRUE), 20)</span></span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </div>
@@ -138,11 +119,11 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Emily Markowitz, Margaret Siple, Liz Dawson.</p>
+  <p></p><p>Developed by Emily Markowitz, Sean Rohan, Margaret Siple, Liz Dawson.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.9000.</p>
 </div>
 
       </footer></div>

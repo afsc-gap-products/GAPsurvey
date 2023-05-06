@@ -56,7 +56,7 @@ The conversion program will ask you for outputs. At the prompt, Select and Add "
 }
 \examples{
 # Convert directly .hex to .btd and .bth using convert_ctd_btd to run SBE Data Processing.
-GAPsurvey::convert_ctd_btd(
+convert_ctd_btd(
     path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
                           package = "GAPsurvey"),
     path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",

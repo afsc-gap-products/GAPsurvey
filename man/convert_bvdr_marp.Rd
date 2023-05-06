@@ -20,7 +20,7 @@ Before using this script,
 For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
 }
 \examples{
-head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
-                                  package = "GAPsurvey"),
-          verbose = TRUE), 20)
+# head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#                                   package = "GAPsurvey"),
+#           verbose = TRUE), 20)
 }

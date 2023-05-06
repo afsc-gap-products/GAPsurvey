@@ -59,24 +59,27 @@ This package was last produced using:
     #> [1] stats     graphics  grDevices utils     datasets  methods   base     
     #> 
     #> other attached packages:
-    #> [1] badger_0.2.3  ggplot2_3.4.2 pkgdown_2.0.7 usethis_2.1.6 here_1.0.1   
+    #> [1] badger_0.2.3       ggplot2_3.4.2      pkgdown_2.0.7.9000 usethis_2.1.6      here_1.0.1        
     #> 
     #> loaded via a namespace (and not attached):
-    #>  [1] tidyselect_1.2.0    dplyr_1.1.2         fastmap_1.1.1       gh_1.4.0            janitor_2.2.0       promises_1.2.0.1   
-    #>  [7] akgfmaps_2.3.1      digest_0.6.31       timechange_0.2.0    mime_0.12           lifecycle_1.0.3     sf_1.0-12          
-    #> [13] ellipsis_0.3.2      processx_3.8.1      magrittr_2.0.3      compiler_4.3.0      rlang_1.1.1         tools_4.3.0        
-    #> [19] utf8_1.2.3          yaml_2.3.7          knitr_1.42          askpass_1.1         prettyunits_1.1.1   htmlwidgets_1.6.2  
-    #> [25] curl_5.0.0          pkgbuild_1.4.0      classInt_0.4-9      RColorBrewer_1.1-3  pkgload_1.3.2       KernSmooth_2.23-21 
-    #> [31] miniUI_0.1.1.1      withr_2.5.0         purrr_1.0.1         sys_3.4.1           desc_1.4.2          grid_4.3.0         
-    #> [37] fansi_1.0.4         urlchecker_1.0.1    profvis_0.3.8       xtable_1.8-4        e1071_1.7-13        colorspace_2.1-0   
-    #> [43] gitcreds_0.1.2      scales_1.2.1        cli_3.6.1           rmarkdown_2.21      crayon_1.5.2        dlstats_0.1.6      
-    #> [49] generics_0.1.3      remotes_2.4.2       rstudioapi_0.14     sessioninfo_1.2.2   DBI_1.1.3           cachem_1.0.8       
-    #> [55] proxy_0.4-27        stringr_1.5.0       BiocManager_1.30.20 vctrs_0.6.2         yulab.utils_0.0.6   devtools_2.4.5     
-    #> [61] jsonlite_1.8.4      callr_3.7.3         credentials_1.3.2   units_0.8-2         glue_1.6.2          ps_1.7.5           
-    #> [67] lubridate_1.9.2     stringi_1.7.12      gtable_0.3.3        later_1.3.1         rvcheck_0.2.1       munsell_0.5.0      
-    #> [73] tibble_3.2.1        pillar_1.9.0        rappdirs_0.3.3      htmltools_0.5.5     openssl_2.0.6       httr2_0.2.2        
-    #> [79] R6_2.5.1            gert_1.9.2          rprojroot_2.0.3     evaluate_0.20       shiny_1.7.4         memoise_2.0.1      
-    #> [85] snakecase_0.11.0    httpuv_1.6.9        class_7.3-22        Rcpp_1.0.10         xfun_0.39           fs_1.6.2           
+    #>  [1] tidyselect_1.2.0    dplyr_1.1.2         fastmap_1.1.1       gh_1.4.0            janitor_2.2.0      
+    #>  [6] promises_1.2.0.1    akgfmaps_2.3.1      digest_0.6.31       timechange_0.2.0    mime_0.12          
+    #> [11] lifecycle_1.0.3     sf_1.0-12           ellipsis_0.3.2      processx_3.8.1      magrittr_2.0.3     
+    #> [16] compiler_4.3.0      rlang_1.1.1         tools_4.3.0         utf8_1.2.3          yaml_2.3.7         
+    #> [21] knitr_1.42          askpass_1.1         prettyunits_1.1.1   htmlwidgets_1.6.2   curl_5.0.0         
+    #> [26] pkgbuild_1.4.0      classInt_0.4-9      RColorBrewer_1.1-3  pkgload_1.3.2       KernSmooth_2.23-21 
+    #> [31] miniUI_0.1.1.1      withr_2.5.0         purrr_1.0.1         sys_3.4.1           desc_1.4.2         
+    #> [36] grid_4.3.0          fansi_1.0.4         urlchecker_1.0.1    profvis_0.3.8       xtable_1.8-4       
+    #> [41] e1071_1.7-13        colorspace_2.1-0    gitcreds_0.1.2      scales_1.2.1        cli_3.6.1          
+    #> [46] rmarkdown_2.21      crayon_1.5.2        dlstats_0.1.6       generics_0.1.3      remotes_2.4.2      
+    #> [51] rstudioapi_0.14     sessioninfo_1.2.2   DBI_1.1.3           cachem_1.0.8        proxy_0.4-27       
+    #> [56] stringr_1.5.0       BiocManager_1.30.20 vctrs_0.6.2         yulab.utils_0.0.6   devtools_2.4.5     
+    #> [61] jsonlite_1.8.4      callr_3.7.3         credentials_1.3.2   units_0.8-2         glue_1.6.2         
+    #> [66] ps_1.7.5            lubridate_1.9.2     stringi_1.7.12      gtable_0.3.3        later_1.3.1        
+    #> [71] rvcheck_0.2.1       munsell_0.5.0       tibble_3.2.1        pillar_1.9.0        rappdirs_0.3.3     
+    #> [76] htmltools_0.5.5     openssl_2.0.6       httr2_0.2.2         R6_2.5.1            gert_1.9.2         
+    #> [81] rprojroot_2.0.3     evaluate_0.20       shiny_1.7.4         memoise_2.0.1       snakecase_0.11.0   
+    #> [86] httpuv_1.6.9        class_7.3-22        Rcpp_1.0.10         xfun_0.39           fs_1.6.2           
     #> [91] pkgconfig_2.0.3
 
 ## NOAA README

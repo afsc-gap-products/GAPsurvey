@@ -181,7 +181,7 @@ convert_ted_btd <- function(
 #'
 #' @examples
 #' # Convert directly .hex to .btd and .bth using convert_ctd_btd to run SBE Data Processing.
-#' GAPsurvey::convert_ctd_btd(
+#' convert_ctd_btd(
 #'     path_in = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
 #'                           package = "GAPsurvey"),
 #'     path_xmlcon = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
@@ -413,25 +413,26 @@ convert_ctd_btd <- function(
 #' @export
 #'
 #' @examples
-#' # Copy system files to working directory for example
-#' file.copy(
-#'   from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-#'                      package = "GAPsurvey"),
-#'  to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
-#'           replacement = dirname(getwd()), # getwd(),
-#'           x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
-#'           package = "GAPsurvey")))
-#'
-#' file.copy(
-#'   from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-#'                       package = "GAPsurvey"),
-#'   to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
-#'             replacement = dirname(getwd()), # getwd(),
-#'             x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
-#'                             package = "GAPsurvey")))
-#'
-#' # # NOT RUN: Run convert_ctd_hex()
-#' # GAPsurvey::convert_ctd_hex(hex_file_path = paste0(dirname(getwd()), "/2021_06_13_0003.hex"),
+#' # Not run:
+#' ## Copy system files to working directory for example
+#' #  file.copy(
+#' #    from = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+#' #                       package = "GAPsurvey"),
+#' #   to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
+#' #            replacement = getwd(),
+#' #            x = system.file("exdata/convert_ctd_btd/2021_06_13_0003.hex",
+#' #            package = "GAPsurvey")))
+#' #
+#' #  file.copy(
+#' #    from = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+#' #                        package = "GAPsurvey"),
+#' #    to = gsub(pattern = system.file("exdata/convert_ctd_btd/", package = "GAPsurvey"),
+#' #              replacement = getwd(),
+#' #              x = system.file("exdata/convert_ctd_btd/19-8102_Deploy2021.xmlcon",
+#' #                              package = "GAPsurvey")))
+#' #
+#' ## Run convert_ctd_hex()
+#' # convert_ctd_hex(hex_file_path = paste0(dirname(getwd()), "/2021_06_13_0003.hex"),
 #' #                            xmlcon_path = paste0(dirname(getwd()), "/19-8102_Deploy2021.xmlcon"),
 #' #                            bat_file = NULL,
 #' #                            datcnv_file = NULL)
@@ -626,9 +627,9 @@ convert_log_gps <- function(
 #'
 #' @export
 #' @examples
-#' head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
-#'                                   package = "GAPsurvey"),
-#'           verbose = TRUE), 20)
+#' # head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#' #                                   package = "GAPsurvey"),
+#' #           verbose = TRUE), 20)
 convert_bvdr_marp <- function(path_bvdr,
                               verbose = FALSE) {
 
