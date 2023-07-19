@@ -674,18 +674,19 @@ convert_bvdr_marp <- function(path_bvdr,
 
 #' Calculate Net Spread for tows missing net width using a glm.
 #'
-#' The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean calc_net_spread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
-#'
+#' @details The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean calc_net_spread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
 #' In race_data, this will manifest as...
-#' net_mensuration_code = Net Mensuration Method
-#' 0* Unidentified method. Will make racebase.haul$net_mesured = "N".
-#' 1 Scanmar net mensuration - don't use, historical
-#' 2 NetMind net mensuration - don't use, historical
-#' 3 Furuno net mensuration - don't use, historical
-#' 4* Estimated from other hauls - when missing net spread, or spread and hieght. Will make racebase.haul$net_mesured = "N". Estimated using GLM
-#' 5* Estimated from warp angle - hopefully, will not come up and shouldn't be used
-#' 6 Marport net mensuration - shouldn't be there, indicates raw data
-#' 7* Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_mesured = "Y".
+#' \itemize{
+#'  \item{"net_mensuration_code"}{Net Mensuration Method}
+#'  \item{"0*"}{Unidentified method. Will make racebase.haul$net_measured = "N"}
+#'  \item{"1"}{Scanmar net mensuration - don't use, historical}
+#'  \item{"2"}{NetMind net mensuration - don't use, historical}
+#'  \item{"3"}{Furuno net mensuration - don't use, historical}
+#'  \item{"4*"}{Estimated from other hauls - when missing net spread, or spread and height. Will make racebase.haul$net_measured = "N". Estimated using GLM}
+#'  \item{"5*"}{Estimated from warp angle - hopefully, will not come up and shouldn't be used}
+#'  \item{"6"}{Marport net mensuration - shouldn't be there, indicates raw data}
+#'  \item{"7*"}{Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_measured = "Y".}
+#' }
 #'
 #' @param dat data.frame. This can be data from GIDES or race_data.hauls, including these columns: WIRE_OUT, NET_HEIGHT, NET_SPREAD
 #'
