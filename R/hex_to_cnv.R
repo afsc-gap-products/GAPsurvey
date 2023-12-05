@@ -183,11 +183,12 @@ convert_ctd_btd <- function(filepath_hex,
 #'
 #' @param latitude Latitude in decimal degrees north
 #' @param pressure Pressure in decibars
+#' @param nsmall Number of decimal places for depth
 #' @noRd
 #' @references UNESCO 1983. Algorithms for computation of fundamental properties of seawater, 1983. Unesco Tech. Pap. in Mar. Sci., No. 44, 53 pp.
 #' Kelley, D., Richards, C., and Layton, C. 2022. oce: An R package for oceanographic analysis. Journal of Open Source Software 7(71): 3594. https://doi.org/10.21105/joss.03594
 
-calc_depth_from_pressure <- function(latitude, pressure) {
+calc_depth_from_pressure <- function(latitude, pressure, nsmall = 3) {
 
   latitude <- latitude * atan2(1, 1)/45
 
@@ -198,6 +199,8 @@ calc_depth_from_pressure <- function(latitude, pressure) {
 
   res <- (((-1.82e-15 * pressure + 2.279e-10) * pressure -
              2.2512e-05) * pressure + 9.72659) * pressure/gr
+
+  res <- round(res, digits = nsmall)
 
   return(res)
 
