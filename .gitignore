@@ -45,3 +45,5 @@ vignettes/*.pdf
 
 
 /notforgit
+/archive
+*.Rproj

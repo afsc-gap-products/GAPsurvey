@@ -13,7 +13,7 @@ fix_path(path)
 A fixed path string.
 }
 \description{
-Function adds '/' or '\\' to the end of directories and recognizes when there are file extentions at the end of strings.
+Function adds '/' or '\\' to the end of directories and recognizes when there are file extensions at the end of strings.
 }
 \examples{
 fix_path("sdfg/sdfg/sdfg/dfg.dd")
