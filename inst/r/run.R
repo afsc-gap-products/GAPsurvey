@@ -247,7 +247,6 @@ rmarkdown::render(here::here("inst", "r", "README.Rmd"),
 # Document and create Package --------------------------------------------------
 .rs.restartR()
 
-# options(rmarkdown.html_vignette.check_title = FALSE)
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 library(here)
 library(devtools)
@@ -277,8 +276,8 @@ library(pkgdown)
 # usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
 
 # pkgdown::clean_site()
-pkgdown::build_site()
-# pkgdown::build_site(pkg = here::here())
+# pkgdown::build_site()
+pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz

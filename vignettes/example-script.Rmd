@@ -1,0 +1,86 @@
+---
+title: "Example got-to script"
+description: ""
+date: "`r format(Sys.Date(), format='%B %d %Y') `"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{example-script}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Example Script Using R Package "GAPsurvey"
+
+> Last updated April 2024
+
+Open Rstudio script "example_script.R" (should be located on desktop, if you have this opened in R, you are already here! This is the example_script.R file!)
+
+## Load Packages (only need to do this once
+
+# install R package
+
+Rerun this only when there is a new version of the package to install
+```{r install-github, eval = FALSE}
+devtools::install_github("afsc-gap-products/GAPsurvey")
+```
+
+or
+
+```{r install-local, eval = FALSE}
+install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.01.tar.gz',
+                 repos=NULL, type='source')
+```
+
+## Load libraries
+
+```{r load-packages}
+library(GAPsurvey)
+```
+
+## Use functions from `GAPSurvey`
+
+### What have we historically caught at this station?
+
+## Learn more about and find examples using...
+
+```{r get_catch_haul_history, eval =  FALSE}
+?get_catch_haul_history
+```
+
+```{r get_catch_haul_history-use}
+get_catch_haul_history(
+  # years = 2021, # optional; if you only want to see a specific year, not the last 10
+  # species_codes = c(21720, 21740), # optional; pacific cod and walleye pollock ONLY
+  survey = "EBS", # for example
+  station = "I-13") # for example
+```
+
+### What time is sunrise and sunset?
+
+## Learn more about and find examples using...
+
+```{r get_sunrise_sunset, eval =  FALSE}
+?get_sunrise_sunset
+```
+
+```{r get_sunrise_sunset-use}
+get_sunrise_sunset(chosen_date = Sys.Date(),
+                  survey = "EBS",
+                  station = "I-13")
+
+get_sunrise_sunset(chosen_date = "2023-06-10",
+                   survey = "GOA",
+                   station = "7-7")
+
+get_sunrise_sunset(chosen_date = "2023-06-10",
+                   latitude = 52.6,
+                   longitude = -169.4364)
+```
+

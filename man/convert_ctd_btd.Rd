@@ -54,8 +54,10 @@ This function converts a CTD  hexadecimal (.hex) file to bathythermic data (.btd
 # CTD without auxiliary sensors
 
 convert_ctd_btd(
- filepath_hex = system.file(paste0("exdata/convert_ctd_btd/", "2021_06_13_0003.hex"), package = "GAPsurvey"),
- filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/", "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
+ filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+   "2021_06_13_0003.hex"), package = "GAPsurvey"),
+ filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+   "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
  latitude = 55,
  VESSEL = 94,
  CRUISE = 202101,

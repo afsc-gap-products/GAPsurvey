@@ -1,4 +1,101 @@
-url: ~
+url: https://afsc-gap-products.github.io/GAPsurvey/
+csl: 'https://raw.githubusercontent.com/citation-style-language/styles/master/apa-no-ampersand.csl'
+bibliography: 'https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/bibliography.bib'
+
 template:
   bootstrap: 5
+  bslib:
+    pkgdown-nav-height: 100px
 
+news:
+  one_page: true
+
+footer:
+  structure:
+    right: FALSE
+    left: built_with
+
+home:
+  sidebar: FALSE
+
+navbar:
+  structure:
+    left: [reference, vignettes, articles, citation, news]
+  components:
+    reference:
+      text: Functions
+      href: reference/index.html
+    vignettes:
+      text: Vignettes
+      menu:
+      - text: Example got-to script
+        href: articles/example-script.html
+    news:
+     text: Release Notes
+     menu:
+      - text: "v2023.08.01"
+        href: "https://github.com/afsc-gap-products/GAPsurvey/releases/tag/v2023.08.01"
+
+
+# navbar:
+#   left:
+#     - text: "Functions"
+#       icon: far fa-file-code fa-lg
+#       href: reference/index.html
+#     - text: "News"
+#       icon: fas fa-bullhorn fa-lg
+#       href: news/index.html
+#   right:
+#     - icon: fas fa-paper-plane fa-lg
+#       href: mailto:emily.markowitz@noaa.gov
+#     - icon: fas fa-question-circle fa-lg
+#       href: https://github.com/afsc-gap-products/GAPsurvey/issues/
+#     - icon: fab fa-github fa-lg
+#       href: https://github.com/afsc-gap-products/GAPsurvey
+#     - icon: fa-fish
+#       href: https://nmfs-general-modeling-tools.github.io/
+#
+# articles:
+#   - title: "At-sea data management tools for RACE GAP surveys"
+#     desc: >
+#       There are no vignettes at this time. <br/>
+#       <br/>
+
+reference:
+  - title: Marport and Globe Converters
+    contents:
+      - '`convert_log_gps`'
+      - '`convert_bvdr_marp`'
+  - title: CTD Converters & Tools
+    contents:
+      # - starts_with("get_")
+      - '`convert_ted_btd`'
+      - '`convert_ctd_btd`'
+      - '`convert_do_to_o2sat`'
+      - '`extract_calibration_xmlcon`'
+      - '`get_calibration_parameter`'
+      - '`integer_to_conductivity`'
+      - '`integer_to_ph`'
+      - '`integer_to_pressure`'
+      - '`integer_to_temperature`'
+      - '`oxygen_saturation`'
+  - title: Estimate Net Spread
+    contents:
+      - '`calc_net_spread`'
+  - title: Resources
+    contents:
+      - '`get_catch_haul_history`'
+      - '`get_sunrise_sunset`'
+  - title: Datasets
+    contents:
+      - '`public_data`'
+      - '`species_data`'
+      - '`PolySpecies`'
+      - '`station_coords`'
+  - title: Helper Functions
+    contents:
+      - '`numbers0`'
+      - '`fix_path`'
+      - '`text_list`'
+      - '`hex_to_cnv`'
+      - '`tau_par`'
