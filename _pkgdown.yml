@@ -1,4 +1,4 @@
-url: https://afsc-gap-products.github.io/GAPsurvey/
+url: 'https://afsc-gap-products.github.io/GAPsurvey/'
 csl: 'https://raw.githubusercontent.com/citation-style-language/styles/master/apa-no-ampersand.csl'
 bibliography: 'https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/bibliography.bib'
 
@@ -15,51 +15,45 @@ footer:
     right: FALSE
     left: built_with
 
-home:
-  sidebar: FALSE
-
 navbar:
   structure:
-    left: [reference, vignettes, articles, citation, news]
+    left: [reference, articles, news]
+    right: [email, issues, github, homepage]
   components:
+    email:
+      icon: fas fa-paper-plane fa-lg
+      href: mailto:nmfs.afsc.gap.metadata@noaa.gov
+      aria-label: email
+    issues:
+      icon: fas fa-question-circle fa-lg
+      href: https://github.com/afsc-gap-products/GAPsurvey/issues/
+      aria-label: issues
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/afsc-gap-products/GAPsurvey
+      aria-label: github
+    homepage:
+      icon: fa-fish
+      href: https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys
+      aria-label: homepage
     reference:
       text: Functions
+      icon: far fa-file-code fa-lg
       href: reference/index.html
-    vignettes:
-      text: Vignettes
+    articles:
+      text: Articles
+      icon: fa-newspaper # https://fontawesome.com/icons/newspaper?f=classic&s=regular
       menu:
       - text: Example got-to script
         href: articles/example-script.html
     news:
      text: Release Notes
-     menu:
-      - text: "v2023.08.01"
-        href: "https://github.com/afsc-gap-products/GAPsurvey/releases/tag/v2023.08.01"
-
-
-# navbar:
-#   left:
-#     - text: "Functions"
-#       icon: far fa-file-code fa-lg
-#       href: reference/index.html
-#     - text: "News"
-#       icon: fas fa-bullhorn fa-lg
-#       href: news/index.html
-#   right:
-#     - icon: fas fa-paper-plane fa-lg
-#       href: mailto:emily.markowitz@noaa.gov
-#     - icon: fas fa-question-circle fa-lg
-#       href: https://github.com/afsc-gap-products/GAPsurvey/issues/
-#     - icon: fab fa-github fa-lg
-#       href: https://github.com/afsc-gap-products/GAPsurvey
-#     - icon: fa-fish
-#       href: https://nmfs-general-modeling-tools.github.io/
-#
-# articles:
-#   - title: "At-sea data management tools for RACE GAP surveys"
-#     desc: >
-#       There are no vignettes at this time. <br/>
-#       <br/>
+     icon: fas fa-bullhorn fa-lg
+     href: 'https://github.com/afsc-gap-products/GAPsurvey/releases'
+    # citation:
+    #  # text: Citation
+    #  icon: fa-location-dot # https://fontawesome.com/icons/location-dot?f=classic&s=solid
+    #  href: 'https://github.com/afsc-gap-products/GAPsurvey/blob/main/CITATION.bib'
 
 reference:
   - title: Marport and Globe Converters
@@ -99,3 +93,4 @@ reference:
       - '`text_list`'
       - '`hex_to_cnv`'
       - '`tau_par`'
+

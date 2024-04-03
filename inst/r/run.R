@@ -239,6 +239,7 @@ library(akgfmaps)
 library(magrittr)
 library(readr)
 library(dplyr)
+library(pkgdown)
 
 rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
@@ -258,13 +259,13 @@ setwd("..")
 install("GAPsurvey")
 3
 setwd(here::here())
-devtools::check()
+# devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 
 .rs.restartR()
 # devtools::install_github("rstudio/fontawesome", force = T)
-# library(fontawesome)
+library(fontawesome)
 library(here)
 library(usethis)
 library(pkgdown)
@@ -274,7 +275,7 @@ library(pkgdown)
 # pkgdown::build_favicons()
 # devtools::build_vignettes()
 # usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
-
+# usethis::use_vignette("my-vignette")
 # pkgdown::clean_site()
 # pkgdown::build_site()
 pkgdown::build_site(pkg = here::here())

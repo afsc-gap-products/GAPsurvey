@@ -26,12 +26,15 @@ Open Rstudio script "example_script.R" (should be located on desktop, if you hav
 
 # install R package
 
-Rerun this only when there is a new version of the package to install
+Rerun this only when there is a new version of the package to install. 
+
+Install from `GitHub`
+
 ```{r install-github, eval = FALSE}
 devtools::install_github("afsc-gap-products/GAPsurvey")
 ```
 
-or
+or install from local file `.tar.gz`
 
 ```{r install-local, eval = FALSE}
 install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.01.tar.gz',
@@ -48,7 +51,7 @@ library(GAPsurvey)
 
 ### What have we historically caught at this station?
 
-## Learn more about and find examples using...
+Learn more about and find examples using...
 
 ```{r get_catch_haul_history, eval =  FALSE}
 ?get_catch_haul_history
@@ -56,15 +59,15 @@ library(GAPsurvey)
 
 ```{r get_catch_haul_history-use}
 get_catch_haul_history(
-  # years = 2021, # optional; if you only want to see a specific year, not the last 10
-  # species_codes = c(21720, 21740), # optional; pacific cod and walleye pollock ONLY
+  years = 2021:2023, # optional; if you only want to see a specific year, not the last 10
+  species_codes = c(21720, 21740), # optional; pacific cod and walleye pollock ONLY
   survey = "EBS", # for example
   station = "I-13") # for example
 ```
 
 ### What time is sunrise and sunset?
 
-## Learn more about and find examples using...
+Learn more about and find examples using...
 
 ```{r get_sunrise_sunset, eval =  FALSE}
 ?get_sunrise_sunset
