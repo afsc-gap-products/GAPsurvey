@@ -65,8 +65,10 @@ convert_ctd_btd(
 # CTD with DO and pH sensors
 
 convert_ctd_btd(
-  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/", "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/", "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
+  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+    "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
+  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+    "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
   VESSEL = 162,
   CRUISE = 202301,
   HAUL = 97,

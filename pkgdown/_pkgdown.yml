@@ -38,7 +38,6 @@ reference:
       - '`convert_ctd_btd`'
       - '`convert_ctd_hex`'
       - '`convert_do_to_o2sat`'
-      - '`hex_to_cnv`'
       - '`extract_calibration_xmlcon`'
       - '`get_calibration_parameter`'
       - '`integer_to_conductivity`'
@@ -46,7 +45,6 @@ reference:
       - '`integer_to_pressure`'
       - '`integer_to_temperature`'
       - '`oxygen_saturation`'
-      - '`tau_par`'
   - title: Estimate Net Spread
     contents:
       - '`calc_net_spread`'

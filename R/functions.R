@@ -40,7 +40,7 @@
 #'    filename_add = "newted")
 convert_ted_btd <- function(
     VESSEL = NA,
-    # CRUISE = NA,
+    CRUISE = NA,
     HAUL = NA,
     MODEL_NUMBER = NA,
     VERSION_NUMBER = NA,

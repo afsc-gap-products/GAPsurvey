@@ -94,7 +94,8 @@ WHERE cc.WEIGHT_KG > 0" ) %>%
   janitor::clean_names()
 
 # Save table to local directory
-save(public_data, file = here::here("data", "public_data.rda"))
+# https://stackoverflow.com/questions/70503726/warning-lazydata-db-of-mb-without-lazydatacompression-set
+save(public_data, file ="./data/public_data.rda", compress = "xz")
 
 column <- metadata_colname %>%
   dplyr::filter(metadata_colname %in% toupper(names(public_data))) %>%
@@ -155,7 +156,7 @@ station_coords <- station_coords %>%
   dplyr::filter(!is.na(longitude_dd)) %>%
   dplyr::filter(!is.na(latitude_dd))
 
-save(station_coords, file = "./data/station_coords.rda")
+save(station_coords, file = "./data/station_coords.rda", compress = "xz")
 
 column <- metadata_colname %>%
   dplyr::filter(metadata_colname %in% toupper(names(station_coords))) %>%
@@ -196,7 +197,7 @@ WHERE SURVEY_SPECIES = 1" ) %>%
                 common_name,
                 scientific_name = species_name)
 
-save(species_data, file = "./data/species_data.rda")
+save(species_data, file = "./data/species_data.rda", compress = "xz")
 
 column <- metadata_colname %>%
   dplyr::filter(metadata_colname %in% toupper(names(species_data))) %>%
@@ -226,13 +227,25 @@ write.table(str0,
             file = here::here("R","species_data.R"),
             sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
+# README -----------------------------------------------------------------------
+
+library(here)
+library(devtools)
+library(usethis)
+library(roxygen2)
+library(RODBC)
+library(gapctd)
+library(akgfmaps)
+library(magrittr)
+library(readr)
+library(dplyr)
+
+rmarkdown::render(here::here("inst", "r", "README.Rmd"),
+                  output_dir = "./",
+                  output_file = "README.md")
+
 # Document and create Package --------------------------------------------------
-
-# library(remotes)
-# remotes::install_github("DTUAqua/DATRAS/DATRAS")
-
 .rs.restartR()
-
 
 # options(rmarkdown.html_vignette.check_title = FALSE)
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
@@ -241,17 +254,12 @@ library(devtools)
 library(usethis)
 library(roxygen2)
 library(RODBC)
-
-rmarkdown::render(here::here("inst", "r", "README.Rmd"),
-                  output_dir = "./",
-                  output_file = "README.md")
-
 devtools::document()
 setwd("..")
 install("GAPsurvey")
 3
 setwd(here::here())
-# devtools::check()
+devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 

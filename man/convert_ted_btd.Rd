@@ -6,7 +6,6 @@
 \usage{
 convert_ted_btd(
   VESSEL = NA,
-  CRUISE = NA,
   HAUL = NA,
   MODEL_NUMBER = NA,
   VERSION_NUMBER = NA,
@@ -18,8 +17,6 @@ convert_ted_btd(
 }
 \arguments{
 \item{VESSEL}{Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.}
-
-\item{CRUISE}{Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.}
 
 \item{HAUL}{Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
 
@@ -34,6 +31,8 @@ convert_ted_btd(
 \item{path_out}{Optional. The default is the local working directory but can be specified with a string.}
 
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputed file. Here, you can additional information that may make this file helpful to find later.}
+
+\item{CRUISE}{Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.}
 }
 \value{
 .BTH and .BTD files to the path_out directory.
