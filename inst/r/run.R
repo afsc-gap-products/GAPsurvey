@@ -211,8 +211,9 @@ str0 <- paste0("#' @title Subsetted species data
                ncol(species_data)," variables.
 #' \\describe{
 ",
-               paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ", column$metadata_colname_desc,"}"), collapse = "\n"),
-               "#'   }
+paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ",
+              column$metadata_colname_desc,"}"), collapse = "\n"),
+"#'   }
 #' @source https://github.com/afsc-gap-products/gap_products
 #' @keywords species code data
 #' @examples
@@ -232,6 +233,7 @@ write.table(str0,
 
 .rs.restartR()
 
+
 # options(rmarkdown.html_vignette.check_title = FALSE)
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 library(here)
@@ -239,6 +241,11 @@ library(devtools)
 library(usethis)
 library(roxygen2)
 library(RODBC)
+
+rmarkdown::render(here::here("inst", "r", "README.Rmd"),
+                  output_dir = "./",
+                  output_file = "README.md")
+
 devtools::document()
 setwd("..")
 install("GAPsurvey")
@@ -254,9 +261,7 @@ setwd(here::here())
 library(here)
 library(usethis)
 library(pkgdown)
-rmarkdown::render(here::here("inst", "r", "README.Rmd"),
-                  output_dir = "./",
-                  output_file = "README.md")
+
 
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
@@ -264,9 +269,8 @@ rmarkdown::render(here::here("inst", "r", "README.Rmd"),
 # usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
 
 # pkgdown::clean_site()
+pkgdown::build_site()
 # pkgdown::build_site(pkg = here::here())
-# pkgdown::build_site()
-pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz

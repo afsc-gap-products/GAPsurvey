@@ -28,14 +28,26 @@ articles:
       <br/>
 
 reference:
-  - title: Converters
+  - title: Marport and Globe Converters
+    contents:
+      - '`convert_log_gps`'
+      - '`convert_bvdr_marp`'
+  - title: CTD Converters & Tools
     contents:
       - '`convert_ted_btd`'
       - '`convert_ctd_btd`'
       - '`convert_ctd_hex`'
-      - '`convert_bvdr_marp`'
-      - '`convert_log_gps`'
-  - title: Estimate Values
+      - '`convert_do_to_o2sat`'
+      - '`hex_to_cnv`'
+      - '`extract_calibration_xmlcon`'
+      - '`get_calibration_parameter`'
+      - '`integer_to_conductivity`'
+      - '`integer_to_ph`'
+      - '`integer_to_pressure`'
+      - '`integer_to_temperature`'
+      - '`oxygen_saturation`'
+      - '`tau_par`'
+  - title: Estimate Net Spread
     contents:
       - '`calc_net_spread`'
   - title: Resources
@@ -44,9 +56,9 @@ reference:
       - '`get_sunrise_sunset`'
   - title: Datasets
     contents:
-      - '`PolySpecies`'
       - '`public_data`'
       - '`species_data`'
+      - '`PolySpecies`'
       - '`station_coords`'
   - title: Helper Functions
     contents:
