@@ -881,7 +881,7 @@ write_to_cnv <- function(data_list, output_path) {
                        " [Instrument's time stamp, header]"))
   out <- c(out, paste0("# bad_flag = -9.990e-29"))
   out <- c(out, paste0("# gapctd_date = ", format(Sys.time(), "%b %d %Y %T"),
-                       ", gapctd ", gsub(pattern = "'", replacement = "", x = packageVersion("gapctd"))))
+                       ", gapctd"))
   out <- c(out, paste0("# gapctd_in = ", dl$hex_path))
   out <- c(out, paste0("# file_type = ascii"))
   out <- c(out, "*END*")
