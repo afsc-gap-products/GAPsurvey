@@ -241,7 +241,7 @@ library(roxygen2)
 library(RODBC)
 devtools::document()
 setwd("..")
-install("sdmgamindex")
+install("GAPsurvey")
 3
 setwd(here::here())
 # devtools::check()
