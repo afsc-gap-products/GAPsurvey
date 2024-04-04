@@ -218,7 +218,7 @@ calc_depth_from_pressure <- function(latitude, pressure, nsmall = 3) {
 #' @param sample_interval Sampling interval for scans; 0.25 for a typical SBE19plus V2 deployment.
 #' @param output_channels Optional. Named vector of output channels and their names. Do not use unless outputs are are not the defaults.
 #' @param output_sig_digits Optional. Significant digits after the decimal place for output channels. Only change if a subset of channels. Do not use unless outputs are are not the defaults.
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 hex_to_cnv <- function(hex_path,
@@ -481,7 +481,7 @@ hex_to_cnv <- function(hex_path,
 #' @param par3 Temperature calibration parameter par3
 #' @param par4 Temperature calibration parameter par4
 #' @param par5 Temperature calibration parameter par5
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 integer_to_temperature <- function(temperature_integer,
@@ -536,7 +536,7 @@ integer_to_temperature <- function(temperature_integer,
 #' @param par0 tvoltage_integer conversion constant
 #' @param sig_figs number of significant digits to use for temperature (default = 3)
 #' @param convert_to_dbar Should pressure be returned in or decibars (TRUE) or pounds per square inch without offset (FALSE)
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 integer_to_pressure <- function(pressure_integer,
@@ -598,7 +598,7 @@ integer_to_pressure <- function(pressure_integer,
 #' @param par0 Constant to convert integer to voltage
 #' @param par1 Constant to convert integer to voltage
 #' @param sig_figs number of significant digits to use for conductivity (default = 6)
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 integer_to_conductivity <- function(conductivity_integer, temperature, pressure, condg, condh, condi, condj, cpcor, ctcor, par0 = 256, par1 = 1000, sig_figs = 6) {
@@ -623,7 +623,7 @@ integer_to_conductivity <- function(conductivity_integer, temperature, pressure,
 #' @param temperature temperature in degrees C
 #' @param sig_figs number of significant digits to use for conductivity (default = 3)
 #' @param par0 ph_integer conversion constant
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 integer_to_ph <- function(ph_integer, ph_offset, ph_slope, temperature, sig_figs = 3, par0 = 13107) {
@@ -649,7 +649,7 @@ integer_to_ph <- function(ph_integer, ph_offset, ph_slope, temperature, sig_figs
 #'
 #' @param temperature Temperature (degrees Celsius).
 #' @param salinity Salinity (PSU, PSS-78).
-#' @export
+#' @noRd
 #' @references Garcia, H.E., Gordon, L.I., 1992. Oxygen solubility in seawater: Better fitting equations. Limnol. Oceanogr. 37, 1307–1312. https://doi.org/10.4319/lo.1992.37.6.1307
 #' @author Sean Rohan
 
@@ -689,7 +689,7 @@ oxygen_saturation <- function(temperature, salinity) {
 #' @param oxygen Dissolved oxygen in ml/l
 #' @param temperature Temperature (IPTS-68, degrees Celsius).
 #' @param salinity Salinity (PSU, PSS-78).
-#' @export
+#' @noRd
 #' @references Garcia, H.E., Gordon, L.I., 1992. Oxygen solubility in seawater: Better fitting equations. Limnol. Oceanogr. 37, 1307–1312. https://doi.org/10.4319/lo.1992.37.6.1307
 #' @author Sean Rohan
 
@@ -755,7 +755,7 @@ integer_to_dissolved_oxygen <- function(do_integer,
   dVdt <- c(0, diff(do_voltage)/sample_interval)
 
   if(tau_correction) {
-    tau <- DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
+    tau <- tau_par(temperature, pressure, tau20, d0, d1, d2)
   }
 
   temperature_K <- temperature + 273.15
@@ -781,7 +781,7 @@ integer_to_dissolved_oxygen <- function(do_integer,
 #' @param d1 Tau correction calibration parameter D1.
 #' @param d2 Tau correction calibration parameter D2.
 #' @param tau20 Tau correction calibration parameter Tau20.
-#' @export
+#' @noRd
 #' @references Edwards, B., Murphy, D., Janzen, C., Larson, A.N., 2010. Calibration, response, and hysteresis in deep-sea dissolved oxygen measurements. J. Atmos. Ocean. Technol. 27, 920–931. https://doi.org/10.1175/2009JTECHO693.1
 #' @author Sean Rohan
 
@@ -810,7 +810,7 @@ integer_to_ox_voltage <- function(ox_integer) {
 #' @param start_block starting index for lines of the header to search
 #' @param end_block ending index for lines of the leader to search
 #' @param make_numeric Logical. Should the tag value be forced to a numeric?
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 get_calibration_parameter <- function(header, cal_par, start_block = NULL, end_block = NULL, make_numeric = TRUE) {
@@ -881,7 +881,7 @@ write_to_cnv <- function(data_list, output_path) {
                        " [Instrument's time stamp, header]"))
   out <- c(out, paste0("# bad_flag = -9.990e-29"))
   out <- c(out, paste0("# gapctd_date = ", format(Sys.time(), "%b %d %Y %T"),
-                       ", gapctd ", gsub(pattern = "'", replacement = "", x = packageVersion("gapctd"))))
+                       ", GAPSurvey ", gsub(pattern = "[^0-9.-]", "", packageVersion("GAPSurvey"))))
   out <- c(out, paste0("# gapctd_in = ", dl$hex_path))
   out <- c(out, paste0("# file_type = ascii"))
   out <- c(out, "*END*")
@@ -913,7 +913,7 @@ write_to_cnv <- function(data_list, output_path) {
 #' Retrives calibration parameters for temperature, conductivity, pressure, oxygen, and pH sensors from an instrument configuration (.xmlcon) file.
 #'
 #' @param xmlcon_path Path to an xmlcon file.
-#' @export
+#' @noRd
 #' @author Sean Rohan
 
 extract_calibration_xmlcon <- function(xmlcon_path) {
