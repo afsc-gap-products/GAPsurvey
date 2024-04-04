@@ -49,3 +49,21 @@ get_sunrise_sunset(chosen_date = Sys.Date(),
 # get_sunrise_sunset(chosen_date = "2023-06-10",
 #                    latitude = 52.6,
 #                    longitude = -169.4364)
+
+
+## Convert CTD data to BTD as a backup for SBE39 (aka 'the BT') ----------------
+
+convert_ctd_btd(
+  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+                                    "SBE19plus_01908106_2023_06_18_0001.hex"),
+                             package = "GAPsurvey"),
+  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+                                       "SBE19plusV2_8106_ph_DO_leg2.xmlcon"),
+                                package = "GAPsurvey"),
+  VESSEL = 162,
+  CRUISE = 202301,
+  HAUL = 97,
+  latitude = 59.01693, # Approximate - for depth estimation
+  MODEL_NUMBER = "",
+  VERSION_NUMBER = "",
+  SERIAL_NUMBER = 8106)
