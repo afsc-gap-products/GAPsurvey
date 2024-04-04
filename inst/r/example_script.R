@@ -38,9 +38,26 @@ get_catch_haul_history(
 ## Learn more about and find examples for functions in GAPsurvey using...
 # ?get_sunrise_sunset
 
+get_sunrise_sunset(chosen_date = "2024-06-10",
+                   survey = "AI",
+                   station = "33-47")
+
 get_sunrise_sunset(chosen_date = Sys.Date(),
-                  survey = "EBS",
-                  station = "I-13")
+                   survey = "GOA",
+                   station = "323-176")
+
+get_sunrise_sunset(chosen_date = "2024-08-04",
+                   survey = "EBS",
+                   station = "P-31")
+
+get_sunrise_sunset(chosen_date = "2024-06-04",
+                   survey = "NBS",
+                   station = "ZZ-01")
+
+get_sunrise_sunset(chosen_date = "2024-08-04",
+                   survey = NULL,
+                   latitude = 60,
+                   longitude = -162)
 
 ## other examples:
 # get_sunrise_sunset(chosen_date = "2023-06-10",

@@ -135,11 +135,12 @@ stn_col <- c("ID", "ID", "STATIONID", "STATIONID")
 station_coords <- data.frame()
 
 for(ii in 1:length(sel_region)) {
-  map_layers <- akgfmaps::get_base_layers(select.region = sel_region[ii], set.crs = "EPSG:4326")
+  map_layers <- akgfmaps::get_base_layers(select.region = sel_region[ii], set.crs = "EPSG:3338")
 
   station_center <- map_layers$survey.grid |>
     sf::st_make_valid() |>
-    sf::st_centroid()
+    sf::st_centroid() |>
+    sf::st_transform(crs = "WGS84")
 
   station_center <- data.frame(station = station_center[[stn_col[ii]]]) |>
     dplyr::bind_cols(sf::st_coordinates(station_center)) |>
