@@ -8,11 +8,14 @@ library(magrittr)
 library(readr)
 library(dplyr)
 
-locations <- c("Z:/Projects/ConnectToOracle.R")
-for (i in 1:length(locations)){
-  if (file.exists(locations[i])){
-    source(locations[i])
-  }
+if (file.exists("Z:/Projects/ConnectToOracle.R")) {
+  source("Z:/Projects/ConnectToOracle.R")
+  channel <- channel_products
+} else {
+  # library(devtools)
+  # devtools::install_github("afsc-gap-products/gapindex")
+  library(gapindex)
+  gapindex::get_connected()
 }
 
 # Load column metadata table ---------------------------------------------------
@@ -179,7 +182,7 @@ str0 <- paste0("#' @title Station centroid locations for each station from akgfm
 #' @keywords station survey data
 #' @examples
 #' data(station_coords)
-#' @details DETAILS
+#' @details Find code to create this table in ./inst/run.R
 'station_coords'")
 
 write.table(str0, file = "./R/station_coords.R", sep = "\t",
@@ -215,7 +218,7 @@ str0 <- paste0("#' @title Subsetted species data
 ",
 paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ",
               column$metadata_colname_desc,"}"), collapse = "\n"),
-"#'   }
+"#' }
 #' @source https://github.com/afsc-gap-products/gap_products
 #' @keywords species code data
 #' @examples
@@ -241,6 +244,7 @@ library(magrittr)
 library(readr)
 library(dplyr)
 library(pkgdown)
+library(gapindex)
 
 rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
@@ -283,7 +287,7 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2023.04.02"
+date0 <- "2023.04.04"
 file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
 file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
 devtools::build()

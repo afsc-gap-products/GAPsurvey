@@ -49,6 +49,8 @@ To get a .log file that is usable in this function,
 Now that you have a .log file, you can RUN the function by putting your cursor on the "convert_log_gps()" line below & press CTRL+R.
 }
 \examples{
+readLines(system.file("exdata/convert_log_gps/06062017.log",
+  package = "GAPsurvey"))[1:5] # input file
 convert_log_gps(
     VESSEL = 94,
     CRUISE = 201901,
@@ -58,7 +60,11 @@ convert_log_gps(
         package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "newlog")
+readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
+  package = "GAPsurvey"))[1:5] # output file
 
+readLines(system.file("exdata/convert_log_gps/Haul0037",
+  package = "GAPsurvey"))[1:5] # input file
  convert_log_gps(
     VESSEL = 94,
     CRUISE = 202101,
@@ -68,4 +74,6 @@ convert_log_gps(
         package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "newlog")
+readLines(system.file("exdata/convert_log_gps/Haul0037_newlog.gps",
+  package = "GAPsurvey"))[1:5] # output file
 }

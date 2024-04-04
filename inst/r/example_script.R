@@ -1,6 +1,6 @@
 # R Package "GAPsurvey"
 # Example Script
-# Last updated April 2023
+# Last updated April 2024
 
 # Notes ------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@
 
 # devtools::install_github("afsc-gap-products/GAPsurvey")
 # or
-install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.01.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.04.tar.gz',
                  repos=NULL, type='source')
 
 # Load libraries as needed -----------------------------------------------------
@@ -58,15 +58,6 @@ get_sunrise_sunset(chosen_date = "2024-08-04",
                    survey = NULL,
                    latitude = 60,
                    longitude = -162)
-
-## other examples:
-# get_sunrise_sunset(chosen_date = "2023-06-10",
-#                    survey = "GOA",
-#                    station = "7-7")
-# get_sunrise_sunset(chosen_date = "2023-06-10",
-#                    latitude = 52.6,
-#                    longitude = -169.4364)
-
 
 ## Convert CTD data to BTD as a backup for SBE39 (aka 'the BT') ----------------
 

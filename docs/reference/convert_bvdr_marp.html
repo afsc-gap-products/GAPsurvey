@@ -20,7 +20,7 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
     
     <a class="navbar-brand me-2" href="../index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.01</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.04</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,9 +118,17 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",</span></span></span>
+<span class="r-in"><span><span class="co">#   package = "GAPsurvey"))[1:5] # input file</span></span></span>
+<span class="r-in"><span><span class="co"># head(convert_bvdr_marp(</span></span></span>
+<span class="r-in"><span><span class="co">#   path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",</span></span></span>
 <span class="r-in"><span><span class="co">#                                   package = "GAPsurvey"),</span></span></span>
 <span class="r-in"><span><span class="co">#           verbose = TRUE), 20)</span></span></span>
+<span class="r-in"><span><span class="co"># convert_bvdr_marp(</span></span></span>
+<span class="r-in"><span><span class="co">#   path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",</span></span></span>
+<span class="r-in"><span><span class="co">#                                   package = "GAPsurvey"))</span></span></span>
+<span class="r-in"><span><span class="co"># readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.marp",</span></span></span>
+<span class="r-in"><span><span class="co">#   package = "GAPsurvey")) # output file</span></span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

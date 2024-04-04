@@ -78,9 +78,4 @@ reference:
       - '`station_coords`'
       - '`species_data`'
       - '`PolySpecies`'
-  - title: Helper Functions
-    contents:
-      - '`numbers0`'
-      - '`fix_path`'
-      - '`text_list`'
 

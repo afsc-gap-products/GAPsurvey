@@ -30,7 +30,7 @@ To get a .log file that is usable in this function,
     
     <a class="navbar-brand me-2" href="../index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.01</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.04</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,7 +171,15 @@ To get a .log file that is usable in this function,
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">convert_log_gps</span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_log_gps/06062017.log"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="co"># input file</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on 'C:/Users/emily.markowitz/AppData/Local/R/win-library/4.3/GAPsurvey/exdata/convert_log_gps/06062017.log'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "$GPRMC,235958.000,A,5814.4411,N,15934.8091,W,9.45,11.19,050617,,,D*4E"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "$SDDBS,76.71,f,23.38,M,12.79,F"                                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "$GPGGA,235959.000,5814.4436,N,15934.8081,W,2,08,1.1,10.9,M,16.2,M,2.0,0000*53"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "$GPGSA,M,3,25,29,02,31,12,06,14,51,,,,,1.8,1.1,1.4*3A"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "$SDDBS,76.79,f,23.41,M,12.80,F"                                               </span>
+<span class="r-in"><span><span class="fu">convert_log_gps</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    VESSEL <span class="op">=</span> <span class="fl">94</span>,</span></span>
 <span class="r-in"><span>    CRUISE <span class="op">=</span> <span class="fl">201901</span>,</span></span>
 <span class="r-in"><span>    HAUL <span class="op">=</span> <span class="fl">3</span>,</span></span>
@@ -181,7 +189,18 @@ To get a .log file that is usable in this function,
 <span class="r-in"><span>    path_out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    filename_add <span class="op">=</span> <span class="st">"newlog"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Your new .gps files are saved to Z:/Projects/GAPsurvey_general/GAPsurvey/docs/reference/HAUL0003_newlog.gps</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_log_gps/HAUL0003_newlog.gps"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="co"># output file</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "94,201901,3,06/06/2017 15:59:58,5814.4411,-15934.8091"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "94,201901,3,06/06/2017 15:59:59,5814.4436,-15934.8081"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "94,201901,3,06/06/2017 16:00:00,5814.4462,-15934.8071"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "94,201901,3,06/06/2017 16:00:01,5814.4487,-15934.8061"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "94,201901,3,06/06/2017 16:00:02,5814.4513,-15934.8052"</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_log_gps/Haul0037"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="co"># input file</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>file("") only supports open = "w+" and open = "w+b": using the former</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA NA NA NA NA</span>
 <span class="r-in"><span> <span class="fu">convert_log_gps</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    VESSEL <span class="op">=</span> <span class="fl">94</span>,</span></span>
 <span class="r-in"><span>    CRUISE <span class="op">=</span> <span class="fl">202101</span>,</span></span>
@@ -192,6 +211,13 @@ To get a .log file that is usable in this function,
 <span class="r-in"><span>    path_out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    filename_add <span class="op">=</span> <span class="st">"newlog"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Your new .gps files are saved to Z:/Projects/GAPsurvey_general/GAPsurvey/docs/reference/HAUL0037_newlog.gps</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_log_gps/Haul0037_newlog.gps"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="co"># output file</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "94,202101,37,06/07/2021 08:04:00,5737.6868,-16401.4024"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "94,202101,37,06/07/2021 08:04:01,5737.6842,-16401.4038"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "94,202101,37,06/07/2021 08:04:02,5737.6816,-16401.4046"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "94,202101,37,06/07/2021 08:04:03,5737.6792,-16401.4044"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "94,202101,37,06/07/2021 08:04:04,5737.6767,-16401.4038"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

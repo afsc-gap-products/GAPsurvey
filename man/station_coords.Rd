@@ -22,7 +22,7 @@ data('station_coords')
 Station centroid coordinates for each station for all surveys, as defined by the {akgfmaps} package.
 }
 \details{
-DETAILS
+Find code to create this table in ./inst/run.R
 }
 \examples{
 data(station_coords)

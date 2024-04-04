@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.01</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.04</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,47 +119,44 @@
     
     
 <div class="section level2">
-<h2 id="example-script-using-r-package-gapsurvey">Example Script Using R Package “GAPsurvey”<a class="anchor" aria-label="anchor" href="#example-script-using-r-package-gapsurvey"></a>
+<h2 id="example-script-using-r-package-gapsurvey">Example Script Using R Package <code>GAPsurvey</code><a class="anchor" aria-label="anchor" href="#example-script-using-r-package-gapsurvey"></a>
 </h2>
 <blockquote>
 <p>Last updated April 2024</p>
 </blockquote>
-<p>Open Rstudio script “example_script.R” (should be located on desktop,
-if you have this opened in R, you are already here! This is the
-example_script.R file!)</p>
-<div class="section level3">
-<h3 id="load-packages-only-need-to-do-this-once">Load Packages (only need to do this once<a class="anchor" aria-label="anchor" href="#load-packages-only-need-to-do-this-once"></a>
-</h3>
-</div>
-</div>
-<div class="section level2">
-<h2 id="install-r-package">install R package<a class="anchor" aria-label="anchor" href="#install-r-package"></a>
-</h2>
-<p>Rerun this only when there is a new version of the package to
-install.</p>
-<p>Install from <code>GitHub</code></p>
+<p>Open Rstudio script <code>example_script.R</code>. This should
+already be located on desktop, otherwise find it using the link
+below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"afsc-gap-products/GAPsurvey"</span><span class="op">)</span></span></code></pre></div>
-<p>or install from local file <code>.tar.gz</code></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"r/example_script.R"</span>, package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "C:/Users/emily.markowitz/AppData/Local/R/win-library/4.3/GAPsurvey/r/example_script.R"</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="install-r-package">Install R package<a class="anchor" aria-label="anchor" href="#install-r-package"></a>
+</h3>
+<p>Rerun this only when there is a new version of the package to
+install. The user may install from <code>GitHub</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/Users/User/Downloads/GAPsurvey_2023.04.01.tar.gz'</span>,</span>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"afsc-gap-products/GAPsurvey"</span><span class="op">)</span></span></code></pre></div>
+<p>or install from local file <code>.tar.gz</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># example, the user may have a different path</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/Users/User/Downloads/GAPsurvey_2023.04.04.tar.gz'</span>,</span>
 <span>                 repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">'source'</span><span class="op">)</span></span></code></pre></div>
+</div>
 <div class="section level3">
 <h3 id="load-libraries">Load libraries<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/afsc-gap-products/GAPsurvey" class="external-link">GAPsurvey</a></span><span class="op">)</span></span></code></pre></div>
+<p>Now we can use functions from <code>GAPSurvey</code>!</p>
 </div>
 <div class="section level3">
-<h3 id="use-functions-from-gapsurvey">Use functions from <code>GAPSurvey</code><a class="anchor" aria-label="anchor" href="#use-functions-from-gapsurvey"></a>
+<h3 id="what-have-we-historically-caught-at-this-station">What have we historically caught at this station?<a class="anchor" aria-label="anchor" href="#what-have-we-historically-caught-at-this-station"></a>
 </h3>
-<div class="section level4">
-<h4 id="what-have-we-historically-caught-at-this-station">What have we historically caught at this station?<a class="anchor" aria-label="anchor" href="#what-have-we-historically-caught-at-this-station"></a>
-</h4>
 <p>Learn more about and find examples using…</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">?</span><span class="va">get_catch_haul_history</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">get_catch_haul_history</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/get_catch_haul_history.html">get_catch_haul_history</a></span><span class="op">(</span></span>
 <span>  years <span class="op">=</span> <span class="fl">2021</span><span class="op">:</span><span class="fl">2023</span>, <span class="co"># optional; if you only want to see a specific year, not the last 10</span></span>
 <span>  species_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">21720</span>, <span class="fl">21740</span><span class="op">)</span>, <span class="co"># optional; pacific cod and walleye pollock ONLY</span></span>
@@ -217,34 +214,69 @@ install.</p>
 <span><span class="co">#&gt; 2       0.043081       0.531            1190</span></span>
 <span><span class="co">#&gt; 3       0.046484       0.516             812</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="what-time-is-sunrise-and-sunset">What time is sunrise and sunset?<a class="anchor" aria-label="anchor" href="#what-time-is-sunrise-and-sunset"></a>
-</h4>
+<div class="section level3">
+<h3 id="what-time-is-sunrise-and-sunset">What time is sunrise and sunset?<a class="anchor" aria-label="anchor" href="#what-time-is-sunrise-and-sunset"></a>
+</h3>
 <p>Learn more about and find examples using…</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">?</span><span class="va">get_sunrise_sunset</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                  survey <span class="op">=</span> <span class="st">"EBS"</span>,</span>
-<span>                  station <span class="op">=</span> <span class="st">"I-13"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using survey station (EBS I-13) centroid location information (lat = 57.667, lon = -160.23) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 07:58 AKST</span></span>
-<span><span class="co">#&gt; Sunset is at 21:28 AKST</span></span>
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">get_sunrise_sunset</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-06-10"</span>,</span>
+<span>                   survey <span class="op">=</span> <span class="st">"AI"</span>,</span>
+<span>                   station <span class="op">=</span> <span class="st">"33-47"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using survey station (AI 33-47) centroid location information (lat = 53.013, lon = 172.407) to calculate sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2024-06-10 08:04:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2024-06-10 00:54:00 AKDT</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2023-06-10"</span>,</span>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                   survey <span class="op">=</span> <span class="st">"GOA"</span>,</span>
-<span>                   station <span class="op">=</span> <span class="st">"7-7"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using survey station (GOA 7-7) centroid location information (lat = 52.603, lon = -169.462) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 06:54 AKST</span></span>
-<span><span class="co">#&gt; Sunset is at 23:39 AKST</span></span>
+<span>                   station <span class="op">=</span> <span class="st">"323-176"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using survey station (GOA 323-176) centroid location information (lat = 60.052, lon = -143.311) to calculate sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2024-04-04 06:47:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2024-04-03 20:24:00 AKDT</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2023-06-10"</span>,</span>
-<span>                   latitude <span class="op">=</span> <span class="fl">52.6</span>,</span>
-<span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">169.4364</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using latitude and longitude to calcualte sunrise and sunset. </span></span>
-<span><span class="co">#&gt; Sunrise is at 06:54 AKST</span></span>
-<span><span class="co">#&gt; Sunset is at 23:39 AKST</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-08-04"</span>,</span>
+<span>                   survey <span class="op">=</span> <span class="st">"EBS"</span>,</span>
+<span>                   station <span class="op">=</span> <span class="st">"P-31"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using survey station (EBS P-31) centroid location information (lat = 60, lon = -177.356) to calculate sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2024-08-04 07:38:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2024-08-04 00:12:00 AKDT</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-06-04"</span>,</span>
+<span>                   survey <span class="op">=</span> <span class="st">"NBS"</span>,</span>
+<span>                   station <span class="op">=</span> <span class="st">"ZZ-01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using survey station (NBS ZZ-01) centroid location information (lat = 63.334, lon = -168.244) to calculate sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2024-06-04 05:14:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2024-06-04 01:08:00 AKDT</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-08-04"</span>,</span>
+<span>                   survey <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                   latitude <span class="op">=</span> <span class="fl">60</span>,</span>
+<span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">162</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using latitude and longitude to calcualte sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2024-08-04 06:37:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2024-08-03 23:10:00 AKDT</span></span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt">Convert CTD data to BTD as a backup for SBE39 (aka ‘the BT’)<a class="anchor" aria-label="anchor" href="#convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">?</span><span class="va">convert_ctd_btd</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/convert_ctd_btd.html">convert_ctd_btd</a></span><span class="op">(</span></span>
+<span>  filepath_hex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/"</span>,</span>
+<span>                                    <span class="st">"SBE19plus_01908106_2023_06_18_0001.hex"</span><span class="op">)</span>,</span>
+<span>                             package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span>
+<span>  filepath_xmlcon <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exdata/convert_ctd_btd/"</span>,</span>
+<span>                                       <span class="st">"SBE19plusV2_8106_ph_DO_leg2.xmlcon"</span><span class="op">)</span>,</span>
+<span>                                package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span>,</span>
+<span>  VESSEL <span class="op">=</span> <span class="fl">162</span>,</span>
+<span>  CRUISE <span class="op">=</span> <span class="fl">202301</span>,</span>
+<span>  HAUL <span class="op">=</span> <span class="fl">97</span>,</span>
+<span>  latitude <span class="op">=</span> <span class="fl">59.01693</span>, <span class="co"># Approximate - for depth estimation</span></span>
+<span>  MODEL_NUMBER <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  VERSION_NUMBER <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  SERIAL_NUMBER <span class="op">=</span> <span class="fl">8106</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

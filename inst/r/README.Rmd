@@ -67,7 +67,7 @@ library(GAPsurvey)
 Use the below [bibtext citations]("https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITATION.bib") for citing the package created and maintained in this repo. Add "note = {Accessed: mm/dd/yyyy}" to append the day this data was accessed. 
 
 ```{r load_citation, echo = FALSE}
-cat(readLines(con = here::here("CITATION.bib")), sep = "\n") 
+cat(readLines(con = here::here("inst/CITATION.bib")), sep = "\n") 
 ```
 
 ## Metadata

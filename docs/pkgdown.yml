@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   example-script: example-script.html
-last_built: 2024-04-04T08:37Z
+last_built: 2024-04-04T23:25Z
 urls:
   reference: https://afsc-gap-products.github.io/GAPsurvey/reference
   article: https://afsc-gap-products.github.io/GAPsurvey/articles

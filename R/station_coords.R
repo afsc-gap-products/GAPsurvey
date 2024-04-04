@@ -12,5 +12,5 @@
 #' @keywords station survey data
 #' @examples
 #' data(station_coords)
-#' @details DETAILS
+#' @details Find code to create this table in ./inst/run.R
 'station_coords'

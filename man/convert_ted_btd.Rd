@@ -42,6 +42,14 @@ convert_ted_btd(
 Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
 }
 \examples{
+# input files
+readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.ted",
+  package = "GAPsurvey"))[1:5]
+readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.tet",
+  package = "GAPsurvey"))[1:5]
+readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.teh",
+  package = "GAPsurvey"))[1:5]
+#' run function
 convert_ted_btd(
    VESSEL = 94,
    CRUISE = 201901,
@@ -52,4 +60,9 @@ convert_ted_btd(
    path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
    path_out = getwd(),
    filename_add = "newted")
+# output files
+readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTD",
+  package = "GAPsurvey"))[1:5]
+readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTH",
+  package = "GAPsurvey"))[1:5]
 }

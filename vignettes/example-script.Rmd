@@ -16,28 +16,28 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Example Script Using R Package "GAPsurvey"
+# Example Script Using R Package `GAPsurvey`
 
 > Last updated April 2024
 
-Open Rstudio script "example_script.R" (should be located on desktop, if you have this opened in R, you are already here! This is the example_script.R file!)
+Open Rstudio script `example_script.R`. This should already be located on desktop, otherwise find it using the link below. 
 
-## Load Packages (only need to do this once
+```{r find-example-script}
+system.file("r/example_script.R", package = "GAPsurvey")
+```
+## Install R package
 
-# install R package
-
-Rerun this only when there is a new version of the package to install. 
-
-Install from `GitHub`
+Rerun this only when there is a new version of the package to install. The user may install from `GitHub`:
 
 ```{r install-github, eval = FALSE}
 devtools::install_github("afsc-gap-products/GAPsurvey")
 ```
 
-or install from local file `.tar.gz`
+or install from local file `.tar.gz`:
 
 ```{r install-local, eval = FALSE}
-install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.01.tar.gz',
+# example, the user may have a different path
+install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.04.tar.gz',
                  repos=NULL, type='source')
 ```
 
@@ -47,9 +47,9 @@ install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.01.tar.gz',
 library(GAPsurvey)
 ```
 
-## Use functions from `GAPSurvey`
+Now we can use functions from `GAPSurvey`! 
 
-### What have we historically caught at this station?
+## What have we historically caught at this station?
 
 Learn more about and find examples using...
 
@@ -65,7 +65,7 @@ get_catch_haul_history(
   station = "I-13") # for example
 ```
 
-### What time is sunrise and sunset?
+## What time is sunrise and sunset?
 
 Learn more about and find examples using...
 
@@ -74,16 +74,49 @@ Learn more about and find examples using...
 ```
 
 ```{r get_sunrise_sunset-use}
+get_sunrise_sunset(chosen_date = "2024-06-10",
+                   survey = "AI",
+                   station = "33-47")
+
 get_sunrise_sunset(chosen_date = Sys.Date(),
-                  survey = "EBS",
-                  station = "I-13")
-
-get_sunrise_sunset(chosen_date = "2023-06-10",
                    survey = "GOA",
-                   station = "7-7")
+                   station = "323-176")
 
-get_sunrise_sunset(chosen_date = "2023-06-10",
-                   latitude = 52.6,
-                   longitude = -169.4364)
+get_sunrise_sunset(chosen_date = "2024-08-04",
+                   survey = "EBS",
+                   station = "P-31")
+
+get_sunrise_sunset(chosen_date = "2024-06-04",
+                   survey = "NBS",
+                   station = "ZZ-01")
+
+get_sunrise_sunset(chosen_date = "2024-08-04",
+                   survey = NULL,
+                   latitude = 60,
+                   longitude = -162)
 ```
+
+## Convert CTD data to BTD as a backup for SBE39 (aka 'the BT')
+
+```{r convert_ctd_btd, eval =  FALSE}
+?convert_ctd_btd
+```
+
+```{r convert_ctd_btd-use, eval = FALSE}
+convert_ctd_btd(
+  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+                                    "SBE19plus_01908106_2023_06_18_0001.hex"),
+                             package = "GAPsurvey"),
+  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+                                       "SBE19plusV2_8106_ph_DO_leg2.xmlcon"),
+                                package = "GAPsurvey"),
+  VESSEL = 162,
+  CRUISE = 202301,
+  HAUL = 97,
+  latitude = 59.01693, # Approximate - for depth estimation
+  MODEL_NUMBER = "",
+  VERSION_NUMBER = "",
+  SERIAL_NUMBER = 8106)
+```
+
 
