@@ -622,9 +622,9 @@ calc_net_spread <- function(dat) {
 #'                    survey = "GOA",
 #'                    station = "323-176")
 #' # Find times based on a survey (AI) station's recorded lat/lon for today's date
-#' # get_sunrise_sunset(chosen_date = "2023-06-10",
-#' #                     survey = "AI",
-#' #                    station = "33-47")
+#' get_sunrise_sunset(chosen_date = "2023-06-10",
+#'                     survey = "AI",
+#'                    station = "33-47")
 
 get_sunrise_sunset <- function(
     chosen_date,
@@ -635,46 +635,15 @@ get_sunrise_sunset <- function(
     verbose = FALSE,
     timezone = "US/Alaska") {
 
-  # Function to format dates
-  format_date <- function(x) {
-
-    if(x > 24) {
-      x <- x - 24
-    }
-
-    hour <- unlist(strsplit(as.character(floor(x)), split = ""))
-
-    hour_vec <- c("0", "0")
-
-    if(length(hour) == 2) {
-      hour_vec <- hour
-    } else {
-      hour_vec[2] <- hour
-    }
-
-    min_vec <- c("0", "0")
-
-    minutes <- unlist(strsplit(as.character(floor(x%%1*60)), split = ""))
-
-    if(length(minutes) == 2) {
-      min_vec <- minutes
-    } else {
-      min_vec[2] <- minutes
-    }
-
-    out <- paste0(paste(hour_vec, collapse = ""), ":", paste(min_vec, collapse = ""))
-
-    return(out)
-
-  }
-
-  chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
+  chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = "UTC")
 
   if (timezone == "US/Alaska") {
     sel_tz <- -8
   } else if (timezone == "US/Aleutian") {
     sel_tz <- -9
   }
+
+  chosen_date <- chosen_date + -1 * sel_tz * 3600 + 1
 
   # Are lat/long in degrees and decimal mins? If so, convert to decimal degrees.
   if (!is.null(latitude) | !is.null(longitude)) {
@@ -719,50 +688,87 @@ get_sunrise_sunset <- function(
 
   }
 
-  # crds0 = matrix(c(longitude, latitude),
-  #                nrow = 1)
-
   date_vec <- unlist(strsplit(as.character(chosen_date), split = ""))
 
   ac4r_output <- astrcalc4r(
     day = as.numeric(paste(date_vec[9:10], collapse = "")),
     month = as.numeric(paste(date_vec[6:7], collapse = "")),
     year = as.numeric(paste(date_vec[1:4], collapse = "")),
-    hour = 7,
-    # Arguments longitude and timezone must have the same sign if input time is
-    # not UTC (timezone != 0).  In particular, if timezone !=0, both lon and timezone must
-    # be negative for locations in western hemisphere and positive for locations in the
-    # eastern hemisphere.  Check and fix input data if warranted. If data are correct
-    # then convert input time (argument hour) to UTC and use timezone=zero.
-    # This problem  occurs  1  times at rows:  1
-    timezone = sel_tz,
+    hour = ifelse(length(date_vec) > 12,
+                  as.numeric(paste(date_vec[12:13], collapse = "")),
+                  12),
+    timezone = 0, # UTC
     lat = latitude,
     lon = longitude,
     withinput = FALSE,
     seaorland = "maritime",
     acknowledgment = FALSE)
 
-  sunrise <- format_date(ac4r_output$sunrise)
-  sunset <- format_date(ac4r_output$sunset)
+  sunrise <- format_date(x = ac4r_output$sunrise,
+                         x_date = chosen_date,
+                         tz = timezone,
+                         hour_offset = sel_tz)
 
-  # sunrise <- maptools::sunriset(
-  #   crds = crds0,
-  #   dateTime = chosen_date,
-  #   direction = "sunrise",
-  #   POSIXct.out = TRUE
-  # )$time
-  #
-  # sunset <- maptools::sunriset(
-  #   crds = crds0,
-  #   dateTime = chosen_date,
-  #   direction = "sunset",
-  #   POSIXct.out = TRUE
-  # )$time
+  sunset <- format_date(x = ac4r_output$sunset,
+                        x_date = chosen_date,
+                        tz = timezone,
+                        hour_offset = sel_tz)
 
   message(
-    "Sunrise is at ", sunrise, " AKST",
-    "\nSunset is at ", sunset, " AKST"
+    "Sunrise is at ", format(sunrise, "%Y-%m-%d %H:%M:%S %Z"),
+    "\nSunset is at ", format(sunset, "%Y-%m-%d %H:%M:%S %Z")
   )
+}
+
+
+
+#' Format output of astrocalc4r to a date/time object string
+#'
+#' Internal function used by get_sunrise_sunset()
+#'
+#' @param tz time zone as a character vector. See ?as.POSIXlt for details
+#' @param hour_offset offset in hours relative to UTC (America/Anchorage = -8)
+#' @param x_date date as a character, Date, or POSIXct object
+#' @noRd
+
+format_date <- function(x, x_date, hour_offset, tz) {
+
+  x_date <- as.Date(x_date)
+
+  if(x > 24) {
+    x <- x - 24
+  }
+
+  if(x < 0) {
+    x <- 24 + x
+  }
+
+  hour <- unlist(strsplit(as.character(floor(x)), split = ""))
+
+  hour_vec <- c("0", "0")
+
+  if(length(hour) == 2) {
+    hour_vec <- hour
+  } else {
+    hour_vec[2] <- hour
+  }
+
+  min_vec <- c("0", "0")
+
+  minutes <- unlist(strsplit(as.character(floor(x%%1*60)), split = ""))
+
+  if(length(minutes) == 2) {
+    min_vec <- minutes
+  } else {
+    min_vec[2] <- minutes
+  }
+
+  out <- paste0(paste(hour_vec, collapse = ""), ":", paste(min_vec, collapse = ""))
+
+  out <- as.POSIXct(x = paste0(as.character(x_date), " ", out), tz = tz) + (3600 * hour_offset)
+
+  return(out)
+
 }
 
 
