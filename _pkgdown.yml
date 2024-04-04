@@ -65,14 +65,6 @@ reference:
       # - starts_with("get_")
       - '`convert_ted_btd`'
       - '`convert_ctd_btd`'
-      - '`convert_do_to_o2sat`'
-      - '`extract_calibration_xmlcon`'
-      - '`get_calibration_parameter`'
-      - '`integer_to_conductivity`'
-      - '`integer_to_ph`'
-      - '`integer_to_pressure`'
-      - '`integer_to_temperature`'
-      - '`oxygen_saturation`'
   - title: Estimate Net Spread
     contents:
       - '`calc_net_spread`'
@@ -83,14 +75,12 @@ reference:
   - title: Datasets
     contents:
       - '`public_data`'
+      - '`station_coords`'
       - '`species_data`'
       - '`PolySpecies`'
-      - '`station_coords`'
   - title: Helper Functions
     contents:
       - '`numbers0`'
       - '`fix_path`'
       - '`text_list`'
-      - '`hex_to_cnv`'
-      - '`tau_par`'
 
