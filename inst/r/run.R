@@ -94,7 +94,8 @@ WHERE cc.WEIGHT_KG > 0" ) %>%
   janitor::clean_names()
 
 # Save table to local directory
-save(public_data, file = here::here("data", "public_data.rda"))
+# https://stackoverflow.com/questions/70503726/warning-lazydata-db-of-mb-without-lazydatacompression-set
+save(public_data, file ="./data/public_data.rda", compress = "xz")
 
 column <- metadata_colname %>%
   dplyr::filter(metadata_colname %in% toupper(names(public_data))) %>%
@@ -155,7 +156,7 @@ station_coords <- station_coords %>%
   dplyr::filter(!is.na(longitude_dd)) %>%
   dplyr::filter(!is.na(latitude_dd))
 
-save(station_coords, file = "./data/station_coords.rda")
+save(station_coords, file = "./data/station_coords.rda", compress = "xz")
 
 column <- metadata_colname %>%
   dplyr::filter(metadata_colname %in% toupper(names(station_coords))) %>%
@@ -196,7 +197,7 @@ WHERE SURVEY_SPECIES = 1" ) %>%
                 common_name,
                 scientific_name = species_name)
 
-save(species_data, file = "./data/species_data.rda")
+save(species_data, file = "./data/species_data.rda", compress = "xz")
 
 column <- metadata_colname %>%
   dplyr::filter(metadata_colname %in% toupper(names(species_data))) %>%
@@ -211,8 +212,9 @@ str0 <- paste0("#' @title Subsetted species data
                ncol(species_data)," variables.
 #' \\describe{
 ",
-               paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ", column$metadata_colname_desc,"}"), collapse = "\n"),
-               "#'   }
+paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ",
+              column$metadata_colname_desc,"}"), collapse = "\n"),
+"#'   }
 #' @source https://github.com/afsc-gap-products/gap_products
 #' @keywords species code data
 #' @examples
@@ -225,14 +227,27 @@ write.table(str0,
             file = here::here("R","species_data.R"),
             sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
+# README -----------------------------------------------------------------------
+
+library(here)
+library(devtools)
+library(usethis)
+library(roxygen2)
+library(RODBC)
+library(gapctd)
+library(akgfmaps)
+library(magrittr)
+library(readr)
+library(dplyr)
+library(pkgdown)
+
+rmarkdown::render(here::here("inst", "r", "README.Rmd"),
+                  output_dir = "./",
+                  output_file = "README.md")
+
 # Document and create Package --------------------------------------------------
-
-# library(remotes)
-# remotes::install_github("DTUAqua/DATRAS/DATRAS")
-
 .rs.restartR()
 
-# options(rmarkdown.html_vignette.check_title = FALSE)
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 library(here)
 library(devtools)
@@ -250,21 +265,18 @@ setwd(here::here())
 
 .rs.restartR()
 # devtools::install_github("rstudio/fontawesome", force = T)
-# library(fontawesome)
+library(fontawesome)
 library(here)
 library(usethis)
 library(pkgdown)
-rmarkdown::render(here::here("inst", "r", "README.Rmd"),
-                  output_dir = "./",
-                  output_file = "README.md")
+
 
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
 # devtools::build_vignettes()
 # usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
-
+# usethis::use_vignette("my-vignette")
 # pkgdown::clean_site()
-# pkgdown::build_site(pkg = here::here())
 # pkgdown::build_site()
 pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")

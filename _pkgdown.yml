@@ -1,4 +1,96 @@
-url: ~
+url: 'https://afsc-gap-products.github.io/GAPsurvey/'
+csl: 'https://raw.githubusercontent.com/citation-style-language/styles/master/apa-no-ampersand.csl'
+bibliography: 'https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/bibliography.bib'
+
 template:
   bootstrap: 5
+  bslib:
+    pkgdown-nav-height: 100px
+
+news:
+  one_page: true
+
+footer:
+  structure:
+    right: FALSE
+    left: built_with
+
+navbar:
+  structure:
+    left: [reference, articles, news]
+    right: [email, issues, github, homepage]
+  components:
+    email:
+      icon: fas fa-paper-plane fa-lg
+      href: mailto:nmfs.afsc.gap.metadata@noaa.gov
+      aria-label: email
+    issues:
+      icon: fas fa-question-circle fa-lg
+      href: https://github.com/afsc-gap-products/GAPsurvey/issues/
+      aria-label: issues
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/afsc-gap-products/GAPsurvey
+      aria-label: github
+    homepage:
+      icon: fa-fish
+      href: https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys
+      aria-label: homepage
+    reference:
+      text: Functions
+      icon: far fa-file-code fa-lg
+      href: reference/index.html
+    articles:
+      text: Articles
+      icon: fa-newspaper # https://fontawesome.com/icons/newspaper?f=classic&s=regular
+      menu:
+      - text: Example got-to script
+        href: articles/example-script.html
+    news:
+     text: Release Notes
+     icon: fas fa-bullhorn fa-lg
+     href: 'https://github.com/afsc-gap-products/GAPsurvey/releases'
+    # citation:
+    #  # text: Citation
+    #  icon: fa-location-dot # https://fontawesome.com/icons/location-dot?f=classic&s=solid
+    #  href: 'https://github.com/afsc-gap-products/GAPsurvey/blob/main/CITATION.bib'
+
+reference:
+  - title: Marport and Globe Converters
+    contents:
+      - '`convert_log_gps`'
+      - '`convert_bvdr_marp`'
+  - title: CTD Converters & Tools
+    contents:
+      # - starts_with("get_")
+      - '`convert_ted_btd`'
+      - '`convert_ctd_btd`'
+      - '`convert_do_to_o2sat`'
+      - '`extract_calibration_xmlcon`'
+      - '`get_calibration_parameter`'
+      - '`integer_to_conductivity`'
+      - '`integer_to_ph`'
+      - '`integer_to_pressure`'
+      - '`integer_to_temperature`'
+      - '`oxygen_saturation`'
+  - title: Estimate Net Spread
+    contents:
+      - '`calc_net_spread`'
+  - title: Resources
+    contents:
+      - '`get_catch_haul_history`'
+      - '`get_sunrise_sunset`'
+  - title: Datasets
+    contents:
+      - '`public_data`'
+      - '`species_data`'
+      - '`PolySpecies`'
+      - '`station_coords`'
+  - title: Helper Functions
+    contents:
+      - '`numbers0`'
+      - '`fix_path`'
+      - '`text_list`'
+      - '`hex_to_cnv`'
+      - '`tau_par`'
 

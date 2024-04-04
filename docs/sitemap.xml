@@ -1,117 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/404.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/articles/example-script.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/articles/index.html</loc>
   </url>
   <url>
-    <loc>/License.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/authors.html</loc>
   </url>
   <url>
-    <loc>/reference/BVDRtoMARP.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/index.html</loc>
   </url>
   <url>
-    <loc>/reference/calc_net_spread.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/License.html</loc>
   </url>
   <url>
-    <loc>/reference/calc_volumetric_tow.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/BVDRtoMARP.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_bvdr_marp.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/calc_net_spread.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_ctd_btd.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/calc_volumetric_tow.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_ctd_hex.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_bvdr_marp.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_do_to_o2sat.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ctd_btd.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_log_gps.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ctd_hex.html</loc>
   </url>
   <url>
-    <loc>/reference/convert_ted_btd.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_do_to_o2sat.html</loc>
   </url>
   <url>
-    <loc>/reference/CTDtoBTD.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_log_gps.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_calibration_xmlcon.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ted_btd.html</loc>
   </url>
   <url>
-    <loc>/reference/fix_path.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/CTDtoBTD.html</loc>
   </url>
   <url>
-    <loc>/reference/get_calibration_parameter.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/extract_calibration_xmlcon.html</loc>
   </url>
   <url>
-    <loc>/reference/get_catch_haul_history.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/fix_path.html</loc>
   </url>
   <url>
-    <loc>/reference/get_sunrise_sunset.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/get_calibration_parameter.html</loc>
   </url>
   <url>
-    <loc>/reference/hex_to_cnv.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/get_catch_haul_history.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/get_sunrise_sunset.html</loc>
   </url>
   <url>
-    <loc>/reference/integer_to_conductivity.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/hex_to_cnv.html</loc>
   </url>
   <url>
-    <loc>/reference/integer_to_ph.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/integer_to_pressure.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/integer_to_conductivity.html</loc>
   </url>
   <url>
-    <loc>/reference/integer_to_temperature.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/integer_to_ph.html</loc>
   </url>
   <url>
-    <loc>/reference/LOGtoGPS.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/integer_to_pressure.html</loc>
   </url>
   <url>
-    <loc>/reference/netSpread.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/integer_to_temperature.html</loc>
   </url>
   <url>
-    <loc>/reference/numbers0.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/LOGtoGPS.html</loc>
   </url>
   <url>
-    <loc>/reference/oxygen_saturation.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/netSpread.html</loc>
   </url>
   <url>
-    <loc>/reference/PolySpecies.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/numbers0.html</loc>
   </url>
   <url>
-    <loc>/reference/public_data.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/oxygen_saturation.html</loc>
   </url>
   <url>
-    <loc>/reference/species_data.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/PolySpecies.html</loc>
   </url>
   <url>
-    <loc>/reference/sp_table.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/public_data.html</loc>
   </url>
   <url>
-    <loc>/reference/station_coords.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/species_data.html</loc>
   </url>
   <url>
-    <loc>/reference/tau_par.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/sp_table.html</loc>
   </url>
   <url>
-    <loc>/reference/TEDtoBTD.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/station_coords.html</loc>
   </url>
   <url>
-    <loc>/reference/text_list.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/tau_par.html</loc>
   </url>
   <url>
-    <loc>/reference/volumetric_tow.html</loc>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/TEDtoBTD.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/text_list.html</loc>
+  </url>
+  <url>
+    <loc>https://afsc-gap-products.github.io/GAPsurvey/reference/volumetric_tow.html</loc>
   </url>
 </urlset>

@@ -1349,24 +1349,3 @@ fix_path <- function(path) {
 #' @examples
 #' data(PolySpecies)
 "PolySpecies"
-
-
-#' @title species data codes
-#' @description RACEBASE Species Codes and Scientific Names Data Set
-#' @usage data(species_data)
-#' @author Sarah Friedman (sarah.friedman AT noaa.gov)
-#' @format A data frame with 172 rows and 4 variables:
-#' \describe{
-#'   \item{\code{species_code}}{integer Species code}
-#'   \item{\code{common_name}}{integer Poly species code}
-#'   \item{\code{scientific_name}}{character Species scientific latin name}
-#'   \item{\code{scientific_name_old}}{character Species scientific latin name used previously}
-#'}
-#' @details DETAILS
-#' @keywords species scientific code data
-#' @examples
-#' data(species_data)
-"species_data"
-
-
-

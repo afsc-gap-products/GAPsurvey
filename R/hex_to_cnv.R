@@ -21,8 +21,10 @@
 #' # CTD without auxiliary sensors
 #'
 #'convert_ctd_btd(
-#'  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/", "2021_06_13_0003.hex"), package = "GAPsurvey"),
-#'  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/", "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
+#'  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+#'    "2021_06_13_0003.hex"), package = "GAPsurvey"),
+#'  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+#'    "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
 #'  latitude = 55,
 #'  VESSEL = 94,
 #'  CRUISE = 202101,
@@ -32,8 +34,10 @@
 #' # CTD with DO and pH sensors
 #'
 #' convert_ctd_btd(
-#'   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/", "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-#'   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/", "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
+#'   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+#'     "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
+#'   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+#'     "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
 #'   VESSEL = 162,
 #'   CRUISE = 202301,
 #'   HAUL = 97,
@@ -112,7 +116,7 @@ convert_ctd_btd <- function(filepath_hex,
                           grep(pattern = "temperature", x = tolower(data_channel_lines))
                           )
 
-  scan_data <- read.table(file = filepath_cnv,
+  scan_data <- utils::read.table(file = filepath_cnv,
                           skip = grep(pattern = "*END*", x = data0))[, data_channel_index]
 
   names(scan_data) <- c("time_elapsed", "pressure", "temperature")
@@ -881,7 +885,7 @@ write_to_cnv <- function(data_list, output_path) {
                        " [Instrument's time stamp, header]"))
   out <- c(out, paste0("# bad_flag = -9.990e-29"))
   out <- c(out, paste0("# gapctd_date = ", format(Sys.time(), "%b %d %Y %T"),
-                       ", GAPSurvey ", gsub(pattern = "[^0-9.-]", "", packageVersion("GAPSurvey"))))
+                       ", GAPSurvey ", gsub(pattern = "[^0-9.-]", "", utils::packageVersion("GAPSurvey"))))
   out <- c(out, paste0("# gapctd_in = ", dl$hex_path))
   out <- c(out, paste0("# file_type = ascii"))
   out <- c(out, "*END*")

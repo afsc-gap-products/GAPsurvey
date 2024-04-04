@@ -47,3 +47,4 @@ vignettes/*.pdf
 /notforgit
 /archive
 *.Rproj
+inst/doc

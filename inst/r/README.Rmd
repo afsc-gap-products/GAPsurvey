@@ -42,7 +42,6 @@ Seattle, WA 98195
 
 ### *At-sea data management tools for RACE GAP surveys*
 
-
 ```{r, echo = FALSE, results='asis', message=FALSE}
 cat(
   badge_devel("afsc-gap-products/GAPsurvey", "blue"),
@@ -57,9 +56,18 @@ cat(
 library(devtools)
 
 devtools::install_github("afsc-gap-products/GAPsurvey")
-library(GAPsurvey)
-# Alternatively
+# Or
 remotes::install_github("afsc-gap-products/GAPsurvey@main")
+
+library(GAPsurvey)
+```
+
+## Cite this data
+
+Use the below [bibtext citations]("https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITATION.bib") for citing the package created and maintained in this repo. Add "note = {Accessed: mm/dd/yyyy}" to append the day this data was accessed. 
+
+```{r load_citation, echo = FALSE}
+cat(readLines(con = here::here("CITATION.bib")), sep = "\n") 
 ```
 
 ## Metadata
@@ -84,4 +92,3 @@ Software code created by U.S. Government employees is not subject to copyright i
 [U.S. Department of Commerce](https://www.commerce.gov/) | [National
 Oceanographic and Atmospheric Administration](https://www.noaa.gov) |
 [NOAA Fisheries](https://www.fisheries.noaa.gov/)
-
