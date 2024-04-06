@@ -1,7 +1,7 @@
 Package: GAPsurvey
 Type: Package
 Title: Provides at-sea data management tools for RACE GAP surveys
-Version: 2024.04.04
+Version: 2024.04.05
 License: GPL-3
 Authors@R: 
   c(person(given = "Emily",

@@ -15,7 +15,7 @@ if (file.exists("Z:/Projects/ConnectToOracle.R")) {
   # library(devtools)
   # devtools::install_github("afsc-gap-products/gapindex")
   library(gapindex)
-  gapindex::get_connected()
+  channel <- gapindex::get_connected()
 }
 
 # Load column metadata table ---------------------------------------------------
@@ -23,7 +23,7 @@ if (file.exists("Z:/Projects/ConnectToOracle.R")) {
 metadata_table_comment <- dplyr::bind_rows(
   # tables
   RODBC::sqlQuery(
-    channel = channel_products,
+    channel = channel,
     query = "SELECT table_name, comments
 FROM all_tab_comments
 WHERE owner = 'GAP_PRODUCTS'
@@ -31,20 +31,20 @@ ORDER BY table_name") %>%
     data.frame(),
   # materialized view
   RODBC::sqlQuery(
-    channel = channel_products,
+    channel = channel,
     query = "SELECT *FROM user_mview_comments") %>%
     data.frame() %>%
     dplyr::rename(TABLE_NAME = MVIEW_NAME) )
 
 metadata_colname <- RODBC::sqlQuery(
-  channel = channel_products,
+  channel = channel,
   query = "SELECT * FROM GAP_PRODUCTS.METADATA_COLUMN") %>%
   janitor::clean_names()
 
 ## FOSS catch and haul data ----------------------------------------------------
 
 public_data <- RODBC::sqlQuery(
-  channel = channel_products,
+  channel = channel,
   query =
     "SELECT
 hh.YEAR,
@@ -191,7 +191,7 @@ write.table(str0, file = "./R/station_coords.R", sep = "\t",
 ## Taxonomic data --------------------------------------------------------------
 
 species_data <- RODBC::sqlQuery(
-  channel = channel_products,
+  channel = channel,
   query =
     "SELECT *
 FROM GAP_PRODUCTS.TAXONOMIC_CLASSIFICATION
@@ -287,11 +287,11 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2023.04.04"
-file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
-file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
-devtools::build()
-file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"),
-          to = paste0(here::here(), "/GAPsurvey_",date0,".tar.gz"),
-          overwrite = TRUE)
+date0 <- "2024.04.05"
+# file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
+# file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
+devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
+# file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"),
+#           to = paste0(here::here(), "/GAPsurvey_",date0,".tar.gz"),
+#           overwrite = TRUE)
 
