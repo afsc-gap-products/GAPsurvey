@@ -1021,9 +1021,9 @@ get_catch_haul_history <- function(
 
 # Helper Functions ------------------------------------------------------------------------
 
-#' Takes a string of words and combines them into a sentance that lists them.
+#' Takes a string of words and combines them into a sentence that lists them.
 #'
-#' This function alows you to take a string of words and combine them into a sentance list. For example, 'apples', 'oranges', 'pears' would become 'apples, oranges, and pears'. This function uses oxford commas.
+#' This function allows you to take a string of words and combine them into a sentence list. For example, 'apples', 'oranges', 'pears' would become 'apples, oranges, and pears'. This function uses oxford commas.
 #' @param x Character strings you want in your string.
 #' @param oxford T/F: would you like to use an oxford comma? Default = TRUE
 #' @param sep string. default = "," but ";" might be what you need!
@@ -1048,7 +1048,7 @@ text_list<-function(x, oxford = TRUE, sep = ",") {
   return(str1)
 }
 
-#' Make numbers the same length preceeded by 0s
+#' Make numbers the same length preceded by 0s
 #'
 #' @param x a single or vector of values that need to be converted from something like 1 to "001"
 #' @param number_places default = NA. If equal to NA, the function will take use the longest length of a value provided in x (example 1). If equal to a number, it will make sure that every number is the same length of number_places (example 2) or larger (if a value of x has more places than number_places(example 3)).
