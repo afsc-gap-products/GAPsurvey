@@ -1,9 +1,6 @@
 
 # Connect to oracle ------------------------------------------------------------
 
-# This has a specific username and password because I DONT want people to have access to this!
-# source("https://raw.githubusercontent.com/afsc-gap-products/metadata/main/code/functions_oracle.R")
-
 library(magrittr)
 library(readr)
 library(dplyr)
@@ -269,12 +266,10 @@ setwd(here::here())
 ## Create Documentation GitHub-Pages -------------------------------------------
 
 .rs.restartR()
-# devtools::install_github("rstudio/fontawesome", force = T)
-library(fontawesome)
+library(fontawesome) # # devtools::install_github("rstudio/fontawesome", force = T)
 library(here)
 library(usethis)
 library(pkgdown)
-
 
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
@@ -282,16 +277,11 @@ library(pkgdown)
 # usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
 # usethis::use_vignette("my-vignette")
 # pkgdown::clean_site()
-# pkgdown::build_site()
 pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
 date0 <- "2024.04.05"
-# file.remove(paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"))
-# file.remove(paste0((here::here()), "/GAPsurvey_",date0,".tar.gz"))
 devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
-# file.copy(from = paste0(dirname(here::here()), "/GAPsurvey_",date0,".tar.gz"),
-#           to = paste0(here::here(), "/GAPsurvey_",date0,".tar.gz"),
-#           overwrite = TRUE)
+
 
