@@ -32,7 +32,7 @@ ORDER BY table_name") %>%
   # materialized view
   RODBC::sqlQuery(
     channel = channel,
-    query = "SELECT *FROM user_mview_comments") %>%
+    query = "SELECT * FROM user_mview_comments") %>%
     data.frame() %>%
     dplyr::rename(TABLE_NAME = MVIEW_NAME) )
 
