@@ -15,7 +15,7 @@
 
 # devtools::install_github("afsc-gap-products/GAPsurvey")
 # or
-install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.04.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2023.04.05.tar.gz',
                  repos=NULL, type='source')
 
 # Load libraries as needed -----------------------------------------------------
