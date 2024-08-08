@@ -255,8 +255,10 @@ convert_log_gps <- function(
   infoselect<-cbind(info,only.GPRMC)
   colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
   # head(infoselect)
+  hh2 <- sprintf("%06d",infoselect$TIME) # add leading zeroes
+  hh = as.numeric(substr(hh2, start = 1, stop = 2))
 
-  hh=as.numeric(substr(infoselect$"TIME",start=1, stop=2))
+  #hh=as.numeric(substr(infoselect$"TIME",start=1, stop=2))
   hh=ifelse(hh<8,hh+24,hh)-8
   hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
   mm=substr(infoselect$"TIME",start=3, stop=4)
