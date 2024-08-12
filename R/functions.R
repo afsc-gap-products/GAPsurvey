@@ -256,13 +256,13 @@ convert_log_gps <- function(
   colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
   # head(infoselect)
 
-  hh <- as.numeric(infoselect$TIME) # sometimes this reads as chr and sometimes as num so force to num
-  hh <- sprintf("%06d", hh) # add leading zeroes
-  hh = as.numeric(substr(hh2, start = 1, stop = 2))
+  tstamp <- as.numeric(infoselect$TIME) # sometimes this reads as chr and sometimes as num so force to num
+  tstamp <- sprintf("%06d", tstamp) # add leading zeroes
+  hh = as.numeric(substr(tstamp, start = 1, stop = 2))
   hh=ifelse(hh<8,hh+24,hh)-8 # convert to AKDT
   hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
-  mm=substr(infoselect$"TIME",start=3, stop=4)
-  ss=substr(infoselect$"TIME",start=5, stop=6)
+  mm=substr(tstamp,start=3, stop=4)
+  ss=substr(tstamp,start=5, stop=6)
   DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
 
   lat1=as.numeric(as.character(infoselect$LAT1))
@@ -282,7 +282,7 @@ convert_log_gps <- function(
                      ".gps")
 
   new_gps1<-new_gps
-  names(new_gps1) <- NULL
+  #names(new_gps1) <- NULL
   new_gps1 <- as.matrix(new_gps1)
 
   utils::write.table(x = new_gps1,
@@ -290,7 +290,7 @@ convert_log_gps <- function(
                      quote=FALSE,
                      sep = ",",
                      row.names=FALSE,
-                     col.names = FALSE,
+                     col.names = TRUE,
                      eol="\n")
 
   message(paste0("Your new .gps files are saved to ", filename))
