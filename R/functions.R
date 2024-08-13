@@ -191,7 +191,7 @@ convert_ted_btd <- function(
 #' @param path_out Optional. The default is the local working directory but may be specified with a string.
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.
 #'
-#' @return A .GPS file to the path_out directory.
+#' @return A .GPS file to the path_out directory with DATE/TIME in AKDT.
 #' @export
 #'
 #' @examples
@@ -256,8 +256,8 @@ convert_log_gps <- function(
   colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
   # head(infoselect)
 
-  tstamp <- as.numeric(infoselect$TIME) # sometimes this reads as chr and sometimes as num so force to num
-  tstamp <- sprintf("%06d", tstamp) # add leading zeroes
+  tstamp <- as.character(infoselect$TIME) # sometimes this reads as chr and sometimes as num so force to chr
+  tstamp <- sprintf("%06s", tstamp) # add leading zeroes
   hh = as.numeric(substr(tstamp, start = 1, stop = 2))
   hh=ifelse(hh<8,hh+24,hh)-8 # convert to AKDT
   #hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
