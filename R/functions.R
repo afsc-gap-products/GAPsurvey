@@ -229,12 +229,19 @@ convert_log_gps <- function(
     DATE = NA,
     path_in,
     path_out = "./",
-    filename_add = ""){
-
-  if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
-  if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
-  if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
-  if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
+    filename_add = "") {
+  if (is.na(VESSEL)) {
+    VESSEL <- readline("Type vessel code:  ")
+  }
+  if (is.na(CRUISE)) {
+    CRUISE <- readline("Type cruise number:  ")
+  }
+  if (is.na(HAUL)) {
+    HAUL <- readline("Type haul number:  ")
+  }
+  if (is.na(DATE)) {
+    DATE <- readline("Type date of haul (MM/DD/YYYY):  ")
+  }
 
   path_in <- fix_path(path_in)
   file.name <- path_in
@@ -245,52 +252,57 @@ convert_log_gps <- function(
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
 
-  log.file<-utils::read.csv(file.name,header=F, sep=",")
+  log.file <- utils::read.csv(file.name, header = F, sep = ",")
 
-  only.GPRMC<-log.file[log.file$V1=="$GPRMC",]
+  only.GPRMC <- log.file[log.file$V1 == "$GPRMC", ]
   # head(only.GPRMC)
-  only.GPRMC<-only.GPRMC[,c(2,4,5,6,7)]
+  only.GPRMC <- only.GPRMC[, c(2, 4, 5, 6, 7)]
   # head(only.GPRMC)
-  info<-cbind(VESSEL, CRUISE, HAUL, DATE)
-  infoselect<-cbind(info,only.GPRMC)
-  colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
+  info <- cbind(VESSEL, CRUISE, HAUL, DATE)
+  infoselect <- cbind(info, only.GPRMC)
+  colnames(infoselect) <- c("VESSEL", "CRUISE", "HAUL", "DATE", "TIME", "LAT1", "LAT2", "LONG1", "LONG2")
   # head(infoselect)
 
   tstamp <- round(as.numeric(infoselect$TIME)) # sometimes this reads as chr and sometimes as num so force to num. Sometimes a decimal timestamp will break it if you don't round.
   tstamp <- sprintf("%06d", tstamp) # add leading zeroes
-  hh = as.numeric(substr(tstamp, start = 1, stop = 2))
-  hh=ifelse(hh<8,hh+24,hh)-8 # convert to AKDT
-  mm=substr(tstamp,start=3, stop=4)
-  ss=substr(tstamp,start=5, stop=6)
-  DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
+  hh <- as.numeric(substr(tstamp, start = 1, stop = 2))
+  hh <- ifelse(hh < 8, hh + 24, hh) - 8 # convert to AKDT
+  mm <- substr(tstamp, start = 3, stop = 4)
+  ss <- substr(tstamp, start = 5, stop = 6)
+  DATE_TIME <- paste(infoselect$"DATE", paste(hh, mm, ss, sep = ":"))
 
-  lat1=as.numeric(as.character(infoselect$LAT1))
-  LAT=ifelse(infoselect$"LAT2"=="N",lat1,-lat1)
+  lat1 <- as.numeric(as.character(infoselect$LAT1))
+  LAT <- ifelse(infoselect$"LAT2" == "N", lat1, -lat1)
   LAT <- formatC(x = LAT, digits = 4, format = "f")
 
-  long1=as.numeric(as.character(infoselect$LONG1))
-  LONG=ifelse(infoselect$"LONG2"=="E",long1,-long1)
+  long1 <- as.numeric(as.character(infoselect$LONG1))
+  LONG <- ifelse(infoselect$"LONG2" == "E", long1, -long1)
   LONG <- formatC(x = LONG, digits = 4, format = "f")
 
   new_gps <- cbind.data.frame(VESSEL, CRUISE, HAUL, DATE_TIME, LAT, LONG)
 
 
-  filename <- paste0(path_out, "HAUL",shaul,
-                     ifelse(is.na(filename_add) | filename_add == "",
-                            "", paste0("_", filename_add)),
-                     ".gps")
+  filename <- paste0(
+    path_out, "HAUL", shaul,
+    ifelse(is.na(filename_add) | filename_add == "",
+      "", paste0("_", filename_add)
+    ),
+    ".gps"
+  )
 
-  new_gps1<-new_gps
-  #names(new_gps1) <- NULL
+  new_gps1 <- new_gps
+  # names(new_gps1) <- NULL
   new_gps1 <- as.matrix(new_gps1)
 
-  utils::write.table(x = new_gps1,
-                     file = filename,
-                     quote=FALSE,
-                     sep = ",",
-                     row.names=FALSE,
-                     col.names = TRUE,
-                     eol="\n")
+  utils::write.table(
+    x = new_gps1,
+    file = filename,
+    quote = FALSE,
+    sep = ",",
+    row.names = FALSE,
+    col.names = TRUE,
+    eol = "\n"
+  )
 
   message(paste0("Your new .gps files are saved to ", filename))
 }
