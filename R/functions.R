@@ -256,11 +256,10 @@ convert_log_gps <- function(
   colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
   # head(infoselect)
 
-  tstamp <- as.character(infoselect$TIME) # sometimes this reads as chr and sometimes as num so force to chr
-  tstamp <- sprintf("%06s", tstamp) # add leading zeroes
+  tstamp <- round(as.numeric(infoselect$TIME)) # sometimes this reads as chr and sometimes as num so force to num. Sometimes a decimal timestamp will break it if you don't round.
+  tstamp <- sprintf("%06d", tstamp) # add leading zeroes
   hh = as.numeric(substr(tstamp, start = 1, stop = 2))
   hh=ifelse(hh<8,hh+24,hh)-8 # convert to AKDT
-  #hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
   mm=substr(tstamp,start=3, stop=4)
   ss=substr(tstamp,start=5, stop=6)
   DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
