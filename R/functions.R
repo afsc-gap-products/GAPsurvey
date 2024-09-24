@@ -1,15 +1,3 @@
-# #' ---
-# #' title: GAPsurvey
-# #' purpose: assist scientists on the survey collect data
-# #' author: Jason Conner (jason.conner AT noaa.gov), Emily Markowitz (emily.markowitz AT noaa.gov), and Liz Dawson (Liz.Dawson AT noaa.gov)
-# #' modified by: Emily Markowitz (emily.markowitz AT noaa.gov) and Liz Dawson (Liz.Dawson AT noaa.gov)
-# #' start date: 2018?
-# #' modified date: June 2021
-# #' ---
-
-
-# Converts ----------------------------------------------
-
 
 #' BVDR Conversion to Create BTD data
 #'
@@ -262,6 +250,9 @@ convert_log_gps <- function(
   infoselect <- cbind(info, only.GPRMC)
   colnames(infoselect) <- c("VESSEL", "CRUISE", "HAUL", "DATE", "TIME", "LAT1", "LAT2", "LONG1", "LONG2")
   # head(infoselect)
+  hh2 <- sprintf("%06d",infoselect$TIME) # add leading zeroes
+  hh = as.numeric(substr(hh2, start = 1, stop = 2))
+
 
   tstamp <- round(as.numeric(infoselect$TIME)) # sometimes this reads as chr and sometimes as num so force to num. Sometimes a decimal timestamp will break it if you don't round.
   tstamp <- sprintf("%06d", tstamp) # add leading zeroes
@@ -270,6 +261,14 @@ convert_log_gps <- function(
   mm <- substr(tstamp, start = 3, stop = 4)
   ss <- substr(tstamp, start = 5, stop = 6)
   DATE_TIME <- paste(infoselect$"DATE", paste(hh, mm, ss, sep = ":"))
+
+#  #hh=as.numeric(substr(infoselect$"TIME",start=1, stop=2))
+#  hh=ifelse(hh<8,hh+24,hh)-8
+#  hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
+#  mm=substr(infoselect$"TIME",start=3, stop=4)
+#  ss=substr(infoselect$"TIME",start=5, stop=6)
+#  DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
+
 
   lat1 <- as.numeric(as.character(infoselect$LAT1))
   LAT <- ifelse(infoselect$"LAT2" == "N", lat1, -lat1)
