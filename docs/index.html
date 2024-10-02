@@ -5,7 +5,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Provides at-sea data management tools for RACE GAP surveys. ">
 <title>Provides at-sea data management tools for RACE GAP surveys • GAPsurvey</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -15,91 +14,48 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Provides at-sea data management tools for RACE GAP surveys">
-<meta property="og:description" content="Provides at-sea data management tools for RACE GAP surveys. ">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Provides at-sea data management tools for RACE GAP surveys">
+<meta name="description" content="Provides at-sea data management tools for RACE GAP surveys.">
+<meta property="og:description" content="Provides at-sea data management tools for RACE GAP surveys.">
 <meta property="og:image" content="https://afsc-gap-products.github.io/GAPsurvey/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.04</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.05</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">
-    <span class="far fa far fa-file-code fa-lg"></span>
-     
-    Functions
-  </a>
-</li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html"><span class="fa far fa-file-code fa-lg"></span> Functions</a></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--articles">
-    <span class="fa fa-newspaper"></span>
-     
-    Articles
-  </a>
-  <div class="dropdown-menu" aria-labelledby="dropdown--articles">
-    <a class="dropdown-item" href="articles/example-script.html">Example got-to script</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-newspaper"></span> Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/example-script.html">Example got-to script</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey/releases">
-    <span class="fas fa fas fa-bullhorn fa-lg"></span>
-     
-    Release Notes
-  </a>
-</li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey/releases"><span class="fa fas fa-bullhorn fa-lg"></span> Release Notes</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="nav-link" href="mailto:nmfs.afsc.gap.metadata@noaa.gov" aria-label="email">
-    <span class="fas fa fas fa-paper-plane fa-lg"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey/issues/" aria-label="issues">
-    <span class="fas fa fas fa-question-circle fa-lg"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys" aria-label="homepage">
-    <span class="fa fa-fish"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link" href="mailto:nmfs.afsc.gap.metadata@noaa.gov" aria-label="email"><span class="fa fas fa-paper-plane fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey/issues/" aria-label="issues"><span class="fa fas fa-question-circle fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey" aria-label="github"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys" aria-label="homepage"><span class="fa fa-fish"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-home">
 <div class="row">
@@ -127,67 +83,89 @@
 <h3 id="at-sea-data-management-tools-for-race-gap-surveys">
 <em>At-sea data management tools for RACE GAP surveys</em><a class="anchor" aria-label="anchor" href="#at-sea-data-management-tools-for-race-gap-surveys"></a>
 </h3>
-<p><a href="https://github.com/afsc-gap-products/GAPsurvey" class="external-link"><img src="https://img.shields.io/badge/devel%20version-2024.04.04-blue.svg"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a> <a href="https://github.com/afsc-gap-products/GAPsurvey/commits/main" class="external-link"><img src="https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg"></a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; Warning: `git_branch_default()` was deprecated in usethis 2.1.0.</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; ℹ Please use `git_default_branch()` instead.</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the badger package.</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt;   Please report the issue at &lt;https://github.com/GuangchuangYu/badger/issues&gt;.</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span></code></pre></div>
+<p><a href="https://github.com/afsc-gap-products/GAPsurvey" class="external-link"><img src="https://img.shields.io/badge/devel%20version-2024.04.05-blue.svg"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a> <a href="https://github.com/afsc-gap-products/GAPsurvey/commits/main" class="external-link"><img src="https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg"></a></p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="make-sure-the-necessary-packages-are-installed">Make sure the necessary packages are installed<a class="anchor" aria-label="anchor" href="#make-sure-the-necessary-packages-are-installed"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># Or</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey@main"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(GAPsurvey)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Or</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey@main"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="fu">library</span>(GAPsurvey)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="cite-this-data">Cite this data<a class="anchor" aria-label="anchor" href="#cite-this-data"></a>
 </h2>
 <p>Use the below <a href="%22https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITATION.bib%22">bibtext citations</a> for citing the package created and maintained in this repo. Add “note = {Accessed: mm/dd/yyyy}” to append the day this data was accessed.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co">#&gt; @misc{GAPsurvey,</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt;   author = {{NOAA Fisheries Alaska Fisheries Science Center, Goundfish Assessment Program}},</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;   year = {2024},</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt;   title = {AFSC Goundfish Assessment Program at-Sea data management tools for RACE GAP surveys},</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;   howpublished = {https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys},</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;   publisher = {{U.S. Dep. Commer.}},</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;   copyright = {Public Domain}</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; @misc{GAPsurvey,</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;   author = {{NOAA Fisheries Alaska Fisheries Science Center, Goundfish Assessment Program}},</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   year = {2024},</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   title = {AFSC Goundfish Assessment Program at-Sea data management tools for RACE GAP surveys},</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   howpublished = {https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys},</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   publisher = {{U.S. Dep. Commer.}},</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;   copyright = {Public Domain}</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="metadata">Metadata<a class="anchor" aria-label="anchor" href="#metadata"></a>
 </h2>
 <p>This package was last produced using:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; R version 4.3.2 (2023-10-31 ucrt)</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Platform: x86_64-w64-mingw32/x64 (64-bit)</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; Running under: Windows 10 x64 (build 19045)</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; Matrix products: default</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; locale:</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt; [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                           LC_TIME=English_United States.utf8    </span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt; time zone: America/Los_Angeles</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt; tzcode source: internal</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt; attached base packages:</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     </span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt; other attached packages:</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;  [1] badger_0.2.3    pkgdown_2.0.7   gapctd_2.1.2    lubridate_1.9.3 plotly_4.10.4   interp_1.1-6    bbmle_1.0.25.1  oce_1.8-2       gsw_1.1-1       tidyr_1.3.1     plyr_1.8.9      RODBC_1.3-23    roxygen2_7.3.1  devtools_2.4.5  usethis_2.2.3  </span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt; [16] here_1.0.1      akgfmaps_3.5.0  terra_1.7-71    stars_0.6-4     abind_1.4-5     sf_1.0-16       gstat_2.1-1     ggplot2_3.5.0   classInt_0.4-10 gapindex_2.2.0  dplyr_1.1.4     readr_2.1.5     magrittr_2.0.3 </span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;   [1] RColorBrewer_1.1-3  sys_3.4.2           rstudioapi_0.16.0   dlstats_0.1.7       jsonlite_1.8.8      rmarkdown_2.26      fs_1.6.3            vctrs_0.6.5         memoise_2.0.1       askpass_1.2.0       gh_1.4.0            janitor_2.2.0      </span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt;  [13] htmltools_0.5.7     curl_5.2.1          KernSmooth_2.23-22  htmlwidgets_1.6.4   keyring_1.3.2       desc_1.4.3          httr2_1.0.0         zoo_1.8-12          cachem_1.0.8        mime_0.12           lifecycle_1.0.4     pkgconfig_2.0.3    </span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;  [25] Matrix_1.6-5        R6_2.5.1            fastmap_1.1.1       shiny_1.8.0         snakecase_0.11.1    digest_0.6.35       numDeriv_2016.8-1.1 colorspace_2.1-0    rprojroot_2.0.4     pkgload_1.3.4       fansi_1.0.6         timechange_0.3.0   </span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt;  [37] httr_1.4.7          compiler_4.3.2      proxy_0.4-27        intervals_0.15.4    remotes_2.5.0       withr_3.0.0         DBI_1.2.2           pkgbuild_1.4.4      MASS_7.3-60         openssl_2.1.1       rappdirs_0.3.3      sessioninfo_1.2.2  </span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;  [49] tools_4.3.2         units_0.8-5         httpuv_1.6.14       glue_1.7.0          promises_1.2.1      grid_4.3.2          getPass_0.2-4       generics_0.1.3      gtable_0.3.4        tzdb_0.4.0          class_7.3-22        data.table_1.15.2  </span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt;  [61] hms_1.1.3           sp_2.1-3            xml2_1.3.6          utf8_1.2.4          pillar_1.9.0        stringr_1.5.1       yulab.utils_0.1.4   later_1.3.2         lattice_0.21-9      FNN_1.1.4           deldir_2.0-4        tidyselect_1.2.1   </span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt;  [73] rvcheck_0.2.1       miniUI_0.1.1.1      knitr_1.45          gitcreds_0.1.2      xfun_0.42           credentials_2.0.1   stringi_1.8.3       lazyeval_0.2.2      yaml_2.3.8          evaluate_0.23       codetools_0.2-19    tibble_3.2.1       </span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt;  [85] BiocManager_1.30.22 cli_3.6.2           xtable_1.8-4        munsell_0.5.0       spacetime_1.3-1     Rcpp_1.0.12         gert_2.0.1          bdsmatrix_1.3-7     parallel_4.3.2      ellipsis_0.3.2      assertthat_0.2.1    profvis_0.3.8      </span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt;  [97] urlchecker_1.0.1    viridisLite_0.4.2   mvtnorm_1.2-4       scales_1.3.0        xts_0.13.2          e1071_1.7-14        purrr_1.0.2         crayon_1.5.2        rlang_1.1.3</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&gt; R version 4.4.1 (2024-06-14 ucrt)</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Platform: x86_64-w64-mingw32/x64</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Running under: Windows 10 x64 (build 19045)</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Matrix products: default</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; locale:</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; time zone: America/Los_Angeles</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; tzcode source: internal</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; attached base packages:</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; other attached packages:</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;  [1] badger_0.2.4    gapindex_2.2.0  pkgdown_2.1.0   gapctd_2.1.6    lubridate_1.9.3 plotly_4.10.4   interp_1.1-6   </span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt;  [8] bbmle_1.0.25.1  oce_1.8-3       gsw_1.2-0       tidyr_1.3.1     plyr_1.8.9      remotes_2.5.0   roxygen2_7.3.2 </span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; [15] devtools_2.4.5  usethis_3.0.0   here_1.0.1      akgfmaps_3.5.3  terra_1.7-78    stars_0.6-6     abind_1.4-8    </span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; [22] sf_1.0-17       gstat_2.1-2     ggplot2_3.5.1   classInt_0.4-10 RODBC_1.3-23    dplyr_1.1.4     readr_2.1.5    </span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; [29] magrittr_2.0.3 </span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt;   [1] RColorBrewer_1.1-3  sys_3.4.2           rstudioapi_0.16.0   dlstats_0.1.7       jsonlite_1.8.8     </span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;   [6] rmarkdown_2.28      fs_1.6.4            vctrs_0.6.5         memoise_2.0.1       askpass_1.2.0      </span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt;  [11] gh_1.4.1            janitor_2.2.0       htmltools_0.5.8.1   curl_5.2.2          KernSmooth_2.23-24 </span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt;  [16] htmlwidgets_1.6.4   desc_1.4.3          httr2_1.0.4         zoo_1.8-12          cachem_1.1.0       </span></span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt;  [21] mime_0.12           lifecycle_1.0.4     pkgconfig_2.0.3     Matrix_1.7-0        R6_2.5.1           </span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt;  [26] fastmap_1.2.0       shiny_1.9.1         snakecase_0.11.1    digest_0.6.37       numDeriv_2016.8-1.1</span></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt;  [31] colorspace_2.1-1    ps_1.8.0            rprojroot_2.0.4     pkgload_1.4.0       fansi_1.0.6        </span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt;  [36] timechange_0.3.0    httr_1.4.7          compiler_4.4.1      proxy_0.4-27        intervals_0.15.5   </span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt;  [41] withr_3.0.1         DBI_1.2.3           pkgbuild_1.4.4      MASS_7.3-60.2       openssl_2.2.1      </span></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt;  [46] rappdirs_0.3.3      sessioninfo_1.2.2   tools_4.4.1         units_0.8-5         httpuv_1.6.15      </span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt;  [51] glue_1.7.0          callr_3.7.6         promises_1.3.0      grid_4.4.1          generics_0.1.3     </span></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt;  [56] gtable_0.3.5        tzdb_0.4.0          class_7.3-22        data.table_1.16.0   hms_1.1.3          </span></span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt;  [61] sp_2.1-4            xml2_1.3.6          utf8_1.2.4          pillar_1.9.0        stringr_1.5.1      </span></span>
+<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt;  [66] yulab.utils_0.1.7   later_1.3.2         lattice_0.22-6      FNN_1.1.4           deldir_2.0-4       </span></span>
+<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt;  [71] tidyselect_1.2.1    rvcheck_0.2.1       miniUI_0.1.1.1      knitr_1.48          gitcreds_0.1.2     </span></span>
+<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt;  [76] xfun_0.47           credentials_2.0.1   stringi_1.8.4       lazyeval_0.2.2      yaml_2.3.10        </span></span>
+<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt;  [81] evaluate_0.24.0     codetools_0.2-20    tibble_3.2.1        BiocManager_1.30.25 cli_3.6.3          </span></span>
+<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt;  [86] xtable_1.8-4        munsell_0.5.1       processx_3.8.4      spacetime_1.3-2     Rcpp_1.0.13        </span></span>
+<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt;  [91] gert_2.1.1          bdsmatrix_1.3-7     parallel_4.4.1      ellipsis_0.3.2      profvis_0.3.8      </span></span>
+<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt;  [96] urlchecker_1.0.1    viridisLite_0.4.2   mvtnorm_1.3-1       scales_1.3.0        xts_0.14.0         </span></span>
+<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; [101] e1071_1.7-14        crayon_1.5.3        purrr_1.0.2         rlang_1.1.4</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="noaa-readme">NOAA README<a class="anchor" aria-label="anchor" href="#noaa-readme"></a>
@@ -241,20 +219,19 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
+
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

@@ -455,8 +455,8 @@
 # interval = seconds: 0.25
 # start_time = Jun 13 2021 12:13:29 [Instrument's time stamp, header]
 # bad_flag = -9.990e-29
-# gapctd_date = Apr 06 2024 16:12:14, GAPSurvey 2024.4.4
-# gapctd_in = C:/Users/sean.rohan/AppData/Local/Temp/RtmpWSLcfB/temp_libpath15cc58f34baf/GAPsurvey/exdata/convert_ctd_btd/2021_06_13_0003.hex
+# gapctd_date = Oct 02 2024 09:47:09, GAPSurvey 2024.4.5
+# gapctd_in = C:/Users/emily.markowitz/AppData/Local/Temp/RtmpoVbRrC/temp_libpath69ac20527f1e/GAPsurvey/exdata/convert_ctd_btd/2021_06_13_0003.hex
 # file_type = ascii
 *END*
       0.000     5.5861     -0.251   0.000139        0.0

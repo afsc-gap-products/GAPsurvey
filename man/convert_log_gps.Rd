@@ -30,7 +30,7 @@ convert_log_gps(
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.}
 }
 \value{
-A .GPS file to the path_out directory.
+A .GPS file to the path_out directory with DATE/TIME in AKDT.
 }
 \description{
 In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.

@@ -281,7 +281,7 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2024.04.05"
+date0 <- "2024.10.02"
 devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
 
 
