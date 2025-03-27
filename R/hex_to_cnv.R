@@ -14,6 +14,36 @@
 #' @param SERIAL_NUMBER Optional. The serial number of the CTD.
 #' @param instrument_timezone Time zone for the instrument data. Do not change unless the instrument is not setup for Alaska Time
 #' @param filename_add Optional. Default = "new". This string will be added to BTD and BTH outputs. This can help prevent accidentally overwriting BTH and BTD files.
+#' @examples
+#' \dontrun{
+#' # CTD without auxiliary sensors
+#'
+#'convert_ctd_btd(
+#'  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+#'    "2021_06_13_0003.hex"), package = "GAPsurvey"),
+#'  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+#'    "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
+#'  latitude = 55,
+#'  VESSEL = 94,
+#'  CRUISE = 202101,
+#'  HAUL = 107,
+#'  SERIAL_NUMBER = 8105)
+#'
+#' # CTD with DO and pH sensors
+#'
+#' convert_ctd_btd(
+#'   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+#'     "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
+#'   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+#'     "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
+#'   VESSEL = 162,
+#'   CRUISE = 202301,
+#'   HAUL = 97,
+#'   latitude = 59.01693,
+#'   MODEL_NUMBER = "",
+#'   VERSION_NUMBER = "",
+#'   SERIAL_NUMBER = 8106)
+#' }
 #' @return .BTH and .BTD files to the dirpath_output directory.
 #' @export
 #' @references https://github.com/afsc-gap-products/gapctd

@@ -8,4 +8,4 @@
 ^notforgit$
 ^\.README\.Rmd$
 ^\.notes\.R$
-
+.github
