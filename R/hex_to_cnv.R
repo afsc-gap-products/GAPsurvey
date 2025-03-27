@@ -5,7 +5,7 @@
 #' @param filepath_hex Required. Filepath to the SBE19plus hexadecimal (.hex) file from a single cast as a character vector (e.g. "C:/CTD/202301_162_L1/sbe19plus01908091_05_04_0001.hex")/.
 #' @param filepath_xmlcon Required. Filepath to the instrument configuration file (.xmlcon) for the CTD (e.g. serial number 8091 would use the file with 8091 in the name ("C:/CTD/xmlcon configuration files/SBE19plusV2_8091.xmlcon").
 #' @param dirpath_output Optional. The default is the local working directory but may be specified with a string.
-#' @param latitude Required. Latitude in decimal degrees (approximate).
+#' @param latitude Required. Latitude in decimal degrees.
 #' @param VESSEL Required. The vessel number (e.g., 94).
 #' @param CRUISE Required. The cruise number (e.g., 201901).
 #' @param HAUL Required. The haul number (e.g. 150).
@@ -17,38 +17,9 @@
 #' @return .BTH and .BTD files to the dirpath_output directory.
 #' @export
 #' @references https://github.com/afsc-gap-products/gapctd
-#' @examples
-#' # CTD without auxiliary sensors
-#'
-#'convert_ctd_btd(
-#'  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-#'    "2021_06_13_0003.hex"), package = "GAPsurvey"),
-#'  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-#'    "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
-#'  latitude = 55,
-#'  VESSEL = 94,
-#'  CRUISE = 202101,
-#'  HAUL = 107,
-#'  SERIAL_NUMBER = 8105)
-#'
-#' # CTD with DO and pH sensors
-#'
-#' convert_ctd_btd(
-#'   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-#'     "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-#'   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-#'     "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
-#'   VESSEL = 162,
-#'   CRUISE = 202301,
-#'   HAUL = 97,
-#'   latitude = 59.01693,
-#'   MODEL_NUMBER = "",
-#'   VERSION_NUMBER = "",
-#'   SERIAL_NUMBER = 8106)
-#'
 
-convert_ctd_btd <- function(filepath_hex,
-                            dirpath_output = "./",
+convert_ctd_btd <- function(filepath_hex = NULL,
+                            dirpath_output = NULL,
                             filepath_xmlcon = NULL,
                             latitude = NA,
                             VESSEL = NA,
@@ -68,6 +39,33 @@ convert_ctd_btd <- function(filepath_hex,
     return(tmp)
   }
 
+if(is.null(dirpath_output)){
+  dirpath_output <- paste0(getwd(), "/")
+}
+if(is.null(filepath_hex)){
+  filepath_hex <-
+    choose.files(
+      default = "*.hex",
+      caption = "Select .hex file",
+      multi = FALSE,
+      filters = matrix(c("HEX file (.hex)","*.hex"),
+                       ncol = 2)
+    )
+}
+if(is.null(filepath_xmlcon)){
+  filepath_xmlcon <-
+    choose.files(
+      default = "*.xmlcon",
+      caption = "Select .xmlcon file",
+      multi = FALSE,
+      filters = matrix(c("Sea-Bird Instrument Configuration (.xmlcon)", "*.xmlcon"),
+                       ncol = 2)
+)
+}
+  if(is.na(latitude)){
+    latitude <- readline("Type latitude in decimal degrees:  ")
+    latitude <- as.numeric(latitude)
+    }
   if(is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if(is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if(is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
@@ -82,6 +80,8 @@ convert_ctd_btd <- function(filepath_hex,
   if(!file.exists(filepath_xmlcon)) {
     stop(paste0("convert_ctd_btd: Configuration file (.xmcon) not found at ", filepath_xmlcon))
   }
+
+  stopifnot("convert_ctd_btd: latitude must be numeric." = is.numeric(latitude))
 
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
@@ -114,9 +114,9 @@ convert_ctd_btd <- function(filepath_hex,
   data_channel_index <- c(grep(pattern = "times", x = tolower(data_channel_lines)),
                           grep(pattern = "pressure", x = tolower(data_channel_lines)),
                           grep(pattern = "temperature", x = tolower(data_channel_lines))
-                          )
+  )
 
-  scan_data <- utils::read.table(file = filepath_cnv,
+  scan_data <- read.table(file = filepath_cnv,
                           skip = grep(pattern = "*END*", x = data0))[, data_channel_index]
 
   names(scan_data) <- c("time_elapsed", "pressure", "temperature")
@@ -124,9 +124,9 @@ convert_ctd_btd <- function(filepath_hex,
   scan_data$time_elapsed <- floor(scan_data$time_elapsed)
 
   scan_data <- stats::aggregate.data.frame(x = scan_data[, c("temperature", "pressure")],
-                                       by = list(time_elapsed = scan_data$time_elapsed),
-                                       FUN = mean,
-                                       na.rm = TRUE)
+                                           by = list(time_elapsed = scan_data$time_elapsed),
+                                           FUN = mean,
+                                           na.rm = TRUE)
 
   scan_data$date_time <- cast_start_time + scan_data$time_elapsed
 
@@ -177,8 +177,8 @@ convert_ctd_btd <- function(filepath_hex,
 
   message(paste0("Baththermic data (.BTD) and header (.BTD) files written to: \n",
                  filename,
-                 ".BTD\n",
-                 filename, ".BTH"))
+                 ".BTD",
+                 "\n", filename, ".BTH"))
 
 }
 
@@ -190,12 +190,11 @@ convert_ctd_btd <- function(filepath_hex,
 #'
 #' @param latitude Latitude in decimal degrees north
 #' @param pressure Pressure in decibars
-#' @param nsmall Number of decimal places for depth
 #' @noRd
 #' @references UNESCO 1983. Algorithms for computation of fundamental properties of seawater, 1983. Unesco Tech. Pap. in Mar. Sci., No. 44, 53 pp.
 #' Kelley, D., Richards, C., and Layton, C. 2022. oce: An R package for oceanographic analysis. Journal of Open Source Software 7(71): 3594. https://doi.org/10.21105/joss.03594
 
-calc_depth_from_pressure <- function(latitude, pressure, nsmall = 3) {
+calc_depth_from_pressure <- function(latitude, pressure) {
 
   latitude <- latitude * atan2(1, 1)/45
 
@@ -206,8 +205,6 @@ calc_depth_from_pressure <- function(latitude, pressure, nsmall = 3) {
 
   res <- (((-1.82e-15 * pressure + 2.279e-10) * pressure -
              2.2512e-05) * pressure + 9.72659) * pressure/gr
-
-  res <- round(res, digits = nsmall)
 
   return(res)
 
@@ -227,6 +224,14 @@ calc_depth_from_pressure <- function(latitude, pressure, nsmall = 3) {
 #' @param output_sig_digits Optional. Significant digits after the decimal place for output channels. Only change if a subset of channels. Do not use unless outputs are are not the defaults.
 #' @noRd
 #' @author Sean Rohan
+#' @examples
+#' # Convert SBE19plus CTD .hex file to .cnv
+#'
+#' library(gapctd)
+#'
+#' hex_to_cnv(hex_path = system.file("./extdata/example/SBE19plus_01908106_2023_06_19_0001.hex", package = "gapctd"),
+#'            xmlcon_path = system.file("./extdata/example/SBE19plusV2_8106_ph_DO_leg2.xmlcon", package = "gapctd"),
+#'            output_path = "SBE19plus_01908106_2023_06_19_0001_raw.cnv")
 
 hex_to_cnv <- function(hex_path,
                        output_path,
@@ -353,20 +358,19 @@ hex_to_cnv <- function(hex_path,
                                   "doxygen_int",
                                   "ph_int"))
 
-    # index_calibration_pars <- 1:40
     index_channels <- 1:7
   }
 
-  output_channels <- output_channels[index_channels]
-  output_sig_digits <- output_sig_digits[index_channels]
+    output_channels <- output_channels[index_channels]
+    output_sig_digits <- output_sig_digits[index_channels]
 
-  message(
-    paste0("hex_to_cnv: ",
-           length(index_channels),
-           " data channels detected (",
-           paste(names(output_channels), collapse = ", "), ")"
+    message(
+      paste0("hex_to_cnv: ",
+             length(index_channels),
+             " data channels detected (",
+             paste(names(output_channels), collapse = ", "), ")"
+      )
     )
-  )
 
   values_int <- list()
 
@@ -437,10 +441,10 @@ hex_to_cnv <- function(hex_path,
 
   if(deployed_ph) {
     ph <- integer_to_ph(ph_integer = values_int$ph_int,
-                        ph_offset = cal_par_list[['ph']]['Offset'],
-                        ph_slope = cal_par_list[['ph']]['Slope'],
-                        temperature = temperature,
-                        sig_figs = output_sig_digits['ph'])
+                                 ph_offset = cal_par_list[['ph']]['Offset'],
+                                 ph_slope = cal_par_list[['ph']]['Slope'],
+                                 temperature = temperature,
+                                 sig_figs = output_sig_digits['ph'])
   }
 
   time_elapsed <- seq(0, (length(lines_data)-1)*sample_interval, sample_interval)
@@ -762,7 +766,7 @@ integer_to_dissolved_oxygen <- function(do_integer,
   dVdt <- c(0, diff(do_voltage)/sample_interval)
 
   if(tau_correction) {
-    tau <- tau_par(temperature, pressure, tau20, d0, d1, d2)
+    tau <- DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
   }
 
   temperature_K <- temperature + 273.15
@@ -888,7 +892,7 @@ write_to_cnv <- function(data_list, output_path) {
                        " [Instrument's time stamp, header]"))
   out <- c(out, paste0("# bad_flag = -9.990e-29"))
   out <- c(out, paste0("# gapctd_date = ", format(Sys.time(), "%b %d %Y %T"),
-                       ", GAPSurvey ", gsub(pattern = "[^0-9.-]", "", utils::packageVersion("GAPSurvey"))))
+                       ", gapctd ", gsub(pattern = "'", replacement = "", x = packageVersion("gapctd"))))
   out <- c(out, paste0("# gapctd_in = ", dl$hex_path))
   out <- c(out, paste0("# file_type = ascii"))
   out <- c(out, "*END*")
@@ -963,11 +967,11 @@ extract_calibration_xmlcon <- function(xmlcon_path) {
                                                   make_numeric = FALSE)
 
     calibration_df <- rbind(calibration_df,
-                            data.frame(
-                              channel = data_channels[ii],
-                              serial_number = serial_number,
-                              calibration_date = as.Date(calibration_date, format = "%d-%b-%y")
-                            )
+                                       data.frame(
+                                         channel = data_channels[ii],
+                                         serial_number = serial_number,
+                                         calibration_date = as.Date(calibration_date, format = "%d-%b-%y")
+                                       )
     )
 
     for(jj in 1:length(calibration_params[[data_channels[ii]]])) {
