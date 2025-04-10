@@ -484,7 +484,7 @@ hex_to_cnv <- function(hex_path,
   )
 
   message("hex_to_cnv: Writing data to cnv.\n")
-  GAPsurvey::write_to_cnv(data_list = cnv_dat, output_path = output_path)
+  write_to_cnv(data_list = cnv_dat, output_path = output_path)
 
 }
 
@@ -779,7 +779,7 @@ integer_to_dissolved_oxygen <- function(do_integer,
   dVdt <- c(0, diff(do_voltage)/sample_interval)
 
   if(tau_correction) {
-    tau <- GAPsurvey::DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
+    tau <- DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
   }
 
   temperature_K <- temperature + 273.15
