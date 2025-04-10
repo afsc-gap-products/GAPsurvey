@@ -836,7 +836,6 @@ integer_to_ox_voltage <- function(ox_integer) {
 #' @param make_numeric Logical. Should the tag value be forced to a numeric?
 #' @noRd
 #' @author Sean Rohan
-
 get_calibration_parameter <- function(header, cal_par, start_block = NULL, end_block = NULL, make_numeric = TRUE) {
 
   # Subset header lines between start and end text
@@ -865,6 +864,7 @@ get_calibration_parameter <- function(header, cal_par, start_block = NULL, end_b
 #' @param data_list List of data and metadata to write to the cnv file
 #' @param output_path Output path for the cnv file
 #' @author Sean Rohan
+#' @noRd
 write_to_cnv <- function(data_list, output_path) {
 # #' @noRd
   dl <- data_list
