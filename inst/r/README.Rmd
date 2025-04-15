@@ -41,7 +41,7 @@ Seattle, WA 98195
 
 ## Table of contents
 
-```{r toc, echo = FALSE, eval = TRUE, warning=FALSE}
+```{r toc, echo = FALSE, eval = TRUE, warning = FALSE}
 toc <- strsplit(x = readtext::readtext(file = "./README.Rmd", verbosity = 0)[[2]], split = "\n")
 toc <- toc[[1]][substr(x = toc[[1]], start = 1, stop = 1) == "#"]
 toc <- toc[-c(1:3)]

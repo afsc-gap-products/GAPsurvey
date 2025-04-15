@@ -1,24 +1,24 @@
 # title: "Example GAPsurvey Go-to script"
 # Last updated April 2025
-# # ------------------------------------------------------------------------------
-# ## Install R package
+# #
+# ## Install R package -----------------------------------------------------------
 # Rerun this only when there is a new version of the package to install. The user may install from `GitHub`:
 # devtools::install_github("afsc-gap-products/GAPsurvey")
 
 # or install from local file `.tar.gz`:
 # # example, the user may have a different path
-# install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.09.tar.gz',
+# install.packages('C:/R/GAPsurvey_2025.04.09.tar.gz',
 #                  repos=NULL, type='source')
 
-# ## Load libraries
+# ## Load libraries --------------------------------------------------------------
 library(GAPsurvey)
 
 # Now we have access to all of the functions in the `GAPSurvey` R package! 
-# ## Open this example `GAPsurvey` script (for reference)
+# ## Open this example `GAPsurvey` script (for reference) ------------------------
 # This should already be located on desktop, otherwise find it using the link below. 
 # system.file("r/GAPsurvey_script.R", package = "GAPsurvey")
 
-# ## What have we historically caught at this station?
+# ## What have we historically caught at this station? ---------------------------
 # Learn more: 
 # ?get_catch_haul_history
 
@@ -37,32 +37,32 @@ get_catch_haul_history(
      grid_buffer = 3)
 
 
-# # All catch data
+# # All catch data ---------------------------------------------------------------
 # You can also look through all catch data from the survey
 # ?GAPsurvey::public_data
 
 # GAPsurvey::public_data
 head(GAPsurvey::public_data) # using `head()` function to see first few (6) rows of dataset 
 
-# # Species Data
+# # Species Data -----------------------------------------------------------------
 # You can also use this to find all species and species codes for quick searching
 # ?GAPsurvey::species_data
 
 # GAPsurvey::species_data
 head(GAPsurvey::species_data) # using `head()` function to see first few (6) rows of dataset 
 
-# # Species Polycorder reference
+# # Species Polycorder reference -------------------------------------------------
 # You can also use this to find all species and species codes for quick searching
 # ?GAPsurvey::PolySpecies
 
 # GAPsurvey::PolySpecies
 head(GAPsurvey::PolySpecies) # using `head()` function to see first few (6) rows of dataset 
 
-# ## What time is sunrise and sunset?
+# ## What time is sunrise and sunset? --------------------------------------------
 # Learn more:
 # ?get_sunrise_sunset
 
-# # Examples: 
+# Examples: 
 # Find times based on lat/lon for today's date, where date is a date object
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    latitude = 63.3,
@@ -94,7 +94,7 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
                    survey = "NBS",
                    station = "ZZ-01")
 
-# ## Convert CTD data to BTD as a backup for SBE39 (aka 'the BT')
+# ## Convert CTD data to BTD as a backup for SBE39 (aka 'the BT') ----------------
 # This function converts a CTD  hexadecimal (.hex) file to bathythermic data (.btd) and bathythermic header files (.bth). If you are unable to convert your file, please contact sean.rohan@@noaa.gov.
 # ?convert_ctd_btd
 
@@ -112,7 +112,7 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
 #  VERSION_NUMBER = 1,
 #  SERIAL_NUMBER = 8105)
 
-# # BVDR Conversion to Create BTD data
+# # BVDR Conversion to Create BTD data -------------------------------------------
 # Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
 # This will return .BTH and .BTD files to the path_out directory.
 # Learn more: 
@@ -143,7 +143,7 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
 #  readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTH",
 #    package = "GAPsurvey"))[1:5]
 
-# # Recover position data from Globe .log file
+# # Recover position data from Globe .log file -----------------------------------
 # In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
 # To get a .log file that is usable in this function,
 # 1) Go the C:\ globe\ logs\ 2018\ directory and choose GLG file with proper date
@@ -160,7 +160,7 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
 # Learn more:
 # ?convert_log_gps
 
-# # Example: 
+# Example: 
 # # example input file
 # readLines(system.file("exdata/convert_log_gps/06062017.log",
 #    package = "GAPsurvey"))[1:5] # input file
@@ -178,7 +178,7 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
 # readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
 #    package = "GAPsurvey"))[1:5] # output file
 
-# # Convert .bvdr files to .marp files
+# # Convert .bvdr files to .marp files -------------------------------------------
 # If you mistakenly delete the marport data for a haul, you can retrieve that data through this converter.
 # Before using this script,
 # 1. Open the .bvdr file in Notepad ++ or a similar text editor.
@@ -188,7 +188,7 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
 # Learn more:
 # ?convert_log_gps
 
-# # Example: 
+# Example: 
 # # example input file
 # readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
 #   package = "GAPsurvey"))[1:5] # input file

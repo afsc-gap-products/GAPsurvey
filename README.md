@@ -102,14 +102,14 @@ repository](https://github.com/afsc-gap-products/GAPsurvey/issues).
 
     #> R version 4.4.3 (2025-02-28 ucrt)
     #> Platform: x86_64-w64-mingw32/x64
-    #> Running under: Windows 10 x64 (build 19045)
+    #> Running under: Windows 11 x64 (build 22631)
     #> 
     #> Matrix products: default
     #> 
     #> 
     #> locale:
-    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                          
-    #> [5] LC_TIME=English_United States.utf8    
+    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
+    #> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
     #> 
     #> time zone: America/Los_Angeles
     #> tzcode source: internal
@@ -118,18 +118,20 @@ repository](https://github.com/afsc-gap-products/GAPsurvey/issues).
     #> [1] stats     graphics  grDevices utils     datasets  methods   base     
     #> 
     #> other attached packages:
-    #> [1] ggplot2_3.5.1
+    #> [1] ggplot2_3.5.2        pkgdown_2.1.1        fontawesome_0.5.3    GAPsurvey_2025.04.09 RODBC_1.3-26         roxygen2_7.3.2      
+    #> [7] here_1.0.1           devtools_2.4.5       usethis_3.1.0       
     #> 
     #> loaded via a namespace (and not attached):
-    #>  [1] gtable_0.3.6       xfun_0.51          remotes_2.5.0      htmlwidgets_1.6.4  devtools_2.4.5     lattice_0.22-6     vctrs_0.6.5        tools_4.4.3        generics_0.1.3     gstat_2.1-3       
-    #> [11] parallel_4.4.3     tibble_3.2.1       proxy_0.4-27       spacetime_1.3-3    xts_0.14.1         pkgconfig_2.0.3    KernSmooth_2.23-26 data.table_1.17.0  lifecycle_1.0.4    compiler_4.4.3    
-    #> [21] stringr_1.5.1      FNN_1.1.4.1        munsell_0.5.1      terra_1.8-29       janitor_2.2.1      codetools_0.2-20   snakecase_0.11.1   httpuv_1.6.15      usethis_3.1.0      stars_0.6-8       
-    #> [31] htmltools_0.5.8.1  class_7.3-23       yaml_2.3.10        pkgdown_2.1.1      urlchecker_1.0.1   later_1.4.1        pillar_1.10.1      ellipsis_0.3.2     RODBC_1.3-26       classInt_0.4-11   
-    #> [41] cachem_1.1.0       sessioninfo_1.2.3  abind_1.4-8        mime_0.12          tidyselect_1.2.1   digest_0.6.37      stringi_1.8.4      purrr_1.0.4        sf_1.0-19          dplyr_1.1.4       
-    #> [51] rprojroot_2.0.4    fastmap_1.2.0      grid_4.4.3         here_1.0.1         colorspace_2.1-1   cli_3.6.4          magrittr_2.0.3     readtext_0.91      pkgbuild_1.4.6     e1071_1.7-16      
-    #> [61] withr_3.0.2        promises_1.3.2     akgfmaps_4.0.3     scales_1.3.0       sp_2.2-0           lubridate_1.9.4    timechange_0.3.0   httr_1.4.7         rmarkdown_2.29     zoo_1.8-13        
-    #> [71] memoise_2.0.1      shiny_1.10.0       evaluate_1.0.3     knitr_1.49         miniUI_0.1.1.1     profvis_0.4.0      rlang_1.1.5        Rcpp_1.0.14        xtable_1.8-4       glue_1.8.0        
-    #> [81] DBI_1.2.3          pkgload_1.4.0      rstudioapi_0.17.1  R6_2.6.1           fs_1.6.5           intervals_0.15.5   units_0.8-7
+    #>  [1] gtable_0.3.6      xfun_0.52         htmlwidgets_1.6.4 remotes_2.5.0     processx_3.8.6    callr_3.7.6       generics_0.1.3   
+    #>  [8] vctrs_0.6.5       tools_4.4.3       ps_1.9.1          curl_6.2.2        tibble_3.2.1      pkgconfig_2.0.3   data.table_1.17.0
+    #> [15] xopen_1.0.1       desc_1.4.3        lifecycle_1.0.4   compiler_4.4.3    stringr_1.5.1     brio_1.1.5        munsell_0.5.1    
+    #> [22] httpuv_1.6.15     htmltools_0.5.8.1 yaml_2.3.10       later_1.4.2       pillar_1.10.2     urlchecker_1.0.1  ellipsis_0.3.2   
+    #> [29] cachem_1.1.0      sessioninfo_1.2.3 mime_0.13         tidyselect_1.2.1  digest_0.6.37     stringi_1.8.7     dplyr_1.1.4      
+    #> [36] purrr_1.0.4       rprojroot_2.0.4   fastmap_1.2.0     grid_4.4.3        colorspace_2.1-1  cli_3.6.4         magrittr_2.0.3   
+    #> [43] readtext_0.91     pkgbuild_1.4.7    withr_3.0.2       prettyunits_1.2.0 scales_1.3.0      promises_1.3.2    httr_1.4.7       
+    #> [50] rmarkdown_2.29    memoise_2.0.1     shiny_1.10.0      evaluate_1.0.3    knitr_1.50        rcmdcheck_1.4.0   testthat_3.2.3   
+    #> [57] miniUI_0.1.1.1    profvis_0.4.0     rlang_1.1.6       Rcpp_1.0.14       xtable_1.8-4      glue_1.8.0        xml2_1.3.8       
+    #> [64] pkgload_1.4.0     rstudioapi_0.17.1 R6_2.6.1          fs_1.6.6
 
 ## NOAA README
 

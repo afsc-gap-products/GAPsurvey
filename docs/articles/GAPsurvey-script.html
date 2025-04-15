@@ -66,7 +66,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Example GAPsurvey Go-to script</h1>
             
-            <h4 data-toc-skip class="date">April 10 2025</h4>
+            <h4 data-toc-skip class="date">April 15 2025</h4>
       
 
       <div class="d-none name"><code>GAPsurvey-script.Rmd</code></div>
@@ -78,10 +78,13 @@
 <h2 id="example-script-using-r-package-gapsurvey">Example Script Using R Package <code>GAPsurvey</code><a class="anchor" aria-label="anchor" href="#example-script-using-r-package-gapsurvey"></a>
 </h2>
 <blockquote>
-<p>Last updated April 2025 # ——————————————————————————</p>
+<p>Last updated April 2025</p>
 </blockquote>
+</div>
+<div class="section level2">
+<h2 id="section"></h2>
 <div class="section level3">
-<h3 id="install-r-package">Install R package<a class="anchor" aria-label="anchor" href="#install-r-package"></a>
+<h3 id="install-r-package">Install R package ———————————————————–<a class="anchor" aria-label="anchor" href="#install-r-package"></a>
 </h3>
 <p>Rerun this only when there is a new version of the package to
 install. The user may install from <code>GitHub</code>:</p>
@@ -90,11 +93,11 @@ install. The user may install from <code>GitHub</code>:</p>
 <p>or install from local file <code>.tar.gz</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># example, the user may have a different path</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/Users/NOAA/Downloads/GAPsurvey_2025.04.09.tar.gz'</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/R/GAPsurvey_2025.04.09.tar.gz'</span>,</span>
 <span>                 repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">'source'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="load-libraries">Load libraries<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
+<h3 id="load-libraries">Load libraries ————————————————————–<a class="anchor" aria-label="anchor" href="#load-libraries"></a>
 </h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://afsc-gap-products.github.io/GAPsurvey">GAPsurvey</a></span><span class="op">)</span></span></code></pre></div>
@@ -102,7 +105,8 @@ install. The user may install from <code>GitHub</code>:</p>
 <code>GAPSurvey</code> R package!</p>
 </div>
 <div class="section level3">
-<h3 id="open-this-example-gapsurvey-script-for-reference">Open this example <code>GAPsurvey</code> script (for reference)<a class="anchor" aria-label="anchor" href="#open-this-example-gapsurvey-script-for-reference"></a>
+<h3 id="open-this-example-gapsurvey-script-for-reference">Open this example <code>GAPsurvey</code> script (for reference)
+————————<a class="anchor" aria-label="anchor" href="#open-this-example-gapsurvey-script-for-reference"></a>
 </h3>
 <p>This should already be located on desktop, otherwise find it using
 the link below.</p>
@@ -110,7 +114,7 @@ the link below.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"r/GAPsurvey_script.R"</span>, package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="what-have-we-historically-caught-at-this-station">What have we historically caught at this station?<a class="anchor" aria-label="anchor" href="#what-have-we-historically-caught-at-this-station"></a>
+<h3 id="what-have-we-historically-caught-at-this-station">What have we historically caught at this station? —————————<a class="anchor" aria-label="anchor" href="#what-have-we-historically-caught-at-this-station"></a>
 </h3>
 <p>Learn more:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -2478,7 +2482,7 @@ the link below.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="all-catch-data">All catch data<a class="anchor" aria-label="anchor" href="#all-catch-data"></a>
+<h2 id="all-catch-data">All catch data —————————————————————<a class="anchor" aria-label="anchor" href="#all-catch-data"></a>
 </h2>
 <p>You can also look through all catch data from the survey</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -2537,7 +2541,7 @@ the link below.</p>
 <span><span class="co">#&gt; 6        7.301           0</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="species-data">Species Data<a class="anchor" aria-label="anchor" href="#species-data"></a>
+<h2 id="species-data">Species Data —————————————————————–<a class="anchor" aria-label="anchor" href="#species-data"></a>
 </h2>
 <p>You can also use this to find all species and species codes for quick
 searching</p>
@@ -2555,7 +2559,7 @@ searching</p>
 <span><span class="co">#&gt; 6        10170               English sole                   Parophrys vetulus</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="species-polycorder-reference">Species Polycorder reference<a class="anchor" aria-label="anchor" href="#species-polycorder-reference"></a>
+<h2 id="species-polycorder-reference--">Species Polycorder reference ————————————————-<a class="anchor" aria-label="anchor" href="#species-polycorder-reference--"></a>
 </h2>
 <p>You can also use this to find all species and species codes for quick
 searching</p>
@@ -2572,24 +2576,20 @@ searching</p>
 <span><span class="co">#&gt; 5          420                 2 Beringraja binoculata             big skate</span></span>
 <span><span class="co">#&gt; 6          435                 3  Bathyraja interrupta          Bering skate</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="what-time-is-sunrise-and-sunset">What time is sunrise and sunset?<a class="anchor" aria-label="anchor" href="#what-time-is-sunrise-and-sunset"></a>
+<h3 id="what-time-is-sunrise-and-sunset">What time is sunrise and sunset? ——————————————–<a class="anchor" aria-label="anchor" href="#what-time-is-sunrise-and-sunset"></a>
 </h3>
 <p>Learn more:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">get_sunrise_sunset</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="examples">Examples:<a class="anchor" aria-label="anchor" href="#examples"></a>
-</h2>
+<p>Examples:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Find times based on lat/lon for today's date, where date is a date object</span></span>
 <span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                   latitude <span class="op">=</span> <span class="fl">63.3</span>,</span>
 <span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using latitude and longitude to calcualte sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2025-04-10 08:09:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2025-04-09 22:36:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunrise is at 2025-04-15 07:52:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-04-14 22:51:00 AKDT</span></span>
 <span></span>
 <span><span class="co"># Find times based on lat/lon for today's date, where date is a character</span></span>
 <span><span class="co"># and lat/lon in degree decimal-minutes</span></span>
@@ -2613,8 +2613,8 @@ searching</p>
 <span>                   survey <span class="op">=</span> <span class="st">"GOA"</span>,</span>
 <span>                   station <span class="op">=</span> <span class="st">"264-18-511"</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; Using survey station (GOA 264-18-511) centroid location information (lat = 52.352, lon = -169.971) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2025-04-10 08:33:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2025-04-09 22:09:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunrise is at 2025-04-15 08:21:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-04-14 22:17:00 AKDT</span></span>
 <span></span>
 <span><span class="co"># Find times based on a survey (EBS) station's recorded lat/lon for today's date</span></span>
 <span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2025-08-04"</span>,</span>
@@ -2631,8 +2631,10 @@ searching</p>
 <span><span class="co">#&gt; Using survey station (NBS ZZ-01) centroid location information (lat = 63.334, lon = -168.244) to calculate sunrise and sunset.</span></span>
 <span><span class="co">#&gt; Sunrise is at 2025-06-04 05:14:00 AKDT</span></span>
 <span><span class="co">#&gt; Sunset is at 2025-06-04 01:08:00 AKDT</span></span></code></pre></div>
+</div>
 <div class="section level3">
-<h3 id="convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt">Convert CTD data to BTD as a backup for SBE39 (aka ‘the BT’)<a class="anchor" aria-label="anchor" href="#convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt"></a>
+<h3 id="convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt--">Convert CTD data to BTD as a backup for SBE39 (aka ‘the BT’)
+—————-<a class="anchor" aria-label="anchor" href="#convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt--"></a>
 </h3>
 <p>This function converts a CTD hexadecimal (.hex) file to bathythermic
 data (.btd) and bathythermic header files (.bth). If you are unable to
@@ -2656,7 +2658,7 @@ convert your file, please contact sean.rohan@<span class="citation">@noaa.gov</s
 </div>
 </div>
 <div class="section level2">
-<h2 id="bvdr-conversion-to-create-btd-data">BVDR Conversion to Create BTD data<a class="anchor" aria-label="anchor" href="#bvdr-conversion-to-create-btd-data"></a>
+<h2 id="bvdr-conversion-to-create-btd-data--">BVDR Conversion to Create BTD data ——————————————-<a class="anchor" aria-label="anchor" href="#bvdr-conversion-to-create-btd-data--"></a>
 </h2>
 <p>Converts Marport BVDR data (.ted and .tet files from Marport headrope
 sensor) to .BTD format. You must first run the BVDR converter program
@@ -2701,7 +2703,7 @@ creates. Once you have used the BVDR converter to output the .ted and
 <span>   package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="recover-position-data-from-globe--log-file">Recover position data from Globe .log file<a class="anchor" aria-label="anchor" href="#recover-position-data-from-globe--log-file"></a>
+<h2 id="recover-position-data-from-globe--log-file">Recover position data from Globe .log file ———————————–<a class="anchor" aria-label="anchor" href="#recover-position-data-from-globe--log-file"></a>
 </h2>
 <p>In the event that the MARPORT server GPS fails or is incomplete,
 “convert_log_gps()” converts GLOBE LOG files into a format that can be
@@ -2728,10 +2730,7 @@ AKDT.</p>
 <p>Learn more:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">convert_log_gps</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example">Example:<a class="anchor" aria-label="anchor" href="#example"></a>
-</h2>
+<p>Example:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># example input file</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_log_gps/06062017.log"</span>,</span>
@@ -2753,7 +2752,7 @@ AKDT.</p>
 <span>   package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="co"># output file</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="convert--bvdr-files-to--marp-files">Convert .bvdr files to .marp files<a class="anchor" aria-label="anchor" href="#convert--bvdr-files-to--marp-files"></a>
+<h2 id="convert--bvdr-files-to--marp-files--">Convert .bvdr files to .marp files ——————————————-<a class="anchor" aria-label="anchor" href="#convert--bvdr-files-to--marp-files--"></a>
 </h2>
 <p>If you mistakenly delete the marport data for a haul, you can
 retrieve that data through this converter.</p>
@@ -2771,10 +2770,7 @@ package = “GAPsurvey”)</p>
 <p>Learn more:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">convert_log_gps</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example-1">Example:<a class="anchor" aria-label="anchor" href="#example-1"></a>
-</h2>
+<p>Example:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># example input file</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"exdata/convert_bvdr_marp/20220811-00Za.bvdr"</span>,</span>
