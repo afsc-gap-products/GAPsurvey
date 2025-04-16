@@ -301,6 +301,13 @@ rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
                   output_file = "README.md")
 
+
+# Update DESCRIPTION -----------------------------------------------------------
+date0 <- "2025.04.09"
+aaa <- readLines(con = "DESCRIPTION")
+aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
+write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
 # Document and create Package --------------------------------------------------
 .rs.restartR()
 # Update DESCRIPTION file with new date version number!!!
