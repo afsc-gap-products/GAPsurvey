@@ -204,7 +204,7 @@ convert_log_gps <- function(
     path_in,
     path_out = "./",
     filename_add = "") {
-  
+
   if (is.na(VESSEL)) {
     VESSEL <- readline("Type vessel code:  ")
   }
@@ -322,10 +322,10 @@ convert_bvdr_marp <- function(path_bvdr,
                               verbose = FALSE) {
 
   dat <- readLines(con = path_bvdr, skipNul = TRUE)
-  dat1 <- strsplit(x = dat, split = "\\$G")
-  dat2 <- strsplit(x = dat, split = "\\:::")
-  dat3 <- strsplit(x = dat, split = "\\$01TE")
-  dat4 <- strsplit(x = dat, split = "\\$01DST")
+  dat1 <- strsplit(x = dat, split = "\\$G", useBytes = TRUE)
+  dat2 <- strsplit(x = dat, split = "\\:::", useBytes = TRUE)
+  dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
+  dat4 <- strsplit(x = dat, split = "\\$01DST", useBytes = TRUE)
 
   for (i in 1:length(dat1)) {
     if (length(dat1[i][[1]])>1) {
@@ -348,7 +348,7 @@ convert_bvdr_marp <- function(path_bvdr,
   }
   dat <- sapply(X = dat1, "[", 2)
   dat <- dat[!is.na(dat)]
-  dat <- dat[!grepl(pattern = "\\$Gf", x = dat)]
+  dat <- dat[!grepl(pattern = "\\$Gf", x = dat, useBytes = TRUE)]
   file_name_out <- gsub(pattern = ".bvdr", replacement = ".marp", x = path_bvdr, fixed = TRUE)
   writeLines(text = dat, con = file_name_out)
 
@@ -375,28 +375,28 @@ convert_bvdr_marp <- function(path_bvdr,
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    latitude = 63.3,
 #'                    longitude = -170.5)
-#' 
+#'
 #' # Find times based on lat/lon for today's date, where date is a character
 #' # and lat/lon in degree decimal-minutes
 #' get_sunrise_sunset(chosen_date = "2023-06-05",
 #'                    latitude = "63 18.0",
 #'                    longitude = "-170 30.0")
-#' 
+#'
 #' # Find times based on a survey (AI) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = "2025-06-10",
 #'                    survey = "AI",
 #'                    station = "8-55")
-#' 
+#'
 #' # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "GOA",
-#'                    station = "264-18-511") 
-#' 
+#'                    station = "264-18-511")
+#'
 #' # Find times based on a survey (EBS) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = "2025-08-04",
 #'                    survey = "EBS",
 #'                    station = "P-31")
-#' 
+#'
 #' # Find times based on a survey (NBS) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = "2025-06-04",
 #'                    survey = "NBS",
