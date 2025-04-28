@@ -287,7 +287,7 @@ date0 <- "2025.04.28" # Update files with new date version number!!!
 
 aaa <- readLines(con = here::here("vignettes", "GAPsurvey-script.Rmd"))
 aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
-write.table(x = aaa, file = here::here("inst", "r", "GAPsurvey-script.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(x = aaa, file = here::here("vignettes", "GAPsurvey-script.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ## make GAPsurvey_script.Rmd into .R script -------------------------------------
 

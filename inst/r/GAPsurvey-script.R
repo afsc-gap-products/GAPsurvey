@@ -7,7 +7,7 @@
 
 # or install from local file `.tar.gz`:
 # # example, the user may have a different path
-# install.packages('C:/R/GAPsurvey_2025.04.09.tar.gz',
+# install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.28.tar.gz',
 #                  repos=NULL, type='source')
 
 # ## Load libraries --------------------------------------------------------------
