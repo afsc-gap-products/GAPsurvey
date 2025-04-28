@@ -279,9 +279,18 @@ write.table(str0,
             file = here::here("R","species_data.R"),
             sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
-# make GAPsurvey_script.Rmd into .R script -------------------------------------
+# Update and run support files ------------------------------------------------
 
-# Update GAPsurvey-script.Rmd file with new date version number!!!
+date0 <- "2025.04.28" # Update files with new date version number!!!
+
+## GAPsurvey-run.Rmd -----------------------------------------------------------
+
+aaa <- readLines(con = here::here("vignettes", "GAPsurvey-script.Rmd"))
+aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
+write.table(x = aaa, file = here::here("inst", "r", "GAPsurvey-script.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+## make GAPsurvey_script.Rmd into .R script -------------------------------------
+
 knitr::purl(
   input = here::here("vignettes", "GAPsurvey-script.Rmd"),
   output = here::here("inst", "r", "GAPsurvey-script.R"), documentation = 2)
@@ -294,10 +303,8 @@ aa <- gsub(pattern = "# > ", replacement = "# ", x = aa)
 aa <- aa[aa != "# "]
 writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
 
-# README -----------------------------------------------------------------------
+## README -----------------------------------------------------------------------
 
-# Update README.Rmd file with new date version number!!!
-date0 <- "2025.04.28"
 aaa <- readLines(con = here::here("inst", "r", "README.Rmd"))
 aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
 write.table(x = aaa, file = here::here("inst", "r", "README.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
@@ -305,9 +312,9 @@ rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
                   output_file = "README.md")
 
-# Update DESCRIPTION -----------------------------------------------------------
-date0 <- "2025.04.28"
-aaa <- readLines(con = "DESCRIPTION")
+## Update DESCRIPTION -----------------------------------------------------------
+
+aaa <- readLines(con = here::here("DESCRIPTION"))
 aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
 write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
@@ -322,7 +329,7 @@ PKG <- c("devtools", # # devtools::install_github("rstudio/fontawesome", force =
          "usethis",
          "roxygen2",
          "RODBC")
-source("./inst/r/pkg_install.R")
+source(here::here("inst/r/pkg_install.R"))
 lapply(unique(PKG), pkg_install)
 
 devtools::document()
@@ -334,8 +341,7 @@ devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 
-.rs.restartR()
-date0 <- "2025.04.09"
+date0 <- "2025.04.28"
 
 PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
          "here",
