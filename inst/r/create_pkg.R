@@ -2,48 +2,48 @@
 
 
 PKG <- c(
-  
-  "devtools", 
+
+  "devtools",
   "remotes",
-  
+
   # other tidyverse
   "plyr",
   "dplyr",
   "magrittr",
   "tidyr",
-  "readxl", 
+  "readxl",
   "viridis",
   "readr",
-  "ggplot2", 
+  "ggplot2",
   "tibble",
-  "janitor", 
-  "data.table", 
+  "janitor",
+  "data.table",
   "here",
-  
+
   # Survey data pull Specific packages
   "akgfmaps", # devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = TRUE)
   "coldpool", # devtools::install_github("afsc-gap-products/coldpool")
   "gapctd", # install_github("afsc-gap-products/gapctd")
   "gapindex", # devtools::install_github("afsc-gap-products/gapindex")
-  
-  "jsonlite", 
-  "httr", 
-  "sp", 
-  "RODBC", 
-  
-  "roxygen2", 
+
+  "jsonlite",
+  "httr",
+  "sp",
+  "RODBC",
+
+  "roxygen2",
   "usethis",
-  
-  "pkgdown", 
-  
+
+  "pkgdown",
+
   # Spatial mapping
   "sf",
-  "ggspatial", 
-  
+  "ggspatial",
+
   "fontawesome",
-  
+
   # API pulls
-  "jsonlite", 
+  "jsonlite",
   "httr"
 )
 
@@ -178,26 +178,26 @@ sel_region <- c("ai", "goa", "ebs", "nbs")
 station_coords <- c()
 
 for (ii in 1:length(sel_region)) {
-  
+
   map_layers <- akgfmaps::get_base_layers(select.region = sel_region[ii], set.crs = "EPSG:3338")
-  
+
   station_center <- map_layers$survey.grid |>
     sf::st_make_valid() |>
     sf::st_centroid() |>
     sf::st_transform(crs = "WGS84")
-  
+
   names(station_center) <- tolower(names(station_center))
-  
+
   # if ("grid_id" %in% names(station_center) & sum(is.na(station_center$grid_id)) != nrow(station_center)) {
   #   station_center$station <- paste0(station_center$grid_id, "-", station_center$station)
   # }
-  
+
   station_center <- data.frame(station_center[, c("survey_definition_id", "design_year", "station", "grid_id")]) |>
     dplyr::bind_cols(sf::st_coordinates(station_center)) |>
     dplyr::rename(longitude_dd = X, latitude_dd = Y) |>
-    dplyr::mutate(srvy = toupper(sel_region[ii]), 
+    dplyr::mutate(srvy = toupper(sel_region[ii]),
                   station = as.character(station))
-  
+
   station_coords <- station_coords |>
     dplyr::bind_rows(station_center)
 }
@@ -283,10 +283,10 @@ write.table(str0,
 
 # Update GAPsurvey-script.Rmd file with new date version number!!!
 knitr::purl(
-  input = here::here("vignettes", "GAPsurvey-script.Rmd"), 
+  input = here::here("vignettes", "GAPsurvey-script.Rmd"),
   output = here::here("inst", "r", "GAPsurvey-script.R"), documentation = 2)
 
-aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R")) 
+aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R"))
 aa <- aa[c(2,20:length(aa))]
 aa <- aa[!grepl(pattern = "## ----", x = aa)]
 aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
@@ -297,13 +297,16 @@ writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
 # README -----------------------------------------------------------------------
 
 # Update README.Rmd file with new date version number!!!
+date0 <- "2025.04.28"
+aaa <- readLines(con = here::here("inst", "r", "README.Rmd"))
+aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
+write.table(x = aaa, file = here::here("inst", "r", "README.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
 rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
                   output_file = "README.md")
 
-
 # Update DESCRIPTION -----------------------------------------------------------
-date0 <- "2025.04.09"
+date0 <- "2025.04.28"
 aaa <- readLines(con = "DESCRIPTION")
 aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
 write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
@@ -315,9 +318,9 @@ write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 
 PKG <- c("devtools", # # devtools::install_github("rstudio/fontawesome", force = T)
-         "here", 
-         "usethis", 
-         "roxygen2", 
+         "here",
+         "usethis",
+         "roxygen2",
          "RODBC")
 source("./inst/r/pkg_install.R")
 lapply(unique(PKG), pkg_install)
@@ -335,8 +338,8 @@ devtools::check()
 date0 <- "2025.04.09"
 
 PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
-         "here", 
-         "usethis", 
+         "here",
+         "usethis",
          "pkgdown")
 source("./inst/r/pkg_install.R")
 lapply(unique(PKG), pkg_install)
