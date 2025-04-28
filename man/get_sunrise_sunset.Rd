@@ -55,7 +55,7 @@ get_sunrise_sunset(chosen_date = "2025-06-10",
 # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "GOA",
-                   station = "264-18-511") 
+                   station = "264-18-511")
 
 # Find times based on a survey (EBS) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = "2025-08-04",
