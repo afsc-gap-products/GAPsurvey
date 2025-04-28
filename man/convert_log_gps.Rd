@@ -30,7 +30,7 @@ convert_log_gps(
 \item{filename_add}{Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.}
 }
 \value{
-A .GPS file to the path_out directory.
+A .GPS file to the path_out directory with DATE/TIME in AKDT.
 }
 \description{
 In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
@@ -61,19 +61,5 @@ convert_log_gps(
     path_out = getwd(),
     filename_add = "newlog")
 readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
-  package = "GAPsurvey"))[1:5] # output file
-
-readLines(system.file("exdata/convert_log_gps/Haul0037",
-  package = "GAPsurvey"))[1:5] # input file
- convert_log_gps(
-    VESSEL = 94,
-    CRUISE = 202101,
-    HAUL = 37,
-    DATE = "06/07/2021",
-    path_in = system.file("exdata/convert_log_gps/Haul0037.log",
-        package = "GAPsurvey"),
-    path_out = getwd(),
-    filename_add = "newlog")
-readLines(system.file("exdata/convert_log_gps/Haul0037_newlog.gps",
   package = "GAPsurvey"))[1:5] # output file
 }

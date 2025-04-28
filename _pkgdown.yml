@@ -44,8 +44,8 @@ navbar:
       text: Articles
       icon: fa-newspaper # https://fontawesome.com/icons/newspaper?f=classic&s=regular
       menu:
-      - text: Example got-to script
-        href: articles/example-script.html
+      - text: Example go-to script
+        href: articles/GAPsurvey-script.html
     news:
      text: Release Notes
      icon: fas fa-bullhorn fa-lg
@@ -65,9 +65,9 @@ reference:
       # - starts_with("get_")
       - '`convert_ted_btd`'
       - '`convert_ctd_btd`'
-  - title: Estimate Net Spread
-    contents:
-      - '`calc_net_spread`'
+  # - title: Estimate Net Spread
+  #   contents:
+  #     - '`calc_net_spread`'
   - title: Resources
     contents:
       - '`get_catch_haul_history`'

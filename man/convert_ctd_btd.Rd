@@ -5,8 +5,8 @@
 \title{Convert CTD data from .hex to BTD and BTH}
 \usage{
 convert_ctd_btd(
-  filepath_hex,
-  dirpath_output = "./",
+  filepath_hex = NULL,
+  dirpath_output = NULL,
   filepath_xmlcon = NULL,
   latitude = NA,
   VESSEL = NA,
@@ -26,7 +26,7 @@ convert_ctd_btd(
 
 \item{filepath_xmlcon}{Required. Filepath to the instrument configuration file (.xmlcon) for the CTD (e.g. serial number 8091 would use the file with 8091 in the name ("C:/CTD/xmlcon configuration files/SBE19plusV2_8091.xmlcon").}
 
-\item{latitude}{Required. Latitude in decimal degrees (approximate).}
+\item{latitude}{Required. Latitude in decimal degrees.}
 
 \item{VESSEL}{Required. The vessel number (e.g., 94).}
 
@@ -51,7 +51,12 @@ convert_ctd_btd(
 This function converts a CTD  hexadecimal (.hex) file to bathythermic data (.btd) and bathythermic header files (.bth). If you are unable to convert your file, please contact sean.rohan@noaa.gov.
 }
 \examples{
+\dontrun{
 # CTD without auxiliary sensors
+
+# Run without passing arguments as code
+
+convert_ctd_btd()
 
 convert_ctd_btd(
  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
@@ -62,24 +67,9 @@ convert_ctd_btd(
  VESSEL = 94,
  CRUISE = 202101,
  HAUL = 107,
- SERIAL_NUMBER = 8105)
-
-# CTD with DO and pH sensors
-
-convert_ctd_btd(
-  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-    "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-    "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
-  VESSEL = 162,
-  CRUISE = 202301,
-  HAUL = 97,
-  latitude = 59.01693,
-  MODEL_NUMBER = "",
-  VERSION_NUMBER = "",
-  SERIAL_NUMBER = 8106)
+ SERIAL_NUMBER = 8105, 
+ MODEL_NUMBER = 1,
+ VERSION_NUMBER = 1)
 
 }
-\references{
-https://github.com/afsc-gap-products/gapctd
 }

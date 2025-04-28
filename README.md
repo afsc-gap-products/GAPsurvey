@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# GAPsurvey <a href={https://afsc-gap-products.github.io/GAPsurvey}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo with an image of a NOAA Fisheries report" />
+# GAPsurvey <a href={https://afsc-gap-products.github.io/GAPsurvey}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo."/>
 
 > This code is always in development
 
@@ -10,10 +10,6 @@
 
 **Sean Rohan** (Sean.Rohan AT noaa.gov; @MargaretSiple-NOAA)
 
-**Megsie Siple** (Margaret.Siple AT noaa.gov; @MargaretSiple-NOAA)
-
-**Liz Dawson** (Liz.Dawson AT noaa.gov; @liz-dawson-NOAA)
-
 Alaska Fisheries Science Center,
 
 National Marine Fisheries Service,
@@ -22,21 +18,54 @@ National Oceanic and Atmospheric Administration,
 
 Seattle, WA 98195
 
-### *At-sea data management tools for RACE GAP surveys*
+## Table of contents
 
-[![](https://img.shields.io/badge/devel%20version-2024.04.04-blue.svg)](https://github.com/afsc-gap-products/GAPsurvey)
-[![](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
-[![](https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg)](https://github.com/afsc-gap-products/GAPsurvey/commits/main)
+>      - [**At-sea data management tools for RACE GAP surveys**](#*at-sea-data-management-tools-for-race-gap-surveys*)
+>
+> -   [*Make sure the necessary packages are
+>     installed*](#make-sure-the-necessary-packages-are-installed)
+> -   [*Or*](#or)
+> -   [*example, the user may have a different
+>     path*](#example,-the-user-may-have-a-different-path)
+>     -   [*User Resources*](#user-resources)
+>     -   [*Cite this data*](#cite-this-data)
+> -   [*Relevant publications*](#relevant-publications)
+> -   [*Suggestions and Comments*](#suggestions-and-comments)
+>     -   [*R Version Metadata*](#r-version-metadata)
+>     -   [*NOAA README*](#noaa-readme)
+>     -   [*NOAA License*](#noaa-license)
+
+### *At-sea data management tools for RACE GAP surveys*
 
 ## Make sure the necessary packages are installed
 
-    library(devtools)
+or install from local file `.tar.gz`:
 
-    devtools::install_github("afsc-gap-products/GAPsurvey")
-    # Or
-    remotes::install_github("afsc-gap-products/GAPsurvey@main")
+## User Resources
 
-    library(GAPsurvey)
+-   [GitHub
+    repository](https://github.com/afsc-gap-products/gap_products).
+
+-   [Access Tips and Documentation for All Production
+    Data](https://afsc-gap-products.github.io/gap_products/)
+
+-   [Fisheries One Stop Shop
+    (FOSS)](https://www.fisheries.noaa.gov/foss)
+
+-   [Groundfish Assessment Program Bottom Trawl
+    Surveys](https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys)
+
+-   [AFSC’s Resource Assessment and Conservation Engineering
+    Division](https://www.fisheries.noaa.gov/about/resource-assessment-and-conservation-engineering-division)
+
+-   [Survey code
+    books](https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual)
+
+-   [Publications and Data
+    Reports](https://repository.library.noaa.gov/)
+
+-   [Research Surveys conducted at
+    AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
 
 ## Cite this data
 
@@ -54,40 +83,55 @@ for citing the package created and maintained in this repo. Add “note =
     #>   copyright = {Public Domain}
     #> }
 
-## Metadata
+# Relevant publications
 
-This package was last produced using:
+**Learn more about these surveys** \[@2023NEBS; @2023NEBS; @GOA2023;
+@AI2022; @RN979; @SAPcrab2024\].
 
-    #> R version 4.3.2 (2023-10-31 ucrt)
-    #> Platform: x86_64-w64-mingw32/x64 (64-bit)
-    #> Running under: Windows 10 x64 (build 19045)
+# Suggestions and Comments
+
+If you see that the data, product, or metadata can be improved, you are
+invited to create a [pull
+request](https://github.com/afsc-gap-products/GAPsurvey/pulls), [submit
+an issue to the GitHub
+organization](https://github.com/afsc-gap-products/data-requests/issues),
+or [submit an issue to the code’s
+repository](https://github.com/afsc-gap-products/GAPsurvey/issues).
+
+## R Version Metadata
+
+    #> R version 4.4.3 (2025-02-28 ucrt)
+    #> Platform: x86_64-w64-mingw32/x64
+    #> Running under: Windows 11 x64 (build 22631)
     #> 
     #> Matrix products: default
     #> 
     #> 
     #> locale:
-    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
+    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
+    #> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
     #> 
     #> time zone: America/Los_Angeles
     #> tzcode source: internal
     #> 
     #> attached base packages:
-    #> [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+    #> [1] stats     graphics  grDevices utils     datasets  methods   base     
     #> 
     #> other attached packages:
-    #>  [1] badger_0.2.3    pkgdown_2.0.7   gapctd_2.1.2    lubridate_1.9.3 plotly_4.10.4   interp_1.1-6    bbmle_1.0.25.1  oce_1.8-2       gsw_1.1-1       tidyr_1.3.1     plyr_1.8.9      RODBC_1.3-23    roxygen2_7.3.1  devtools_2.4.5  usethis_2.2.3  
-    #> [16] here_1.0.1      akgfmaps_3.5.0  terra_1.7-71    stars_0.6-4     abind_1.4-5     sf_1.0-16       gstat_2.1-1     ggplot2_3.5.0   classInt_0.4-10 gapindex_2.2.0  dplyr_1.1.4     readr_2.1.5     magrittr_2.0.3 
+    #> [1] ggplot2_3.5.2        pkgdown_2.1.1        fontawesome_0.5.3    GAPsurvey_2025.04.09 RODBC_1.3-26         roxygen2_7.3.2      
+    #> [7] here_1.0.1           devtools_2.4.5       usethis_3.1.0       
     #> 
     #> loaded via a namespace (and not attached):
-    #>   [1] RColorBrewer_1.1-3  sys_3.4.2           rstudioapi_0.16.0   dlstats_0.1.7       jsonlite_1.8.8      rmarkdown_2.26      fs_1.6.3            vctrs_0.6.5         memoise_2.0.1       askpass_1.2.0       gh_1.4.0            janitor_2.2.0      
-    #>  [13] htmltools_0.5.7     curl_5.2.1          KernSmooth_2.23-22  htmlwidgets_1.6.4   keyring_1.3.2       desc_1.4.3          httr2_1.0.0         zoo_1.8-12          cachem_1.0.8        mime_0.12           lifecycle_1.0.4     pkgconfig_2.0.3    
-    #>  [25] Matrix_1.6-5        R6_2.5.1            fastmap_1.1.1       shiny_1.8.0         snakecase_0.11.1    digest_0.6.35       numDeriv_2016.8-1.1 colorspace_2.1-0    rprojroot_2.0.4     pkgload_1.3.4       fansi_1.0.6         timechange_0.3.0   
-    #>  [37] httr_1.4.7          compiler_4.3.2      proxy_0.4-27        intervals_0.15.4    remotes_2.5.0       withr_3.0.0         DBI_1.2.2           pkgbuild_1.4.4      MASS_7.3-60         openssl_2.1.1       rappdirs_0.3.3      sessioninfo_1.2.2  
-    #>  [49] tools_4.3.2         units_0.8-5         httpuv_1.6.14       glue_1.7.0          promises_1.2.1      grid_4.3.2          getPass_0.2-4       generics_0.1.3      gtable_0.3.4        tzdb_0.4.0          class_7.3-22        data.table_1.15.2  
-    #>  [61] hms_1.1.3           sp_2.1-3            xml2_1.3.6          utf8_1.2.4          pillar_1.9.0        stringr_1.5.1       yulab.utils_0.1.4   later_1.3.2         lattice_0.21-9      FNN_1.1.4           deldir_2.0-4        tidyselect_1.2.1   
-    #>  [73] rvcheck_0.2.1       miniUI_0.1.1.1      knitr_1.45          gitcreds_0.1.2      xfun_0.42           credentials_2.0.1   stringi_1.8.3       lazyeval_0.2.2      yaml_2.3.8          evaluate_0.23       codetools_0.2-19    tibble_3.2.1       
-    #>  [85] BiocManager_1.30.22 cli_3.6.2           xtable_1.8-4        munsell_0.5.0       spacetime_1.3-1     Rcpp_1.0.12         gert_2.0.1          bdsmatrix_1.3-7     parallel_4.3.2      ellipsis_0.3.2      assertthat_0.2.1    profvis_0.3.8      
-    #>  [97] urlchecker_1.0.1    viridisLite_0.4.2   mvtnorm_1.2-4       scales_1.3.0        xts_0.13.2          e1071_1.7-14        purrr_1.0.2         crayon_1.5.2        rlang_1.1.3
+    #>  [1] gtable_0.3.6      xfun_0.52         htmlwidgets_1.6.4 remotes_2.5.0     processx_3.8.6    callr_3.7.6       generics_0.1.3   
+    #>  [8] vctrs_0.6.5       tools_4.4.3       ps_1.9.1          curl_6.2.2        tibble_3.2.1      pkgconfig_2.0.3   data.table_1.17.0
+    #> [15] xopen_1.0.1       desc_1.4.3        lifecycle_1.0.4   compiler_4.4.3    stringr_1.5.1     brio_1.1.5        munsell_0.5.1    
+    #> [22] httpuv_1.6.15     htmltools_0.5.8.1 yaml_2.3.10       later_1.4.2       pillar_1.10.2     urlchecker_1.0.1  ellipsis_0.3.2   
+    #> [29] cachem_1.1.0      sessioninfo_1.2.3 mime_0.13         tidyselect_1.2.1  digest_0.6.37     stringi_1.8.7     dplyr_1.1.4      
+    #> [36] purrr_1.0.4       rprojroot_2.0.4   fastmap_1.2.0     grid_4.4.3        colorspace_2.1-1  cli_3.6.4         magrittr_2.0.3   
+    #> [43] readtext_0.91     pkgbuild_1.4.7    withr_3.0.2       prettyunits_1.2.0 scales_1.3.0      promises_1.3.2    httr_1.4.7       
+    #> [50] rmarkdown_2.29    memoise_2.0.1     shiny_1.10.0      evaluate_1.0.3    knitr_1.50        rcmdcheck_1.4.0   testthat_3.2.3   
+    #> [57] miniUI_0.1.1.1    profvis_0.4.0     rlang_1.1.6       Rcpp_1.0.14       xtable_1.8-4      glue_1.8.0        xml2_1.3.8       
+    #> [64] pkgload_1.4.0     rstudioapi_0.17.1 R6_2.6.1          fs_1.6.6
 
 ## NOAA README
 
@@ -105,7 +149,7 @@ The Department of Commerce seal and logo, or the seal and logo of a DOC
 bureau, shall not be used in any manner to imply endorsement of any
 commercial product or activity by DOC or the United States Government.
 
-## License
+## NOAA License
 
 Software code created by U.S. Government employees is not subject to
 copyright in the United States (17 U.S.C. §105). The United
@@ -116,7 +160,7 @@ end, the Department of Commerce hereby grants to Recipient a
 royalty-free, nonexclusive license to use, copy, and create derivative
 works of the Software outside of the United States.
 
-<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries">
+<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"/>
 
 [U.S. Department of Commerce](https://www.commerce.gov/) | [National
 Oceanographic and Atmospheric Administration](https://www.noaa.gov) |
