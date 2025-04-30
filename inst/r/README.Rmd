@@ -1,5 +1,9 @@
 ---
-output: md_document
+output: 
+  md_document: 
+    variant: gfm
+csl: "https://raw.githubusercontent.com/citation-style-language/styles/master/apa-no-ampersand.csl"
+bibliography: "https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/bibliography.bib"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,7 +13,7 @@ knitr::opts_chunk$set(
   message = FALSE, 
   error = FALSE, 
   warning = FALSE, 
-  echo = FALSE, 
+  echo = TRUE, 
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/",
@@ -23,13 +27,17 @@ require(ggplot2)
 
 # GAPsurvey <a href={`r link_repopage`}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo."/>
 
+*At-sea data management tools for RACE GAP surveys*
+
 > This code is always in development
 
 ## This code is primarally maintained by: 
 
 **Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
 
-**Sean Rohan** (Sean.Rohan AT noaa.gov; @MargaretSiple-NOAA)
+**Sean Rohan** (Sean.Rohan AT noaa.gov; @sean-rohan-NOAA)
+
+**Margaret Siple** (Margaret Siple AT noaa.gov; @MargaretSiple-NOAA)
 
 Alaska Fisheries Science Center, 
 
@@ -42,6 +50,7 @@ Seattle, WA 98195
 ## Table of contents
 
 ```{r toc, echo = FALSE, eval = TRUE, warning = FALSE}
+
 toc <- strsplit(x = readtext::readtext(file = "./README.Rmd", verbosity = 0)[[2]], split = "\n")
 toc <- toc[[1]][substr(x = toc[[1]], start = 1, stop = 1) == "#"]
 toc <- toc[-c(1:3)]
@@ -58,15 +67,13 @@ toc <- paste0(toc_list, "*](#", toc_link, ")", collapse = "\n")
 
 `r toc`
 
-### *At-sea data management tools for RACE GAP surveys*
-
 ## Make sure the necessary packages are installed
 	
 ```{r, eval=FALSE, warning=FALSE, message=FALSE}
 library(devtools)
 
 devtools::install_github("afsc-gap-products/GAPsurvey")
-# Or
+ # Or
 remotes::install_github("afsc-gap-products/GAPsurvey@main")
 
 library(GAPsurvey)
@@ -76,7 +83,7 @@ or install from local file `.tar.gz`:
 
 ```{r install-local, eval = FALSE}
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.09.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.30.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
 ```
