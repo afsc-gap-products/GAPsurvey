@@ -237,9 +237,6 @@ convert_log_gps <- function(
   infoselect <- cbind(info, only.GPRMC)
   colnames(infoselect) <- c("VESSEL", "CRUISE", "HAUL", "DATE", "TIME", "LAT1", "LAT2", "LONG1", "LONG2")
   # head(infoselect)
-  hh2 <- base::sprintf("%06d", as.numeric(infoselect$TIME)) # add leading zeroes
-  hh = as.numeric(substr(hh2, start = 1, stop = 2))
-
 
   tstamp <- round(as.numeric(infoselect$TIME)) # sometimes this reads as chr and sometimes as num so force to num. Sometimes a decimal timestamp will break it if you don't round.
   tstamp <- sprintf("%06d", tstamp) # add leading zeroes
