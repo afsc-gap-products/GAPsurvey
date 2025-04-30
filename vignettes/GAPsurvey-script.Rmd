@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 #
 
-## Install R package -----------------------------------------------------------
+# Install R package ---
 
 Rerun this only when there is a new version of the package to install. The user may install from `GitHub`:
 
@@ -34,11 +34,11 @@ or install from local file `.tar.gz`:
 
 ```{r install-local, eval = FALSE}
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.28.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.30.tar.gz',
                  repos=NULL, type='source')
 ```
 
-## Load libraries --------------------------------------------------------------
+# Load libraries ---
 
 ```{r load-packages}
 library(GAPsurvey)
@@ -46,7 +46,7 @@ library(GAPsurvey)
 
 Now we have access to all of the functions in the `GAPSurvey` R package! 
 
-## Open this example `GAPsurvey` script (for reference) ------------------------
+# Open this example `GAPsurvey` script (for reference) ---
 
 This should already be located on desktop, otherwise find it using the link below. 
 
@@ -54,7 +54,7 @@ This should already be located on desktop, otherwise find it using the link belo
 system.file("r/GAPsurvey_script.R", package = "GAPsurvey")
 ```
 
-## What have we historically caught at this station? ---------------------------
+# What have we historically caught at this station? ---
 
 Learn more: 
 
@@ -64,23 +64,26 @@ Learn more:
 
 Examples: 
 
-```{r get_catch_haul_history}
-## for one year and only 1 station for all species
+For one year and only 1 station for all species
+
+```{r get_catch_haul_history-1, eval = FALSE}
 get_catch_haul_history(
   years = 2021:2023, # optional; if you only want to see a specific year, not the last 10
   species_codes = c(21720, 21740), # optional; pacific cod and walleye pollock ONLY
   survey = "EBS", # for example
   station = "I-13") # for example
+```
 
-## for default 10 years and nearby stations for all species (a typical use-case)
+For default 10 years and nearby stations for all species (a typical use-case)
+
+```{r get_catch_haul_history-2, eval = FALSE}
 get_catch_haul_history(
      survey = "AI",
      station = "324-73",
      grid_buffer = 3)
-
 ```
 
-# All catch data ---------------------------------------------------------------
+# All catch data ---
 
 You can also look through all catch data from the survey
 
@@ -93,7 +96,7 @@ You can also look through all catch data from the survey
 head(GAPsurvey::public_data) # using `head()` function to see first few (6) rows of dataset 
 ```
 
-# Species Data -----------------------------------------------------------------
+# Species Data ---
 
 You can also use this to find all species and species codes for quick searching
 
@@ -106,7 +109,7 @@ You can also use this to find all species and species codes for quick searching
 head(GAPsurvey::species_data) # using `head()` function to see first few (6) rows of dataset 
 ```
 
-# Species Polycorder reference -------------------------------------------------
+# Species Polycorder reference ---
 
 You can also use this to find all species and species codes for quick searching
 
@@ -119,7 +122,7 @@ You can also use this to find all species and species codes for quick searching
 head(GAPsurvey::PolySpecies) # using `head()` function to see first few (6) rows of dataset 
 ```
 
-## What time is sunrise and sunset? --------------------------------------------
+# What time is sunrise and sunset? ---
 
 Learn more:
 
@@ -129,40 +132,54 @@ Learn more:
 
 Examples: 
 
-```{r get_sunrise_sunset}
-# Find times based on lat/lon for today's date, where date is a date object
+Find times based on lat/lon for today's date, where date is a date object
+
+```{r get_sunrise_sunset-1}
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    latitude = 63.3,
                    longitude = -170.5)
+```
 
-# Find times based on lat/lon for today's date, where date is a character
-# and lat/lon in degree decimal-minutes
+Find times based on lat/lon for today's date, where date is a character and lat/lon in degree decimal-minutes
+
+```{r get_sunrise_sunset-2}
 get_sunrise_sunset(chosen_date = "2023-06-05",
                    latitude = "63 18.0",
                    longitude = "-170 30.0")
+```
 
-# Find times based on a survey (AI) station's recorded lat/lon for today's date
+Find times based on a survey (AI) station's recorded lat/lon for today's date
+```{r get_sunrise_sunset-3}
 get_sunrise_sunset(chosen_date = "2025-06-10",
                    survey = "AI",
                    station = "8-55")
+```
 
-# Find times based on a survey (GOA) station's recorded lat/lon for today's date
+Find times based on a survey (GOA) station's recorded lat/lon for today's date
+
+```{r get_sunrise_sunset-4}
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "GOA",
-                   station = "264-18-511") 
+                   station = "264-18-511")
+```
 
-# Find times based on a survey (EBS) station's recorded lat/lon for today's date
+Find times based on a survey (EBS) station's recorded lat/lon for today's date
+
+```{r get_sunrise_sunset-5}
 get_sunrise_sunset(chosen_date = "2025-08-04",
                    survey = "EBS",
                    station = "P-31")
+```
 
-# Find times based on a survey (NBS) station's recorded lat/lon for today's date
+Find times based on a survey (NBS) station's recorded lat/lon for today's date
+
+```{r get_sunrise_sunset-6}
 get_sunrise_sunset(chosen_date = "2025-06-04",
                    survey = "NBS",
                    station = "ZZ-01")
 ```
 
-## Convert CTD data to BTD as a backup for SBE39 (aka 'the BT') ----------------
+# Convert CTD data to BTD as a backup for SBE39 (aka 'the BT') ---
 
 This function converts a CTD  hexadecimal (.hex) file to bathythermic data (.btd) and bathythermic header files (.bth). If you are unable to convert your file, please contact sean.rohan@@noaa.gov.
 
@@ -187,7 +204,7 @@ convert_ctd_btd(
  SERIAL_NUMBER = 8105)
 ```
 
-# BVDR Conversion to Create BTD data -------------------------------------------
+# BVDR Conversion to Create BTD data ---
 
 Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
 
@@ -229,7 +246,7 @@ Example:
    package = "GAPsurvey"))[1:5]
 ```
 
-# Recover position data from Globe .log file -----------------------------------
+# Recover position data from Globe .log file ---
 
 In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
 To get a .log file that is usable in this function,
@@ -276,7 +293,7 @@ readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
    package = "GAPsurvey"))[1:5] # output file
 ```
 
-# Convert .bvdr files to .marp files -------------------------------------------
+# Convert .bvdr files to .marp files ---
 
 If you mistakenly delete the marport data for a haul, you can retrieve that data through this converter.
 

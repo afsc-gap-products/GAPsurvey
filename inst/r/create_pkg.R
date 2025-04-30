@@ -281,7 +281,7 @@ write.table(str0,
 
 # Update and run support files ------------------------------------------------
 
-date0 <- "2025.04.28" # Update files with new date version number!!!
+date0 <- "2025.04.30" # Update files with new date version number!!!
 
 ## GAPsurvey-run.Rmd -----------------------------------------------------------
 
@@ -301,6 +301,7 @@ aa <- aa[!grepl(pattern = "## ----", x = aa)]
 aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
 aa <- gsub(pattern = "# > ", replacement = "# ", x = aa)
 aa <- aa[aa != "# "]
+# for (i in 1:15) { aa <- gsub(pattern = "-", replacement = "", x = aa) }
 writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
 
 ## README -----------------------------------------------------------------------
@@ -319,12 +320,12 @@ aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
 write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 # Document and create Package --------------------------------------------------
+
 .rs.restartR()
-# Update DESCRIPTION file with new date version number!!!
 
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 
-PKG <- c("devtools", # # devtools::install_github("rstudio/fontawesome", force = T)
+PKG <- c("devtools",
          "here",
          "usethis",
          "roxygen2",
@@ -341,7 +342,7 @@ devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 
-date0 <- "2025.04.28"
+date0 <- "2025.04.30"
 
 PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
          "here",
