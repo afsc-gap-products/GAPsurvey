@@ -23,6 +23,10 @@ testthat::test_that("Test convert_ctd_btd()",
                       bth_out <- utils::read.csv(fpath_bth);
                       testthat::expect_true(all(dim(btd_out) == c(2602, 7)));
                       testthat::expect_true(all(dim(bth_out) == c(1, 14)));
+                      suppressWarnings(file.remove(c(fpath_btd, fpath_bth)));
+                      suppressWarnings(
+                        file.remove(c(list.files(path = getwd(), pattern = ".cnv", full.names = TRUE)))
+                        );
                       })
 
 # testthat::test_that("Test convert_bvdr_marp()")
@@ -51,4 +55,7 @@ testthat::test_that("Test convert_ted_btd()",
                       bth_out <- utils::read.csv(fpath_bth);
                       testthat::expect_true(all(dim(btd_out) == c(1583, 8)));
                       testthat::expect_true(all(dim(bth_out) == c(1, 14)));
+                      suppressWarnings(
+                        file.remove(c(fpath_btd, fpath_bth), showWarnings = FALSE)
+                        );
                     })

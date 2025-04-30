@@ -19,7 +19,7 @@
 #' # CTD without auxiliary sensors
 #'
 #' # Run without passing arguments as code
-#' 
+#'
 #' convert_ctd_btd()
 #'
 #'convert_ctd_btd(
@@ -31,7 +31,7 @@
 #'  VESSEL = 94,
 #'  CRUISE = 202101,
 #'  HAUL = 107,
-#'  SERIAL_NUMBER = 8105, 
+#'  SERIAL_NUMBER = 8105,
 #'  MODEL_NUMBER = 1,
 #'  VERSION_NUMBER = 1)
 #'
@@ -780,9 +780,9 @@ integer_to_dissolved_oxygen <- function(do_integer,
   tau <- 0
   dVdt <- c(0, diff(do_voltage)/sample_interval)
 
-  if(tau_correction) {
-    tau <- DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
-  }
+  # if(tau_correction) {
+  #   tau <- DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
+  # }
 
   temperature_K <- temperature + 273.15
 
@@ -868,7 +868,7 @@ get_calibration_parameter <- function(header, cal_par, start_block = NULL, end_b
 #' @author Sean Rohan
 #' @noRd
 write_to_cnv <- function(data_list, output_path) {
-# #' @noRd
+
   dl <- data_list
 
   dl$data <- dl$data[names(dl$output_channels)]
