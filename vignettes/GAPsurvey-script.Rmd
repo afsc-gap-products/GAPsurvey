@@ -1,7 +1,6 @@
 ---
 title: "Example GAPsurvey Go-to script"
 description: ""
-date: "`r format(Sys.Date(), format='%B %d %Y') `"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{example-script}
@@ -18,7 +17,7 @@ knitr::opts_chunk$set(
 
 # Example Script Using R Package `GAPsurvey`
 
-> Last updated April 2025
+> Last updated `r  format(Sys.Date(), format='%B %d %Y') `
 
 #
 
