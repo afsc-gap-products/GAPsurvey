@@ -281,7 +281,7 @@ write.table(str0,
 
 # Update and run support files ------------------------------------------------
 
-date0 <- "2025.04.30" # Update files with new date version number!!!
+date0 <- "2025.05.01" # Update files with new date version number!!!
 
 ## GAPsurvey-run.Rmd -----------------------------------------------------------
 
@@ -342,7 +342,7 @@ devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 
-date0 <- "2025.04.30"
+date0 <- "2025.05.01" # Update files with new date version number!!!
 
 PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
          "here",

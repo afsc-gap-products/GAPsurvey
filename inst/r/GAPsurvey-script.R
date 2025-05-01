@@ -1,5 +1,5 @@
 # title: "Example GAPsurvey Go-to script"
-# Last updated April 2025
+# Last updated `r  format(Sys.Date(), format='%B %d %Y') `
 # #
 # # Install R package ---
 # Rerun this only when there is a new version of the package to install. The user may install from `GitHub`:
@@ -7,7 +7,7 @@ devtools::install_github("afsc-gap-products/GAPsurvey")
 
 # or install from local file `.tar.gz`:
 # # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.30.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.05.01.tar.gz',
                  repos=NULL, type='source')
 
 # # Load libraries ---

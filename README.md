@@ -8,11 +8,13 @@
 
 ## This code is primarally maintained by:
 
-**Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
+**Emily Markowitz** (Emily.Markowitz AT noaa.gov;
+(**EmilyMarkowitz-NOAA?**))
 
-**Sean Rohan** (Sean.Rohan AT noaa.gov; @sean-rohan-NOAA)
+**Sean Rohan** (Sean.Rohan AT noaa.gov; (**sean-rohan-NOAA?**))
 
-**Margaret Siple** (Margaret Siple AT noaa.gov; @MargaretSiple-NOAA)
+**Margaret Siple** (Margaret Siple AT noaa.gov;
+(**MargaretSiple-NOAA?**))
 
 Alaska Fisheries Science Center,
 
@@ -24,60 +26,62 @@ Seattle, WA 98195
 
 ## Table of contents
 
-> -   [*Make sure the necessary packages are
->     installed*](#make-sure-the-necessary-packages-are-installed)
-> -   [*example, the user may have a different
->     path*](#example,-the-user-may-have-a-different-path)
->     -   [*User Resources*](#user-resources)
->     -   [*Cite this data*](#cite-this-data)
-> -   [*Relevant publications*](#relevant-publications)
-> -   [*Suggestions and Comments*](#suggestions-and-comments)
->     -   [*R Version Metadata*](#r-version-metadata)
->     -   [*NOAA README*](#noaa-readme)
->     -   [*NOAA License*](#noaa-license)
+> - [*Make sure the necessary packages are
+>   installed*](#make-sure-the-necessary-packages-are-installed)
+> - [*example, the user may have a different
+>   path*](#example,-the-user-may-have-a-different-path)
+>   - [*User Resources*](#user-resources)
+>   - [*Cite this data*](#cite-this-data)
+> - [*Relevant publications*](#relevant-publications)
+> - [*Suggestions and Comments*](#suggestions-and-comments)
+>   - [*R Version Metadata*](#r-version-metadata)
+>   - [*NOAA README*](#noaa-readme)
+>   - [*NOAA License*](#noaa-license)
 
 ## Make sure the necessary packages are installed
 
-    library(devtools)
+``` r
+library(devtools)
 
-    devtools::install_github("afsc-gap-products/GAPsurvey")
-     # Or
-    remotes::install_github("afsc-gap-products/GAPsurvey@main")
+devtools::install_github("afsc-gap-products/GAPsurvey")
+ # Or
+remotes::install_github("afsc-gap-products/GAPsurvey@main")
 
-    library(GAPsurvey)
+library(GAPsurvey)
+```
 
 or install from local file `.tar.gz`:
 
-    # example, the user may have a different path
-    install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.30.tar.gz',
-                     repos=NULL, type='source')
-    library(GAPsurvey)
+``` r
+# example, the user may have a different path
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.05.01.tar.gz',
+                 repos=NULL, type='source')
+library(GAPsurvey)
+```
 
 ## User Resources
 
--   [GitHub
-    repository](https://github.com/afsc-gap-products/gap_products).
+- [GitHub
+  repository](https://github.com/afsc-gap-products/gap_products).
 
--   [Access Tips and Documentation for All Production
-    Data](https://afsc-gap-products.github.io/gap_products/)
+- [Access Tips and Documentation for All Production
+  Data](https://afsc-gap-products.github.io/gap_products/)
 
--   [Fisheries One Stop Shop
-    (FOSS)](https://www.fisheries.noaa.gov/foss)
+- [Fisheries One Stop Shop (FOSS)](https://www.fisheries.noaa.gov/foss)
 
--   [Groundfish Assessment Program Bottom Trawl
-    Surveys](https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys)
+- [Groundfish Assessment Program Bottom Trawl
+  Surveys](https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys)
 
--   [AFSC’s Resource Assessment and Conservation Engineering
-    Division](https://www.fisheries.noaa.gov/about/resource-assessment-and-conservation-engineering-division)
+- [AFSC’s Resource Assessment and Conservation Engineering
+  Division](https://www.fisheries.noaa.gov/about/resource-assessment-and-conservation-engineering-division)
 
--   [Survey code
-    books](https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual)
+- [Survey code
+  books](https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual)
 
--   [Publications and Data
-    Reports](https://repository.library.noaa.gov/)
+- [Publications and Data Reports](https://repository.library.noaa.gov/)
 
--   [Research Surveys conducted at
-    AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
+- [Research Surveys conducted at
+  AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
 
 ## Cite this data
 
@@ -86,22 +90,78 @@ citations](%22https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITAT
 for citing the package created and maintained in this repo. Add “note =
 {Accessed: mm/dd/yyyy}” to append the day this data was accessed.
 
-    cat(readLines(con = here::here("inst/CITATION.bib")), sep = "\n") 
-    #> @misc{GAPsurvey,
-    #>   author = {{NOAA Fisheries Alaska Fisheries Science Center, Goundfish Assessment Program}},
-    #>   year = {2024},
-    #>   title = {AFSC Goundfish Assessment Program at-Sea data management tools for RACE GAP surveys},
-    #>   howpublished = {https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys},
-    #>   publisher = {{U.S. Dep. Commer.}},
-    #>   copyright = {Public Domain}
-    #> }
+``` r
+cat(readLines(con = here::here("inst/CITATION.bib")), sep = "\n") 
+#> @misc{GAPsurvey,
+#>   author = {{NOAA Fisheries Alaska Fisheries Science Center, Goundfish Assessment Program}},
+#>   year = {2024},
+#>   title = {AFSC Goundfish Assessment Program at-Sea data management tools for RACE GAP surveys},
+#>   howpublished = {https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys},
+#>   publisher = {{U.S. Dep. Commer.}},
+#>   copyright = {Public Domain}
+#> }
+```
 
 # Relevant publications
 
-    source("https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/current_data_tm.r") # srvy_cite 
+``` r
+source("https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/current_data_tm.r") # srvy_cite 
+```
 
-**Learn more about these surveys** \[@2023NEBS; @2023NEBS; @GOA2023;
-@AI2022; @RN979; @SAPcrab2024\].
+**Learn more about these surveys** (Hoff, 2016; Markowitz et al., 2024,
+2024; Siple et al., 2024; Von Szalay et al., 2023; Zacher et al., 2024).
+
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0" line-spacing="2">
+
+<div id="ref-RN979" class="csl-entry">
+
+Hoff, G. R. (2016). *Results of the 2016 eastern Bering Sea upper
+continental slope survey of groundfishes and invertebrate resources*
+(NOAA Tech. Memo. NOAA-AFSC-339). U.S. Dep. Commer.
+<https://doi.org/10.7289/V5/TM-AFSC-339>
+
+</div>
+
+<div id="ref-2023NEBS" class="csl-entry">
+
+Markowitz, E. H., Dawson, E. J., Wassermann, S., Anderson, C. B., Rohan,
+S. K., Charriere, B. K., and Stevenson, D. E. (2024). *Results of the
+2023 eastern and northern Bering Sea continental shelf bottom trawl
+survey of groundfish and invertebrate fauna* (NOAA Tech. Memo.
+NMFS-AFSC-487; p. 242). U.S. Dep. Commer.
+<https://doi.org/10.25923/2mry-yx09>
+
+</div>
+
+<div id="ref-GOA2023" class="csl-entry">
+
+Siple, M. C., Szalay, P. G. von, Raring, N. W., Dowlin, A. N., and
+Riggle, B. C. (2024). *Data report: 2023 gulf of alaska bottom trawl
+survey* (NOAA Tech. Memo. AFSC processed report; 2024-09). U.S. Dep.
+Commer. <https://doi.org/10.25923/gbb1-x748>
+
+</div>
+
+<div id="ref-AI2022" class="csl-entry">
+
+Von Szalay, P. G., Raring, N. W., Siple, M. C., Dowlin, A. N., Riggle,
+B. C., and Laman, E. A. and. (2023). *Data report: 2022 Aleutian Islands
+bottom trawl survey* (AFSC Processed Rep. 2023-07; p. 230). U.S. Dep.
+Commer. <https://doi.org/10.25923/85cy-g225>
+
+</div>
+
+<div id="ref-SAPcrab2024" class="csl-entry">
+
+Zacher, L. S., Richar, J. I., Fedewa, E. J., Ryznar, E. R., and Litzow,
+M. A. (2024). *The 2024 eastern Bering Sea continental shelf trawl
+survey: Results for commercial crab species DRAFT* \[NOAA Tech. Memo.\].
+<https://www.fisheries.noaa.gov/resource/document/draft-2024-eastern-bering-sea-crab-technical-memorandum>
+
+</div>
+
+</div>
 
 # Suggestions and Comments
 
@@ -115,35 +175,38 @@ repository](https://github.com/afsc-gap-products/GAPsurvey/issues).
 
 ## R Version Metadata
 
-    sessionInfo()
-    #> R version 4.4.3 (2025-02-28 ucrt)
-    #> Platform: x86_64-w64-mingw32/x64
-    #> Running under: Windows 10 x64 (build 19045)
-    #> 
-    #> Matrix products: default
-    #> 
-    #> 
-    #> locale:
-    #> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
-    #> 
-    #> time zone: America/Los_Angeles
-    #> tzcode source: internal
-    #> 
-    #> attached base packages:
-    #> [1] stats     graphics  grDevices utils     datasets  methods   base     
-    #> 
-    #> other attached packages:
-    #> [1] ggplot2_3.5.2
-    #> 
-    #> loaded via a namespace (and not attached):
-    #>  [1] tidyselect_1.2.1   dplyr_1.1.4        farver_2.1.2       fastmap_1.2.0      gapindex_3.0.2     janitor_2.2.1      akgfmaps_4.0.4     promises_1.3.2     digest_0.6.37      timechange_0.3.0   mime_0.13         
-    #> [12] lifecycle_1.0.4    sf_1.0-20          ellipsis_0.3.2     terra_1.8-42       magrittr_2.0.3     compiler_4.4.3     rlang_1.1.5        RODBC_1.3-26       tools_4.4.3        yaml_2.3.10        data.table_1.17.0 
-    #> [23] knitr_1.50         FNN_1.1.4.1        htmlwidgets_1.6.4  sp_2.2-0           pkgbuild_1.4.7     classInt_0.4-11    here_1.0.1         RColorBrewer_1.1-3 pkgload_1.4.0      abind_1.4-8        KernSmooth_2.23-26
-    #> [34] miniUI_0.1.2       withr_3.0.2        purrr_1.0.4        grid_4.4.3         urlchecker_1.0.1   profvis_0.4.0      xts_0.14.1         readtext_0.91      xtable_1.8-4       e1071_1.7-16       scales_1.4.0      
-    #> [45] cli_3.6.3          rmarkdown_2.29     intervals_0.15.5   generics_0.1.3     remotes_2.5.0      rstudioapi_0.17.1  httr_1.4.7         sessioninfo_1.2.3  DBI_1.2.3          cachem_1.1.0       proxy_0.4-27      
-    #> [56] stringr_1.5.1      stars_0.6-8        parallel_4.4.3     vctrs_0.6.5        devtools_2.4.5     units_0.8-7        glue_1.8.0         pkgdown_2.1.2      codetools_0.2-20   gstat_2.1-3        lubridate_1.9.4   
-    #> [67] stringi_1.8.7      gtable_0.3.6       later_1.4.2        tibble_3.2.1       pillar_1.10.2      htmltools_0.5.8.1  R6_2.6.1           rprojroot_2.0.4    evaluate_1.0.3     shiny_1.10.0       lattice_0.22-6    
-    #> [78] memoise_2.0.1      snakecase_0.11.1   httpuv_1.6.16      class_7.3-23       Rcpp_1.0.14        spacetime_1.3-3    xfun_0.52          fs_1.6.6           zoo_1.8-14         usethis_3.1.0      pkgconfig_2.0.3
+``` r
+sessionInfo()
+#> R version 4.4.3 (2025-02-28 ucrt)
+#> Platform: x86_64-w64-mingw32/x64
+#> Running under: Windows 10 x64 (build 19045)
+#> 
+#> Matrix products: default
+#> 
+#> 
+#> locale:
+#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
+#> 
+#> time zone: America/Los_Angeles
+#> tzcode source: internal
+#> 
+#> attached base packages:
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
+#> 
+#> other attached packages:
+#> [1] ggplot2_3.5.2        pkgdown_2.1.2        fontawesome_0.5.3    GAPsurvey_2025.05.01 RODBC_1.3-26         roxygen2_7.3.2       here_1.0.1           devtools_2.4.5       usethis_3.1.0       
+#> 
+#> loaded via a namespace (and not attached):
+#>  [1] DBI_1.2.3          remotes_2.5.0      testthat_3.2.3     rlang_1.1.5        magrittr_2.0.3     snakecase_0.11.1   e1071_1.7-16       compiler_4.4.3     callr_3.7.6        vctrs_0.6.5        stringr_1.5.1     
+#> [12] profvis_0.4.0      pkgconfig_2.0.3    fastmap_1.2.0      ellipsis_0.3.2     promises_1.3.2     rmarkdown_2.29     sessioninfo_1.2.3  ps_1.9.1           purrr_1.0.4        xfun_0.52          cachem_1.1.0      
+#> [23] later_1.4.2        terra_1.8-42       parallel_4.4.3     prettyunits_1.2.0  R6_2.6.1           stringi_1.8.7      RColorBrewer_1.1-3 pkgload_1.4.0      brio_1.1.5         lubridate_1.9.4    stars_0.6-8       
+#> [34] Rcpp_1.0.14        knitr_1.50         zoo_1.8-14         readtext_0.91      FNN_1.1.4.1        httpuv_1.6.16      timechange_0.3.0   tidyselect_1.2.1   rstudioapi_0.17.1  abind_1.4-8        yaml_2.3.10       
+#> [45] codetools_0.2-20   miniUI_0.1.2       curl_6.2.2         processx_3.8.6     pkgbuild_1.4.7     lattice_0.22-6     tibble_3.2.1       intervals_0.15.5   shiny_1.10.0       withr_3.0.2        evaluate_1.0.3    
+#> [56] desc_1.4.3         sf_1.0-20          units_0.8-7        proxy_0.4-27       urlchecker_1.0.1   xts_0.14.1         xml2_1.3.8         pillar_1.10.2      KernSmooth_2.23-26 generics_0.1.3     rprojroot_2.0.4   
+#> [67] sp_2.2-0           xopen_1.0.1        spacetime_1.3-3    scales_1.4.0       xtable_1.8-4       class_7.3-23       glue_1.8.0         janitor_2.2.1      tools_4.4.3        data.table_1.17.0  fs_1.6.6          
+#> [78] grid_4.4.3         cli_3.6.3          gstat_2.1-3        akgfmaps_4.0.4     rcmdcheck_1.4.0    dplyr_1.1.4        gtable_0.3.6       digest_0.6.37      classInt_0.4-11    htmlwidgets_1.6.4  farver_2.1.2      
+#> [89] memoise_2.0.1      htmltools_0.5.8.1  lifecycle_1.0.4    httr_1.4.7         mime_0.13
+```
 
 ## NOAA README
 
@@ -174,6 +237,6 @@ works of the Software outside of the United States.
 
 <img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"/>
 
-[U.S. Department of Commerce](https://www.commerce.gov/) | [National
-Oceanographic and Atmospheric Administration](https://www.noaa.gov) |
+[U.S. Department of Commerce](https://www.commerce.gov/) \| [National
+Oceanographic and Atmospheric Administration](https://www.noaa.gov) \|
 [NOAA Fisheries](https://www.fisheries.noaa.gov/)
