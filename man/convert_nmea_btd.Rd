@@ -6,6 +6,7 @@
 \usage{
 convert_nmea_btd(
   nmea_strings,
+  filter_type = "lowpass",
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
@@ -15,7 +16,9 @@ convert_nmea_btd(
 )
 }
 \arguments{
-\item{nmea_strings}{Character vector of NMEA strings (e.g., in a .marp file.)}
+\item{nmea_strings}{Character vector of NMEA strings (e.g., in a .marp file.).}
+
+\item{filter_type}{Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.}
 
 \item{VESSEL}{Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.}
 
@@ -28,8 +31,6 @@ convert_nmea_btd(
 \item{VERSION_NUMBER}{Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).}
 
 \item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).}
-
-\item{INSTRUMENT}{Instrument name as a character vector. Default = "Marport TE"}
 }
 \description{
 Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
