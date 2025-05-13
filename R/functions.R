@@ -398,37 +398,223 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   # Remove unnecessary carriage returns
   dat <- gsub(pattern = "\\r", replacement = "", x = dat)
   dat <- gsub(pattern = "\\n", replacement = "", x = dat)
-  marp_dat <- dat[!grepl(pattern = "\\$Gf", x = dat, useBytes = TRUE)]
+  dat <- dat[!grepl(pattern = "\\$Gf", x = dat, useBytes = TRUE)]
   file_name_out <- gsub(pattern = ".bvdr", replacement = ".marp", x = path_bvdr[1], fixed = TRUE)
 
-  writeLines(text = marp_dat, con = file_name_out)
+  writeLines(text = dat, con = file_name_out)
 
   # stopifnot("convert_bvdr_marp: .marp file was not successfully generated." = check.exists(file_name_out))
 
-  cat(paste0("convert_bvdr_marp: ", length(marp_dat), " lines written to ", file_name_out))
+  cat(paste0("convert_bvdr_marp: ", length(dat), " lines written to ", file_name_out))
 
-  # if(make_btd_bth) {
-  #   #  Placeholder
-  #
-  #   bt_dat <- dat[grepl(pattern = "GPZDA", x = dat) | grepl(pattern = "\\$TE", x = dat)]
-  #
-  #   gpzda_index <- grep(pattern = "GPZDA", x = dat)
-  #   depth_index <- grep(pattern = "TED", x = dat)
-  #   height_index <- grep(pattern = "TEH", x = dat)
-  #   temperature_index  <- grep(pattern = "TET", x = dat)
-  #
-  #   depth <- sub(".*,([-+]?[0-9]*\\.?[0-9]+),.*", "\\1", dat[depth_index])
-  #   height <- sub(".*,([-+]?[0-9]*\\.?[0-9]+),.*", "\\1", dat[height_index])
-  #   temperature <- sub(".*,([-+]?[0-9]*\\.?[0-9]+),.*", "\\1", dat[temperature_index])
-  #
-  #
-  # }
+  output <- list(marp = dat)
 
+  # Create BTD and BTH files from NMEA strings
+  if(make_btd_bth) {
+
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat)
+
+    output <- c(output, btd_bth_output)
+
+  }
 
   if(verbose) {
-    return(marp_dat)
+    return(output)
   }
 }
+
+
+
+#' Extract depth and temperature from NMEA strings
+#'
+#' Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
+#'
+#' @param nmea_strings Character vector of NMEA strings (e.g., in a .marp file.)
+#' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param MODEL_NUMBER Optional. Default = "Marport Trawl Explorer". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
+#' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
+#' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
+#' @param INSTRUMENT Instrument name as a character vector. Default = "Marport TE"
+#' @export
+#' @author Sean Rohan <sean.rohan@@noaa.gov>
+
+convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA) {
+
+  # nmea_strings <- dat
+  # VESSEL = NA
+  # CRUISE = NA
+  # HAUL = NA
+  # MODEL_NUMBER = "Marport Trawl Explorer"
+  # VERSION_NUMBER = NA
+  # SERIAL_NUMBER = NA
+
+  # Add tests to check that NMEA strings include temperature and depth
+
+  if(is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
+  if(is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
+  if(is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
+  if(is.na(MODEL_NUMBER)){ MODEL_NUMBER <- readline("Type model number (optional):  ") }
+  if(is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number (optional):  ") }
+  if(is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of sensor (optional):  ") }
+
+  # Initialize lists to store parsed data
+  matched_bt <- list()
+
+  # Function to convert HHMMSS.SSS to POSIXct
+  parse_time <- function(hhmmss, date_str) {
+    as.POSIXct(
+      strptime(
+        paste0(
+          date_str,
+          sprintf("%06.3f", as.numeric(hhmmss))
+        ),
+        "%Y-%m-%d%H%M%OS"
+      ),
+      tz = "UTC"
+    )
+  }
+
+  # Track current time from $GPZDA
+  current_time <- NA
+  current_date <- NA
+  last_data_time <- list(depth = NA, temp = NA, height = NA)
+  pending <- list()
+
+  # Line-by-line processing
+  for(line in nmea_strings) {
+
+    if(grepl("^\\$GPZDA", line)) {
+      parts <- strsplit(line, ",")[[1]]
+      time_str <- parts[2]
+      day <- parts[3]
+      month <- parts[4]
+      year <- parts[5]
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$GPGGA", line) | grepl("^\\$GPRMC", line)) {
+      parts <- strsplit(line, ",")[[1]]
+      time_str <- parts[2]
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$01TED", line)) {
+      val <- as.numeric(sub(",m.*", "", strsplit(line, ",")[[1]][2]))
+      if(!is.na(current_time)) {
+        last_data_time$depth <- current_time
+        pending$depth <- list(value = val, time = current_time)
+      }
+
+    } else if(grepl("^\\$01TET", line)) {
+      val <- as.numeric(sub(",C.*", "", strsplit(line, ",")[[1]][2]))
+      if(!is.na(current_time)) {
+        last_data_time$temp <- current_time
+        pending$temp <- list(value = val, time = current_time)
+      }
+
+    } else if(grepl("^\\$01TEH", line)) {
+      val <- as.numeric(sub(",m.*", "", strsplit(line, ",")[[1]][2]))
+      if(!is.na(current_time)) {
+        last_data_time$height <- current_time
+        pending$height <- list(value = val, time = current_time)
+      }
+    }
+
+    # When all three are available, or at least one changes, record a row
+    if(!is.null(current_time)) {
+      values <- list(
+        DATE_TIME = current_time,
+        DEPTH = if(!is.null(pending$depth) &&
+                   difftime(current_time, pending$depth$time, units = "secs") <= 10) pending$depth$value else NA,
+        TEMPERATURE = if(!is.null(pending$temp) &&
+                         difftime(current_time, pending$temp$time, units = "secs") <= 10) pending$temp$value else NA#,
+        # HEIGHT = if(!is.null(pending$height) &&
+        #              difftime(current_time, pending$height$time, units = "secs") <= 10) pending$height$value else NA
+      )
+      matched_bt[[length(matched_bt) + 1]] <- values
+    }
+  }
+
+  # Convert list to data.frame
+  output_btd <- do.call(rbind, lapply(matched_bt, as.data.frame))
+  output_btd <- output_btd[!duplicated(output_btd$DATE_TIME), ]  # Remove duplicates
+  rownames(output_btd) <- NULL
+
+  # Convert DATE_TIME to Alaska time and format for .BTD
+  output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "UTC")
+  output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "America/Anchorage")
+
+  # Write .BTH file
+  output_bth <-
+    data.frame(
+      VESSEL = VESSEL,
+      CRUISE = CRUISE,
+      HAUL = HAUL,
+      MODEL_NUMBER = MODEL_NUMBER,
+      VERSION_NUMBER = VERSION_NUMBER,
+      SERIAL_NUMBER = SERIAL_NUMBER,
+      HOST_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+      LOGGER_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+      LOGGING_START = format(min(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+      LOGGING_END = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+      SAMPLE_PERIOD = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+      NUMBER_CHANNELS = 2,
+      NUMBER_SAMPLES = nrow(output_btd),
+      MODE = 2
+    )
+
+
+
+  output_bth[which(is.na(output_bth))] <- ""
+
+  bth_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTH")
+
+  utils::write.csv(
+    x = output_bth,
+    file = bth_path,
+    quote = FALSE,
+    row.names = FALSE
+  )
+
+  cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path))
+
+  # Write .BTD file
+  output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
+
+  output_btd <-
+    output_btd[complete.cases(output_btd), ]
+
+  output_btd <-
+    data.frame(
+      VESSEL = VESSEL,
+      CRUISE = CRUISE,
+      HAUL = HAUL,
+      SERIAL_NUMBER = SERIAL_NUMBER,
+      DATE_TIME = output_btd$DATE_TIME,
+      TEMPERATURE = output_btd$TEMPERATURE,
+      DEPTH = output_btd$DEPTH
+    )
+
+  output_btd[which(is.na(output_btd))] <- ""
+
+  btd_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTD")
+
+  utils::write.csv(
+    x = output_btd,
+    file = btd_path,
+    quote = FALSE,
+    row.names = FALSE
+  )
+
+  cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path))
+
+  return(list(btd = output_btd, bth = output_bth))
+
+}
+
+
 
 #' Get sunrise and sunset times by day, latitude, and longitude
 #'
