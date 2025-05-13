@@ -361,6 +361,9 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
+aa <- list.files(path = here::here(), pattern = ".tar.gz")
+file.copy(from = here::here(aa), to = paste0("../", aa), overwrite = TRUE)
+file.remove(here::here(aa))
 devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
 
 
