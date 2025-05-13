@@ -152,9 +152,6 @@ convert_ted_btd <- function(
 
 
 
-
-
-
 #' Recover position data from Globe .log file
 #'
 #' In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
@@ -300,8 +297,10 @@ convert_log_gps <- function(
 #' 3. Save the .bvdr file with these changes and use the link to that file below for path_bvdr
 #' For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
 #' @param path_bvdr Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey")
+#' @param make_btd_bth Logical. Should a .btd and bth file be generated?
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
-#'
+#' @param ... Optional additional arguments passed to convert_nmea_btd().
+#' @importFrom utils choose.files
 #' @export
 #' @examples
 #' # readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
@@ -315,10 +314,52 @@ convert_log_gps <- function(
 #' #                                   package = "GAPsurvey"))
 #' # readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.marp",
 #' #   package = "GAPsurvey")) # output file
-convert_bvdr_marp <- function(path_bvdr,
-                              verbose = FALSE) {
+convert_bvdr_marp <- function(path_bvdr = NULL,
+                              make_btd_bth = TRUE,
+                              verbose = FALSE,
+                              ...) {
 
-  dat <- readLines(con = path_bvdr, skipNul = TRUE)
+  if(is.null(path_bvdr)) {
+    path_bvdr <-
+      choose.files(
+        default = "*.bvdr",
+        caption = "Select .bvdr file(s)",
+        multi = TRUE,
+        filters = matrix(c("Binary Voyage Data Recorder (.bvdr)", "*.bvdr"),
+                         ncol = 2)
+      )
+  }
+
+  dat <- character()
+
+  for(ii in path_bvdr) {
+
+    # Handle binary cases
+    lines <- readBin(ii, what = "rb", n = 1e8)
+
+    lines <- iconv(lines, from = "latin1", to = "UTF-8")
+
+    dat <- c(dat,
+             lines
+    )
+  }
+
+  # Filter out lines that don't contain NMEA prefixes strings ----
+  dat <- dat[nchar(dat) > 0]
+
+  dat <- dat[
+    unlist(
+      lapply(dat, FUN = function(input) {
+        any(
+          c(grepl(input, pattern = "\\$G"),
+            grepl(input, pattern = "\\$01TE"),
+            grepl(input, pattern = "\\:::"),
+            grepl(input, pattern = "\\$01DST"))
+        )
+      })
+    )
+  ]
+
   dat1 <- strsplit(x = dat, split = "\\$G", useBytes = TRUE)
   dat2 <- strsplit(x = dat, split = "\\:::", useBytes = TRUE)
   dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
@@ -343,14 +384,42 @@ convert_bvdr_marp <- function(path_bvdr,
       dat1[i][[1]][2] <- paste0("$01DST", dat1[i][[1]][2])
     }
   }
+
   dat <- sapply(X = dat1, "[", 2)
   dat <- dat[!is.na(dat)]
-  dat <- dat[!grepl(pattern = "\\$Gf", x = dat, useBytes = TRUE)]
-  file_name_out <- gsub(pattern = ".bvdr", replacement = ".marp", x = path_bvdr, fixed = TRUE)
-  writeLines(text = dat, con = file_name_out)
 
-  if (verbose) {
-    return(dat)
+  # Remove unnecessary carriage returns
+  dat <- gsub(pattern = "\\r", replacement = "", x = dat)
+  dat <- gsub(pattern = "\\n", replacement = "", x = dat)
+  marp_dat <- dat[!grepl(pattern = "\\$Gf", x = dat, useBytes = TRUE)]
+  file_name_out <- gsub(pattern = ".bvdr", replacement = ".marp", x = path_bvdr[1], fixed = TRUE)
+
+  writeLines(text = marp_dat, con = file_name_out)
+
+  # stopifnot("convert_bvdr_marp: .marp file was not successfully generated." = check.exists(file_name_out))
+
+  cat(paste0("convert_bvdr_marp: ", length(marp_dat), " lines written to ", file_name_out))
+
+  # if(make_btd_bth) {
+  #   #  Placeholder
+  #
+  #   bt_dat <- dat[grepl(pattern = "GPZDA", x = dat) | grepl(pattern = "\\$TE", x = dat)]
+  #
+  #   gpzda_index <- grep(pattern = "GPZDA", x = dat)
+  #   depth_index <- grep(pattern = "TED", x = dat)
+  #   height_index <- grep(pattern = "TEH", x = dat)
+  #   temperature_index  <- grep(pattern = "TET", x = dat)
+  #
+  #   depth <- sub(".*,([-+]?[0-9]*\\.?[0-9]+),.*", "\\1", dat[depth_index])
+  #   height <- sub(".*,([-+]?[0-9]*\\.?[0-9]+),.*", "\\1", dat[height_index])
+  #   temperature <- sub(".*,([-+]?[0-9]*\\.?[0-9]+),.*", "\\1", dat[temperature_index])
+  #
+  #
+  # }
+
+
+  if(verbose) {
+    return(marp_dat)
   }
 }
 
