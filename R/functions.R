@@ -298,6 +298,7 @@ convert_log_gps <- function(
 #' For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
 #' @param path_bvdr Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey")
 #' @param make_btd_bth Logical. Should a .btd and bth file be generated?
+#' @param sort_by_path Logical. Should .bvdr files be read in alphabetical order. Note: Keep this TRUE when the original file names are used to ensure NMEA strings are read in chronological order.
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
 #' @param ... Optional additional arguments passed to convert_nmea_btd().
 #' @importFrom utils choose.files
@@ -316,6 +317,7 @@ convert_log_gps <- function(
 #' #   package = "GAPsurvey")) # output file
 convert_bvdr_marp <- function(path_bvdr = NULL,
                               make_btd_bth = TRUE,
+                              sort_by_path = TRUE,
                               verbose = FALSE,
                               ...) {
 
@@ -330,11 +332,16 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
       )
   }
 
+  # Sort entries by filename to ensure proper date/time order
+  if(sort_by_path) {
+    path_bvdr <- sort(path_bvdr)
+  }
+
   dat <- character()
 
   for(ii in path_bvdr) {
 
-    # Handle binary cases
+    # Handle nulls and corrupt lines
     lines <- readBin(ii, what = "rb", n = 1e8)
 
     lines <- iconv(lines, from = "latin1", to = "UTF-8")
