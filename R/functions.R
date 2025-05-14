@@ -358,9 +358,13 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
     unlist(
       lapply(dat, FUN = function(input) {
         any(
-          c(grepl(input, pattern = "\\$G"),
+          c(grepl(input, pattern = "\\$GPZDA"),
+            grepl(input, pattern = "\\$GPGLL"),
+            grepl(input, pattern = "\\$GPRMC"),
+            grepl(input, pattern = "\\$GPVTG"),
+            grepl(input, pattern = "\\$GPGGA"),
             grepl(input, pattern = "\\$01TE"),
-            grepl(input, pattern = "\\:::"),
+            grepl(input, pattern = "\\:::m"),
             grepl(input, pattern = "\\$01DST"))
         )
       })
@@ -368,7 +372,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   ]
 
   dat1 <- strsplit(x = dat, split = "\\$G", useBytes = TRUE)
-  dat2 <- strsplit(x = dat, split = "\\:::", useBytes = TRUE)
+  dat2 <- strsplit(x = dat, split = "\\:::m", useBytes = TRUE)
   dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
   dat4 <- strsplit(x = dat, split = "\\$01DST", useBytes = TRUE)
 
@@ -380,7 +384,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
     }
     if (length(dat2[i][[1]])>1) {
       dat1[i]<-dat2[i]
-      dat1[i][[1]][2] <- paste0(":::", dat1[i][[1]][2])
+      dat1[i][[1]][2] <- paste0(":::m", dat1[i][[1]][2])
     }
     if (length(dat3[i][[1]])>1) {
       dat1[i]<-dat3[i]
@@ -412,7 +416,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   # Create BTD and BTH files from NMEA strings
   if(make_btd_bth) {
 
-    btd_bth_output <- convert_nmea_btd(nmea_strings = dat)
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "median")
 
     output <- c(output, btd_bth_output)
 
@@ -429,26 +433,18 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #'
 #' Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
 #'
-#' @param nmea_strings Character vector of NMEA strings (e.g., in a .marp file.)
+#' @param nmea_strings Character vector of NMEA strings (e.g., in a .marp file.).
+#' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param MODEL_NUMBER Optional. Default = "Marport Trawl Explorer". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
 #' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
-#' @param INSTRUMENT Instrument name as a character vector. Default = "Marport TE"
 #' @export
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
-convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA) {
-
-  # nmea_strings <- dat
-  # VESSEL = NA
-  # CRUISE = NA
-  # HAUL = NA
-  # MODEL_NUMBER = "Marport Trawl Explorer"
-  # VERSION_NUMBER = NA
-  # SERIAL_NUMBER = NA
+convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA) {
 
   # Add tests to check that NMEA strings include temperature and depth
 
@@ -520,6 +516,8 @@ convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, 
         last_data_time$height <- current_time
         pending$height <- list(value = val, time = current_time)
       }
+    } else{
+      next
     }
 
     # When all three are available, or at least one changes, record a row
@@ -529,9 +527,7 @@ convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, 
         DEPTH = if(!is.null(pending$depth) &&
                    difftime(current_time, pending$depth$time, units = "secs") <= 10) pending$depth$value else NA,
         TEMPERATURE = if(!is.null(pending$temp) &&
-                         difftime(current_time, pending$temp$time, units = "secs") <= 10) pending$temp$value else NA#,
-        # HEIGHT = if(!is.null(pending$height) &&
-        #              difftime(current_time, pending$height$time, units = "secs") <= 10) pending$height$value else NA
+                         difftime(current_time, pending$temp$time, units = "secs") <= 10) pending$temp$value else NA
       )
       matched_bt[[length(matched_bt) + 1]] <- values
     }
@@ -565,8 +561,6 @@ convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, 
       MODE = 2
     )
 
-
-
   output_bth[which(is.na(output_bth))] <- ""
 
   bth_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTH")
@@ -581,10 +575,26 @@ convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, 
   cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path))
 
   # Write .BTD file
-  output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
-
   output_btd <-
     output_btd[complete.cases(output_btd), ]
+
+  if(filter_type == "median") {
+    output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
+    output_btd$DEPTH <- median_filter(output_btd$DEPTH)
+  }
+
+  if(filter_type == "lowpass") {
+    output_btd$TEMPERATURE <- lowpass_filter(output_btd$TEMPERATURE,
+                                             time_constant = 3,
+                                             freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+                                             precision = 1)
+    output_btd$DEPTH <- lowpass_filter(output_btd$DEPTH,
+                                       time_constant = 3,
+                                       freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+                                       precision = 1)
+  }
+
+  output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
 
   output_btd <-
     data.frame(
@@ -597,7 +607,7 @@ convert_nmea_btd <- function(nmea_strings, VESSEL = NA, CRUISE = NA, HAUL = NA, 
       DEPTH = output_btd$DEPTH
     )
 
-  output_btd[which(is.na(output_btd))] <- ""
+  output_btd[which(is.na(output_btd), arr.ind = TRUE)] <- ""
 
   btd_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTD")
 
