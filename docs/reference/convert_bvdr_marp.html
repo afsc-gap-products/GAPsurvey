@@ -17,7 +17,7 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
 
     <a class="navbar-brand me-2" href="../index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.05.01</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.05.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,13 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_bvdr_marp</span><span class="op">(</span><span class="va">path_bvdr</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_bvdr_marp</span><span class="op">(</span></span>
+<span>  path_bvdr <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  make_btd_bth <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sort_by_path <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -69,8 +75,20 @@ For an example of what a proper .marp file looks like, refer to system.file("exd
 <dd><p>Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr &lt;- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey")</p></dd>
 
 
+<dt id="arg-make-btd-bth">make_btd_bth<a class="anchor" aria-label="anchor" href="#arg-make-btd-bth"></a></dt>
+<dd><p>Logical. Should a .btd and bth file be generated?</p></dd>
+
+
+<dt id="arg-sort-by-path">sort_by_path<a class="anchor" aria-label="anchor" href="#arg-sort-by-path"></a></dt>
+<dd><p>Logical. Should .bvdr files be read in alphabetical order. Note: Keep this TRUE when the original file names are used to ensure NMEA strings are read in chronological order.</p></dd>
+
+
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Optional additional arguments passed to convert_nmea_btd().</p></dd>
 
 </dl></div>
 
