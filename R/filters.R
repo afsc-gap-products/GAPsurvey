@@ -5,6 +5,7 @@
 #' @param x A numerical vector
 #' @param window Window size (odd integer).
 #' @noRd
+#' @importFrom stats median
 #' @author Sean Rohan
 
 median_filter <- function(x, window = 5) {

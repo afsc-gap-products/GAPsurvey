@@ -37,13 +37,13 @@ testthat::test_that(
     syspath_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey");
     fpath_bvdr <- paste0(getwd(), "/", basename(syspath_bvdr));
     file.copy(syspath_bvdr, fpath_bvdr);
-    convert_bvdr_marp(path_bvdr = fpath_bvdr);
+    convert_bvdr_marp(path_bvdr = fpath_bvdr, make_btd_bth = FALSE);
     # Check files exist
     fpath_marp <- paste0(getwd(), "/20220811-00Za.marp");
     testthat::expect_true(file.exists(fpath_marp));
     # Check that dimensions match expected output
     marp_out <- readLines(fpath_marp)
-    testthat::expect_true(length(marp_out) == 22245);
+    testthat::expect_true(length(marp_out) == 22193);
     suppressWarnings(file.remove(c(fpath_bvdr, fpath_marp)));
   }
 )
