@@ -33,11 +33,11 @@ require(ggplot2)
 
 ## This code is primarally maintained by: 
 
-**Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
+**Emily Markowitz** (Emily.Markowitz AT noaa.gov; EmilyMarkowitz-NOAA)
 
-**Sean Rohan** (Sean.Rohan AT noaa.gov; @sean-rohan-NOAA)
+**Sean Rohan** (Sean.Rohan AT noaa.gov; sean-rohan-NOAA)
 
-**Margaret Siple** (Margaret Siple AT noaa.gov; @MargaretSiple-NOAA)
+**Margaret Siple** (Margaret Siple AT noaa.gov; MargaretSiple-NOAA)
 
 Alaska Fisheries Science Center, 
 
