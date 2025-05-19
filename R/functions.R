@@ -337,64 +337,52 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
     path_bvdr <- sort(path_bvdr)
   }
 
-  dat <- character()
-
-  for(ii in path_bvdr) {
-
-    # Handle nulls and corrupt lines
-    lines <- readBin(ii, what = "rb", n = 1e8)
-
-    lines <- iconv(lines, from = "latin1", to = "UTF-8")
-
-    dat <- c(dat,
-             lines
-    )
-  }
-
-  # Filter out lines that don't contain NMEA prefixes strings ----
-  dat <- dat[nchar(dat) > 0]
-
-  dat <- dat[
-    unlist(
-      lapply(dat, FUN = function(input) {
-        any(
-          c(grepl(input, pattern = "\\$GPZDA"),
-            grepl(input, pattern = "\\$GPGLL"),
-            grepl(input, pattern = "\\$GPRMC"),
-            grepl(input, pattern = "\\$GPVTG"),
-            grepl(input, pattern = "\\$GPGGA"),
-            grepl(input, pattern = "\\$01TE"),
-            grepl(input, pattern = "\\:::m"),
-            grepl(input, pattern = "\\$01DST"))
-        )
-      })
-    )
-  ]
+  # Read binary files and remove lines that are empty or missing valid start characters
+  dat <- unlist(
+    lapply(
+      path_bvdr,
+      function(x) {
+        lines <- readBin(x, what = "rb", n = 1e8)
+        lines <- iconv(lines, from = "latin1", to = "UTF-8")
+        lines <- lines[nchar(lines) > 0]
+        lines <-
+          lines[any(
+            c(grepl(lines, pattern = "\\$GPZDA"),
+              grepl(lines, pattern = "\\$GPGLL"),
+              grepl(lines, pattern = "\\$GPRMC"),
+              grepl(lines, pattern = "\\$GPVTG"),
+              grepl(lines, pattern = "\\$GPGGA"),
+              grepl(lines, pattern = "\\$01TE"),
+              grepl(lines, pattern = "\\:::m"),
+              grepl(lines, pattern = "\\$01DST"))
+          )]
+      }
+    ),
+    use.names = FALSE)
 
   dat1 <- strsplit(x = dat, split = "\\$G", useBytes = TRUE)
   dat2 <- strsplit(x = dat, split = "\\:::m", useBytes = TRUE)
   dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
   dat4 <- strsplit(x = dat, split = "\\$01DST", useBytes = TRUE)
 
-  for (i in 1:length(dat1)) {
-    if (length(dat1[i][[1]])>1) {
-      # if (substr(x = dat1[i][[1]][2], start = 1, stop = 1) == "G"){
-      dat1[i][[1]][2] <- paste0("$G", dat1[i][[1]][2])
-      # }
+  dat1 <- lapply(seq_along(dat1), function(i) {
+    if (length(dat4[[i]]) > 1) {
+      dat <- dat4[[i]]
+      dat[2] <- paste0("$01DST", dat[2])
+    } else if (length(dat3[[i]]) > 1) {
+      dat <- dat3[[i]]
+      dat[2] <- paste0("$01TE", dat[2])
+    } else if (length(dat2[[i]]) > 1) {
+      dat <- dat2[[i]]
+      dat[2] <- paste0(":::m", dat[2])
+    } else if (length(dat1[[i]]) > 1) {
+      dat <- dat1[[i]]
+      dat[2] <- paste0("$G", dat[2])
+    } else {
+      dat <- dat1[[i]]
     }
-    if (length(dat2[i][[1]])>1) {
-      dat1[i]<-dat2[i]
-      dat1[i][[1]][2] <- paste0(":::m", dat1[i][[1]][2])
-    }
-    if (length(dat3[i][[1]])>1) {
-      dat1[i]<-dat3[i]
-      dat1[i][[1]][2] <- paste0("$01TE", dat1[i][[1]][2])
-    }
-    if (length(dat4[i][[1]])>1) {
-      dat1[i]<-dat4[i]
-      dat1[i][[1]][2] <- paste0("$01DST", dat1[i][[1]][2])
-    }
-  }
+    dat
+  })
 
   dat <- sapply(X = dat1, "[", 2)
   dat <- dat[!is.na(dat)]
