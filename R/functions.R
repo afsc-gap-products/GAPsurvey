@@ -399,7 +399,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 
   # stopifnot("convert_bvdr_marp: .marp file was not successfully generated." = check.exists(file_name_out))
 
-  cat(paste0("convert_bvdr_marp: ", length(dat), " lines written to ", file_name_out))
+  cat(paste0("convert_bvdr_marp: ", length(dat), " lines written to ", file_name_out, "\n"))
 
   output <- list(marp = dat)
 
@@ -464,22 +464,26 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CR
     )
   }
 
-  # Track current time from $GPZDA
+  # Track current time from $GPZDA or :::msg yyyymmdd-HHMMSS
   current_time <- NA
   current_date <- NA
+  year <- NA
+  month <- NA
+  day <- NA
+
   last_data_time <- list(depth = NA, temp = NA, height = NA)
   pending <- list()
 
   # Line-by-line processing
   for(line in nmea_strings) {
 
-    # Check message lines for date/time
+    # Parse lines to extract dates/times
     if(grepl(pattern = ".* (\\d{8})-\\d{6}Z", x = line)) {
 
       year <- as.numeric(sub(".* (\\d{4})\\d{4}-\\d{6}Z", "\\1", line))
       month <- as.numeric(sub(".*\\d{4}(\\d{2})\\d{2}-\\d{6}Z", "\\1", line))
       day   <- as.numeric(sub(".*\\d{6}(\\d{2})-\\d{6}Z", "\\1", line))
-
+      time_str <- sub(".*-(\\d{6})Z", "\\1", line)
       current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
       current_time <- parse_time(time_str, current_date)
 
@@ -537,12 +541,30 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CR
 
   # Convert list to data.frame
   output_btd <- do.call(rbind, lapply(matched_bt, as.data.frame))
+
+  if(is.null(output_btd)) {
+    warning("convert_nmea_btd: Fewer than three temperature/depth observations. No valid output.")
+    return(NULL)
+  }
+
   output_btd <- output_btd[!duplicated(output_btd$DATE_TIME), ]  # Remove duplicates
+
+  output_btd <-
+    output_btd[complete.cases(output_btd), ]
+
+  output_btd <- output_btd[!(output_btd$TEMPERATURE == 0 & output_btd$DEPTH == 0), ]
+
+  if(nrow(output_btd) < 3) {
+    warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
+    return(NULL)
+  }
+
   rownames(output_btd) <- NULL
 
   # Convert DATE_TIME to Alaska time and format for .BTD
   output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "UTC")
   output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "America/Anchorage")
+
 
   # Write .BTH file
   output_bth <-
@@ -576,26 +598,32 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CR
 
   cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
 
-  # Write .BTD file
-  output_btd <-
-    output_btd[complete.cases(output_btd), ]
+  print(head(output_btd))
 
+  # Apply filter
   if(filter_type == "median") {
     output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
     output_btd$DEPTH <- median_filter(output_btd$DEPTH)
   }
 
   if(filter_type == "lowpass") {
-    output_btd$TEMPERATURE <- lowpass_filter(output_btd$TEMPERATURE,
-                                             time_constant = 3,
-                                             freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-                                             precision = 1)
-    output_btd$DEPTH <- lowpass_filter(output_btd$DEPTH,
-                                       time_constant = 3,
-                                       freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-                                       precision = 1)
+    output_btd$TEMPERATURE <-
+      lowpass_filter(
+        x = output_btd$TEMPERATURE,
+        time_constant = 3,
+        freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+        precision = 1
+      )
+    output_btd$DEPTH <-
+      lowpass_filter(
+        x = output_btd$DEPTH,
+        time_constant = 3,
+        freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+        precision = 1
+      )
   }
 
+  # Write .BTD file
   output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
 
   output_btd <-

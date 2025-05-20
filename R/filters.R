@@ -11,7 +11,7 @@
 median_filter <- function(x, window = 5) {
 
   half_window <- (window-1)/2
-  n_iter <- nrow(output_btd)
+  n_iter <- length(x)
   x_out <- numeric(length = n_iter)
 
   for(ii in (half_window+1):(n_iter-half_window)) {
