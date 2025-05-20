@@ -65,6 +65,7 @@ reference:
       # - starts_with("get_")
       - '`convert_ted_btd`'
       - '`convert_ctd_btd`'
+      - '`convert_nmea_btd`'
   # - title: Estimate Net Spread
   #   contents:
   #     - '`calc_net_spread`'

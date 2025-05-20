@@ -323,7 +323,7 @@ write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col
 
 .rs.restartR()
 
-Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
+# Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 
 PKG <- c("devtools",
          "here",
