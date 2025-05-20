@@ -43,7 +43,7 @@ testthat::test_that(
     testthat::expect_true(file.exists(fpath_marp));
     # Check that dimensions match expected output
     marp_out <- readLines(fpath_marp)
-    testthat::expect_true(length(marp_out) == 22193);
+    testthat::expect_true(length(marp_out) == 22230);
     suppressWarnings(file.remove(c(fpath_bvdr, fpath_marp)));
   }
 )

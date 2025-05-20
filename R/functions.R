@@ -365,24 +365,26 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
   dat4 <- strsplit(x = dat, split = "\\$01DST", useBytes = TRUE)
 
-  dat1 <- lapply(seq_along(dat1), function(i) {
-    if (length(dat4[[i]]) > 1) {
-      dat <- dat4[[i]]
-      dat[2] <- paste0("$01DST", dat[2])
-    } else if (length(dat3[[i]]) > 1) {
-      dat <- dat3[[i]]
-      dat[2] <- paste0("$01TE", dat[2])
-    } else if (length(dat2[[i]]) > 1) {
-      dat <- dat2[[i]]
-      dat[2] <- paste0(":::m", dat[2])
-    } else if (length(dat1[[i]]) > 1) {
-      dat <- dat1[[i]]
-      dat[2] <- paste0("$G", dat[2])
-    } else {
-      dat <- dat1[[i]]
+  dat1 <- lapply(
+    seq_along(dat1), function(i) {
+      if (length(dat4[[i]]) > 1) {
+        dat <- dat4[[i]]
+        dat[2] <- paste0("$01DST", dat[2])
+      } else if (length(dat3[[i]]) > 1) {
+        dat <- dat3[[i]]
+        dat[2] <- paste0("$01TE", dat[2])
+      } else if (length(dat2[[i]]) > 1) {
+        dat <- dat2[[i]]
+        dat[2] <- paste0(":::m", dat[2])
+      } else if (length(dat1[[i]]) > 1) {
+        dat <- dat1[[i]]
+        dat[2] <- paste0("$G", dat[2])
+      } else {
+        dat <- dat1[[i]]
+      }
+      dat
     }
-    dat
-  })
+  )
 
   dat <- sapply(X = dat1, "[", 2)
   dat <- dat[!is.na(dat)]
@@ -404,7 +406,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   # Create BTD and BTH files from NMEA strings
   if(make_btd_bth) {
 
-    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "median")
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "median", ...)
 
     output <- c(output, btd_bth_output)
 
@@ -429,11 +431,12 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @param MODEL_NUMBER Optional. Default = "Marport Trawl Explorer". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
 #' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
+#' @param ... additional arguments
 #' @export
 #' @importFrom stats complete.cases
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
-convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA) {
+convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
   # Add tests to check that NMEA strings include temperature and depth
 
@@ -470,7 +473,17 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
   # Line-by-line processing
   for(line in nmea_strings) {
 
-    if(grepl("^\\$GPZDA", line)) {
+    # Check message lines for date/time
+    if(grepl(pattern = ".* (\\d{8})-\\d{6}Z", x = line)) {
+
+      year <- as.numeric(sub(".* (\\d{4})\\d{4}-\\d{6}Z", "\\1", line))
+      month <- as.numeric(sub(".*\\d{4}(\\d{2})\\d{2}-\\d{6}Z", "\\1", line))
+      day   <- as.numeric(sub(".*\\d{6}(\\d{2})-\\d{6}Z", "\\1", line))
+
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$GPZDA", line)) {
       parts <- strsplit(line, ",")[[1]]
       time_str <- parts[2]
       day <- parts[3]
@@ -510,7 +523,7 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     }
 
     # When all three are available, or at least one changes, record a row
-    if(!is.null(current_time)) {
+    if(!is.na(current_time)) {
       values <- list(
         DATE_TIME = current_time,
         DEPTH = if(!is.null(pending$depth) &&
@@ -561,7 +574,7 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     row.names = FALSE
   )
 
-  cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path))
+  cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
 
   # Write .BTD file
   output_btd <-
@@ -607,7 +620,7 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     row.names = FALSE
   )
 
-  cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path))
+  cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path, "\n"))
 
   return(list(btd = output_btd, bth = output_bth))
 

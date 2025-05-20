@@ -6,13 +6,14 @@
 \usage{
 convert_nmea_btd(
   nmea_strings,
-  filter_type = "lowpass",
+  filter_type = "none",
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
   MODEL_NUMBER = "Marport Trawl Explorer",
   VERSION_NUMBER = NA,
-  SERIAL_NUMBER = NA
+  SERIAL_NUMBER = NA,
+  ...
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ convert_nmea_btd(
 \item{VERSION_NUMBER}{Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).}
 
 \item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).}
+
+\item{...}{additional arguments}
 }
 \description{
 Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
