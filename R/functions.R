@@ -1,4 +1,3 @@
-
 #' BVDR Conversion to Create BTD data
 #'
 #' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (BVDRReader.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App (NEW BVDR README.txt).  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
@@ -318,7 +317,7 @@ convert_log_gps <- function(
 convert_bvdr_marp <- function(path_bvdr = NULL,
                               make_btd_bth = TRUE,
                               sort_by_path = TRUE,
-                              verbose = FALSE,
+                              verbose = TRUE,
                               ...) {
 
   if(is.null(path_bvdr)) {
@@ -337,64 +336,54 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
     path_bvdr <- sort(path_bvdr)
   }
 
-  dat <- character()
-
-  for(ii in path_bvdr) {
-
-    # Handle nulls and corrupt lines
-    lines <- readBin(ii, what = "rb", n = 1e8)
-
-    lines <- iconv(lines, from = "latin1", to = "UTF-8")
-
-    dat <- c(dat,
-             lines
-    )
-  }
-
-  # Filter out lines that don't contain NMEA prefixes strings ----
-  dat <- dat[nchar(dat) > 0]
-
-  dat <- dat[
-    unlist(
-      lapply(dat, FUN = function(input) {
-        any(
-          c(grepl(input, pattern = "\\$GPZDA"),
-            grepl(input, pattern = "\\$GPGLL"),
-            grepl(input, pattern = "\\$GPRMC"),
-            grepl(input, pattern = "\\$GPVTG"),
-            grepl(input, pattern = "\\$GPGGA"),
-            grepl(input, pattern = "\\$01TE"),
-            grepl(input, pattern = "\\:::m"),
-            grepl(input, pattern = "\\$01DST"))
-        )
-      })
-    )
-  ]
+  # Read binary files and remove lines that are empty or missing valid start characters
+  dat <- unlist(
+    lapply(
+      path_bvdr,
+      function(x) {
+        lines <- readBin(x, what = "rb", n = 1e8)
+        lines <- iconv(lines, from = "latin1", to = "UTF-8")
+        lines <- lines[nchar(lines) > 0]
+        lines <-
+          lines[any(
+            c(grepl(lines, pattern = "\\$GPZDA"),
+              grepl(lines, pattern = "\\$GPGLL"),
+              grepl(lines, pattern = "\\$GPRMC"),
+              grepl(lines, pattern = "\\$GPVTG"),
+              grepl(lines, pattern = "\\$GPGGA"),
+              grepl(lines, pattern = "\\$01TE"),
+              grepl(lines, pattern = "\\:::m"),
+              grepl(lines, pattern = "\\$01DST"))
+          )]
+      }
+    ),
+    use.names = FALSE)
 
   dat1 <- strsplit(x = dat, split = "\\$G", useBytes = TRUE)
   dat2 <- strsplit(x = dat, split = "\\:::m", useBytes = TRUE)
   dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
   dat4 <- strsplit(x = dat, split = "\\$01DST", useBytes = TRUE)
 
-  for (i in 1:length(dat1)) {
-    if (length(dat1[i][[1]])>1) {
-      # if (substr(x = dat1[i][[1]][2], start = 1, stop = 1) == "G"){
-      dat1[i][[1]][2] <- paste0("$G", dat1[i][[1]][2])
-      # }
+  dat1 <- lapply(
+    seq_along(dat1), function(i) {
+      if (length(dat4[[i]]) > 1) {
+        dat <- dat4[[i]]
+        dat[2] <- paste0("$01DST", dat[2])
+      } else if (length(dat3[[i]]) > 1) {
+        dat <- dat3[[i]]
+        dat[2] <- paste0("$01TE", dat[2])
+      } else if (length(dat2[[i]]) > 1) {
+        dat <- dat2[[i]]
+        dat[2] <- paste0(":::m", dat[2])
+      } else if (length(dat1[[i]]) > 1) {
+        dat <- dat1[[i]]
+        dat[2] <- paste0("$G", dat[2])
+      } else {
+        dat <- dat1[[i]]
+      }
+      dat
     }
-    if (length(dat2[i][[1]])>1) {
-      dat1[i]<-dat2[i]
-      dat1[i][[1]][2] <- paste0(":::m", dat1[i][[1]][2])
-    }
-    if (length(dat3[i][[1]])>1) {
-      dat1[i]<-dat3[i]
-      dat1[i][[1]][2] <- paste0("$01TE", dat1[i][[1]][2])
-    }
-    if (length(dat4[i][[1]])>1) {
-      dat1[i]<-dat4[i]
-      dat1[i][[1]][2] <- paste0("$01DST", dat1[i][[1]][2])
-    }
-  }
+  )
 
   dat <- sapply(X = dat1, "[", 2)
   dat <- dat[!is.na(dat)]
@@ -409,14 +398,14 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 
   # stopifnot("convert_bvdr_marp: .marp file was not successfully generated." = check.exists(file_name_out))
 
-  cat(paste0("convert_bvdr_marp: ", length(dat), " lines written to ", file_name_out))
+  cat(paste0("convert_bvdr_marp: ", length(dat), " lines written to ", file_name_out, "\n"))
 
   output <- list(marp = dat)
 
   # Create BTD and BTH files from NMEA strings
   if(make_btd_bth) {
 
-    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "median")
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "none", ...)
 
     output <- c(output, btd_bth_output)
 
@@ -435,17 +424,20 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #'
 #' @param nmea_strings Character vector of NMEA strings (e.g., in a .marp file.).
 #' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
+#' @param min_depth Optional (default = -0.1). Minimum valid depth value.
+#' @param max_depth Optional (default = 1000). Maximum valid depth value.
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param MODEL_NUMBER Optional. Default = "Marport Trawl Explorer". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
 #' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
+#' @param ... additional arguments
 #' @export
 #' @importFrom stats complete.cases
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
-convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA) {
+convert_nmea_btd <- function(nmea_strings, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
   # Add tests to check that NMEA strings include temperature and depth
 
@@ -473,16 +465,30 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     )
   }
 
-  # Track current time from $GPZDA
+  # Track current time from $GPZDA or :::msg yyyymmdd-HHMMSS
   current_time <- NA
   current_date <- NA
+  year <- NA
+  month <- NA
+  day <- NA
+
   last_data_time <- list(depth = NA, temp = NA, height = NA)
   pending <- list()
 
   # Line-by-line processing
   for(line in nmea_strings) {
 
-    if(grepl("^\\$GPZDA", line)) {
+    # Parse lines to extract dates/times
+    if(grepl(pattern = ".* (\\d{8})-\\d{6}Z", x = line)) {
+
+      year <- as.numeric(sub(".* (\\d{4})\\d{4}-\\d{6}Z", "\\1", line))
+      month <- as.numeric(sub(".*\\d{4}(\\d{2})\\d{2}-\\d{6}Z", "\\1", line))
+      day   <- as.numeric(sub(".*\\d{6}(\\d{2})-\\d{6}Z", "\\1", line))
+      time_str <- sub(".*-(\\d{6})Z", "\\1", line)
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$GPZDA", line)) {
       parts <- strsplit(line, ",")[[1]]
       time_str <- parts[2]
       day <- parts[3]
@@ -522,7 +528,7 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     }
 
     # When all three are available, or at least one changes, record a row
-    if(!is.null(current_time)) {
+    if(!is.na(current_time)) {
       values <- list(
         DATE_TIME = current_time,
         DEPTH = if(!is.null(pending$depth) &&
@@ -536,12 +542,34 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
 
   # Convert list to data.frame
   output_btd <- do.call(rbind, lapply(matched_bt, as.data.frame))
+
+  if(is.null(output_btd)) {
+    warning("convert_nmea_btd: Fewer than three temperature/depth observations. No valid output.")
+    return(NULL)
+  }
+
   output_btd <- output_btd[!duplicated(output_btd$DATE_TIME), ]  # Remove duplicates
+
+  output_btd <-
+    output_btd[complete.cases(output_btd), ]
+
+  output_btd <- output_btd[!(output_btd$TEMPERATURE == 0 & output_btd$DEPTH == 0), ]
+
+  if(!is.na(min_depth) & !is.na(max_depth)) {
+    output_btd <- output_btd[output_btd$DEPTH >= min_depth & output_btd$DEPTH <= max_depth, ]
+  }
+
+  if(nrow(output_btd) < 3) {
+    warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
+    return(NULL)
+  }
+
   rownames(output_btd) <- NULL
 
   # Convert DATE_TIME to Alaska time and format for .BTD
   output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "UTC")
   output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "America/Anchorage")
+
 
   # Write .BTH file
   output_bth <-
@@ -573,28 +601,32 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     row.names = FALSE
   )
 
-  cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path))
+  cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
 
-  # Write .BTD file
-  output_btd <-
-    output_btd[complete.cases(output_btd), ]
-
+  # Apply filter
   if(filter_type == "median") {
     output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
     output_btd$DEPTH <- median_filter(output_btd$DEPTH)
   }
 
   if(filter_type == "lowpass") {
-    output_btd$TEMPERATURE <- lowpass_filter(output_btd$TEMPERATURE,
-                                             time_constant = 3,
-                                             freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-                                             precision = 1)
-    output_btd$DEPTH <- lowpass_filter(output_btd$DEPTH,
-                                       time_constant = 3,
-                                       freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-                                       precision = 1)
+    output_btd$TEMPERATURE <-
+      lowpass_filter(
+        x = output_btd$TEMPERATURE,
+        time_constant = 3,
+        freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+        precision = 1
+      )
+    output_btd$DEPTH <-
+      lowpass_filter(
+        x = output_btd$DEPTH,
+        time_constant = 3,
+        freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+        precision = 1
+      )
   }
 
+  # Write .BTD file
   output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
 
   output_btd <-
@@ -619,7 +651,7 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "lowpass", VESSEL = NA,
     row.names = FALSE
   )
 
-  cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path))
+  cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path, "\n"))
 
   return(list(btd = output_btd, bth = output_bth))
 
