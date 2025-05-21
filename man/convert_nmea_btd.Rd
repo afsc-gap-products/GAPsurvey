@@ -5,7 +5,7 @@
 \title{Extract depth and temperature from NMEA strings}
 \usage{
 convert_nmea_btd(
-  nmea_strings,
+  nmea_strings = NULL,
   filter_type = "none",
   min_depth = -0.1,
   max_depth = 800,
@@ -19,7 +19,7 @@ convert_nmea_btd(
 )
 }
 \arguments{
-\item{nmea_strings}{Character vector of NMEA strings (e.g., in a .marp file.).}
+\item{nmea_strings}{Character vector of NMEA strings (e.g., from a .bvdr file) or a path to a .marp file.}
 
 \item{filter_type}{Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.}
 
@@ -43,6 +43,12 @@ convert_nmea_btd(
 }
 \description{
 Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
+}
+\examples{
+\dontrun{
+# Run this to select Marport (.marp files)
+convert_nmea_btd()
+}
 }
 \author{
 Sean Rohan <sean.rohan@noaa.gov>
