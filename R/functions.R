@@ -1,4 +1,3 @@
-
 #' BVDR Conversion to Create BTD data
 #'
 #' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (BVDRReader.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App (NEW BVDR README.txt).  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
@@ -318,7 +317,7 @@ convert_log_gps <- function(
 convert_bvdr_marp <- function(path_bvdr = NULL,
                               make_btd_bth = TRUE,
                               sort_by_path = TRUE,
-                              verbose = FALSE,
+                              verbose = TRUE,
                               ...) {
 
   if(is.null(path_bvdr)) {
@@ -406,7 +405,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   # Create BTD and BTH files from NMEA strings
   if(make_btd_bth) {
 
-    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "median", ...)
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "none", ...)
 
     output <- c(output, btd_bth_output)
 
@@ -425,6 +424,8 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #'
 #' @param nmea_strings Character vector of NMEA strings (e.g., in a .marp file.).
 #' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
+#' @param min_depth Optional (default = -0.1). Minimum valid depth value.
+#' @param max_depth Optional (default = 1000). Maximum valid depth value.
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
@@ -436,7 +437,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @importFrom stats complete.cases
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
-convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+convert_nmea_btd <- function(nmea_strings, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
   # Add tests to check that NMEA strings include temperature and depth
 
@@ -554,6 +555,10 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CR
 
   output_btd <- output_btd[!(output_btd$TEMPERATURE == 0 & output_btd$DEPTH == 0), ]
 
+  if(!is.na(min_depth) & !is.na(max_depth)) {
+    output_btd <- output_btd[output_btd$DEPTH >= min_depth & output_btd$DEPTH <= max_depth, ]
+  }
+
   if(nrow(output_btd) < 3) {
     warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
     return(NULL)
@@ -597,8 +602,6 @@ convert_nmea_btd <- function(nmea_strings, filter_type = "none", VESSEL = NA, CR
   )
 
   cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
-
-  print(head(output_btd))
 
   # Apply filter
   if(filter_type == "median") {

@@ -8,7 +8,7 @@ convert_bvdr_marp(
   path_bvdr = NULL,
   make_btd_bth = TRUE,
   sort_by_path = TRUE,
-  verbose = FALSE,
+  verbose = TRUE,
   ...
 )
 }

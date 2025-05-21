@@ -7,6 +7,8 @@
 convert_nmea_btd(
   nmea_strings,
   filter_type = "none",
+  min_depth = -0.1,
+  max_depth = 800,
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
@@ -20,6 +22,10 @@ convert_nmea_btd(
 \item{nmea_strings}{Character vector of NMEA strings (e.g., in a .marp file.).}
 
 \item{filter_type}{Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.}
+
+\item{min_depth}{Optional (default = -0.1). Minimum valid depth value.}
+
+\item{max_depth}{Optional (default = 1000). Maximum valid depth value.}
 
 \item{VESSEL}{Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.}
 
