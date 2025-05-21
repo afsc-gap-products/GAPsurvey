@@ -422,7 +422,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #'
 #' Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
 #'
-#' @param nmea_strings Character vector of NMEA strings (e.g., in a .marp file.).
+#' @param nmea_strings Character vector of NMEA strings (e.g., from a .bvdr file) or a path to a .marp file.
 #' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
 #' @param min_depth Optional (default = -0.1). Minimum valid depth value.
 #' @param max_depth Optional (default = 1000). Maximum valid depth value.
@@ -434,13 +434,55 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
 #' @param ... additional arguments
 #' @export
+#' @examples \dontrun{
+#' # Run this to select Marport (.marp files)
+#' convert_nmea_btd()
+#' }
 #' @importFrom stats complete.cases
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
-convert_nmea_btd <- function(nmea_strings, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+
+  if(is.null(nmea_strings)) {
+    message("convert_nmea_btd: nmea_strings is NULL. Select a .marp file.")
+    nmea_strings <-
+        choose.files(
+          default = "*.marp",
+          caption = "Select .marp file(s)",
+          multi = TRUE,
+          filters = matrix(c("Marport (.marp)", "*.marp"),
+                           ncol = 2)
+        )
+
+    stopifnot("convert_nmea_btd: Must select a file." = length(nmea_strings) >= 1)
+  }
+
+  if(all(grepl(pattern = ".marp", x = nmea_strings))) {
+
+    message("convert_nmea_btd: Extracting NMEA strings from .marp files.")
+
+    nmea_list <- vector(mode = "list", length = length(nmea_strings))
+    nmea_strings <- lapply(
+      X = nmea_strings,
+      FUN = function(x) {
+        lines <- readLines(x)
+        lines[any(
+          c(grepl(lines, pattern = "\\$GPZDA"),
+            grepl(lines, pattern = "\\$GPGLL"),
+            grepl(lines, pattern = "\\$GPRMC"),
+            grepl(lines, pattern = "\\$GPVTG"),
+            grepl(lines, pattern = "\\$GPGGA"),
+            grepl(lines, pattern = "\\$01TE"),
+            grepl(lines, pattern = "\\:::m"),
+            grepl(lines, pattern = "\\$01DST"))
+        )]
+      })
+
+    nmea_strings <- unname(unlist(nmea_strings))
+
+  }
 
   # Add tests to check that NMEA strings include temperature and depth
-
   if(is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
   if(is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
   if(is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
