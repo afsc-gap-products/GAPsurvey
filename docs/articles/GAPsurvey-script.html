@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.05.13</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.05.21</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@
 <h2 id="example-script-using-r-package-gapsurvey">Example Script Using R Package <code>GAPsurvey</code><a class="anchor" aria-label="anchor" href="#example-script-using-r-package-gapsurvey"></a>
 </h2>
 <blockquote>
-<p>Last updated May 14 2025</p>
+<p>Last updated May 21 2025</p>
 </blockquote>
 </div>
 <div class="section level2">
@@ -92,7 +92,7 @@ install. The user may install from <code>GitHub</code>:</p>
 <p>or install from local file <code>.tar.gz</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># example, the user may have a different path</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/Users/User/Downloads/GAPsurvey_2025.05.13.tar.gz'</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/Users/User/Downloads/GAPsurvey_2025.05.21.tar.gz'</span>,</span>
 <span>                 repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">'source'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -243,8 +243,8 @@ object</p>
 <span>                   latitude <span class="op">=</span> <span class="fl">63.3</span>,</span>
 <span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">170.5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using latitude and longitude to calcualte sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2025-05-14 06:18:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2025-05-14 00:18:00 AKDT</span></span></code></pre></div>
+<span><span class="co">#&gt; Sunrise is at 2025-05-21 05:57:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-05-21 00:39:00 AKDT</span></span></code></pre></div>
 <p>Find times based on lat/lon for today’s date, where date is a
 character and lat/lon in degree decimal-minutes</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -270,8 +270,8 @@ today’s date</p>
 <span>                   survey <span class="op">=</span> <span class="st">"GOA"</span>,</span>
 <span>                   station <span class="op">=</span> <span class="st">"264-18-511"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using survey station (GOA 264-18-511) centroid location information (lat = 52.352, lon = -169.971) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2025-05-14 07:25:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2025-05-13 23:06:00 AKDT</span></span></code></pre></div>
+<span><span class="co">#&gt; Sunrise is at 2025-05-21 07:15:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-05-20 23:17:00 AKDT</span></span></code></pre></div>
 <p>Find times based on a survey (EBS) station’s recorded lat/lon for
 today’s date</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">

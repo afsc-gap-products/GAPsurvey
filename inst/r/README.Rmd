@@ -83,7 +83,7 @@ or install from local file `.tar.gz`:
 
 ```{r install-local, eval = FALSE}
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.05.13.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.05.21.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
 ```
