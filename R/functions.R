@@ -444,6 +444,13 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 
 convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
+  format_date <- function(x, ...) {
+    tmp <- format(x, ...)
+    tmp <- sub("^[0]+", "", tmp)
+    tmp <- sub('/0', "/", tmp)
+    return(tmp)
+  }
+
   if(is.null(nmea_strings)) {
     message("convert_nmea_btd: nmea_strings is NULL. Select a .marp file.")
     nmea_strings <-
@@ -692,7 +699,10 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
     }
 
     # Write .BTD file
-    output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
+    output_btd$DATE_TIME <-
+      format_date(
+        format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
+      )
 
     output_btd <-
       data.frame(
@@ -701,8 +711,8 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
         HAUL = HAUL,
         SERIAL_NUMBER = SERIAL_NUMBER,
         DATE_TIME = output_btd$DATE_TIME,
-        TEMPERATURE = output_btd$TEMPERATURE,
-        DEPTH = output_btd$DEPTH
+        TEMPERATURE = format(output_btd$TEMPERATURE, nsmall = 3),
+        DEPTH = format(output_btd$DEPTH, nsmall = 1)
       )
 
     output_btd[which(is.na(output_btd), arr.ind = TRUE)] <- ""
