@@ -441,18 +441,26 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @importFrom stats complete.cases
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
+
 convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+
+  format_date <- function(x, ...) {
+    tmp <- format(x, ...)
+    tmp <- sub("^[0]+", "", tmp)
+    tmp <- sub('/0', "/", tmp)
+    return(tmp)
+  }
 
   if(is.null(nmea_strings)) {
     message("convert_nmea_btd: nmea_strings is NULL. Select a .marp file.")
     nmea_strings <-
-        choose.files(
-          default = "*.marp",
-          caption = "Select .marp file(s)",
-          multi = TRUE,
-          filters = matrix(c("Marport (.marp)", "*.marp"),
-                           ncol = 2)
-        )
+      choose.files(
+        default = "*.marp",
+        caption = "Select .marp file(s)",
+        multi = TRUE,
+        filters = matrix(c("Marport (.marp)", "*.marp"),
+                         ncol = 2)
+      )
 
     stopifnot("convert_nmea_btd: Must select a file." = length(nmea_strings) >= 1)
   }
@@ -565,137 +573,202 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
         last_data_time$height <- current_time
         pending$height <- list(value = val, time = current_time)
       }
+    } else if(grepl("^\\$01DST", line)) {
+      val <- as.numeric(sub(",m.*", "", strsplit(line, ",")[[1]][4]))
+      if(!is.na(current_time)) {
+        last_data_time$net_spread <- current_time
+        pending$net_spread <- list(value = val, time = current_time)
+      }
     } else{
       next
     }
 
-    # When all three are available, or at least one changes, record a row
+    # When epth and temperature are available, or at least one changes, record a row
     if(!is.na(current_time)) {
       values <- list(
         DATE_TIME = current_time,
         DEPTH = if(!is.null(pending$depth) &&
                    difftime(current_time, pending$depth$time, units = "secs") <= 10) pending$depth$value else NA,
         TEMPERATURE = if(!is.null(pending$temp) &&
-                         difftime(current_time, pending$temp$time, units = "secs") <= 10) pending$temp$value else NA
+                         difftime(current_time, pending$temp$time, units = "secs") <= 10) pending$temp$value else NA,
+        NET_HEIGHT = if(!is.null(pending$height) &&
+                        difftime(current_time, pending$height$time, units = "secs") <= 1) pending$height$value else NA,
+        NET_SPREAD = if(!is.null(pending$net_spread) &&
+                        difftime(current_time, pending$net_spread$time, units = "secs") <= 1) pending$net_spread$value else NA
       )
       matched_bt[[length(matched_bt) + 1]] <- values
     }
   }
 
   # Convert list to data.frame
-  output_btd <- do.call(rbind, lapply(matched_bt, as.data.frame))
+  matched_bt <- do.call(rbind, lapply(matched_bt, as.data.frame))
 
-  if(is.null(output_btd)) {
+  if(is.null(matched_bt)) {
+    warning("convert_nmea_btd: No temperature, depth, spread, or height observations. No valid output.")
+    return(NULL)
+  }
+
+  if(!("NET_HEIGHT" %in% names(matched_bt))) {
+    matched_bt$NET_HEIGHT <- NA
+  }
+
+  if(!("NET_SPREAD" %in% names(matched_bt))) {
+    matched_bt$NET_SPREAD <- NA
+  }
+
+  output_btd <- matched_bt[c("DATE_TIME", "DEPTH", "TEMPERATURE")]
+
+  if(!is.null(output_btd)) {
+
+    output_btd <- output_btd[!duplicated(output_btd$DATE_TIME), ]  # Remove duplicates
+
+    output_btd <-
+      output_btd[complete.cases(output_btd), ]
+
+    output_btd <- output_btd[!(output_btd$TEMPERATURE == 0 & output_btd$DEPTH == 0), ]
+
+    if(!is.na(min_depth) & !is.na(max_depth)) {
+      output_btd <- output_btd[output_btd$DEPTH >= min_depth & output_btd$DEPTH <= max_depth, ]
+    }
+
+    if(nrow(output_btd) < 3) {
+      warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
+      return(NULL)
+    }
+
+    rownames(output_btd) <- NULL
+
+    # Convert DATE_TIME to Alaska time and format for .BTD
+    output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "UTC")
+    output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "America/Anchorage")
+
+
+    # Write .BTH file
+    output_bth <-
+      data.frame(
+        VESSEL = VESSEL,
+        CRUISE = CRUISE,
+        HAUL = HAUL,
+        MODEL_NUMBER = MODEL_NUMBER,
+        VERSION_NUMBER = VERSION_NUMBER,
+        SERIAL_NUMBER = SERIAL_NUMBER,
+        HOST_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        LOGGER_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        LOGGING_START = format(min(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        LOGGING_END = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        SAMPLE_PERIOD = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+        NUMBER_CHANNELS = 2,
+        NUMBER_SAMPLES = nrow(output_btd),
+        MODE = 2
+      )
+
+    output_bth[which(is.na(output_bth))] <- ""
+
+    bth_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTH")
+
+    utils::write.csv(
+      x = output_bth,
+      file = bth_path,
+      quote = FALSE,
+      row.names = FALSE
+    )
+
+    cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
+
+    # Apply filter
+    if(filter_type == "median") {
+      output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
+      output_btd$DEPTH <- median_filter(output_btd$DEPTH)
+    }
+
+    if(filter_type == "lowpass") {
+      output_btd$TEMPERATURE <-
+        lowpass_filter(
+          x = output_btd$TEMPERATURE,
+          time_constant = 3,
+          freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+          precision = 1
+        )
+      output_btd$DEPTH <-
+        lowpass_filter(
+          x = output_btd$DEPTH,
+          time_constant = 3,
+          freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+          precision = 1
+        )
+    }
+
+    # Write .BTD file
+    output_btd$DATE_TIME <-
+      format_date(
+        format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
+      )
+
+    output_btd <-
+      data.frame(
+        VESSEL = VESSEL,
+        CRUISE = CRUISE,
+        HAUL = HAUL,
+        SERIAL_NUMBER = SERIAL_NUMBER,
+        DATE_TIME = output_btd$DATE_TIME,
+        TEMPERATURE = format(output_btd$TEMPERATURE, nsmall = 3),
+        DEPTH = format(output_btd$DEPTH, nsmall = 1)
+      )
+
+    output_btd[which(is.na(output_btd), arr.ind = TRUE)] <- ""
+
+    btd_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTD")
+
+    utils::write.csv(
+      x = output_btd,
+      file = btd_path,
+      quote = FALSE,
+      row.names = FALSE
+    )
+
+    cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path, "\n"))
+
+  } else {
+    output_btd <- NULL
+    output_bth <- NULL
     warning("convert_nmea_btd: Fewer than three temperature/depth observations. No valid output.")
-    return(NULL)
   }
 
-  output_btd <- output_btd[!duplicated(output_btd$DATE_TIME), ]  # Remove duplicates
+  output_hs <- matched_bt[c("DATE_TIME", "NET_HEIGHT", "NET_SPREAD")]
 
-  output_btd <-
-    output_btd[complete.cases(output_btd), ]
+  output_hs <- output_hs[!duplicated(output_hs$DATE_TIME), ]
 
-  output_btd <- output_btd[!(output_btd$TEMPERATURE == 0 & output_btd$DEPTH == 0), ]
+  output_hs <- output_hs[!is.na(output_hs$NET_HEIGHT) | !is.na(output_hs$NET_SPREAD), ]
 
-  if(!is.na(min_depth) & !is.na(max_depth)) {
-    output_btd <- output_btd[output_btd$DEPTH >= min_depth & output_btd$DEPTH <= max_depth, ]
-  }
+  if(nrow(output_hs) > 0) {
+    output_hs <-
+      data.frame(
+        VESSEL = VESSEL,
+        CRUISE = CRUISE,
+        HAUL = HAUL,
+        DATE_TIME = output_hs$DATE_TIME,
+        NET_HEIGHT = output_hs$NET_HEIGHT,
+        NET_SPREAD = output_hs$NET_SPREAD
+      )
 
-  if(nrow(output_btd) < 3) {
-    warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
-    return(NULL)
-  }
+    output_hs[which(is.na(output_hs), arr.ind = TRUE)] <- ""
 
-  rownames(output_btd) <- NULL
+    hs_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".hs")
 
-  # Convert DATE_TIME to Alaska time and format for .BTD
-  output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "UTC")
-  output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "America/Anchorage")
-
-
-  # Write .BTH file
-  output_bth <-
-    data.frame(
-      VESSEL = VESSEL,
-      CRUISE = CRUISE,
-      HAUL = HAUL,
-      MODEL_NUMBER = MODEL_NUMBER,
-      VERSION_NUMBER = VERSION_NUMBER,
-      SERIAL_NUMBER = SERIAL_NUMBER,
-      HOST_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
-      LOGGER_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
-      LOGGING_START = format(min(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
-      LOGGING_END = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
-      SAMPLE_PERIOD = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-      NUMBER_CHANNELS = 2,
-      NUMBER_SAMPLES = nrow(output_btd),
-      MODE = 2
+    utils::write.csv(
+      x = output_hs,
+      file = hs_path,
+      quote = FALSE,
+      row.names = FALSE
     )
 
-  output_bth[which(is.na(output_bth))] <- ""
+    cat(paste0("convert_nmea_btd: Height-spread (.hs) file saved to ", hs_path, "\n"))
 
-  bth_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTH")
-
-  utils::write.csv(
-    x = output_bth,
-    file = bth_path,
-    quote = FALSE,
-    row.names = FALSE
-  )
-
-  cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
-
-  # Apply filter
-  if(filter_type == "median") {
-    output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
-    output_btd$DEPTH <- median_filter(output_btd$DEPTH)
+  } else {
+    output_hs <- NULL
   }
 
-  if(filter_type == "lowpass") {
-    output_btd$TEMPERATURE <-
-      lowpass_filter(
-        x = output_btd$TEMPERATURE,
-        time_constant = 3,
-        freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-        precision = 1
-      )
-    output_btd$DEPTH <-
-      lowpass_filter(
-        x = output_btd$DEPTH,
-        time_constant = 3,
-        freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-        precision = 1
-      )
-  }
-
-  # Write .BTD file
-  output_btd$DATE_TIME <- format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
-
-  output_btd <-
-    data.frame(
-      VESSEL = VESSEL,
-      CRUISE = CRUISE,
-      HAUL = HAUL,
-      SERIAL_NUMBER = SERIAL_NUMBER,
-      DATE_TIME = output_btd$DATE_TIME,
-      TEMPERATURE = output_btd$TEMPERATURE,
-      DEPTH = output_btd$DEPTH
-    )
-
-  output_btd[which(is.na(output_btd), arr.ind = TRUE)] <- ""
-
-  btd_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTD")
-
-  utils::write.csv(
-    x = output_btd,
-    file = btd_path,
-    quote = FALSE,
-    row.names = FALSE
-  )
-
-  cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path, "\n"))
-
-  return(list(btd = output_btd, bth = output_bth))
+  return(list(btd = output_btd, bth = output_bth, height_spread = output_hs))
 
 }
 
