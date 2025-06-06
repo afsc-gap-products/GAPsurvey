@@ -52,7 +52,7 @@ or install from local file `.tar.gz`:
 
 ``` r
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.05.21.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.06.05.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
 ```
@@ -183,8 +183,8 @@ sessionInfo()
 #>   LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                          
-#> [5] LC_TIME=English_United States.utf8    
+#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
+#> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
 #> 
 #> time zone: America/Los_Angeles
 #> tzcode source: internal
@@ -196,16 +196,12 @@ sessionInfo()
 #> [1] ggplot2_3.5.2
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] gtable_0.3.6       xfun_0.52          remotes_2.5.0      htmlwidgets_1.6.4  devtools_2.4.5     lattice_0.22-6     vctrs_0.6.5        tools_4.5.0        generics_0.1.4    
-#> [10] gstat_2.1-3        parallel_4.5.0     tibble_3.2.1       proxy_0.4-27       spacetime_1.3-3    xts_0.14.1         pkgconfig_2.0.3    KernSmooth_2.23-26 data.table_1.17.2 
-#> [19] RColorBrewer_1.1-3 lifecycle_1.0.4    compiler_4.5.0     farver_2.1.2       stringr_1.5.1      FNN_1.1.4.1        terra_1.8-50       janitor_2.2.1      codetools_0.2-20  
-#> [28] snakecase_0.11.1   httpuv_1.6.16      usethis_3.1.0      stars_0.6-8        htmltools_0.5.8.1  class_7.3-23       yaml_2.3.10        pkgdown_2.1.2      urlchecker_1.0.1  
-#> [37] later_1.4.2        pillar_1.10.2      ellipsis_0.3.2     RODBC_1.3-26       classInt_0.4-11    cachem_1.1.0       sessioninfo_1.2.3  abind_1.4-8        mime_0.13         
-#> [46] tidyselect_1.2.1   digest_0.6.37      stringi_1.8.7      purrr_1.0.4        sf_1.0-21          dplyr_1.1.4        rprojroot_2.0.4    fastmap_1.2.0      grid_4.5.0        
-#> [55] here_1.0.1         cli_3.6.5          magrittr_2.0.3     readtext_0.91      pkgbuild_1.4.7     e1071_1.7-16       withr_3.0.2        promises_1.3.2     akgfmaps_4.0.6    
-#> [64] scales_1.4.0       sp_2.2-0           lubridate_1.9.4    timechange_0.3.0   httr_1.4.7         rmarkdown_2.29     zoo_1.8-14         memoise_2.0.1      shiny_1.10.0      
-#> [73] evaluate_1.0.3     knitr_1.50         miniUI_0.1.2       profvis_0.4.0      rlang_1.1.6        Rcpp_1.0.14        xtable_1.8-4       glue_1.8.0         DBI_1.2.3         
-#> [82] pkgload_1.4.0      rstudioapi_0.17.1  R6_2.6.1           fs_1.6.6           intervals_0.15.5   units_0.8-7
+#>  [1] vctrs_0.6.5        httr_1.4.7         cli_3.6.5          knitr_1.50         rlang_1.1.6        xfun_0.52          stringi_1.8.7     
+#>  [8] readtext_0.91      generics_0.1.4     data.table_1.17.4  glue_1.8.0         rprojroot_2.0.4    htmltools_0.5.8.1  scales_1.4.0      
+#> [15] rmarkdown_2.29     grid_4.5.0         evaluate_1.0.3     tibble_3.2.1       fastmap_1.2.0      yaml_2.3.10        lifecycle_1.0.4   
+#> [22] compiler_4.5.0     dplyr_1.1.4        RColorBrewer_1.1-3 pkgconfig_2.0.3    here_1.0.1         rstudioapi_0.17.1  farver_2.1.2      
+#> [29] digest_0.6.37      R6_2.6.1           tidyselect_1.2.1   pillar_1.10.2      magrittr_2.0.3     withr_3.0.2        tools_4.5.0       
+#> [36] gtable_0.3.6
 ```
 
 ## NOAA README

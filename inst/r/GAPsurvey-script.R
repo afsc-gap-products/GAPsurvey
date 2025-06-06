@@ -1,13 +1,13 @@
 # title: "Example GAPsurvey Go-to script"
 # Last updated `r format(Sys.Date(), format='%B %d %Y') `
-# #
+#
 # # Install R package ---
 # Rerun this only when there is a new version of the package to install. The user may install from `GitHub`:
 devtools::install_github("afsc-gap-products/GAPsurvey")
 
 # or install from local file `.tar.gz`:
 # # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.05.21.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.06.05.tar.gz',
                  repos=NULL, type='source')
 
 # # Load libraries ---
@@ -117,14 +117,14 @@ convert_ctd_btd(
 ?convert_ted_btd
 
 # Example:
- # example input files
+#  # example input files
  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.ted",
    package = "GAPsurvey"))[1:5]
  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.tet",
    package = "GAPsurvey"))[1:5]
  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.teh",
    package = "GAPsurvey"))[1:5]
-  # run function
+#   # run function
  convert_ted_btd(
     VESSEL = 94,
     CRUISE = 201901,
@@ -135,7 +135,7 @@ convert_ctd_btd(
     path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
     path_out = getwd(),
     filename_add = "newted")
- # example output files
+#  # example output files
  readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTD",
    package = "GAPsurvey"))[1:5]
  readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTH",
@@ -159,7 +159,7 @@ convert_ctd_btd(
 ?convert_log_gps
 
 # Example:
-# # example input file
+# example input file
 readLines(system.file("exdata/convert_log_gps/06062017.log",
    package = "GAPsurvey"))[1:5] # input file
 # use function
