@@ -52,7 +52,7 @@ or install from local file `.tar.gz`:
 
 ``` r
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.06.05.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.06.07.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
 ```

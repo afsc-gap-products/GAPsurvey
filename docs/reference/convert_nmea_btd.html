@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.06.05</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.06.07</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,12 +46,15 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">convert_nmea_btd</span><span class="op">(</span></span>
 <span>  nmea_strings <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  filter_type <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  interactive_editing <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  min_depth <span class="op">=</span> <span class="op">-</span><span class="fl">0.1</span>,</span>
 <span>  max_depth <span class="op">=</span> <span class="fl">800</span>,</span>
+<span>  min_temperature <span class="op">=</span> <span class="op">-</span><span class="fl">2</span>,</span>
+<span>  max_temperature <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  VESSEL <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  CRUISE <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  HAUL <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  MODEL_NUMBER <span class="op">=</span> <span class="st">"Marport Trawl Explorer"</span>,</span>
+<span>  MODEL_NUMBER <span class="op">=</span> <span class="st">"Marport TE"</span>,</span>
 <span>  VERSION_NUMBER <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  SERIAL_NUMBER <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -70,12 +73,24 @@
 <dd><p>Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.</p></dd>
 
 
+<dt id="arg-interactive-editing">interactive_editing<a class="anchor" aria-label="anchor" href="#arg-interactive-editing"></a></dt>
+<dd><p>Should the interactive point removal interface be used to manually clean temperature and depth data? If TRUE, must have graphic devices set to view plots in actual size (in R Studio: View &gt; Actual Size or Ctrl+0)</p></dd>
+
+
 <dt id="arg-min-depth">min_depth<a class="anchor" aria-label="anchor" href="#arg-min-depth"></a></dt>
-<dd><p>Optional (default = -0.1). Minimum valid depth value.</p></dd>
+<dd><p>Optional (default = -0.1). Minimum valid depth (m).</p></dd>
 
 
 <dt id="arg-max-depth">max_depth<a class="anchor" aria-label="anchor" href="#arg-max-depth"></a></dt>
-<dd><p>Optional (default = 1000). Maximum valid depth value.</p></dd>
+<dd><p>Optional (default = 1000). Maximum valid depth (m).</p></dd>
+
+
+<dt id="arg-min-temperature">min_temperature<a class="anchor" aria-label="anchor" href="#arg-min-temperature"></a></dt>
+<dd><p>Optional (default = -2). Maximum valid temperature (Celsius).</p></dd>
+
+
+<dt id="arg-max-temperature">max_temperature<a class="anchor" aria-label="anchor" href="#arg-max-temperature"></a></dt>
+<dd><p>Optional (default = 20). Maximum valid temperature (Celsius).</p></dd>
 
 
 <dt id="arg-vessel">VESSEL<a class="anchor" aria-label="anchor" href="#arg-vessel"></a></dt>
@@ -91,7 +106,7 @@
 
 
 <dt id="arg-model-number">MODEL_NUMBER<a class="anchor" aria-label="anchor" href="#arg-model-number"></a></dt>
-<dd><p>Optional. Default = "Marport Trawl Explorer". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).</p></dd>
+<dd><p>Optional. Default = "Marport TE". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions). This field may have restrictions on length.</p></dd>
 
 
 <dt id="arg-version-number">VERSION_NUMBER<a class="anchor" aria-label="anchor" href="#arg-version-number"></a></dt>
