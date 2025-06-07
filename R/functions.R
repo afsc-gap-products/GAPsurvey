@@ -424,12 +424,14 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #'
 #' @param nmea_strings Character vector of NMEA strings (e.g., from a .bvdr file) or a path to a .marp file.
 #' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
-#' @param min_depth Optional (default = -0.1). Minimum valid depth value.
-#' @param max_depth Optional (default = 1000). Maximum valid depth value.
+#' @param min_depth Optional (default = -0.1). Minimum valid depth (m).
+#' @param max_depth Optional (default = 1000). Maximum valid depth (m).
+#' @param min_temperature Optional (default = -2). Maximum valid temperature (Celsius).
+#' @param max_temperature Optional (default = 20). Maximum valid temperature (Celsius).
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param MODEL_NUMBER Optional. Default = "Marport Trawl Explorer". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions).
+#' @param MODEL_NUMBER Optional. Default = "Marport TE". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions). This field may have restrictions on length.
 #' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
 #' @param ... additional arguments
@@ -442,7 +444,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
 
-convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_depth = -0.1, max_depth = 800, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport Trawl Explorer", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_depth = -0.1, max_depth = 800, min_temperature = -2, max_temperature = 20, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport TE", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -631,6 +633,10 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
       output_btd <- output_btd[output_btd$DEPTH >= min_depth & output_btd$DEPTH <= max_depth, ]
     }
 
+    if(!is.na(min_temperature) & !is.na(max_temperature)) {
+      output_btd <- output_btd[output_btd$TEMPERATURE >= min_temperature & output_btd$TEMPERATURE <= max_temperature, ]
+    }
+
     if(nrow(output_btd) < 3) {
       warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
       return(NULL)
@@ -698,6 +704,12 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
         )
     }
 
+    par(mfrow = c(2,1))
+    plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+    mtext("Delete temp outlier rows\nfrom .BTD in a text editor.")
+    plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+    mtext("Delete depth outlier rows\nfrom .BTD in a text editor.")
+
     # Write .BTD file
     output_btd$DATE_TIME <-
       format_date(
@@ -761,6 +773,11 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
       quote = FALSE,
       row.names = FALSE
     )
+
+    # plot(output_hs$DATE_TIME, output_hs$NET_HEIGHT, xlab = "Datetime", ylab = "NET_HEIGHT")
+    # mtext("Do not edit height.")
+    # plot(output_hs$DATE_TIME, output_hs$NET_SPREAD, xlab = "Datetime", ylab = "NET_SPREAD")
+    # mtext("Do not edit spread.")
 
     cat(paste0("convert_nmea_btd: Height-spread (.hs) file saved to ", hs_path, "\n"))
 
