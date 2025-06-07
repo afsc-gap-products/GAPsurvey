@@ -424,6 +424,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #'
 #' @param nmea_strings Character vector of NMEA strings (e.g., from a .bvdr file) or a path to a .marp file.
 #' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
+#' @param interactive_editing Should the interactive point removal interface be used to manually clean temperature and depth data? If TRUE, must have graphic devices set to view plots in actual size (in R Studio: View > Actual Size or Ctrl+0)
 #' @param min_depth Optional (default = -0.1). Minimum valid depth (m).
 #' @param max_depth Optional (default = 1000). Maximum valid depth (m).
 #' @param min_temperature Optional (default = -2). Maximum valid temperature (Celsius).
@@ -444,7 +445,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
 
-convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_depth = -0.1, max_depth = 800, min_temperature = -2, max_temperature = 20, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport TE", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interactive_editing = TRUE, min_depth = -0.1, max_depth = 800, min_temperature = -2, max_temperature = 20, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport TE", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -704,11 +705,35 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", min_dept
         )
     }
 
-    par(mfrow = c(2,1))
-    plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
-    mtext("Delete temp outlier rows\nfrom .BTD in a text editor.")
-    plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
-    mtext("Delete depth outlier rows\nfrom .BTD in a text editor.")
+
+    if(interactive_editing) {
+
+      par(mfrow = c(2,1))
+      plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+      mtext("Raw data.")
+      plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+      mtext("Raw data.")
+
+      dummy <- readline("Plotting raw data. Set plot to actual size (RStudio: View > Actual Size) then press ENTER to begin manual point editing.")
+
+      output_btd <- interactive_point_editing(x = output_btd, x_col = "DATE_TIME", y_col = "DEPTH", tol = 0.5)
+      output_btd <- interactive_point_editing(x = output_btd, x_col = "DATE_TIME", y_col = "TEMPERATURE", tol = 0.5)
+
+      par(mfrow = c(2,1))
+      plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+      mtext("Cleaned data.")
+      plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+      mtext("Cleaned data.")
+
+    } else {
+      par(mfrow = c(2,1))
+      plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+      mtext("Delete temp outlier rows\nfrom .BTD in a text editor.")
+      plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+      mtext("Delete depth outlier rows\nfrom .BTD in a text editor.")
+    }
+
+
 
     # Write .BTD file
     output_btd$DATE_TIME <-
