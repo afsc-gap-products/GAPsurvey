@@ -646,9 +646,8 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interact
     rownames(output_btd) <- NULL
 
     # Convert DATE_TIME to Alaska time and format for .BTD
-    output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "UTC")
-    output_btd$DATE_TIME <- as.POSIXct(output_btd$DATE_TIME, tz = "America/Anchorage")
-
+    attr(output_btd$DATE_TIME, "tzone") <- "UTC"
+    attr(output_btd$DATE_TIME, "tzone") <- "America/Anchorage"
 
     # Write .BTH file
     output_bth <-
