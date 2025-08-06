@@ -510,7 +510,17 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interact
       strptime(
         paste0(
           date_str,
-          sprintf("%06.3f", as.numeric(hhmmss))
+          # sprintf("%06.3f", as.numeric(hhmmss))
+          gsub(
+            pattern = " ",
+            replacement = "0",
+            x =
+              format(
+                as.numeric(hhmmss),
+                nsmall = 3,
+                width = 10,
+                trim = FALSE)
+          )
         ),
         "%Y-%m-%d%H%M%OS"
       ),
