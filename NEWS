@@ -1,3 +1,15 @@
+GAPsurvey 2026.02.24 (February 24, 2026)
+----------------------------------------------------------------
+
+NEW FUNCTIONALITY
+
+- Added functions to extract data from TimeZero database files
+  and convert to .gps files that can be imported by Poseidon
+  and Wheelhouse as a backup. The primary function for conversion
+  is convert_tzdb_gps(). The new functions require the RSQLite
+  package.
+
+
 GAPsurvey 2025.08.06 (August 6, 2025)
 ----------------------------------------------------------------
 

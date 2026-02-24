@@ -89,12 +89,38 @@ testthat::test_that(
     testthat::expect_true(file.exists(fpath_btd));
     testthat::expect_true(file.exists(fpath_bth));
     # Check that dimensions match expected output
-    btd_out <- utils::read.csv(fpath_btd)
+    btd_out <- utils::read.csv(fpath_btd);
     bth_out <- utils::read.csv(fpath_bth);
     testthat::expect_true(all(dim(btd_out) == c(1583, 8)));
     testthat::expect_true(all(dim(bth_out) == c(1, 14)));
     suppressWarnings(
       file.remove(c(fpath_btd, fpath_bth), showWarnings = FALSE)
     );
+  }
+)
+
+
+testthat::test_that(
+  "Test convert_tzdb_gps()",
+  {
+    convert_tzdb_gps(
+      path_tzdb = system.file("exdata", "convert_tzdb_gps", "OwnShipRecorder.tzdb", package = "GAPsurvey"),
+      output_file = NULL,
+      vessel = 999,
+      cruise = 202499,
+      haul = 999,
+      start = "01/25/2024 14:30:00",
+      end = "01/25/2024 14:33:15"
+    );
+    fpath_tzdb <- paste0(getwd(), "/", "HAUL0999.gps");
+    testthat::expect_true(file.exists(fpath_tzdb));
+    tzdb_out <- utils::read.csv(fpath_tzdb, header = FALSE);
+    testthat::expect_true(all(dim(tzdb_out) == c(191, 6)));
+    tzdb_date <- as.POSIXct(tzdb_out$V4[1], format = "%m/%d/%y %H:%M:%S");
+    test_date <- as.POSIXct("01/25/24 23:30:00", format = "%m/%d/%y %H:%M:%S");
+    testthat::expect_equal(as.numeric(tzdb_date), 1706254200);
+    testthat::expect_equal(tzdb_date, test_date);
+    testthat::expect_true(all(round(tzdb_out[1, c("V5", "V6")], 1) == c(4729.7, -12244.9)));
+    suppressWarnings(file.remove(fpath_tzdb));
   }
 )
