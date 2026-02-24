@@ -4,12 +4,24 @@
 \alias{convert_bvdr_marp}
 \title{Convert .bvdr files to .marp files}
 \usage{
-convert_bvdr_marp(path_bvdr, verbose = FALSE)
+convert_bvdr_marp(
+  path_bvdr = NULL,
+  make_btd_bth = TRUE,
+  sort_by_path = TRUE,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{path_bvdr}{Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey")}
 
+\item{make_btd_bth}{Logical. Should a .btd and bth file be generated?}
+
+\item{sort_by_path}{Logical. Should .bvdr files be read in alphabetical order. Note: Keep this TRUE when the original file names are used to ensure NMEA strings are read in chronological order.}
+
 \item{verbose}{Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.}
+
+\item{...}{Optional additional arguments passed to convert_nmea_btd().}
 }
 \description{
 If you mistakenly delete the marport data for a haul, you can retrieve that data through this converter.

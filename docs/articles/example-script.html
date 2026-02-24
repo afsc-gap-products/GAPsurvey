@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Example got-to script">
 <meta name="description" content="">
 <meta property="og:description" content="">
@@ -66,7 +66,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Example got-to script</h1>
             
-            <h4 data-toc-skip class="date">October 02 2024</h4>
+            <h4 data-toc-skip class="date">April 08 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/afsc-gap-products/GAPsurvey/blob/HEAD/vignettes/example-script.Rmd" class="external-link"><code>vignettes/example-script.Rmd</code></a></small>
       <div class="d-none name"><code>example-script.Rmd</code></div>
@@ -85,7 +85,7 @@ already be located on desktop, otherwise find it using the link
 below.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"r/example_script.R"</span>, package <span class="op">=</span> <span class="st">"GAPsurvey"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "C:/Users/emily.markowitz/AppData/Local/Temp/RtmpoVbRrC/temp_libpath69ac20527f1e/GAPsurvey/r/example_script.R"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "C:/Users/emily.markowitz/AppData/Local/Temp/2/RtmpQjqQee/temp_libpath558858e5257c/GAPsurvey/r/example_script.R"</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="install-r-package">Install R package<a class="anchor" aria-label="anchor" href="#install-r-package"></a>
 </h3>
@@ -166,9 +166,9 @@ install. The user may install from <code>GitHub</code>:</p>
 <span><span class="co">#&gt; 2                   7.6      54              2.854      15.095        2.566</span></span>
 <span><span class="co">#&gt; 3                   3.4      55              2.879      16.146        2.175</span></span>
 <span><span class="co">#&gt;   area_swept_km2 duration_hr total_weight_kg</span></span>
-<span><span class="co">#&gt; 1     0.04773369       0.522         1219.93</span></span>
-<span><span class="co">#&gt; 2     0.04308113       0.531         1190.00</span></span>
-<span><span class="co">#&gt; 3     0.04648433       0.516          812.00</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     0.04773369       0.522            1220</span></span>
+<span><span class="co">#&gt; 2     0.04308113       0.531            1190</span></span>
+<span><span class="co">#&gt; 3     0.04648433       0.516             812</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="what-time-is-sunrise-and-sunset">What time is sunrise and sunset?<a class="anchor" aria-label="anchor" href="#what-time-is-sunrise-and-sunset"></a>
@@ -177,41 +177,41 @@ install. The user may install from <code>GitHub</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">get_sunrise_sunset</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-06-10"</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2025-06-10"</span>,</span>
 <span>                   survey <span class="op">=</span> <span class="st">"AI"</span>,</span>
-<span>                   station <span class="op">=</span> <span class="st">"33-47"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using survey station (AI 33-47) centroid location information (lat = 53.013, lon = 172.407) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2024-06-10 08:04:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2024-06-10 00:54:00 AKDT</span></span>
+<span>                   station <span class="op">=</span> <span class="st">"10402-8-55"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Using survey station (AI 10402-8-55) centroid location information (lat = 53.371, lon = 170.561) to calculate sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2025-06-10 08:10:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-06-10 01:04:00 AKDT</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>                   survey <span class="op">=</span> <span class="st">"GOA"</span>,</span>
-<span>                   station <span class="op">=</span> <span class="st">"323-176"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using survey station (GOA 323-176) centroid location information (lat = 60.052, lon = -143.311) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2024-10-02 07:42:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2024-10-01 19:02:00 AKDT</span></span>
+<span>                   station <span class="op">=</span> <span class="st">"264-264-19-511"</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; Using survey station (GOA 264-264-19-511) centroid location information (lat = 52.369, lon = -169.988) to calculate sunrise and sunset.</span></span>
+<span><span class="co">#&gt; Sunrise is at 2025-04-08 08:37:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-04-07 22:05:00 AKDT</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-08-04"</span>,</span>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2025-08-04"</span>,</span>
 <span>                   survey <span class="op">=</span> <span class="st">"EBS"</span>,</span>
 <span>                   station <span class="op">=</span> <span class="st">"P-31"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using survey station (EBS P-31) centroid location information (lat = 60, lon = -177.356) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2024-08-04 07:38:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2024-08-04 00:12:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunrise is at 2025-08-04 07:38:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-08-04 00:12:00 AKDT</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-06-04"</span>,</span>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2025-06-04"</span>,</span>
 <span>                   survey <span class="op">=</span> <span class="st">"NBS"</span>,</span>
 <span>                   station <span class="op">=</span> <span class="st">"ZZ-01"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using survey station (NBS ZZ-01) centroid location information (lat = 63.334, lon = -168.244) to calculate sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2024-06-04 05:14:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2024-06-04 01:08:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunrise is at 2025-06-04 05:14:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-06-04 01:08:00 AKDT</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2024-08-04"</span>,</span>
+<span><span class="fu"><a href="../reference/get_sunrise_sunset.html">get_sunrise_sunset</a></span><span class="op">(</span>chosen_date <span class="op">=</span> <span class="st">"2025-08-04"</span>,</span>
 <span>                   survey <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>                   latitude <span class="op">=</span> <span class="fl">60</span>,</span>
 <span>                   longitude <span class="op">=</span> <span class="op">-</span><span class="fl">162</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Using latitude and longitude to calcualte sunrise and sunset.</span></span>
-<span><span class="co">#&gt; Sunrise is at 2024-08-04 06:37:00 AKDT</span></span>
-<span><span class="co">#&gt; Sunset is at 2024-08-03 23:10:00 AKDT</span></span></code></pre></div>
+<span><span class="co">#&gt; Sunrise is at 2025-08-04 06:36:00 AKDT</span></span>
+<span><span class="co">#&gt; Sunset is at 2025-08-03 23:11:00 AKDT</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt">Convert CTD data to BTD as a backup for SBE39 (aka ‘the BT’)<a class="anchor" aria-label="anchor" href="#convert-ctd-data-to-btd-as-a-backup-for-sbe39-aka-the-bt"></a>
@@ -242,7 +242,7 @@ install. The user may install from <code>GitHub</code>:</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
 <div class="pkgdown-footer-right">

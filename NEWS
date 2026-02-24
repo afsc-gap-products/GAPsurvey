@@ -1,0 +1,8 @@
+GAPsurvey 2025.08.06 (August 6, 2025)
+----------------------------------------------------------------
+
+BUG FIX
+
+- Changed approach to timezone conversion in convert_nmea_btd()
+  to prevent incorrect times in R < 4.3.0 and made handling of
+  $GPZDA strings more flexible.

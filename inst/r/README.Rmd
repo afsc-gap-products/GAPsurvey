@@ -1,36 +1,43 @@
 ---
-output: md_document
+output: 
+  md_document: 
+    variant: gfm
+csl: "https://raw.githubusercontent.com/citation-style-language/styles/master/apa-no-ampersand.csl"
+bibliography: "https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/bibliography.bib"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(
+  message = FALSE, 
+  error = FALSE, 
+  warning = FALSE, 
+  echo = TRUE, 
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/",
   fig.height = 1
 )
+link_repo <- "https://github.com/afsc-gap-products/GAPsurvey"
+link_repopage <- "https://afsc-gap-products.github.io/GAPsurvey"
 require(ggplot2)
 ```
 
-```{r echo=FALSE, results="hide", message=FALSE, include=FALSE}
-library("badger", quietly = TRUE)
-```
 
-# GAPsurvey <a href={https://afsc-gap-products.github.io/GAPsurvey}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo with an image of a NOAA Fisheries report" />
+# GAPsurvey <a href={`r link_repopage`}><img src="man/figures/logo.png" align="right" width=139 height=139 alt="logo."/>
+
+*At-sea data management tools for RACE GAP surveys*
 
 > This code is always in development
 
 ## This code is primarally maintained by: 
 
-**Emily Markowitz** (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)
+**Emily Markowitz** (Emily.Markowitz AT noaa.gov; EmilyMarkowitz-NOAA)
 
-**Sean Rohan** (Sean.Rohan AT noaa.gov; @MargaretSiple-NOAA)
+**Sean Rohan** (Sean.Rohan AT noaa.gov; sean-rohan-NOAA)
 
-**Megsie Siple** (Margaret.Siple AT noaa.gov; @MargaretSiple-NOAA)
-
-**Liz Dawson** (Liz.Dawson AT noaa.gov; @liz-dawson-NOAA)
+**Margaret Siple** (Margaret Siple AT noaa.gov; MargaretSiple-NOAA)
 
 Alaska Fisheries Science Center, 
 
@@ -40,15 +47,25 @@ National Oceanic and Atmospheric Administration,
 
 Seattle, WA 98195
 
-### *At-sea data management tools for RACE GAP surveys*
+## Table of contents
 
-```{r, echo = FALSE, results='asis', message=FALSE}
-cat(
-  badge_devel("afsc-gap-products/GAPsurvey", "blue"),
-  badge_lifecycle("maturing", "blue"),
-  badge_last_commit("afsc-gap-products/GAPsurvey")
-)
+```{r toc, echo = FALSE, eval = TRUE, warning = FALSE}
+
+toc <- strsplit(x = readtext::readtext(file = "./README.Rmd", verbosity = 0)[[2]], split = "\n")
+toc <- toc[[1]][substr(x = toc[[1]], start = 1, stop = 1) == "#"]
+toc <- toc[-c(1:3)]
+toc_list <- toc
+toc_list <- gsub(pattern = "### ", replacement = ">      - [*", x = toc_list, fixed = TRUE)
+toc_list <- gsub(pattern = "## ", replacement = ">    - [*", x = toc_list, fixed = TRUE)
+toc_list <- gsub(pattern = "# ", replacement = ">  - [*", x = toc_list, fixed = TRUE)
+toc_link <- tolower(gsub(pattern = " ", replacement = "-", 
+                          x = gsub(pattern = "#", replacement = "", 
+                                   x = gsub(pattern = "# ", replacement = "", 
+                                            x = toc, fixed = TRUE), fixed = TRUE)))
+toc <- paste0(toc_list, "*](#", toc_link, ")", collapse = "\n")
 ```
+
+`r toc`
 
 ## Make sure the necessary packages are installed
 	
@@ -56,25 +73,73 @@ cat(
 library(devtools)
 
 devtools::install_github("afsc-gap-products/GAPsurvey")
-# Or
+ # Or
 remotes::install_github("afsc-gap-products/GAPsurvey@main")
 
 library(GAPsurvey)
 ```
 
+or install from local file `.tar.gz`:
+
+```{r install-local, eval = FALSE}
+# example, the user may have a different path
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.06.07.tar.gz',
+                 repos=NULL, type='source')
+library(GAPsurvey)
+```
+
+## User Resources
+
+- [GitHub
+  repository](https://github.com/afsc-gap-products/gap_products).
+
+- [Access Tips and Documentation for All Production
+  Data](https://afsc-gap-products.github.io/gap_products/)
+
+- [Fisheries One Stop Shop (FOSS)](https://www.fisheries.noaa.gov/foss)
+
+- [Groundfish Assessment Program Bottom Trawl
+  Surveys](https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys)
+
+- [AFSC’s Resource Assessment and Conservation Engineering
+  Division](https://www.fisheries.noaa.gov/about/resource-assessment-and-conservation-engineering-division)
+
+- [Survey code
+  books](https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual)
+
+- [Publications and Data Reports](https://repository.library.noaa.gov/)
+
+- [Research Surveys conducted at
+  AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
+  
 ## Cite this data
 
 Use the below [bibtext citations]("https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITATION.bib") for citing the package created and maintained in this repo. Add "note = {Accessed: mm/dd/yyyy}" to append the day this data was accessed. 
 
-```{r load_citation, echo = FALSE}
+```{r load_citation}
 cat(readLines(con = here::here("inst/CITATION.bib")), sep = "\n") 
 ```
 
-## Metadata
+# Relevant publications
 
-This package was last produced using: 
+```{r source-current-tm}
+source("https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/current_data_tm.r") # srvy_cite 
+```
 
-```{r, echo=FALSE}
+**Learn more about these surveys** [`r paste0("@", srvy_cite$CITE, collapse = "; ")`]. 
+
+<div id="refs"></div>
+
+# Suggestions and Comments
+
+If you see that the data, product, or metadata can be improved, you are invited to create a 
+[pull request](`r paste0(link_repo, "/pulls")`), 
+[submit an issue to the GitHub organization](`r "https://github.com/afsc-gap-products/data-requests/issues"`), or 
+[submit an issue to the code's repository](`r paste0(link_repo, "/issues")`).
+
+## R Version Metadata
+
+```{r session-info}
 sessionInfo()
 ```
 
@@ -82,13 +147,10 @@ sessionInfo()
 
 This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.
 
-## License
+## NOAA License
 
 Software code created by U.S. Government employees is not subject to copyright in the United States (17 U.S.C. §105). The United States/Department of Commerce reserve all rights to seek and obtain copyright protection in countries other than the United States for Software authored in its entirety by the Department of Commerce. To this end, the Department of Commerce hereby grants to Recipient a royalty-free, nonexclusive license to use, copy, and create derivative works of the Software outside of the United States.
 
+<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"/>
 
-<img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries">
-
-[U.S. Department of Commerce](https://www.commerce.gov/) | [National
-Oceanographic and Atmospheric Administration](https://www.noaa.gov) |
-[NOAA Fisheries](https://www.fisheries.noaa.gov/)
+[U.S. Department of Commerce](https://www.commerce.gov/) \| [National Oceanographic and Atmospheric Administration](https://www.noaa.gov) \| [NOAA Fisheries](https://www.fisheries.noaa.gov/)

@@ -1,6 +1,7 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/404.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/articles/example-script.html</loc></url>
+<url><loc>https://afsc-gap-products.github.io/GAPsurvey/articles/GAPsurvey-script.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/articles/index.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/authors.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/index.html</loc></url>
@@ -13,6 +14,7 @@
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ctd_hex.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_do_to_o2sat.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_log_gps.html</loc></url>
+<url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_nmea_btd.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ted_btd.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/CTDtoBTD.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/extract_calibration_xmlcon.html</loc></url>
@@ -30,6 +32,7 @@
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/netSpread.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/numbers0.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/oxygen_saturation.html</loc></url>
+<url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/pkg_install.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/PolySpecies.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/public_data.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/species_data.html</loc></url>
@@ -39,5 +42,6 @@
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/TEDtoBTD.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/text_list.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/volumetric_tow.html</loc></url>
+<url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/write_to_cnv.html</loc></url>
 </urlset>
 

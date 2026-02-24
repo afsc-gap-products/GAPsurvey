@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Provides at-sea data management tools for RACE GAP surveys • GAPsurvey</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Provides at-sea data management tools for RACE GAP surveys">
 <meta name="description" content="Provides at-sea data management tools for RACE GAP surveys.">
 <meta property="og:description" content="Provides at-sea data management tools for RACE GAP surveys.">
@@ -29,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">GAPsurvey</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2024.04.05</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2025.06.07</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +41,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-newspaper"></span> Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/example-script.html">Example got-to script</a></li>
+<li><a class="dropdown-item" href="articles/GAPsurvey-script.html">Example go-to script</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/afsc-gap-products/GAPsurvey/releases"><span class="fa fas fa-bullhorn fa-lg"></span> Release Notes</a></li>
@@ -65,107 +64,154 @@
 <a class="anchor" aria-label="anchor" href="#gapsurvey-"></a>
 </h1>
 </div>
+<p><em>At-sea data management tools for RACE GAP surveys</em></p>
 <blockquote>
 <p>This code is always in development</p>
 </blockquote>
 <div class="section level2">
 <h2 id="this-code-is-primarally-maintained-by">This code is primarally maintained by:<a class="anchor" aria-label="anchor" href="#this-code-is-primarally-maintained-by"></a>
 </h2>
-<p><strong>Emily Markowitz</strong> (Emily.Markowitz AT noaa.gov; @EmilyMarkowitz-NOAA)</p>
-<p><strong>Sean Rohan</strong> (Sean.Rohan AT noaa.gov; @MargaretSiple-NOAA)</p>
-<p><strong>Megsie Siple</strong> (Margaret.Siple AT noaa.gov; @MargaretSiple-NOAA)</p>
-<p><strong>Liz Dawson</strong> (Liz.Dawson AT noaa.gov; @liz-dawson-NOAA)</p>
+<p><strong>Emily Markowitz</strong> (Emily.Markowitz AT noaa.gov; EmilyMarkowitz-NOAA)</p>
+<p><strong>Sean Rohan</strong> (Sean.Rohan AT noaa.gov; sean-rohan-NOAA)</p>
+<p><strong>Margaret Siple</strong> (Margaret Siple AT noaa.gov; MargaretSiple-NOAA)</p>
 <p>Alaska Fisheries Science Center,</p>
 <p>National Marine Fisheries Service,</p>
 <p>National Oceanic and Atmospheric Administration,</p>
 <p>Seattle, WA 98195</p>
-<div class="section level3">
-<h3 id="at-sea-data-management-tools-for-race-gap-surveys">
-<em>At-sea data management tools for RACE GAP surveys</em><a class="anchor" aria-label="anchor" href="#at-sea-data-management-tools-for-race-gap-surveys"></a>
-</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; Warning: `git_branch_default()` was deprecated in usethis 2.1.0.</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; ℹ Please use `git_default_branch()` instead.</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; ℹ The deprecated feature was likely used in the badger package.</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt;   Please report the issue at &lt;https://github.com/GuangchuangYu/badger/issues&gt;.</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</span></span></code></pre></div>
-<p><a href="https://github.com/afsc-gap-products/GAPsurvey" class="external-link"><img src="https://img.shields.io/badge/devel%20version-2024.04.05-blue.svg"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg"></a> <a href="https://github.com/afsc-gap-products/GAPsurvey/commits/main" class="external-link"><img src="https://img.shields.io/github/last-commit/afsc-gap-products/GAPsurvey.svg"></a></p>
 </div>
+<div class="section level2">
+<h2 id="table-of-contents">Table of contents<a class="anchor" aria-label="anchor" href="#table-of-contents"></a>
+</h2>
+<blockquote>
+<ul>
+<li><a href="#make-sure-the-necessary-packages-are-installed"><em>Make sure the necessary packages are installed</em></a></li>
+<li>
+<a href="#example,-the-user-may-have-a-different-path"><em>example, the user may have a different path</em></a>
+<ul>
+<li><a href="#user-resources"><em>User Resources</em></a></li>
+<li><a href="#cite-this-data"><em>Cite this data</em></a></li>
+</ul>
+</li>
+<li><a href="#relevant-publications"><em>Relevant publications</em></a></li>
+<li>
+<a href="#suggestions-and-comments"><em>Suggestions and Comments</em></a>
+<ul>
+<li><a href="#r-version-metadata"><em>R Version Metadata</em></a></li>
+<li><a href="#noaa-readme"><em>NOAA README</em></a></li>
+<li><a href="#noaa-license"><em>NOAA License</em></a></li>
+</ul>
+</li>
+</ul>
+</blockquote>
 </div>
 <div class="section level2">
 <h2 id="make-sure-the-necessary-packages-are-installed">Make sure the necessary packages are installed<a class="anchor" aria-label="anchor" href="#make-sure-the-necessary-packages-are-installed"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Or</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"afsc-gap-products/GAPsurvey@main"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="fu">library</span>(GAPsurvey)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"afsc-gap-products/GAPsurvey"</span><span class="op">)</span></span>
+<span> <span class="co"># Or</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"afsc-gap-products/GAPsurvey@main"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://afsc-gap-products.github.io/GAPsurvey">GAPsurvey</a></span><span class="op">)</span></span></code></pre></div>
+<p>or install from local file <code>.tar.gz</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># example, the user may have a different path</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'C:/Users/User/Downloads/GAPsurvey_2025.06.07.tar.gz'</span>,</span>
+<span>                 repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">'source'</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://afsc-gap-products.github.io/GAPsurvey">GAPsurvey</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="user-resources">User Resources<a class="anchor" aria-label="anchor" href="#user-resources"></a>
+</h2>
+<ul>
+<li><p><a href="https://github.com/afsc-gap-products/gap_products" class="external-link">GitHub repository</a>.</p></li>
+<li><p><a href="https://afsc-gap-products.github.io/gap_products/" class="external-link">Access Tips and Documentation for All Production Data</a></p></li>
+<li><p><a href="https://www.fisheries.noaa.gov/foss" class="external-link">Fisheries One Stop Shop (FOSS)</a></p></li>
+<li><p><a href="https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys" class="external-link">Groundfish Assessment Program Bottom Trawl Surveys</a></p></li>
+<li><p><a href="https://www.fisheries.noaa.gov/about/resource-assessment-and-conservation-engineering-division" class="external-link">AFSC’s Resource Assessment and Conservation Engineering Division</a></p></li>
+<li><p><a href="https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual" class="external-link">Survey code books</a></p></li>
+<li><p><a href="https://repository.library.noaa.gov/" class="external-link">Publications and Data Reports</a></p></li>
+<li><p><a href="https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys" class="external-link">Research Surveys conducted at AFSC</a></p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="cite-this-data">Cite this data<a class="anchor" aria-label="anchor" href="#cite-this-data"></a>
 </h2>
 <p>Use the below <a href="%22https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITATION.bib%22">bibtext citations</a> for citing the package created and maintained in this repo. Add “note = {Accessed: mm/dd/yyyy}” to append the day this data was accessed.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co">#&gt; @misc{GAPsurvey,</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;   author = {{NOAA Fisheries Alaska Fisheries Science Center, Goundfish Assessment Program}},</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   year = {2024},</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   title = {AFSC Goundfish Assessment Program at-Sea data management tools for RACE GAP surveys},</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   howpublished = {https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys},</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   publisher = {{U.S. Dep. Commer.}},</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;   copyright = {Public Domain}</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; }</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span>con <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inst/CITATION.bib"</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; @misc{GAPsurvey,</span></span>
+<span><span class="co">#&gt;   author = {{NOAA Fisheries Alaska Fisheries Science Center, Goundfish Assessment Program}},</span></span>
+<span><span class="co">#&gt;   year = {2024},</span></span>
+<span><span class="co">#&gt;   title = {AFSC Goundfish Assessment Program at-Sea data management tools for RACE GAP surveys},</span></span>
+<span><span class="co">#&gt;   howpublished = {https://www.fisheries.noaa.gov/alaska/science-data/groundfish-assessment-program-bottom-trawl-surveys},</span></span>
+<span><span class="co">#&gt;   publisher = {{U.S. Dep. Commer.}},</span></span>
+<span><span class="co">#&gt;   copyright = {Public Domain}</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level1">
+<h1 id="relevant-publications">Relevant publications<a class="anchor" aria-label="anchor" href="#relevant-publications"></a>
+</h1>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/current_data_tm.r"</span><span class="op">)</span> <span class="co"># srvy_cite </span></span></code></pre></div>
+<p><strong>Learn more about these surveys</strong> (Hoff, 2016; Markowitz et al., 2024, 2024; Siple et al., 2024; Von Szalay et al., 2023; Zacher et al., 2024).</p>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-RN979" class="csl-entry">
+Hoff, G. R. (2016). <em>Results of the 2016 eastern Bering Sea upper continental slope survey of groundfishes and invertebrate resources</em> (NOAA Tech. Memo. NOAA-AFSC-339). U.S. Dep. Commer. <a href="https://doi.org/10.7289/V5/TM-AFSC-339" class="external-link uri">https://doi.org/10.7289/V5/TM-AFSC-339</a>
+</div>
+<div id="ref-2023NEBS" class="csl-entry">
+Markowitz, E. H., Dawson, E. J., Wassermann, S., Anderson, C. B., Rohan, S. K., Charriere, B. K., and Stevenson, D. E. (2024). <em>Results of the 2023 eastern and northern Bering Sea continental shelf bottom trawl survey of groundfish and invertebrate fauna</em> (NOAA Tech. Memo. NMFS-AFSC-487; p. 242). U.S. Dep. Commer. <a href="https://doi.org/10.25923/2mry-yx09" class="external-link uri">https://doi.org/10.25923/2mry-yx09</a>
+</div>
+<div id="ref-GOA2023" class="csl-entry">
+Siple, M. C., Szalay, P. G. von, Raring, N. W., Dowlin, A. N., and Riggle, B. C. (2024). <em>Data report: 2023 gulf of alaska bottom trawl survey</em> (NOAA Tech. Memo. AFSC processed report; 2024-09). U.S. Dep. Commer. <a href="https://doi.org/10.25923/gbb1-x748" class="external-link uri">https://doi.org/10.25923/gbb1-x748</a>
+</div>
+<div id="ref-AI2022" class="csl-entry">
+Von Szalay, P. G., Raring, N. W., Siple, M. C., Dowlin, A. N., Riggle, B. C., and Laman, E. A. and. (2023). <em>Data report: 2022 Aleutian Islands bottom trawl survey</em> (AFSC Processed Rep. 2023-07; p. 230). U.S. Dep. Commer. <a href="https://doi.org/10.25923/85cy-g225" class="external-link uri">https://doi.org/10.25923/85cy-g225</a>
+</div>
+<div id="ref-SAPcrab2024" class="csl-entry">
+Zacher, L. S., Richar, J. I., Fedewa, E. J., Ryznar, E. R., and Litzow, M. A. (2024). <em>The 2024 eastern Bering Sea continental shelf trawl survey: Results for commercial crab species DRAFT</em> [NOAA Tech. Memo.]. <a href="https://www.fisheries.noaa.gov/resource/document/draft-2024-eastern-bering-sea-crab-technical-memorandum" class="external-link uri">https://www.fisheries.noaa.gov/resource/document/draft-2024-eastern-bering-sea-crab-technical-memorandum</a>
+</div>
+</div>
+</div>
+<div class="section level1">
+<h1 id="suggestions-and-comments">Suggestions and Comments<a class="anchor" aria-label="anchor" href="#suggestions-and-comments"></a>
+</h1>
+<p>If you see that the data, product, or metadata can be improved, you are invited to create a <a href="https://github.com/afsc-gap-products/GAPsurvey/pulls" class="external-link">pull request</a>, <a href="https://github.com/afsc-gap-products/data-requests/issues" class="external-link">submit an issue to the GitHub organization</a>, or <a href="https://github.com/afsc-gap-products/GAPsurvey/issues" class="external-link">submit an issue to the code’s repository</a>.</p>
 <div class="section level2">
-<h2 id="metadata">Metadata<a class="anchor" aria-label="anchor" href="#metadata"></a>
+<h2 id="r-version-metadata">R Version Metadata<a class="anchor" aria-label="anchor" href="#r-version-metadata"></a>
 </h2>
-<p>This package was last produced using:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#&gt; R version 4.4.1 (2024-06-14 ucrt)</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Platform: x86_64-w64-mingw32/x64</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Running under: Windows 10 x64 (build 19045)</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Matrix products: default</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; locale:</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    </span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; time zone: America/Los_Angeles</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; tzcode source: internal</span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; attached base packages:</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     </span></span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; other attached packages:</span></span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;  [1] badger_0.2.4    gapindex_2.2.0  pkgdown_2.1.0   gapctd_2.1.6    lubridate_1.9.3 plotly_4.10.4   interp_1.1-6   </span></span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt;  [8] bbmle_1.0.25.1  oce_1.8-3       gsw_1.2-0       tidyr_1.3.1     plyr_1.8.9      remotes_2.5.0   roxygen2_7.3.2 </span></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; [15] devtools_2.4.5  usethis_3.0.0   here_1.0.1      akgfmaps_3.5.3  terra_1.7-78    stars_0.6-6     abind_1.4-8    </span></span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; [22] sf_1.0-17       gstat_2.1-2     ggplot2_3.5.1   classInt_0.4-10 RODBC_1.3-23    dplyr_1.1.4     readr_2.1.5    </span></span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; [29] magrittr_2.0.3 </span></span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt;   [1] RColorBrewer_1.1-3  sys_3.4.2           rstudioapi_0.16.0   dlstats_0.1.7       jsonlite_1.8.8     </span></span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;   [6] rmarkdown_2.28      fs_1.6.4            vctrs_0.6.5         memoise_2.0.1       askpass_1.2.0      </span></span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt;  [11] gh_1.4.1            janitor_2.2.0       htmltools_0.5.8.1   curl_5.2.2          KernSmooth_2.23-24 </span></span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt;  [16] htmlwidgets_1.6.4   desc_1.4.3          httr2_1.0.4         zoo_1.8-12          cachem_1.1.0       </span></span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="co">#&gt;  [21] mime_0.12           lifecycle_1.0.4     pkgconfig_2.0.3     Matrix_1.7-0        R6_2.5.1           </span></span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="co">#&gt;  [26] fastmap_1.2.0       shiny_1.9.1         snakecase_0.11.1    digest_0.6.37       numDeriv_2016.8-1.1</span></span>
-<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a><span class="co">#&gt;  [31] colorspace_2.1-1    ps_1.8.0            rprojroot_2.0.4     pkgload_1.4.0       fansi_1.0.6        </span></span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a><span class="co">#&gt;  [36] timechange_0.3.0    httr_1.4.7          compiler_4.4.1      proxy_0.4-27        intervals_0.15.5   </span></span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a><span class="co">#&gt;  [41] withr_3.0.1         DBI_1.2.3           pkgbuild_1.4.4      MASS_7.3-60.2       openssl_2.2.1      </span></span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a><span class="co">#&gt;  [46] rappdirs_0.3.3      sessioninfo_1.2.2   tools_4.4.1         units_0.8-5         httpuv_1.6.15      </span></span>
-<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a><span class="co">#&gt;  [51] glue_1.7.0          callr_3.7.6         promises_1.3.0      grid_4.4.1          generics_0.1.3     </span></span>
-<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="co">#&gt;  [56] gtable_0.3.5        tzdb_0.4.0          class_7.3-22        data.table_1.16.0   hms_1.1.3          </span></span>
-<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a><span class="co">#&gt;  [61] sp_2.1-4            xml2_1.3.6          utf8_1.2.4          pillar_1.9.0        stringr_1.5.1      </span></span>
-<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a><span class="co">#&gt;  [66] yulab.utils_0.1.7   later_1.3.2         lattice_0.22-6      FNN_1.1.4           deldir_2.0-4       </span></span>
-<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a><span class="co">#&gt;  [71] tidyselect_1.2.1    rvcheck_0.2.1       miniUI_0.1.1.1      knitr_1.48          gitcreds_0.1.2     </span></span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a><span class="co">#&gt;  [76] xfun_0.47           credentials_2.0.1   stringi_1.8.4       lazyeval_0.2.2      yaml_2.3.10        </span></span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a><span class="co">#&gt;  [81] evaluate_0.24.0     codetools_0.2-20    tibble_3.2.1        BiocManager_1.30.25 cli_3.6.3          </span></span>
-<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="co">#&gt;  [86] xtable_1.8-4        munsell_0.5.1       processx_3.8.4      spacetime_1.3-2     Rcpp_1.0.13        </span></span>
-<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a><span class="co">#&gt;  [91] gert_2.1.1          bdsmatrix_1.3-7     parallel_4.4.1      ellipsis_0.3.2      profvis_0.3.8      </span></span>
-<span id="cb4-45"><a href="#cb4-45" tabindex="-1"></a><span class="co">#&gt;  [96] urlchecker_1.0.1    viridisLite_0.4.2   mvtnorm_1.3-1       scales_1.3.0        xts_0.14.0         </span></span>
-<span id="cb4-46"><a href="#cb4-46" tabindex="-1"></a><span class="co">#&gt; [101] e1071_1.7-14        crayon_1.5.3        purrr_1.0.2         rlang_1.1.4</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.5.0 (2025-04-11 ucrt)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-w64-mingw32/x64</span></span>
+<span><span class="co">#&gt; Running under: Windows 10 x64 (build 19045)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt;   LAPACK version 3.12.1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8</span></span>
+<span><span class="co">#&gt; [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; time zone: America/Los_Angeles</span></span>
+<span><span class="co">#&gt; tzcode source: internal</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] ggplot2_3.5.2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] vctrs_0.6.5        httr_1.4.7         cli_3.6.5          knitr_1.50         rlang_1.1.6        xfun_0.52          stringi_1.8.7     </span></span>
+<span><span class="co">#&gt;  [8] readtext_0.91      generics_0.1.4     data.table_1.17.4  glue_1.8.0         rprojroot_2.0.4    htmltools_0.5.8.1  scales_1.4.0      </span></span>
+<span><span class="co">#&gt; [15] rmarkdown_2.29     grid_4.5.0         evaluate_1.0.3     tibble_3.2.1       fastmap_1.2.0      yaml_2.3.10        lifecycle_1.0.4   </span></span>
+<span><span class="co">#&gt; [22] compiler_4.5.0     dplyr_1.1.4        RColorBrewer_1.1-3 pkgconfig_2.0.3    here_1.0.1         rstudioapi_0.17.1  farver_2.1.2      </span></span>
+<span><span class="co">#&gt; [29] digest_0.6.37      R6_2.6.1           tidyselect_1.2.1   pillar_1.10.2      magrittr_2.0.3     withr_3.0.2        tools_4.5.0       </span></span>
+<span><span class="co">#&gt; [36] gtable_0.3.6</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="noaa-readme">NOAA README<a class="anchor" aria-label="anchor" href="#noaa-readme"></a>
@@ -173,21 +219,15 @@
 <p>This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.</p>
 </div>
 <div class="section level2">
-<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+<h2 id="noaa-license">NOAA License<a class="anchor" aria-label="anchor" href="#noaa-license"></a>
 </h2>
 <p>Software code created by U.S. Government employees is not subject to copyright in the United States (17 U.S.C. §105). The United States/Department of Commerce reserve all rights to seek and obtain copyright protection in countries other than the United States for Software authored in its entirety by the Department of Commerce. To this end, the Department of Commerce hereby grants to Recipient a royalty-free, nonexclusive license to use, copy, and create derivative works of the Software outside of the United States.</p>
-<p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries"></p>
+<p><img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" alt="NOAA Fisheries" height="75"></p>
 <p><a href="https://www.commerce.gov/" class="external-link">U.S. Department of Commerce</a> | <a href="https://www.noaa.gov" class="external-link">National Oceanographic and Atmospheric Administration</a> | <a href="https://www.fisheries.noaa.gov/" class="external-link">NOAA Fisheries</a></p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="links">
-<h2 data-toc-skip>Links</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/afsc-gap-products/GAPsurvey/" class="external-link">Browse source code</a></li>
-</ul>
-</div>
 
-<div class="license">
+  </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
@@ -205,10 +245,10 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Emily Markowitz <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5757-4230" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Sean Rohan <br><small class="roles"> Author </small>  </li>
-<li>Margaret Siple <br><small class="roles"> Author </small>  </li>
-<li>Liz Dawson <br><small class="roles"> Author </small>  </li>
+<li>Emily Markowitz <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5757-4230" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Sean Rohan <br><small class="roles"> Author </small>   </li>
+<li>Margaret Siple <br><small class="roles"> Author </small>   </li>
+<li>Liz Dawson <br><small class="roles"> Author </small>   </li>
 </ul>
 </div>
 
@@ -219,7 +259,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -1,12 +1,12 @@
 #' @title Presence-only public data from FOSS
-#' @description Positive catch and effort from GAP_PRODUCTS.CPUE with associated taxonomic confidence. This table was created by the Resource Assessment and Conservation Engineering Division (RACE) Groundfish Assessment Program (GAP) of the Alaska Fisheries Science Center (AFSC). The GitHub repository for the scripts that created this code can be found at (https://github.com/afsc-gap-products/gap_products). There are no legal restrictions on access to the data. Last updated on 12 September 2024.
+#' @description snapshot table for snapshot GAP_PRODUCTS.FOSS_CATCH
 #' @usage data('public_data')
 #' @author Emily Markowitz (Emily.Markowitz AT noaa.gov)
-#' @format A data frame with 890349 observations on the following 37 variables.
+#' @format A data frame with 891144 observations on the following 37 variables.
 #' \describe{
 #'   \item{\code{date_time}}{Date and time. The date (MM/DD/YYYY) and time (HH:MM) of the haul. All dates and times are in Alaska time (AKDT) of Anchorage, AK, USA (UTC/GMT -8 hours).}
 #'   \item{\code{depth_m}}{Depth (m). Bottom depth (meters).}
-#'   \item{\code{distance_fished_km}}{Distance fished (km). Distance the net fished (thousands of kilometers).}
+#'   \item{\code{distance_fished_km}}{Distance fished (km). Distance the net fished (kilometers).}
 #'   \item{\code{duration_hr}}{Tow duration (decimal hr). This is the elapsed time between start and end of a haul (decimal hours).}
 #'   \item{\code{haul}}{Haul number. This number uniquely identifies a sampling event (haul) within a cruise. It is a sequential number, in chronological order of occurrence.}
 #'   \item{\code{hauljoin}}{Haul ID. This is a unique numeric identifier assigned to each (vessel, cruise, and haul) combination.}

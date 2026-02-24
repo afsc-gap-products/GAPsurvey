@@ -62,18 +62,4 @@ convert_log_gps(
     filename_add = "newlog")
 readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
   package = "GAPsurvey"))[1:5] # output file
-
-readLines(system.file("exdata/convert_log_gps/Haul0037",
-  package = "GAPsurvey"))[1:5] # input file
- convert_log_gps(
-    VESSEL = 94,
-    CRUISE = 202101,
-    HAUL = 37,
-    DATE = "06/07/2021",
-    path_in = system.file("exdata/convert_log_gps/Haul0037.log",
-        package = "GAPsurvey"),
-    path_out = getwd(),
-    filename_add = "newlog")
-readLines(system.file("exdata/convert_log_gps/Haul0037_newlog.gps",
-  package = "GAPsurvey"))[1:5] # output file
 }
