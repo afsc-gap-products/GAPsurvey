@@ -442,6 +442,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' convert_nmea_btd()
 #' }
 #' @importFrom stats complete.cases
+#' @import graphics
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
 

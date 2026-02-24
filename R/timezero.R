@@ -27,6 +27,7 @@
 #'                   end = "01/25/2024 14:33:15")
 #' }
 #' @import RSQLite
+#' @importFrom utils write.table
 #' @export
 
 convert_tzdb_gps <- function(path_tzdb = NULL,
