@@ -1,19 +1,6 @@
-# #' ---
-# #' title: GAPsurvey
-# #' purpose: assist scientists on the survey collect data
-# #' author: Jason Conner (jason.conner AT noaa.gov), Emily Markowitz (emily.markowitz AT noaa.gov), and Liz Dawson (Liz.Dawson AT noaa.gov)
-# #' modified by: Emily Markowitz (emily.markowitz AT noaa.gov) and Liz Dawson (Liz.Dawson AT noaa.gov)
-# #' start date: 2018?
-# #' modified date: June 2021
-# #' ---
-
-
-# Converts ----------------------------------------------
-
-
 #' BVDR Conversion to Create BTD data
 #'
-#' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
+#' Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (BVDRReader.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App (NEW BVDR README.txt).  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
@@ -28,6 +15,14 @@
 #' @export
 #'
 #' @examples
+#' # input files
+#' readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.ted",
+#'   package = "GAPsurvey"))[1:5]
+#' readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.tet",
+#'   package = "GAPsurvey"))[1:5]
+#' readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.teh",
+#'   package = "GAPsurvey"))[1:5]
+#' #' run function
 #' convert_ted_btd(
 #'    VESSEL = 94,
 #'    CRUISE = 201901,
@@ -38,6 +33,11 @@
 #'    path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
 #'    path_out = getwd(),
 #'    filename_add = "newted")
+#' # output files
+#' readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTD",
+#'   package = "GAPsurvey"))[1:5]
+#' readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTH",
+#'   package = "GAPsurvey"))[1:5]
 convert_ted_btd <- function(
     VESSEL = NA,
     CRUISE = NA,
@@ -151,9 +151,6 @@ convert_ted_btd <- function(
 
 
 
-
-
-
 #' Recover position data from Globe .log file
 #'
 #' In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
@@ -178,10 +175,12 @@ convert_ted_btd <- function(
 #' @param path_out Optional. The default is the local working directory but may be specified with a string.
 #' @param filename_add Optional. Default = "new". This string will be added to the name of the outputted file. Here, you can additional information that may make this file helpful to find later.
 #'
-#' @return A .GPS file to the path_out directory.
+#' @return A .GPS file to the path_out directory with DATE/TIME in AKDT.
 #' @export
 #'
 #' @examples
+#' readLines(system.file("exdata/convert_log_gps/06062017.log",
+#'   package = "GAPsurvey"))[1:5] # input file
 #' convert_log_gps(
 #'     VESSEL = 94,
 #'     CRUISE = 201901,
@@ -191,16 +190,8 @@ convert_ted_btd <- function(
 #'         package = "GAPsurvey"),
 #'     path_out = getwd(),
 #'     filename_add = "newlog")
-#'
-#'  convert_log_gps(
-#'     VESSEL = 94,
-#'     CRUISE = 202101,
-#'     HAUL = 37,
-#'     DATE = "06/07/2021",
-#'     path_in = system.file("exdata/convert_log_gps/Haul0037.log",
-#'         package = "GAPsurvey"),
-#'     path_out = getwd(),
-#'     filename_add = "newlog")
+#' readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
+#'   package = "GAPsurvey"))[1:5] # output file
 convert_log_gps <- function(
     VESSEL = NA,
     CRUISE = NA,
@@ -208,12 +199,20 @@ convert_log_gps <- function(
     DATE = NA,
     path_in,
     path_out = "./",
-    filename_add = ""){
+    filename_add = "") {
 
-  if (is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
-  if (is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
-  if (is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
-  if (is.na(DATE)){ DATE <- readline("Type date of haul (MM/DD/YYYY):  ") }
+  if (is.na(VESSEL)) {
+    VESSEL <- readline("Type vessel code:  ")
+  }
+  if (is.na(CRUISE)) {
+    CRUISE <- readline("Type cruise number:  ")
+  }
+  if (is.na(HAUL)) {
+    HAUL <- readline("Type haul number:  ")
+  }
+  if (is.na(DATE)) {
+    DATE <- readline("Type date of haul (MM/DD/YYYY):  ")
+  }
 
   path_in <- fix_path(path_in)
   file.name <- path_in
@@ -224,56 +223,68 @@ convert_log_gps <- function(
   HAUL <- as.numeric(HAUL)
   shaul <- numbers0(x = HAUL, number_places = 4)
 
-  log.file<-utils::read.csv(file.name,header=F, sep=",")
+  log.file <- utils::read.csv(file.name, header = F, sep = ",")
 
-  only.GPRMC<-log.file[log.file$V1=="$GPRMC",]
+  only.GPRMC <- log.file[log.file$V1 == "$GPRMC", ]
   # head(only.GPRMC)
-  only.GPRMC<-only.GPRMC[,c(2,4,5,6,7)]
+  only.GPRMC <- only.GPRMC[, c(2, 4, 5, 6, 7)]
   # head(only.GPRMC)
-  info<-cbind(VESSEL, CRUISE, HAUL, DATE)
-  infoselect<-cbind(info,only.GPRMC)
-  colnames(infoselect)<-c("VESSEL","CRUISE","HAUL","DATE","TIME","LAT1","LAT2","LONG1","LONG2")
+  info <- cbind(VESSEL, CRUISE, HAUL, DATE)
+  infoselect <- cbind(info, only.GPRMC)
+  colnames(infoselect) <- c("VESSEL", "CRUISE", "HAUL", "DATE", "TIME", "LAT1", "LAT2", "LONG1", "LONG2")
   # head(infoselect)
 
-  hh=as.numeric(substr(infoselect$"TIME",start=1, stop=2))
-  hh=ifelse(hh<8,hh+24,hh)-8
-  hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
-  mm=substr(infoselect$"TIME",start=3, stop=4)
-  ss=substr(infoselect$"TIME",start=5, stop=6)
-  DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
+  tstamp <- round(as.numeric(infoselect$TIME)) # sometimes this reads as chr and sometimes as num so force to num. Sometimes a decimal timestamp will break it if you don't round.
+  tstamp <- sprintf("%06d", tstamp) # add leading zeroes
+  hh <- as.numeric(substr(tstamp, start = 1, stop = 2))
+  hh <- ifelse(hh < 8, hh + 24, hh) - 8 # convert to AKDT
+  mm <- substr(tstamp, start = 3, stop = 4)
+  ss <- substr(tstamp, start = 5, stop = 6)
+  DATE_TIME <- paste(infoselect$"DATE", paste(hh, mm, ss, sep = ":"))
 
-  lat1=as.numeric(as.character(infoselect$LAT1))
-  LAT=ifelse(infoselect$"LAT2"=="N",lat1,-lat1)
+#  #hh=as.numeric(substr(infoselect$"TIME",start=1, stop=2))
+#  hh=ifelse(hh<8,hh+24,hh)-8
+#  hh=ifelse(hh<10,paste0(0,hh),as.character(hh))
+#  mm=substr(infoselect$"TIME",start=3, stop=4)
+#  ss=substr(infoselect$"TIME",start=5, stop=6)
+#  DATE_TIME=paste(infoselect$"DATE", paste(hh,mm,ss,sep=":"))
+
+
+  lat1 <- as.numeric(as.character(infoselect$LAT1))
+  LAT <- ifelse(infoselect$"LAT2" == "N", lat1, -lat1)
   LAT <- formatC(x = LAT, digits = 4, format = "f")
 
-  long1=as.numeric(as.character(infoselect$LONG1))
-  LONG=ifelse(infoselect$"LONG2"=="E",long1,-long1)
+  long1 <- as.numeric(as.character(infoselect$LONG1))
+  LONG <- ifelse(infoselect$"LONG2" == "E", long1, -long1)
   LONG <- formatC(x = LONG, digits = 4, format = "f")
 
   new_gps <- cbind.data.frame(VESSEL, CRUISE, HAUL, DATE_TIME, LAT, LONG)
 
 
-  filename <- paste0(path_out, "HAUL",shaul,
-                     ifelse(is.na(filename_add) | filename_add == "",
-                            "", paste0("_", filename_add)),
-                     ".gps")
+  filename <- paste0(
+    path_out, "HAUL", shaul,
+    ifelse(is.na(filename_add) | filename_add == "",
+      "", paste0("_", filename_add)
+    ),
+    ".gps"
+  )
 
-  new_gps1<-new_gps
-  names(new_gps1) <- NULL
+  new_gps1 <- new_gps
+  # names(new_gps1) <- NULL
   new_gps1 <- as.matrix(new_gps1)
 
-  utils::write.table(x = new_gps1,
-                     file = filename,
-                     quote=FALSE,
-                     sep = ",",
-                     row.names=FALSE,
-                     col.names = FALSE,
-                     eol="\n")
+  utils::write.table(
+    x = new_gps1,
+    file = filename,
+    quote = FALSE,
+    sep = ",",
+    row.names = FALSE,
+    col.names = TRUE,
+    eol = "\n"
+  )
 
   message(paste0("Your new .gps files are saved to ", filename))
-
 }
-
 
 
 #' Convert .bvdr files to .marp files
@@ -285,305 +296,534 @@ convert_log_gps <- function(
 #' 3. Save the .bvdr file with these changes and use the link to that file below for path_bvdr
 #' For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
 #' @param path_bvdr Character string. The full path of the .bvdr file you want to convert. For example, path_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey")
+#' @param make_btd_bth Logical. Should a .btd and bth file be generated?
+#' @param sort_by_path Logical. Should .bvdr files be read in alphabetical order. Note: Keep this TRUE when the original file names are used to ensure NMEA strings are read in chronological order.
 #' @param verbose Logical. Default = FALSE. If you would like a readout of what the file looks like in the console, set to TRUE.
-#'
+#' @param ... Optional additional arguments passed to convert_nmea_btd().
+#' @importFrom utils choose.files
 #' @export
 #' @examples
-#' # head(convert_bvdr_marp(path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#' # readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#' #   package = "GAPsurvey"))[1:5] # input file
+#' # head(convert_bvdr_marp(
+#' #   path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
 #' #                                   package = "GAPsurvey"),
 #' #           verbose = TRUE), 20)
-convert_bvdr_marp <- function(path_bvdr,
-                              verbose = FALSE) {
+#' # convert_bvdr_marp(
+#' #   path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#' #                                   package = "GAPsurvey"))
+#' # readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.marp",
+#' #   package = "GAPsurvey")) # output file
+convert_bvdr_marp <- function(path_bvdr = NULL,
+                              make_btd_bth = TRUE,
+                              sort_by_path = TRUE,
+                              verbose = TRUE,
+                              ...) {
 
-  dat <- readLines(con = path_bvdr, skipNul = TRUE)
-  dat1 <- strsplit(x = dat, split = "\\$G")
-  dat2 <- strsplit(x = dat, split = "\\:::")
-  dat3 <- strsplit(x = dat, split = "\\$01TE")
-  dat4 <- strsplit(x = dat, split = "\\$01DST")
-
-  for (i in 1:length(dat1)) {
-    if (length(dat1[i][[1]])>1) {
-      # if (substr(x = dat1[i][[1]][2], start = 1, stop = 1) == "G"){
-      dat1[i][[1]][2] <- paste0("$G", dat1[i][[1]][2])
-      # }
-    }
-    if (length(dat2[i][[1]])>1) {
-      dat1[i]<-dat2[i]
-      dat1[i][[1]][2] <- paste0(":::", dat1[i][[1]][2])
-    }
-    if (length(dat3[i][[1]])>1) {
-      dat1[i]<-dat3[i]
-      dat1[i][[1]][2] <- paste0("$01TE", dat1[i][[1]][2])
-    }
-    if (length(dat4[i][[1]])>1) {
-      dat1[i]<-dat4[i]
-      dat1[i][[1]][2] <- paste0("$01DST", dat1[i][[1]][2])
-    }
+  if(is.null(path_bvdr)) {
+    path_bvdr <-
+      choose.files(
+        default = "*.bvdr",
+        caption = "Select .bvdr file(s)",
+        multi = TRUE,
+        filters = matrix(c("Binary Voyage Data Recorder (.bvdr)", "*.bvdr"),
+                         ncol = 2)
+      )
   }
+
+  # Sort entries by filename to ensure proper date/time order
+  if(sort_by_path) {
+    path_bvdr <- sort(path_bvdr)
+  }
+
+  # Read binary files and remove lines that are empty or missing valid start characters
+  dat <- unlist(
+    lapply(
+      path_bvdr,
+      function(x) {
+        lines <- readBin(x, what = "rb", n = 1e8)
+        lines <- iconv(lines, from = "latin1", to = "UTF-8")
+        lines <- lines[nchar(lines) > 0]
+        lines <-
+          lines[any(
+            c(grepl(lines, pattern = "\\$GPZDA"),
+              grepl(lines, pattern = "\\$GPGLL"),
+              grepl(lines, pattern = "\\$GPRMC"),
+              grepl(lines, pattern = "\\$GPVTG"),
+              grepl(lines, pattern = "\\$GPGGA"),
+              grepl(lines, pattern = "\\$01TE"),
+              grepl(lines, pattern = "\\:::m"),
+              grepl(lines, pattern = "\\$01DST"))
+          )]
+      }
+    ),
+    use.names = FALSE)
+
+  dat1 <- strsplit(x = dat, split = "\\$G", useBytes = TRUE)
+  dat2 <- strsplit(x = dat, split = "\\:::m", useBytes = TRUE)
+  dat3 <- strsplit(x = dat, split = "\\$01TE", useBytes = TRUE)
+  dat4 <- strsplit(x = dat, split = "\\$01DST", useBytes = TRUE)
+
+  dat1 <- lapply(
+    seq_along(dat1), function(i) {
+      if (length(dat4[[i]]) > 1) {
+        dat <- dat4[[i]]
+        dat[2] <- paste0("$01DST", dat[2])
+      } else if (length(dat3[[i]]) > 1) {
+        dat <- dat3[[i]]
+        dat[2] <- paste0("$01TE", dat[2])
+      } else if (length(dat2[[i]]) > 1) {
+        dat <- dat2[[i]]
+        dat[2] <- paste0(":::m", dat[2])
+      } else if (length(dat1[[i]]) > 1) {
+        dat <- dat1[[i]]
+        dat[2] <- paste0("$G", dat[2])
+      } else {
+        dat <- dat1[[i]]
+      }
+      dat
+    }
+  )
+
   dat <- sapply(X = dat1, "[", 2)
   dat <- dat[!is.na(dat)]
-  dat <- dat[!grepl(pattern = "\\$Gf", x = dat)]
-  file_name_out <- gsub(pattern = ".bvdr", replacement = ".marp", x = path_bvdr, fixed = TRUE)
+
+  # Remove unnecessary carriage returns
+  dat <- gsub(pattern = "\\r", replacement = "", x = dat)
+  dat <- gsub(pattern = "\\n", replacement = "", x = dat)
+  dat <- dat[!grepl(pattern = "\\$Gf", x = dat, useBytes = TRUE)]
+  file_name_out <- gsub(pattern = ".bvdr", replacement = ".marp", x = path_bvdr[1], fixed = TRUE)
+
   writeLines(text = dat, con = file_name_out)
 
-  if (verbose) {
-    return(dat)
+  # stopifnot("convert_bvdr_marp: .marp file was not successfully generated." = check.exists(file_name_out))
+
+  cat(paste0("convert_bvdr_marp: ", length(dat), " lines written to ", file_name_out, "\n"))
+
+  output <- list(marp = dat)
+
+  # Create BTD and BTH files from NMEA strings
+  if(make_btd_bth) {
+
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "none", ...)
+
+    output <- c(output, btd_bth_output)
+
+  }
+
+  if(verbose) {
+    return(output)
   }
 }
 
-# Calculate during hauls -------------------------------------------------------
 
 
-#' Calculate Net Spread for tows missing net width using a glm.
+#' Extract depth and temperature from NMEA strings
 #'
-#' @details The Marport Deep Sea Technologies Inc. net mensuration system was used during the deployment of each tow to record net spread and net height. Net width was measured as the horizontal distance between two sensors attached immediately forward of the junction of the upper breastline and the dandyline, and net height was measured from the headrope center to the seafloor. A custom-made AFSC bottom contact sensor (accelerometer) attached to the center of the footrope was used to determine tow duration based on footrope contact with the seafloor. Mean calc_net_spread values for estimating area swept for the tow duration were calculated according to the methods described by Lauth and Kotwicki (2014).
-#' In race_data, this will manifest as...
-#' \describe{
-#'  \item{"net_mensuration_code"}{Net Mensuration Method}
-#'  \item{"0*"}{Unidentified method. Will make racebase.haul$net_measured = "N"}
-#'  \item{"1"}{Scanmar net mensuration - don't use, historical}
-#'  \item{"2"}{NetMind net mensuration - don't use, historical}
-#'  \item{"3"}{Furuno net mensuration - don't use, historical}
-#'  \item{"4*"}{Estimated from other hauls - when missing net spread, or spread and height. Will make racebase.haul$net_measured = "N". Estimated using GLM}
-#'  \item{"5*"}{Estimated from warp angle - hopefully, will not come up and shouldn't be used}
-#'  \item{"6"}{Marport net mensuration - shouldn't be there, indicates raw data}
-#'  \item{"7*"}{Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_measured = "Y".}
-#' }
+#' Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
 #'
-#' @param dat data.frame. This can be data from GIDES or race_data.hauls, including these columns: WIRE_OUT, NET_HEIGHT, NET_SPREAD
-#'
+#' @param nmea_strings Character vector of NMEA strings (e.g., from a .bvdr file) or a path to a .marp file.
+#' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
+#' @param interactive_editing Should the interactive point removal interface be used to manually clean temperature and depth data? If TRUE, must have graphic devices set to view plots in actual size (in R Studio: View > Actual Size or Ctrl+0)
+#' @param min_depth Optional (default = -0.1). Minimum valid depth (m).
+#' @param max_depth Optional (default = 1000). Maximum valid depth (m).
+#' @param min_temperature Optional (default = -2). Maximum valid temperature (Celsius).
+#' @param max_temperature Optional (default = 20). Maximum valid temperature (Celsius).
+#' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 94 for Vesteraalen). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
+#' @param MODEL_NUMBER Optional. Default = "Marport TE". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions). This field may have restrictions on length.
+#' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
+#' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
+#' @param ... additional arguments
 #' @export
-#' @return a list of equations
-#'
-#' @examples
-#' # Here is an example using 202101 Alaska Night Data from race_data.hauls:
-#' path <- system.file("exdata/calc_net_spread/VESTY202101_RACE_DATA.HAULS.csv",
-#'                     package = "GAPsurvey")
-#' dat <- read.csv(file=path, header=TRUE, sep=",", stringsAsFactors = FALSE)
-#' dat <- dat[dat$PERFORMANCE >= 0 & dat$HAUL_TYPE == 3,]
-#' dat[dat$NET_SPREAD_METHOD != 7, "NET_SPREAD"] <- NA # a normal net width
-#' dat[dat$NET_HEIGHT_METHOD != 6, "NET_HEIGHT"] <- NA # a normal net height
-#' calc_net_spread(dat)
-calc_net_spread <- function(dat) {
+#' @examples \dontrun{
+#' # Run this to select Marport (.marp files)
+#' convert_nmea_btd()
+#' }
+#' @importFrom stats complete.cases
+#' @author Sean Rohan <sean.rohan@@noaa.gov>
 
-  dat0 <- dat[,names(dat) %in%
-                c("HAUL", "NET_SPREAD",	"NET_HEIGHT",	"WIRE_OUT")]
-  dat0$NET_SPREAD_METHODS <- 7 # No Issues
-  dat0$NET_HEIGHT_METHOD <- 6 # No Issues
-  dat0$WIRE_OUT_METHODS <- 5 # No Issues
 
-  out <- data.frame("method_col" = c(),
-                    "method_code" = c(),
-                    "n" = c(),
-                    "desc" = c())
-  # 7: NET_SPREAD_METHOD Marport with sequential outlier rejection, smoothed mean, and adjusted for MKII offset (see AFSC Proc. Report Lauth & Kotwicki 2014). Will make racebase.haul$net_mesured = "Y".
-  # if (nrow(dat0[complete.cases(dat0), ])>0) {
-  #   n7 <- nrow(dat0[complete.cases(dat0), ])
+convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interactive_editing = TRUE, min_depth = -0.1, max_depth = 800, min_temperature = -2, max_temperature = 20, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport TE", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
-  if (sum(!is.na(dat0$NET_SPREAD), na.rm = TRUE)>0) {
-    n7 <- sum(!is.na(dat0$NET_SPREAD), na.rm = TRUE)
-    out <- rbind.data.frame(out,
-                            data.frame("method_col" = "NET_SPREAD_METHOD",
-                                       "method_code" = 7,
-                                       "n" = n7,
-                                       "desc" = paste0(
-                                         "There were ",
-                                         n7,
-                                         " hauls successfully completed where the Marport sensor properly caclulated net mensuration using sequential outlier rejection, smoothed mean, and MKII offset adjustments (see AFSC Proc. Report Lauth & Kotwicki 2014).")
-                            ))
+  format_date <- function(x, ...) {
+    tmp <- format(x, ...)
+    tmp <- sub("^[0]+", "", tmp)
+    tmp <- sub('/0', "/", tmp)
+    return(tmp)
   }
 
-  # When NET_HEIGHT_METHOD != 6 (aka NA)
-  # TOLEDO: Will not work if there are no other tows with the same wire out!
-  if (nrow(dat0[!is.na(dat0$NET_HEIGHT), ]) != nrow(dat0)) {
-    scope_where_height_missing <- dat0$WIRE_OUT[is.na(dat0$NET_HEIGHT)]
-    # out$tows_without_height <- length(scope_where_height_missing)
-    dat0$NET_HEIGHT_METHOD[which(is.na(dat0$NET_HEIGHT))] <- 4
-    for (i in 1:length(unique(scope_where_height_missing))) {
-      dat0$NET_HEIGHT[which(is.na(dat0$NET_HEIGHT) &
-                              dat0$WIRE_OUT == unique(scope_where_height_missing)[i])] <-
-        mean(dat0$NET_HEIGHT[dat0$WIRE_OUT == unique(scope_where_height_missing)[i]], na.rm = TRUE)
-    }
+  if(is.null(nmea_strings)) {
+    message("convert_nmea_btd: nmea_strings is NULL. Select a .marp file.")
+    nmea_strings <-
+      choose.files(
+        default = "*.marp",
+        caption = "Select .marp file(s)",
+        multi = TRUE,
+        filters = matrix(c("Marport (.marp)", "*.marp"),
+                         ncol = 2)
+      )
 
-    out <- rbind.data.frame(out,
-                            data.frame("method_col" = "NET_HEIGHT_METHOD",
-                                       "method_code" = 4,
-                                       "n" = length(scope_where_height_missing),
-                                       "desc" = paste0(
-                                         "There were ",
-                                         length(scope_where_height_missing),
-                                         " missing net height values estimated by averaging the net height of tows with the same wire out scope.")
-                            ))
+    stopifnot("convert_nmea_btd: Must select a file." = length(nmea_strings) >= 1)
+  }
+
+  if(all(grepl(pattern = ".marp", x = nmea_strings))) {
+
+    message("convert_nmea_btd: Extracting NMEA strings from .marp files.")
+
+    nmea_list <- vector(mode = "list", length = length(nmea_strings))
+    nmea_strings <- lapply(
+      X = nmea_strings,
+      FUN = function(x) {
+        lines <- readLines(x)
+        lines[any(
+          c(grepl(lines, pattern = "\\$GPZDA"),
+            grepl(lines, pattern = "\\$GPGLL"),
+            grepl(lines, pattern = "\\$GPRMC"),
+            grepl(lines, pattern = "\\$GPVTG"),
+            grepl(lines, pattern = "\\$GPGGA"),
+            grepl(lines, pattern = "\\$01TE"),
+            grepl(lines, pattern = "\\:::m"),
+            grepl(lines, pattern = "\\$01DST"))
+        )]
+      })
+
+    nmea_strings <- unname(unlist(nmea_strings))
 
   }
 
-  # 4* NET_SPREAD_METHOD Estimated from other hauls - when missing net spread, or spread and height Will make racebase.haul$net_mesured = "N". Estimated using GLM
-  glm_param <- ""
-  if (nrow(dat0[!is.na(dat0$NET_SPREAD), ]) != nrow(dat0)) {
+  # Add tests to check that NMEA strings include temperature and depth
+  if(is.na(VESSEL)){ VESSEL <- readline("Type vessel code:  ") }
+  if(is.na(CRUISE)){ CRUISE <- readline("Type cruise number:  ") }
+  if(is.na(HAUL)){ HAUL <- readline("Type haul number:  ") }
+  if(is.na(MODEL_NUMBER)){ MODEL_NUMBER <- readline("Type model number (optional):  ") }
+  if(is.na(VERSION_NUMBER)){ VERSION_NUMBER <- readline("Type version number (optional):  ") }
+  if(is.na(SERIAL_NUMBER)){ SERIAL_NUMBER <- readline("Type serial number of sensor (optional):  ") }
 
-    # Find the best model
-    dat1 <- dat0[!is.na(dat0$NET_SPREAD),]
-    dat1$INVSCOPE <- 1/dat1$WIRE_OUT
-    glm1 = stats::glm(NET_SPREAD  ~ INVSCOPE + NET_HEIGHT + NET_HEIGHT*INVSCOPE,
-                      data=c(dat1), family="gaussian")
-    glm2 = stats::glm(NET_SPREAD  ~ INVSCOPE + NET_HEIGHT,
-                      data=c(dat1), family="gaussian")
-    glm3 = stats::glm(NET_SPREAD  ~ INVSCOPE + NET_HEIGHT*INVSCOPE,
-                      data=c(dat1), family="gaussian")
-    glm4 = stats::glm(NET_SPREAD  ~ NET_HEIGHT + NET_HEIGHT*INVSCOPE,
-                      data=c(dat1), family="gaussian")
-    glm5 = stats::glm(NET_SPREAD  ~ INVSCOPE,
-                      data=c(dat1), family="gaussian")
-    glm6 = stats::glm(NET_SPREAD  ~ NET_HEIGHT,
-                      data=c(dat1), family="gaussian")
-    glm7 = stats::glm(NET_SPREAD  ~ NET_HEIGHT*INVSCOPE,
-                      data=c(dat1), family="gaussian")
+  # Initialize lists to store parsed data
+  matched_bt <- list()
 
-    best_model <- data.frame(stats::AIC(glm1, glm2, glm3, glm4, glm5, glm6, glm7))
-    best_model<-best_model[best_model$AIC <= min(best_model$AIC)+3,] # +3 because basically the same if within 3 of min
-    best_model<-best_model[best_model$df <= min(best_model$df),]
-    best_model<-best_model[best_model$AIC <= min(best_model$AIC),]
+  # Function to convert HHMMSS.SSS to POSIXct
+  parse_time <- function(hhmmss, date_str) {
+    as.POSIXct(
+      strptime(
+        paste0(
+          date_str,
+          # sprintf("%06.3f", as.numeric(hhmmss))
+          gsub(
+            pattern = " ",
+            replacement = "0",
+            x =
+              format(
+                as.numeric(hhmmss),
+                nsmall = 3,
+                width = 10,
+                trim = FALSE)
+          )
+        ),
+        "%Y-%m-%d%H%M%OS"
+      ),
+      tz = "UTC"
+    )
+  }
 
-    glm0 <- get(x = rownames(best_model)[1])
-    glm0_sum <- summary(glm0)
+  # Track current time from $GPZDA or :::msg yyyymmdd-HHMMSS
+  current_time <- NA
+  current_date <- NA
+  year <- NA
+  month <- NA
+  day <- NA
 
-    # Predict data
-    dat0$NET_SPREAD_METHODS[is.na(dat0$NET_SPREAD)] <- 4
+  last_data_time <- list(depth = NA, temp = NA, height = NA)
+  pending <- list()
 
-    dat1 <- dat0[is.na(dat0$NET_SPREAD),]
-    dat1$INVSCOPE <- 1/dat1$WIRE_OUT
-    n4 <- nrow(dat1)
+  # Line-by-line processing
+  for(line in nmea_strings) {
 
-    dat0$NET_SPREAD[is.na(dat0$NET_SPREAD)] <-
-      stats::predict.glm(object = glm0,
-                         newdata = dat1,
-                         type="response")
+    # Parse lines to extract dates/times
+    if(grepl(pattern = ".* (\\d{8})-\\d{6}Z", x = line)) {
 
-    # Collect coeficents
-    glm0_param <- data.frame(glm0_sum$coefficients)
-    names(glm0_param) <- c("est0","se","tvalue","prob")
-    glm0_param$var <- rownames(glm0_param)
-    glm0_param$est <- round(x = glm0_param$est0, digits = 3)
-    glm0_param$case <- NA
-    for (i in 1:nrow(glm0_param)) {
-      if (glm0_param$prob[i] < 0.001) {
-        glm0_param$case[i] <- "very signifcant (P < 0.001)"
-        # } else if (glm0_param$prob[i] < 0.001) {
-        #   glm0_param$case[i] <- "mostly significant (P < 0.001)"
-      } else if (glm0_param$prob[i] < 0.01) {
-        glm0_param$case[i] <- "significant (P < 0.001)"
-      } else if (glm0_param$prob[i] < 0.05) {
-        glm0_param$case[i] <- "somewhat significant (P < 0.001)"
+      year <- as.numeric(sub(".* (\\d{4})\\d{4}-\\d{6}Z", "\\1", line))
+      month <- as.numeric(sub(".*\\d{4}(\\d{2})\\d{2}-\\d{6}Z", "\\1", line))
+      day   <- as.numeric(sub(".*\\d{6}(\\d{2})-\\d{6}Z", "\\1", line))
+      time_str <- sub(".*-(\\d{6})Z", "\\1", line)
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$GPZDA", line)) {
+      parts <- strsplit(line, ",")[[1]]
+      time_str <- parts[2]
+      day <- parts[3]
+      month <- parts[4]
+      year <- parts[5]
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$GPGGA", line) | grepl("^\\$GPRMC", line)) {
+      parts <- strsplit(line, ",")[[1]]
+      time_str <- parts[2]
+      current_date <- sprintf("%04d-%02d-%02d", as.integer(year), as.integer(month), as.integer(day))
+      current_time <- parse_time(time_str, current_date)
+
+    } else if(grepl("^\\$01TED", line)) {
+      val <- as.numeric(sub(",m.*", "", strsplit(line, ",")[[1]][2]))
+      if(!is.na(current_time)) {
+        last_data_time$depth <- current_time
+        pending$depth <- list(value = val, time = current_time)
       }
+
+    } else if(grepl("^\\$01TET", line)) {
+      val <- as.numeric(sub(",C.*", "", strsplit(line, ",")[[1]][2]))
+      if(!is.na(current_time)) {
+        last_data_time$temp <- current_time
+        pending$temp <- list(value = val, time = current_time)
+      }
+
+    } else if(grepl("^\\$01TEH", line)) {
+      val <- as.numeric(sub(",m.*", "", strsplit(line, ",")[[1]][2]))
+      if(!is.na(current_time)) {
+        last_data_time$height <- current_time
+        pending$height <- list(value = val, time = current_time)
+      }
+    } else if(grepl("^\\$01DST", line)) {
+      val <- as.numeric(sub(",m.*", "", strsplit(line, ",")[[1]][4]))
+      if(!is.na(current_time)) {
+        last_data_time$net_spread <- current_time
+        pending$net_spread <- list(value = val, time = current_time)
+      }
+    } else{
+      next
     }
-    glm0_param$var0 <- tolower(row.names(glm0_param))
-    glm0_param$var0 <- gsub(pattern = "(",
-                            replacement = "",
-                            x = glm0_param$var0,
-                            fixed = TRUE)
-    glm0_param$var0 <- gsub(pattern = ")",
-                            replacement = "",
-                            x = glm0_param$var0,
-                            fixed = TRUE)
-    glm0_param$var0 <- gsub(pattern = ":",
-                            replacement = " x ",
-                            x = glm0_param$var0,
-                            fixed = TRUE)
-    glm0_param$var0 <- gsub(pattern = "invscope",
-                            replacement = "inversed scope",
-                            x = glm0_param$var0,
-                            fixed = TRUE)
-    glm0_param$var0 <- gsub(pattern = "_",
-                            replacement = " ",
-                            x = glm0_param$var0,
-                            fixed = TRUE)
+
+    # When epth and temperature are available, or at least one changes, record a row
+    if(!is.na(current_time)) {
+      values <- list(
+        DATE_TIME = current_time,
+        DEPTH = if(!is.null(pending$depth) &&
+                   difftime(current_time, pending$depth$time, units = "secs") <= 10) pending$depth$value else NA,
+        TEMPERATURE = if(!is.null(pending$temp) &&
+                         difftime(current_time, pending$temp$time, units = "secs") <= 10) pending$temp$value else NA,
+        NET_HEIGHT = if(!is.null(pending$height) &&
+                        difftime(current_time, pending$height$time, units = "secs") <= 1) pending$height$value else NA,
+        NET_SPREAD = if(!is.null(pending$net_spread) &&
+                        difftime(current_time, pending$net_spread$time, units = "secs") <= 1) pending$net_spread$value else NA
+      )
+      matched_bt[[length(matched_bt) + 1]] <- values
+    }
+  }
+
+  # Convert list to data.frame
+  matched_bt <- do.call(rbind, lapply(matched_bt, as.data.frame))
+
+  if(is.null(matched_bt)) {
+    warning("convert_nmea_btd: No temperature, depth, spread, or height observations. No valid output.")
+    return(NULL)
+  }
+
+  if(!("NET_HEIGHT" %in% names(matched_bt))) {
+    matched_bt$NET_HEIGHT <- NA
+  }
+
+  if(!("NET_SPREAD" %in% names(matched_bt))) {
+    matched_bt$NET_SPREAD <- NA
+  }
+
+  output_btd <- matched_bt[c("DATE_TIME", "DEPTH", "TEMPERATURE")]
+
+  if(!is.null(output_btd)) {
+
+    output_btd <- output_btd[!duplicated(output_btd$DATE_TIME), ]  # Remove duplicates
+
+    output_btd <-
+      output_btd[complete.cases(output_btd), ]
+
+    output_btd <- output_btd[!(output_btd$TEMPERATURE == 0 & output_btd$DEPTH == 0), ]
+
+    if(!is.na(min_depth) & !is.na(max_depth)) {
+      output_btd <- output_btd[output_btd$DEPTH >= min_depth & output_btd$DEPTH <= max_depth, ]
+    }
+
+    if(!is.na(min_temperature) & !is.na(max_temperature)) {
+      output_btd <- output_btd[output_btd$TEMPERATURE >= min_temperature & output_btd$TEMPERATURE <= max_temperature, ]
+    }
+
+    if(nrow(output_btd) < 3) {
+      warning("convert_nmea_btd: No outputs created. Fewer than three valid temperature/depth observations.")
+      return(NULL)
+    }
+
+    rownames(output_btd) <- NULL
+
+    # Convert DATE_TIME to Alaska time and format for .BTD
+    attr(output_btd$DATE_TIME, "tzone") <- "UTC"
+    attr(output_btd$DATE_TIME, "tzone") <- "America/Anchorage"
+
+    # Write .BTH file
+    output_bth <-
+      data.frame(
+        VESSEL = VESSEL,
+        CRUISE = CRUISE,
+        HAUL = HAUL,
+        MODEL_NUMBER = MODEL_NUMBER,
+        VERSION_NUMBER = VERSION_NUMBER,
+        SERIAL_NUMBER = SERIAL_NUMBER,
+        HOST_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        LOGGER_TIME = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        LOGGING_START = format(min(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        LOGGING_END = format(max(output_btd$DATE_TIME, na.rm = TRUE), "%m/%d/%Y %H:%M:%S"),
+        SAMPLE_PERIOD = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+        NUMBER_CHANNELS = 2,
+        NUMBER_SAMPLES = nrow(output_btd),
+        MODE = 2
+      )
+
+    output_bth[which(is.na(output_bth))] <- ""
+
+    bth_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTH")
+
+    utils::write.csv(
+      x = output_bth,
+      file = bth_path,
+      quote = FALSE,
+      row.names = FALSE
+    )
+
+    cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
+
+    # Apply filter
+    if(filter_type == "median") {
+      output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
+      output_btd$DEPTH <- median_filter(output_btd$DEPTH)
+    }
+
+    if(filter_type == "lowpass") {
+      output_btd$TEMPERATURE <-
+        lowpass_filter(
+          x = output_btd$TEMPERATURE,
+          time_constant = 3,
+          freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+          precision = 1
+        )
+      output_btd$DEPTH <-
+        lowpass_filter(
+          x = output_btd$DEPTH,
+          time_constant = 3,
+          freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
+          precision = 1
+        )
+    }
 
 
+    if(interactive_editing) {
 
-    str0 <- c()
-    if (length(unique(glm0_param$case)) == 1) {
-      str0 <- paste0("both predictor variables and their interaction were significant (P < 0.001)")
+      par(mfrow = c(2,1))
+      plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+      mtext("Raw data.")
+      plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+      mtext("Raw data.")
+
+      dummy <- readline("Plotting raw data. Set plot to actual size (RStudio: View > Actual Size) then press ENTER to begin manual point editing.")
+
+      output_btd <- interactive_point_editing(x = output_btd, x_col = "DATE_TIME", y_col = "DEPTH", tol = 0.5)
+      output_btd <- interactive_point_editing(x = output_btd, x_col = "DATE_TIME", y_col = "TEMPERATURE", tol = 0.5)
+
+      par(mfrow = c(2,1))
+      plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+      mtext("Cleaned data.")
+      plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+      mtext("Cleaned data.")
+
     } else {
-      for (i in 1:length(unique(glm0_param$case))) {
-        str0 <- c(str0, paste0(
-          text_list(glm0_param$var[glm0_param$case == unique(glm0_param$case)[i]]),
-          " were ",
-          unique(glm0_param$case)[i]
-        ))
-      }
-      str0 <- text_list(str0)
+      par(mfrow = c(2,1))
+      plot(output_btd$DATE_TIME, output_btd$TEMPERATURE, xlab = "Datetime", ylab = "TEMPERATURE")
+      mtext("Delete temp outlier rows\nfrom .BTD in a text editor.")
+      plot(output_btd$DATE_TIME, output_btd$DEPTH, xlab = "Datetime", ylab = "DEPTH")
+      mtext("Delete depth outlier rows\nfrom .BTD in a text editor.")
     }
 
 
-    fm <- as.character(glm0$formula)
-    fm <- paste0(fm[2], " ",
-                 fm[1], " ",
-                 glm0_param$est[glm0_param$var == "(Intercept)"], " + ",
-                 fm[3])
 
-    fm <- gsub(pattern = "NET_SPREAD",
-               replacement = "w",
-               x = fm, fixed = TRUE)
-    if (sum(glm0_param$var == "INVSCOPE:NET_HEIGHT")>0) {
-      fm <- gsub(pattern = "NET_HEIGHT * INVSCOPE",
-                 replacement = paste0(glm0_param$est[glm0_param$var == "INVSCOPE:NET_HEIGHT"],
-                                      " * (h/s)"),
-                 x = fm, fixed = TRUE)
-    }
-    if (sum(glm0_param$var == "NET_HEIGHT")>0) {
-      fm <- gsub(pattern = "NET_HEIGHT",
-                 replacement = paste0(glm0_param$est[glm0_param$var == "NET_HEIGHT"],
-                                      " * h"),
-                 x = fm, fixed = TRUE)
-    }
-    if (sum(glm0_param$var == "INVSCOPE")>0) {
-      fm <- gsub(pattern = "INVSCOPE",
-                 replacement = paste0(glm0_param$est[glm0_param$var == "INVSCOPE"],
-                                      "/s"),
-                 x = fm, fixed = TRUE)
-    }
-    fm <- gsub(pattern = " + -",
-               replacement = " - ",
-               x = fm, fixed = TRUE)
+    # Write .BTD file
+    output_btd$DATE_TIME <-
+      format_date(
+        format(output_btd$DATE_TIME, "%m/%d/%Y %H:%M:%S")
+      )
 
-    out <- rbind.data.frame(out,
-                            data.frame("method_col" = "NET_SPREAD_METHOD",
-                                       "method_code" = 4,
-                                       "n" = n4,
-                                       "desc" = paste0(fm,
-                                                       ": For ",
-                                                       n4,
-                                                       " hauls, the net width was estimated using a generalized linear model. The ",
-                                                       str0)
-                            ))
+    output_btd <-
+      data.frame(
+        VESSEL = VESSEL,
+        CRUISE = CRUISE,
+        HAUL = HAUL,
+        SERIAL_NUMBER = SERIAL_NUMBER,
+        DATE_TIME = output_btd$DATE_TIME,
+        TEMPERATURE = format(output_btd$TEMPERATURE, nsmall = 3),
+        DEPTH = format(output_btd$DEPTH, nsmall = 1)
+      )
 
+    output_btd[which(is.na(output_btd), arr.ind = TRUE)] <- ""
 
-    # # if the interaction between INVSLOPE and HEIGHT are not significant
-    # if ((glm1_sum$coefficients[4,4]>0.05)) {
-    #   # Find the best model
-    #   glm2 = glm(SPREAD ~ INVSCOPE + HEIGHT,
-    #              data=c(dat),family="gaussian")
-    #   glm2_sum <- summary(glm2)
-    #   glm0<-glm2
-    #   eq <- "w ~ 1/s + h: inverse scope and net height were significant (P < 0.001) but not their interaction term"
-    # }
-    # str <- paste0(str, eq, "
-    #
-    #               ")
+    btd_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTD")
+
+    utils::write.csv(
+      x = output_btd,
+      file = btd_path,
+      quote = FALSE,
+      row.names = FALSE
+    )
+
+    cat(paste0("convert_nmea_btd: .BTD file saved to ", btd_path, "\n"))
+
+  } else {
+    output_btd <- NULL
+    output_bth <- NULL
+    warning("convert_nmea_btd: Fewer than three temperature/depth observations. No valid output.")
   }
 
-  # 0* Unidentified method. Will make racebase.haul$net_mesured = "N".
+  output_hs <- matched_bt[c("DATE_TIME", "NET_HEIGHT", "NET_SPREAD")]
 
-  # 5 Estimated from warp angle - hopefully, will not come up and shouldn't be used
+  output_hs <- output_hs[!duplicated(output_hs$DATE_TIME), ]
 
+  output_hs <- output_hs[!is.na(output_hs$NET_HEIGHT) | !is.na(output_hs$NET_SPREAD), ]
 
-  out <- list(#"plot" = plot(dat$NET_SPREAD,1/dat$WIRE_OUT),
-    "actions" = out,
-    "glm_summary" = glm0_param,
-    "dat" = dat0)
+  if(nrow(output_hs) > 0) {
+    output_hs <-
+      data.frame(
+        VESSEL = VESSEL,
+        CRUISE = CRUISE,
+        HAUL = HAUL,
+        DATE_TIME = output_hs$DATE_TIME,
+        NET_HEIGHT = output_hs$NET_HEIGHT,
+        NET_SPREAD = output_hs$NET_SPREAD
+      )
 
-  return(out)
+    output_hs[which(is.na(output_hs), arr.ind = TRUE)] <- ""
+
+    hs_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".hs")
+
+    utils::write.csv(
+      x = output_hs,
+      file = hs_path,
+      quote = FALSE,
+      row.names = FALSE
+    )
+
+    # plot(output_hs$DATE_TIME, output_hs$NET_HEIGHT, xlab = "Datetime", ylab = "NET_HEIGHT")
+    # mtext("Do not edit height.")
+    # plot(output_hs$DATE_TIME, output_hs$NET_SPREAD, xlab = "Datetime", ylab = "NET_SPREAD")
+    # mtext("Do not edit spread.")
+
+    cat(paste0("convert_nmea_btd: Height-spread (.hs) file saved to ", hs_path, "\n"))
+
+  } else {
+    output_hs <- NULL
+  }
+
+  return(list(btd = output_btd, bth = output_bth, height_spread = output_hs))
+
 }
+
+
 
 #' Get sunrise and sunset times by day, latitude, and longitude
 #'
@@ -605,27 +845,30 @@ calc_net_spread <- function(dat) {
 #'                    longitude = -170.5)
 #'
 #' # Find times based on lat/lon for today's date, where date is a character
-#' get_sunrise_sunset(chosen_date = "2023-06-05",
-#'                    latitude = 63.3,
-#'                    longitude = -170.5)
-#' # Find times based on lat/lon for today's date, where date is a character
 #' # and lat/lon in degree decimal-minutes
 #' get_sunrise_sunset(chosen_date = "2023-06-05",
 #'                    latitude = "63 18.0",
 #'                    longitude = "-170 30.0")
-#' # Find times based on a survey (EBS) station's recorded lat/lon for today's date
-#' get_sunrise_sunset(chosen_date = Sys.Date(),
-#'                    survey = "EBS",
-#'                    station = "I-13")
+#'
+#' # Find times based on a survey (AI) station's recorded lat/lon for today's date
+#' get_sunrise_sunset(chosen_date = "2025-06-10",
+#'                    survey = "AI",
+#'                    station = "8-55")
+#'
 #' # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "GOA",
-#'                    station = "323-176")
-#' # Find times based on a survey (AI) station's recorded lat/lon for today's date
-#' # get_sunrise_sunset(chosen_date = "2023-06-10",
-#' #                     survey = "AI",
-#' #                    station = "33-47")
-
+#'                    station = "264-18-511")
+#'
+#' # Find times based on a survey (EBS) station's recorded lat/lon for today's date
+#' get_sunrise_sunset(chosen_date = "2025-08-04",
+#'                    survey = "EBS",
+#'                    station = "P-31")
+#'
+#' # Find times based on a survey (NBS) station's recorded lat/lon for today's date
+#' get_sunrise_sunset(chosen_date = "2025-06-04",
+#'                    survey = "NBS",
+#'                    station = "ZZ-01")
 get_sunrise_sunset <- function(
     chosen_date,
     latitude = NULL,
@@ -635,46 +878,15 @@ get_sunrise_sunset <- function(
     verbose = FALSE,
     timezone = "US/Alaska") {
 
-  # Function to format dates
-  format_date <- function(x) {
-
-    if(x > 24) {
-      x <- x - 24
-    }
-
-    hour <- unlist(strsplit(as.character(floor(x)), split = ""))
-
-    hour_vec <- c("0", "0")
-
-    if(length(hour) == 2) {
-      hour_vec <- hour
-    } else {
-      hour_vec[2] <- hour
-    }
-
-    min_vec <- c("0", "0")
-
-    minutes <- unlist(strsplit(as.character(floor(x%%1*60)), split = ""))
-
-    if(length(minutes) == 2) {
-      min_vec <- minutes
-    } else {
-      min_vec[2] <- minutes
-    }
-
-    out <- paste0(paste(hour_vec, collapse = ""), ":", paste(min_vec, collapse = ""))
-
-    return(out)
-
-  }
-
-  chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = timezone)
+  chosen_date <- as.POSIXct(x = as.character(chosen_date), tz = "UTC")
 
   if (timezone == "US/Alaska") {
     sel_tz <- -8
   } else if (timezone == "US/Aleutian") {
     sel_tz <- -9
   }
+
+  chosen_date <- chosen_date + -1 * sel_tz * 3600 + 1
 
   # Are lat/long in degrees and decimal mins? If so, convert to decimal degrees.
   if (!is.null(latitude) | !is.null(longitude)) {
@@ -719,50 +931,87 @@ get_sunrise_sunset <- function(
 
   }
 
-  # crds0 = matrix(c(longitude, latitude),
-  #                nrow = 1)
-
   date_vec <- unlist(strsplit(as.character(chosen_date), split = ""))
 
   ac4r_output <- astrcalc4r(
     day = as.numeric(paste(date_vec[9:10], collapse = "")),
     month = as.numeric(paste(date_vec[6:7], collapse = "")),
     year = as.numeric(paste(date_vec[1:4], collapse = "")),
-    hour = 7,
-    # Arguments longitude and timezone must have the same sign if input time is
-    # not UTC (timezone != 0).  In particular, if timezone !=0, both lon and timezone must
-    # be negative for locations in western hemisphere and positive for locations in the
-    # eastern hemisphere.  Check and fix input data if warranted. If data are correct
-    # then convert input time (argument hour) to UTC and use timezone=zero.
-    # This problem  occurs  1  times at rows:  1
-    timezone = sel_tz,
+    hour = ifelse(length(date_vec) > 12,
+                  as.numeric(paste(date_vec[12:13], collapse = "")),
+                  12),
+    timezone = 0, # UTC
     lat = latitude,
     lon = longitude,
     withinput = FALSE,
     seaorland = "maritime",
     acknowledgment = FALSE)
 
-  sunrise <- format_date(ac4r_output$sunrise)
-  sunset <- format_date(ac4r_output$sunset)
+  sunrise <- format_date(x = ac4r_output$sunrise,
+                         x_date = chosen_date,
+                         tz = timezone,
+                         hour_offset = sel_tz)
 
-  # sunrise <- maptools::sunriset(
-  #   crds = crds0,
-  #   dateTime = chosen_date,
-  #   direction = "sunrise",
-  #   POSIXct.out = TRUE
-  # )$time
-  #
-  # sunset <- maptools::sunriset(
-  #   crds = crds0,
-  #   dateTime = chosen_date,
-  #   direction = "sunset",
-  #   POSIXct.out = TRUE
-  # )$time
+  sunset <- format_date(x = ac4r_output$sunset,
+                        x_date = chosen_date,
+                        tz = timezone,
+                        hour_offset = sel_tz)
 
   message(
-    "Sunrise is at ", sunrise, " AKST",
-    "\nSunset is at ", sunset, " AKST"
+    "Sunrise is at ", format(sunrise, "%Y-%m-%d %H:%M:%S %Z"),
+    "\nSunset is at ", format(sunset, "%Y-%m-%d %H:%M:%S %Z")
   )
+}
+
+
+
+#' Format output of astrocalc4r to a date/time object string
+#'
+#' Internal function used by get_sunrise_sunset()
+#'
+#' @param tz time zone as a character vector. See ?as.POSIXlt for details
+#' @param hour_offset offset in hours relative to UTC (America/Anchorage = -8)
+#' @param x_date date as a character, Date, or POSIXct object
+#' @noRd
+
+format_date <- function(x, x_date, hour_offset, tz) {
+
+  x_date <- as.Date(x_date)
+
+  if(x > 24) {
+    x <- x - 24
+  }
+
+  if(x < 0) {
+    x <- 24 + x
+  }
+
+  hour <- unlist(strsplit(as.character(floor(x)), split = ""))
+
+  hour_vec <- c("0", "0")
+
+  if(length(hour) == 2) {
+    hour_vec <- hour
+  } else {
+    hour_vec[2] <- hour
+  }
+
+  min_vec <- c("0", "0")
+
+  minutes <- unlist(strsplit(as.character(floor(x%%1*60)), split = ""))
+
+  if(length(minutes) == 2) {
+    min_vec <- minutes
+  } else {
+    min_vec[2] <- minutes
+  }
+
+  out <- paste0(paste(hour_vec, collapse = ""), ":", paste(min_vec, collapse = ""))
+
+  out <- as.POSIXct(x = paste0(as.character(x_date), " ", out), tz = tz) + (3600 * hour_offset)
+
+  return(out)
+
 }
 
 
@@ -1242,14 +1491,14 @@ get_catch_haul_history <- function(
 
 # Helper Functions ------------------------------------------------------------------------
 
-#' Takes a string of words and combines them into a sentance that lists them.
+#' Takes a string of words and combines them into a sentence that lists them.
 #'
-#' This function alows you to take a string of words and combine them into a sentance list. For example, 'apples', 'oranges', 'pears' would become 'apples, oranges, and pears'. This function uses oxford commas.
+#' This function allows you to take a string of words and combine them into a sentence list. For example, 'apples', 'oranges', 'pears' would become 'apples, oranges, and pears'. This function uses oxford commas.
 #' @param x Character strings you want in your string.
 #' @param oxford T/F: would you like to use an oxford comma? Default = TRUE
 #' @param sep string. default = "," but ";" might be what you need!
 #' @keywords strings
-#' @export
+#' @noRd
 #' @examples text_list(c(1,2,"hello",4,"world",6))
 text_list<-function(x, oxford = TRUE, sep = ",") {
   x<-x[which(x!="")]
@@ -1269,12 +1518,12 @@ text_list<-function(x, oxford = TRUE, sep = ",") {
   return(str1)
 }
 
-#' Make numbers the same length preceeded by 0s
+#' Make numbers the same length preceded by 0s
 #'
 #' @param x a single or vector of values that need to be converted from something like 1 to "001"
 #' @param number_places default = NA. If equal to NA, the function will take use the longest length of a value provided in x (example 1). If equal to a number, it will make sure that every number is the same length of number_places (example 2) or larger (if a value of x has more places than number_places(example 3)).
 #'
-#' @export
+#' @noRd
 #' @return A string of the values in x preceeded by "0"s
 #'
 #' @examples
@@ -1307,7 +1556,7 @@ numbers0 <- function (x, number_places = NA) {
 #'
 #' @param path A string with the complete path of the directory or file.
 #'
-#' @export
+#' @noRd
 #' @return A fixed path string.
 #'
 #' @examples

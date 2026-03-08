@@ -44,8 +44,8 @@ navbar:
       text: Articles
       icon: fa-newspaper # https://fontawesome.com/icons/newspaper?f=classic&s=regular
       menu:
-      - text: Example got-to script
-        href: articles/example-script.html
+      - text: Example go-to script
+        href: articles/GAPsurvey-script.html
     news:
      text: Release Notes
      icon: fas fa-bullhorn fa-lg
@@ -65,17 +65,10 @@ reference:
       # - starts_with("get_")
       - '`convert_ted_btd`'
       - '`convert_ctd_btd`'
-      - '`convert_do_to_o2sat`'
-      - '`extract_calibration_xmlcon`'
-      - '`get_calibration_parameter`'
-      - '`integer_to_conductivity`'
-      - '`integer_to_ph`'
-      - '`integer_to_pressure`'
-      - '`integer_to_temperature`'
-      - '`oxygen_saturation`'
-  - title: Estimate Net Spread
-    contents:
-      - '`calc_net_spread`'
+      - '`convert_nmea_btd`'
+  # - title: Estimate Net Spread
+  #   contents:
+  #     - '`calc_net_spread`'
   - title: Resources
     contents:
       - '`get_catch_haul_history`'
@@ -83,14 +76,7 @@ reference:
   - title: Datasets
     contents:
       - '`public_data`'
+      - '`station_coords`'
       - '`species_data`'
       - '`PolySpecies`'
-      - '`station_coords`'
-  - title: Helper Functions
-    contents:
-      - '`numbers0`'
-      - '`fix_path`'
-      - '`text_list`'
-      - '`hex_to_cnv`'
-      - '`tau_par`'
 

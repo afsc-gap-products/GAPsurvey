@@ -42,24 +42,28 @@ get_sunrise_sunset(chosen_date = Sys.Date(),
                    longitude = -170.5)
 
 # Find times based on lat/lon for today's date, where date is a character
-get_sunrise_sunset(chosen_date = "2023-06-05",
-                   latitude = 63.3,
-                   longitude = -170.5)
-# Find times based on lat/lon for today's date, where date is a character
 # and lat/lon in degree decimal-minutes
 get_sunrise_sunset(chosen_date = "2023-06-05",
                    latitude = "63 18.0",
                    longitude = "-170 30.0")
-# Find times based on a survey (EBS) station's recorded lat/lon for today's date
-get_sunrise_sunset(chosen_date = Sys.Date(),
-                   survey = "EBS",
-                   station = "I-13")
+
+# Find times based on a survey (AI) station's recorded lat/lon for today's date
+get_sunrise_sunset(chosen_date = "2025-06-10",
+                   survey = "AI",
+                   station = "8-55")
+
 # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "GOA",
-                   station = "323-176")
-# Find times based on a survey (AI) station's recorded lat/lon for today's date
-# get_sunrise_sunset(chosen_date = "2023-06-10",
-#                     survey = "AI",
-#                    station = "33-47")
+                   station = "264-18-511")
+
+# Find times based on a survey (EBS) station's recorded lat/lon for today's date
+get_sunrise_sunset(chosen_date = "2025-08-04",
+                   survey = "EBS",
+                   station = "P-31")
+
+# Find times based on a survey (NBS) station's recorded lat/lon for today's date
+get_sunrise_sunset(chosen_date = "2025-06-04",
+                   survey = "NBS",
+                   station = "ZZ-01")
 }
