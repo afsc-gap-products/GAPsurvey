@@ -9,7 +9,7 @@
 #'
 #' @return A `data.frame` with selected points removed.
 #' @noRd
-#'
+#' @import graphics
 #' @examples
 #' \dontrun{
 #' df <- data.frame(x = rnorm(20), y = rnorm(20))

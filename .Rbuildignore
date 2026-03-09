@@ -9,3 +9,4 @@
 ^\.README\.Rmd$
 ^\.notes\.R$
 .github
+archive
