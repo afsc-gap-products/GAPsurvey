@@ -2,7 +2,7 @@
 #' @description Station centroid coordinates for each station for all surveys, as defined by the akgfmaps package. 
 #' @usage data('station_coords')
 #' @author Sean Rohan (sean.rohan AT noaa.gov)
-#' @format A data frame with 32858 observations on the following 8 variables.
+#' @format A data frame with 32858 observations on the following 7 variables.
 #' \describe{
 #'   \item{\code{design_year}}{Design year. Year ID associated with a given value AREA_ID. This field describes the changes in the survey design over time.}
 #'   \item{\code{latitude_dd}}{Latitude (decimal degrees). Latitude (one hundred thousandth of a decimal degree).}

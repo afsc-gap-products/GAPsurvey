@@ -1,5 +1,5 @@
 
-
+# Load Libraries ---------------------------------------------------------------
 
 PKG <- c(
 
@@ -19,6 +19,7 @@ PKG <- c(
   "janitor",
   "data.table",
   "here",
+  "terra",
 
   # Survey data pull Specific packages
   "akgfmaps", # devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = TRUE)
@@ -192,7 +193,7 @@ for (ii in 1:length(sel_region)) {
   #   station_center$station <- paste0(station_center$grid_id, "-", station_center$station)
   # }
 
-  station_center <- data.frame(station_center[, c("survey_definition_id", "design_year", "station", "grid_id")]) |>
+  station_center <- data.frame(station_center[, c("survey_definition_id", "design_year", "station")]) |> # , "grid_id"
     dplyr::bind_cols(sf::st_coordinates(station_center)) |>
     dplyr::rename(longitude_dd = X, latitude_dd = Y) |>
     dplyr::mutate(srvy = toupper(sel_region[ii]),
@@ -281,7 +282,7 @@ write.table(str0,
 
 # Update and run support files ------------------------------------------------
 
-date0 <- "2025.06.07" # Update files with new date version number!!!
+date0 <- "2026.03.09" # Update files with new date version number!!!
 
 ## GAPsurvey-run.Rmd -----------------------------------------------------------
 
@@ -342,7 +343,7 @@ devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 
-date0 <- "2025.06.07" # Update files with new date version number!!!
+# date0 <- "2025.06.07" # Update files with new date version number!!!
 
 PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
          "here",

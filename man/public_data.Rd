@@ -5,7 +5,7 @@
 \alias{public_data}
 \title{Presence-only public data from FOSS}
 \format{
-A data frame with 891144 observations on the following 37 variables.
+A data frame with 917401 observations on the following 37 variables.
 \describe{
   \item{\code{date_time}}{Date and time. The date (MM/DD/YYYY) and time (HH:MM) of the haul. All dates and times are in Alaska time (AKDT) of Anchorage, AK, USA (UTC/GMT -8 hours).}
   \item{\code{depth_m}}{Depth (m). Bottom depth (meters).}
@@ -33,7 +33,7 @@ A data frame with 891144 observations on the following 37 variables.
   \item{\code{taxon_confidence}}{Taxon confidence rating. Confidence in the ability of the survey team to correctly identify the taxon to the specified level, based solely on identification skill (e.g., not likelihood of a taxon being caught at that station on a location-by-location basis). Quality codes follow: **High**: High confidence and consistency. Taxonomy is stable and reliable at this level, and field identification characteristics are well known and reliable. **Moderate**: Moderate confidence. Taxonomy may be questionable at this level, or field identification characteristics may be variable and difficult to assess consistently. **Low**: Low confidence. Taxonomy is incompletely known, or reliable field identification characteristics are unknown. Documentation: [Species identification confidence in the eastern Bering Sea shelf survey (1982-2008)](http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2009-04.pdf), [Species identification confidence in the eastern Bering Sea slope survey (1976-2010)](http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-05.pdf), and [Species identification confidence in the Gulf of Alaska and Aleutian Islands surveys (1980-2011)](http://apps-afsc.fisheries.noaa.gov/Publications/ProcRpt/PR2014-01.pdf).}
   \item{\code{vessel_id}}{Vessel ID. ID number of the vessel used to collect data for that haul. The column vessel_id is associated with the vessel_name column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID key codes, review the [code books](https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual).}
   \item{\code{vessel_name}}{Vessel name. Name of the vessel used to collect data for that haul. The column vessel_name is associated with the vessel_id column. Note that it is possible for a vessel to have a new name but the same vessel id number. For a complete list of vessel ID key codes, review the [code books](https://www.fisheries.noaa.gov/resource/document/groundfish-survey-species-code-manual-and-data-codes-manual).}
-  \item{\code{weight_kg}}{Sample or taxon weight (kg). Weight (thousandths of a kilogram) of individuals in a haul by taxon.}
+  \item{\code{weight_kg}}{Sample or taxon weight (kg). Total weight (kilograms).}
   \item{\code{worms}}{World register of marine species (WoRMS) taxonomic serial number. Species code as identified in the World Register of Marine Species (WoRMS) (https://www.marinespecies.org/).}
   \item{\code{year}}{Survey year. Year the observation (survey) was collected.}
   \item{\code{area_swept_km2}}{Area swept (km). The area the net covered while the net was fishing (kilometers squared), defined as the distance fished times the net width.}
