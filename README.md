@@ -52,7 +52,7 @@ or install from local file `.tar.gz`:
 
 ``` r
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2025.06.07.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2026.03.09.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
 ```
@@ -106,8 +106,9 @@ cat(readLines(con = here::here("inst/CITATION.bib")), sep = "\n")
 source("https://raw.githubusercontent.com/afsc-gap-products/citations/main/cite/current_data_tm.r") # srvy_cite 
 ```
 
-**Learn more about these surveys** (Hoff, 2016; Markowitz et al., 2024,
-2024; Siple et al., 2024; Von Szalay et al., 2023; Zacher et al., 2024).
+**Learn more about these surveys** (Hoff, 2016; Markowitz et al., 2024;
+Markowitz et al., 2025; Siple et al., 2024; Von Szalay et al., 2023;
+Zacher et al., 2024).
 
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0" line-spacing="2">
@@ -129,6 +130,16 @@ S. K., Charriere, B. K., and Stevenson, D. E. (2024). *Results of the
 survey of groundfish and invertebrate fauna* (NOAA Tech. Memo.
 NMFS-AFSC-487; p. 242). U.S. Dep. Commer.
 <https://doi.org/10.25923/2mry-yx09>
+
+</div>
+
+<div id="ref-2024EBS" class="csl-entry">
+
+Markowitz, E. H., Wassermann, S., Rohan, S. K., Charriere, B. K.,
+Anderson, C. B., and Stevenson, D. E. (2025). *Results of the 2024
+eastern and northern Bering Sea continental shelf bottom trawl survey of
+groundfish and invertebrate fauna* (NOAA Tech. Memo. NMFS-AFSC-499; p.
+203). U.S. Dep. Commer. <https://doi.org/10.25923/8qa3-x785>
 
 </div>
 
@@ -154,8 +165,8 @@ Commer. <https://doi.org/10.25923/85cy-g225>
 
 Zacher, L. S., Richar, J. I., Fedewa, E. J., Ryznar, E. R., and Litzow,
 M. A. (2024). *The 2024 eastern Bering Sea continental shelf trawl
-survey: Results for commercial crab species DRAFT* \[NOAA Tech. Memo.\].
-<https://www.fisheries.noaa.gov/resource/document/draft-2024-eastern-bering-sea-crab-technical-memorandum>
+survey: Results for commercial crab species* \[NOAA Tech. Memo.\].
+(NFMS-AFSC-491), 237. <https://doi.org/10.25923/q0fw-z324>
 
 </div>
 
@@ -175,33 +186,44 @@ repository](https://github.com/afsc-gap-products/GAPsurvey/issues).
 
 ``` r
 sessionInfo()
-#> R version 4.5.0 (2025-04-11 ucrt)
+#> R version 4.5.1 (2025-06-13 ucrt)
 #> Platform: x86_64-w64-mingw32/x64
-#> Running under: Windows 10 x64 (build 19045)
+#> Running under: Windows 11 x64 (build 22631)
 #> 
 #> Matrix products: default
 #>   LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
-#> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
+#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                          
+#> [5] LC_TIME=English_United States.utf8    
 #> 
 #> time zone: America/Los_Angeles
 #> tzcode source: internal
 #> 
 #> attached base packages:
-#> [1] stats     graphics  grDevices utils     datasets  methods   base     
+#> [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] ggplot2_3.5.2
+#>  [1] fontawesome_0.5.3   ggspatial_1.1.10    pkgdown_2.2.0       roxygen2_7.3.3      RODBC_1.3-26.1      sp_2.2-1            httr_1.4.8         
+#>  [8] jsonlite_2.0.0      gapindex_3.0.3      gapctd_2.1.8        plotly_4.12.0       interp_1.1-6        bbmle_1.0.25.1      oce_1.8-3          
+#> [15] gsw_1.2-0           coldpool_3.5-3      stringr_1.6.0       reshape2_1.4.5      lubridate_1.9.5     fields_17.1         RColorBrewer_1.1-3 
+#> [22] spam_2.11-3         gstat_2.1-5         ggthemes_5.2.0      akgfmaps_4.2.1      stars_0.7-1         abind_1.4-8         sf_1.1-0           
+#> [29] terra_1.9-1         here_1.0.2          data.table_1.18.2.1 janitor_2.2.1       tibble_3.3.1        ggplot2_4.0.2       readr_2.2.0        
+#> [36] viridis_0.6.5       viridisLite_0.4.3   readxl_1.4.5        tidyr_1.3.2         magrittr_2.0.4      dplyr_1.2.0         plyr_1.8.9         
+#> [43] remotes_2.5.0       devtools_2.4.6      usethis_3.2.1      
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] vctrs_0.6.5        httr_1.4.7         cli_3.6.5          knitr_1.50         rlang_1.1.6        xfun_0.52          stringi_1.8.7     
-#>  [8] readtext_0.91      generics_0.1.4     data.table_1.17.4  glue_1.8.0         rprojroot_2.0.4    htmltools_0.5.8.1  scales_1.4.0      
-#> [15] rmarkdown_2.29     grid_4.5.0         evaluate_1.0.3     tibble_3.2.1       fastmap_1.2.0      yaml_2.3.10        lifecycle_1.0.4   
-#> [22] compiler_4.5.0     dplyr_1.1.4        RColorBrewer_1.1-3 pkgconfig_2.0.3    here_1.0.1         rstudioapi_0.17.1  farver_2.1.2      
-#> [29] digest_0.6.37      R6_2.6.1           tidyselect_1.2.1   pillar_1.10.2      magrittr_2.0.3     withr_3.0.2        tools_4.5.0       
-#> [36] gtable_0.3.6
+#>  [1] DBI_1.3.0           deldir_2.0-4        gridExtra_2.3       rlang_1.1.7         snakecase_0.11.1    otel_0.2.0          e1071_1.7-17       
+#>  [8] compiler_4.5.1      getPass_0.2-4       vctrs_0.7.1         maps_3.4.3          pkgconfig_2.0.3     fastmap_1.2.0       ellipsis_0.3.2     
+#> [15] rmarkdown_2.30      sessioninfo_1.2.3   tzdb_0.5.0          purrr_1.2.1         xfun_0.56           cachem_1.1.0        parallel_4.5.1     
+#> [22] R6_2.6.1            stringi_1.8.7       pkgload_1.5.0       cellranger_1.1.0    numDeriv_2016.8-1.1 knitr_1.51          Rcpp_1.1.1         
+#> [29] zoo_1.8-15          readtext_0.92.1     FNN_1.1.4.1         Matrix_1.7-4        timechange_0.4.0    tidyselect_1.2.1    yaml_2.3.12        
+#> [36] rstudioapi_0.18.0   codetools_0.2-20    pkgbuild_1.4.8      lattice_0.22-9      intervals_0.15.5    withr_3.0.2         S7_0.2.1           
+#> [43] evaluate_1.0.5      units_1.0-0         proxy_0.4-29        xml2_1.5.2          xts_0.14.2          pillar_1.11.1       KernSmooth_2.23-26 
+#> [50] generics_0.1.4      rprojroot_2.1.1     spacetime_1.3-3     hms_1.1.4           scales_1.4.0        class_7.3-23        glue_1.8.0         
+#> [57] lazyeval_0.2.2      tools_4.5.1         fs_1.6.6            mvtnorm_1.3-3       dotCall64_1.2       grid_4.5.1          bdsmatrix_1.3-7    
+#> [64] raster_3.6-32       cli_3.6.5           gtable_0.3.6        digest_0.6.39       classInt_0.4-11     htmlwidgets_1.6.4   farver_2.1.2       
+#> [71] memoise_2.0.1       htmltools_0.5.9     lifecycle_1.0.5     MASS_7.3-65
 ```
 
 ## NOAA README
