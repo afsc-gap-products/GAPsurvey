@@ -62,8 +62,6 @@ convert_nmea_btd(
 \item{SERIAL_NUMBER}{Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).}
 
 \item{...}{additional arguments}
-
-\item{filter_type}{Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.}
 }
 \description{
 Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().

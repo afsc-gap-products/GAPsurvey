@@ -405,7 +405,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
   # Create BTD and BTH files from NMEA strings
   if(make_btd_bth) {
 
-    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, filter_type = "none", ...)
+    btd_bth_output <- convert_nmea_btd(nmea_strings = dat, ...)
 
     output <- c(output, btd_bth_output)
 
@@ -423,7 +423,6 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' Convert Marport Trawl Explorer NMEA strings to BTD and BTH files. Called internally by convert_bvdr_marp().
 #'
 #' @param nmea_strings Character vector of NMEA strings (e.g., from a .bvdr file) or a path to a .marp file.
-#' @param filter_type Should depth and temperature channels use a 5-scan median window filter ("median"), low-pass filter ("lowpass"), or no filter ("none") be applied to temperature and depth data to remove erroneous outliers? Default = TRUE.
 #' @param interactive_editing Should the interactive point removal interface be used to manually clean temperature and depth data? If TRUE, must have graphic devices set to view plots in actual size (in R Studio: View > Actual Size or Ctrl+0)
 #' @param min_depth Optional (default = -0.1). Minimum valid depth (m).
 #' @param max_depth Optional (default = 1000). Maximum valid depth (m).
@@ -446,7 +445,7 @@ convert_bvdr_marp <- function(path_bvdr = NULL,
 #' @author Sean Rohan <sean.rohan@@noaa.gov>
 
 
-convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interactive_editing = TRUE, min_depth = -0.1, max_depth = 800, min_temperature = -2, max_temperature = 20, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport TE", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
+convert_nmea_btd <- function(nmea_strings = NULL, interactive_editing = TRUE, min_depth = -0.1, max_depth = 800, min_temperature = -2, max_temperature = 20, VESSEL = NA, CRUISE = NA, HAUL = NA, MODEL_NUMBER = "Marport TE", VERSION_NUMBER = NA, SERIAL_NUMBER = NA, ...) {
 
   format_date <- function(x, ...) {
     tmp <- format(x, ...)
@@ -692,29 +691,6 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interact
 
     cat(paste0("convert_nmea_btd: .BTH file saved to ", bth_path, "\n"))
 
-    # Apply filter
-    if(filter_type == "median") {
-      output_btd$TEMPERATURE <- median_filter(output_btd$TEMPERATURE)
-      output_btd$DEPTH <- median_filter(output_btd$DEPTH)
-    }
-
-    if(filter_type == "lowpass") {
-      output_btd$TEMPERATURE <-
-        lowpass_filter(
-          x = output_btd$TEMPERATURE,
-          time_constant = 3,
-          freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-          precision = 1
-        )
-      output_btd$DEPTH <-
-        lowpass_filter(
-          x = output_btd$DEPTH,
-          time_constant = 3,
-          freq_n = as.integer(median(diff(output_btd$DATE_TIME), na.rm = TRUE)),
-          precision = 1
-        )
-    }
-
 
     if(interactive_editing) {
 
@@ -830,7 +806,7 @@ convert_nmea_btd <- function(nmea_strings = NULL, filter_type = "none", interact
 #'
 #' Convert data tags from SCS files to BTD and BTH files.
 #'
-#' @param nmea_strings File path to a Poseidon/SCS .xml file.
+#' @param xml_path File path to a Poseidon/SCS .xml file.
 #' @param interactive_editing Should the interactive point removal interface be used to manually clean temperature and depth data? If TRUE, must have graphic devices set to view plots in actual size (in R Studio: View > Actual Size or Ctrl+0)
 #' @param min_depth Optional (default = -0.1). Minimum valid depth (m).
 #' @param max_depth Optional (default = 1000). Maximum valid depth (m).
