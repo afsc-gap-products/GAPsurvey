@@ -802,9 +802,9 @@ convert_nmea_btd <- function(nmea_strings = NULL, interactive_editing = TRUE, mi
 
 
 
-#' Convert Marport Trident Pro or Trawl Explorer temperature/depth
+#' Convert Marport Trident Pro temperature/depth to BTD
 #'
-#' Convert data tags from SCS files to BTD and BTH files.
+#' Convert data tags from Poseidon/SCS .xml files that have Marport Trident Pro NMEA tags (DPT, TMP) to BTD and BTH files.
 #'
 #' @param xml_path File path to a Poseidon/SCS .xml file.
 #' @param interactive_editing Should the interactive point removal interface be used to manually clean temperature and depth data? If TRUE, must have graphic devices set to view plots in actual size (in R Studio: View > Actual Size or Ctrl+0)
@@ -815,7 +815,7 @@ convert_nmea_btd <- function(nmea_strings = NULL, interactive_editing = TRUE, mi
 #' @param VESSEL Optional. Default = NA. The vessel number (e.g., 162 for AK Knight, 148 for Ocean Explorer). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param CRUISE Optional. Default = NA. The cruise number, which is usually the year + sequential two digit cruise (e.g., 202101). If NA or not called in the function, a prompt will appear asking for this data.
 #' @param HAUL Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.
-#' @param MODEL_NUMBER Optional. Default = "Marport TE". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions). This field may have restrictions on length.
+#' @param MODEL_NUMBER Optional. Default = "Marport Trident Pro". The model name/number of the temperature/depth sensor. This field may have restrictions on length.
 #' @param VERSION_NUMBER Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).
 #' @param SERIAL_NUMBER Optional. Default = NA. The serial number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual serial number without any negative repercussions).
 #' @param ... additional arguments
@@ -840,7 +840,7 @@ convert_xml_btd <-
     VESSEL = NA,
     CRUISE = NA,
     HAUL = NA,
-    MODEL_NUMBER = "Marport TE",
+    MODEL_NUMBER = "Marport Trident Pro",
     VERSION_NUMBER = NA,
     SERIAL_NUMBER = NA, ...
   ) {
@@ -1036,6 +1036,9 @@ convert_xml_btd <-
       )
 
     output_btd[which(is.na(output_btd), arr.ind = TRUE)] <- ""
+
+    output_btd[['DEPTH']][grepl(pattern = "NA", x = output_btd[['DEPTH']])] <- ""
+    output_btd[['TEMPERATURE']][grepl(pattern = "NA", x = output_btd[['TEMPERATURE']])] <- ""
 
     btd_path <- paste0(getwd(), "/HAUL", numbers0(x = HAUL, number_places = 4), ".BTD")
 

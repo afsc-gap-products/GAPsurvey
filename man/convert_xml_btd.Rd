@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{convert_xml_btd}
 \alias{convert_xml_btd}
-\title{Convert Marport Trident Pro or Trawl Explorer temperature/depth}
+\title{Convert Marport Trident Pro temperature/depth to BTD}
 \usage{
 convert_xml_btd(
   xml_path = NULL,
@@ -48,7 +48,7 @@ convert_xml_btd(
 \item{...}{additional arguments}
 }
 \description{
-Convert data tags from SCS files to BTD and BTH files.
+Convert data tags from Poseidon/SCS .xml files that have Marport Trident Pro NMEA tags (DPT, TMP) to BTD and BTH files.
 }
 \examples{
 \dontrun{
