@@ -128,7 +128,7 @@ testthat::test_that(
   "Test convert_xml_btd()",
   {
     convert_xml_btd(
-      xml_path = system.file("exdata", "convert_xml_btd", "HAUL0999.xml"),
+      xml_path = system.file("exdata", "convert_xml_btd", "HAUL0999.xml", package = "GAPsurvey"),
       VESSEL = 1,
       CRUISE = 202601,
       HAUL = 999,
