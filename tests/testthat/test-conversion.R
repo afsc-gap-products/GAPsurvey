@@ -123,3 +123,30 @@ testthat::test_that(
     suppressWarnings(file.remove(fpath_tzdb));
   }
 )
+
+testthat::test_that(
+  "Test convert_xml_btd()",
+  {
+    convert_xml_btd(
+      xml_path = system.file("exdata", "convert_xml_btd", "HAUL0999.xml"),
+      VESSEL = 1,
+      CRUISE = 202601,
+      HAUL = 999,
+      VERSION_NUMBER = "",
+      MODEL_NUMBER = "Marport Trident",
+      SERIAL_NUMBER = "",
+      interactive_editing = FALSE
+    );
+    fpath_btd <- paste0(getwd(), "/", "HAUL0999.BTD");
+    fpath_bth <- paste0(getwd(), "/", "HAUL0999.BTH");
+    # Check files exist
+    testthat::expect_true(file.exists(fpath_btd));
+    testthat::expect_true(file.exists(fpath_bth));
+    btd_out <- utils::read.csv(fpath_btd);
+    bth_out <- utils::read.csv(fpath_bth);
+    # Check that dimensions match expected output
+    testthat::expect_true(all(dim(btd_out) == c(450, 7)));
+    testthat::expect_true(all(dim(bth_out) == c(1, 14)));
+    suppressWarnings(file.remove(c(fpath_btd, fpath_bth)));
+  }
+)
