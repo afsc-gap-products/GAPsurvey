@@ -14,7 +14,7 @@ convert_xml_btd(
   VESSEL = NA,
   CRUISE = NA,
   HAUL = NA,
-  MODEL_NUMBER = "Marport TE",
+  MODEL_NUMBER = "Marport Trident Pro",
   VERSION_NUMBER = NA,
   SERIAL_NUMBER = NA,
   ...
@@ -39,7 +39,7 @@ convert_xml_btd(
 
 \item{HAUL}{Optional. Default = NA. The haul number that you are trying to convert data for (e.g., 3). If NA or not called in the function, a prompt will appear asking for this data.}
 
-\item{MODEL_NUMBER}{Optional. Default = "Marport TE". The model name/number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual model number without any negative repercussions). This field may have restrictions on length.}
+\item{MODEL_NUMBER}{Optional. Default = "Marport Trident Pro". The model name/number of the temperature/depth sensor. This field may have restrictions on length.}
 
 \item{VERSION_NUMBER}{Optional. Default = NA. The version number of the Marport sensor (e.g., 123 or 999, you can put in NA or a dummy number here instead of the actual version number without any negative repercussions).}
 
