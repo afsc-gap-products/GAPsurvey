@@ -44,7 +44,7 @@ interactive_point_editing <- function(x, x_col, y_col, tol = 0.5) {
     closest_index <- which.min(dist)
 
     # Check if the click is close enough
-    if(dist[closest_index] > tol * max(diff(range(as.numeric(x_vals)/1e10)), diff(range(y_vals)))) {
+    if(dist[closest_index] > tol * max(diff(range(as.numeric(x_vals)/1e10, na.rm = TRUE)), diff(range(y_vals, na.rm = TRUE))+0.1)) {
       message("Click was too far from any point. Try again.")
       next
     }

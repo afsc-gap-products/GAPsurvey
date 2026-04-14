@@ -1,13 +1,30 @@
+GAPsurvey 2026.04.08 (April 8, 2026)
+----------------------------------------------------------------
+
+NEW FUNCTIONALITY
+
+- convert_xml_btd() added to extract temperature and depth data
+  from SCS/Poseidon .xml event files and convert to BTD/BTH as a
+  backup temperature/depth stream for the BT and CTD.
+- parse_marport_nmea() added to extract temperature, depth, wing
+  spread, door spread, net height, latitude, longitude, and
+  date/time from raw Marport Scala 2 NMEA Sentence outputs.
+
+BUG FIX
+
+- interactive_point_editing() now handles NA values in individual
+  data streams.
+
+
 GAPsurvey 2026.02.24 (February 24, 2026)
 ----------------------------------------------------------------
 
 NEW FUNCTIONALITY
 
-- Added functions to extract data from TimeZero database files
-  and convert to .gps files that can be imported by Poseidon
-  and Wheelhouse as a backup. The primary function for conversion
-  is convert_tzdb_gps(). The new functions require the RSQLite
-  package.
+- convert_tzdb_gps() and supporting functions added to extract
+  data from TimeZero database (.tzdb) files and convert to .gps
+  files that can be imported by Poseidon and Wheelhouse. The new
+  functions require the RSQLite package.
 
 
 GAPsurvey 2025.08.06 (August 6, 2025)
