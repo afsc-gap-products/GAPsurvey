@@ -69,8 +69,8 @@ get_sunrise_sunset(chosen_date = Sys.Date(),
                    latitude = 63.3,
                    longitude = -170.5)
 #> Using latitude and longitude to calcualte sunrise and sunset. 
-#> Sunrise is at 2026-03-09 10:00:00 AKDT
-#> Sunset is at 2026-03-08 21:04:00 AKDT
+#> Sunrise is at 2026-04-14 07:56:00 AKDT
+#> Sunset is at 2026-04-13 22:47:00 AKDT
 
 # Find times based on lat/lon for today's date, where date is a character
 # and lat/lon in degree decimal-minutes
@@ -94,8 +94,8 @@ get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "GOA",
                    station = "264-18-511")
 #> Using survey station (GOA 264-18-511) centroid location information (lat = 52.351, lon = -169.964) to calculate sunrise and sunset. 
-#> Sunrise is at 2026-03-09 09:48:00 AKDT
-#> Sunset is at 2026-03-08 21:12:00 AKDT
+#> Sunrise is at 2026-04-14 08:24:00 AKDT
+#> Sunset is at 2026-04-13 22:15:00 AKDT
 
 # Find times based on a survey (EBS) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = "2025-08-04",

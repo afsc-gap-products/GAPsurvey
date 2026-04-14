@@ -50,7 +50,7 @@ or install from local file `.tar.gz`:
 
 ``` r
 # example, the user may have a different path
-install.packages('C:/Users/User/Downloads/GAPsurvey_2026.03.09.tar.gz',
+install.packages('C:/Users/User/Downloads/GAPsurvey_2026.04.14.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
 ```
@@ -162,36 +162,26 @@ sessionInfo()
 #>   LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8 LC_NUMERIC=C                          
-#> [5] LC_TIME=English_United States.utf8    
+#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
+#> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
 #> 
 #> time zone: America/Los_Angeles
 #> tzcode source: internal
 #> 
 #> attached base packages:
-#> [1] stats4    stats     graphics  grDevices utils     datasets  methods   base     
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] fontawesome_0.5.3   ggspatial_1.1.10    pkgdown_2.2.0       roxygen2_7.3.3      RODBC_1.3-26.1      sp_2.2-1            httr_1.4.8         
-#>  [8] jsonlite_2.0.0      gapindex_3.0.3      gapctd_2.1.8        plotly_4.12.0       interp_1.1-6        bbmle_1.0.25.1      oce_1.8-3          
-#> [15] gsw_1.2-0           coldpool_3.5-3      stringr_1.6.0       reshape2_1.4.5      lubridate_1.9.5     fields_17.1         RColorBrewer_1.1-3 
-#> [22] spam_2.11-3         gstat_2.1-5         ggthemes_5.2.0      akgfmaps_4.2.1      stars_0.7-1         abind_1.4-8         sf_1.1-0           
-#> [29] terra_1.9-1         here_1.0.2          data.table_1.18.2.1 janitor_2.2.1       tibble_3.3.1        ggplot2_4.0.2       readr_2.2.0        
-#> [36] viridis_0.6.5       viridisLite_0.4.3   readxl_1.4.5        tidyr_1.3.2         magrittr_2.0.4      dplyr_1.2.0         plyr_1.8.9         
-#> [43] remotes_2.5.0       devtools_2.4.6      usethis_3.2.1      
+#> [1] ggplot2_4.0.2
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] DBI_1.3.0           deldir_2.0-4        gridExtra_2.3       rlang_1.1.7         snakecase_0.11.1    otel_0.2.0          e1071_1.7-17       
-#>  [8] compiler_4.5.1      getPass_0.2-4       vctrs_0.7.1         maps_3.4.3          pkgconfig_2.0.3     fastmap_1.2.0       ellipsis_0.3.2     
-#> [15] rmarkdown_2.30      sessioninfo_1.2.3   tzdb_0.5.0          purrr_1.2.1         xfun_0.56           cachem_1.1.0        parallel_4.5.1     
-#> [22] R6_2.6.1            stringi_1.8.7       pkgload_1.5.0       cellranger_1.1.0    numDeriv_2016.8-1.1 knitr_1.51          Rcpp_1.1.1         
-#> [29] zoo_1.8-15          readtext_0.92.1     FNN_1.1.4.1         Matrix_1.7-4        timechange_0.4.0    tidyselect_1.2.1    yaml_2.3.12        
-#> [36] rstudioapi_0.18.0   codetools_0.2-20    pkgbuild_1.4.8      lattice_0.22-9      intervals_0.15.5    withr_3.0.2         S7_0.2.1           
-#> [43] evaluate_1.0.5      units_1.0-0         proxy_0.4-29        xml2_1.5.2          xts_0.14.2          pillar_1.11.1       KernSmooth_2.23-26 
-#> [50] generics_0.1.4      rprojroot_2.1.1     spacetime_1.3-3     hms_1.1.4           scales_1.4.0        class_7.3-23        glue_1.8.0         
-#> [57] lazyeval_0.2.2      tools_4.5.1         fs_1.6.6            mvtnorm_1.3-3       dotCall64_1.2       grid_4.5.1          bdsmatrix_1.3-7    
-#> [64] raster_3.6-32       cli_3.6.5           gtable_0.3.6        digest_0.6.39       classInt_0.4-11     htmlwidgets_1.6.4   farver_2.1.2       
-#> [71] memoise_2.0.1       htmltools_0.5.9     lifecycle_1.0.5     MASS_7.3-65
+#>  [1] vctrs_0.7.3         httr_1.4.8          cli_3.6.6           knitr_1.51          rlang_1.2.0         xfun_0.57          
+#>  [7] stringi_1.8.7       otel_0.2.0          readtext_0.92.1     generics_0.1.4      S7_0.2.1            data.table_1.18.2.1
+#> [13] glue_1.8.0          rprojroot_2.1.1     htmltools_0.5.9     scales_1.4.0        rmarkdown_2.31      grid_4.5.1         
+#> [19] tibble_3.3.1        evaluate_1.0.5      fastmap_1.2.0       yaml_2.3.12         lifecycle_1.0.5     compiler_4.5.1     
+#> [25] dplyr_1.2.1         RColorBrewer_1.1-3  pkgconfig_2.0.3     here_1.0.2          rstudioapi_0.18.0   farver_2.1.2       
+#> [31] digest_0.6.39       R6_2.6.1            tidyselect_1.2.1    pillar_1.11.1       magrittr_2.0.5      withr_3.0.2        
+#> [37] tools_4.5.1         gtable_0.3.6
 ```
 
 ## NOAA README

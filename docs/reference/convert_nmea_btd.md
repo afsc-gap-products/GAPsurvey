@@ -8,7 +8,6 @@ internally by convert_bvdr_marp().
 ``` r
 convert_nmea_btd(
   nmea_strings = NULL,
-  filter_type = "none",
   interactive_editing = TRUE,
   min_depth = -0.1,
   max_depth = 800,
@@ -30,13 +29,6 @@ convert_nmea_btd(
 
   Character vector of NMEA strings (e.g., from a .bvdr file) or a path
   to a .marp file.
-
-- filter_type:
-
-  Should depth and temperature channels use a 5-scan median window
-  filter ("median"), low-pass filter ("lowpass"), or no filter ("none")
-  be applied to temperature and depth data to remove erroneous outliers?
-  Default = TRUE.
 
 - interactive_editing:
 

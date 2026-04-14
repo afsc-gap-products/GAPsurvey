@@ -15,12 +15,12 @@
 
 Markowitz E, Rohan S, Siple M, Dawson L (2026). *GAPsurvey: Provides
 at-sea data management tools for RACE GAP surveys*. R package version
-2026.03.09, <https://afsc-gap-products.github.io/GAPsurvey>.
+2026.04.14, <https://afsc-gap-products.github.io/GAPsurvey>.
 
     @Manual{,
       title = {GAPsurvey: Provides at-sea data management tools for RACE GAP surveys},
       author = {Emily Markowitz and Sean Rohan and Margaret Siple and Liz Dawson},
       year = {2026},
-      note = {R package version 2026.03.09},
+      note = {R package version 2026.04.14},
       url = {https://afsc-gap-products.github.io/GAPsurvey},
     }

@@ -17,6 +17,10 @@
   : Extract depth and temperature from NMEA strings
 - [`convert_tzdb_gps()`](https://afsc-gap-products.github.io/GAPsurvey/reference/convert_tzdb_gps.md)
   : Read data from a TimeZero database and convert to a .gps file
+- [`convert_xml_btd()`](https://afsc-gap-products.github.io/GAPsurvey/reference/convert_xml_btd.md)
+  : Convert Marport Trident Pro temperature/depth to BTD
+- [`parse_marport_nmea()`](https://afsc-gap-products.github.io/GAPsurvey/reference/parse_marport_nmea.md)
+  : Parse Marport NMEA Logs into wide format data frames
 
 ## Resources
 

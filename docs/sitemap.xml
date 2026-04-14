@@ -17,6 +17,7 @@
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_nmea_btd.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_ted_btd.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_tzdb_gps.html</loc></url>
+<url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/convert_xml_btd.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/CTDtoBTD.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/extract_calibration_xmlcon.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/fix_path.html</loc></url>
@@ -33,6 +34,7 @@
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/netSpread.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/numbers0.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/oxygen_saturation.html</loc></url>
+<url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/parse_marport_nmea.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/pkg_install.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/PolySpecies.html</loc></url>
 <url><loc>https://afsc-gap-products.github.io/GAPsurvey/reference/public_data.html</loc></url>

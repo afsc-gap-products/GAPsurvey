@@ -67,6 +67,8 @@ reference:
       - '`convert_ctd_btd`'
       - '`convert_nmea_btd`'
       - '`convert_tzdb_gps`'
+      - '`convert_xml_btd`'
+      - '`parse_marport_nmea`'
   # - title: Estimate Net Spread
   #   contents:
   #     - '`calc_net_spread`'
