@@ -29,6 +29,16 @@ Seattle, WA 98195
 > - [*example, the user may have a different
 >   path*](#example,-the-user-may-have-a-different-path)
 >   - [*User Resources*](#user-resources)
+>   - [*Updating the Package*](#updating-the-package)
+>     - [*Step 1: Update the Version Number in
+>       `DESCRIPTION`*](#step-1:-update-the-version-number-in-%60description%60)
+>     - [*Step 2: Commit and Push to Main
+>       Branch*](#step-2:-commit-and-push-to-main-branch)
+>     - [*Step 3: Automated Workflows*](#step-3:-automated-workflows)
+>       \#\> - [*1. R-CMD-check Workflow
+>       (.github/workflows/R-CMD-check.yaml)*](#1.-r-cmd-check-workflow-(.github/workflows/r-cmd-check.yaml))
+>       \#\> - [*2. pkgdown Workflow
+>       (.github/workflows/pkgdown.yml)*](#2.-pkgdown-workflow-(.github/workflows/pkgdown.yml))
 >   - [*Cite this data*](#cite-this-data)
 > - [*Relevant publications*](#relevant-publications)
 > - [*Suggestions and Comments*](#suggestions-and-comments)
@@ -81,25 +91,33 @@ library(GAPsurvey)
 - [Research Surveys conducted at
   AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
 
-Updating the Package This repository uses automated GitHub Actions
-workflows to streamline package updates and documentation builds. Follow
-these steps to release a new version:
+## Updating the Package
 
-Step 1: Update the Version Number in DESCRIPTION The only manual change
-you need to make is updating the version number in the DESCRIPTION file
-at the repository root. The version uses a date-based format
-(YYYY.MM.DD):
+This repository uses automated GitHub Actions workflows to streamline
+package updates and documentation builds. Follow these steps to release
+a new version once you have made your content edits to the package code.
 
-Code Version: 2026.04.21 Step 2: Commit and Push to Main Branch Once
-you’ve updated the DESCRIPTION file, commit your changes and push to the
-main branch:
+### Step 1: Update the Version Number in `DESCRIPTION`
 
-bash git add DESCRIPTION git commit -m “Update version to 2026.04.21”
-git push origin main Step 3: Automated Workflows Two GitHub Actions
-workflows will automatically trigger on your push to main:
+The only manual change you need to make is updating the version number
+in the `DESCRIPTION` file at the repository root. The version uses a
+date-based format (YYYY.MM.DD). For example:
 
-1.  R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml) This
-    workflow:
+    Version: 2026.04.21
+
+### Step 2: Commit and Push to Main Branch
+
+Once you’ve updated the `DESCRIPTION` file, commit your changes and push
+to the main branch.
+
+### Step 3: Automated Workflows
+
+Two GitHub Actions workflows will automatically trigger on your push to
+main:
+
+#### 1. R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml)
+
+This workflow:
 
 ✅ Runs R package checks on Windows (R release and R 3.6.0) to ensure
 code quality ✅ Installs all package dependencies (devtools, knitr,
@@ -112,23 +130,13 @@ Converts the vignette GAPsurvey-script.Rmd into an R script
 for download in GitHub Actions) Check status: Visit GitHub Actions to
 view workflow runs and download built packages.
 
-2.  pkgdown Workflow (.github/workflows/pkgdown.yml) This workflow:
+#### 2. pkgdown Workflow (.github/workflows/pkgdown.yml)
+
+This workflow:
 
 ✅ Builds the package documentation site using pkgdown ✅ Deploys the
 documentation to GitHub Pages ✅ Automatically updates when you push to
 main View documentation: <https://afsc-gap-products.github.io/GAPsurvey>
-
-What Gets Updated Automatically When you update the version in
-DESCRIPTION and push to main, the following are automatically updated:
-
-.tar.gz package file - Built with the new version number
-inst/r/GAPsurvey-script.R - Regenerated from the vignette README.md -
-Rendered from README.Rmd (this file) GitHub Pages documentation -
-Rebuilt and deployed GitHub Actions artifacts - .tar.gz available for
-download Troubleshooting Workflow failed? Check the GitHub Actions tab
-for detailed error logs Version not updating? Ensure you edited the
-Version: line in DESCRIPTION (not Date:) Files not committing back?
-Verify the workflow has permissions to commit (should be automatic)
 
 ## Cite this data
 
