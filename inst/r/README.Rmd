@@ -111,7 +111,58 @@ library(GAPsurvey)
 
 - [Research Surveys conducted at
   AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
-  
+
+Updating the Package
+This repository uses automated GitHub Actions workflows to streamline package updates and documentation builds. Follow these steps to release a new version:
+
+Step 1: Update the Version Number in DESCRIPTION
+The only manual change you need to make is updating the version number in the DESCRIPTION file at the repository root. The version uses a date-based format (YYYY.MM.DD):
+
+Code
+Version: 2026.04.21
+Step 2: Commit and Push to Main Branch
+Once you've updated the DESCRIPTION file, commit your changes and push to the main branch:
+
+bash
+git add DESCRIPTION
+git commit -m "Update version to 2026.04.21"
+git push origin main
+Step 3: Automated Workflows
+Two GitHub Actions workflows will automatically trigger on your push to main:
+
+1. R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml)
+This workflow:
+
+✅ Runs R package checks on Windows (R release and R 3.6.0) to ensure code quality
+✅ Installs all package dependencies (devtools, knitr, rmarkdown, here)
+✅ Builds the package into a .tar.gz file with the version number from DESCRIPTION (e.g., GAPsurvey-2026.04.21.tar.gz)
+✅ Converts the vignette GAPsurvey-script.Rmd into an R script (inst/r/GAPsurvey-script.R)
+✅ Renders inst/r/README.Rmd into README.md
+✅ Commits and pushes the updated generated files back to the repository
+✅ Uploads the built .tar.gz package as a workflow artifact (available for download in GitHub Actions)
+Check status: Visit GitHub Actions to view workflow runs and download built packages.
+
+2. pkgdown Workflow (.github/workflows/pkgdown.yml)
+This workflow:
+
+✅ Builds the package documentation site using pkgdown
+✅ Deploys the documentation to GitHub Pages
+✅ Automatically updates when you push to main
+View documentation: https://afsc-gap-products.github.io/GAPsurvey
+
+What Gets Updated Automatically
+When you update the version in DESCRIPTION and push to main, the following are automatically updated:
+
+.tar.gz package file - Built with the new version number
+inst/r/GAPsurvey-script.R - Regenerated from the vignette
+README.md - Rendered from README.Rmd (this file)
+GitHub Pages documentation - Rebuilt and deployed
+GitHub Actions artifacts - .tar.gz available for download
+Troubleshooting
+Workflow failed? Check the GitHub Actions tab for detailed error logs
+Version not updating? Ensure you edited the Version: line in DESCRIPTION (not Date:)
+Files not committing back? Verify the workflow has permissions to commit (should be automatic)
+
 ## Cite this data
 
 Use the below [bibtext citations]("https://afsc-gap-products.github.io/GAPsurvey/blob/main/code/CITATION.bib") for citing the package created and maintained in this repo. Add "note = {Accessed: mm/dd/yyyy}" to append the day this data was accessed. 
