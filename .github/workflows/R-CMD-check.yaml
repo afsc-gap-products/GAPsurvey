@@ -1,5 +1,4 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
     branches: [main]
@@ -17,7 +16,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -42,15 +41,22 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
         shell: bash
 
-      - name: Build R package tar.gz
+      - name: Build and Rename R package
         run: |
-          devtools::build(path = getwd())
+          # 1. Clean up any existing tar.gz files to ensure a fresh build
+          files <- list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$")
+          if (length(files) > 0) file.remove(files)
+          
+          # 2. Build the package
+          pkg_path <- devtools::build(path = getwd())
+          
+          # 3. Rename the file using the version extracted earlier
+          version <- "${{ steps.version.outputs.version }}"
+          new_name <- paste0("GAPsurvey-", version, ".tar.gz")
+          file.rename(pkg_path, new_name)
+          
+          message("Successfully renamed ", pkg_path, " to ", new_name)
         shell: Rscript {0}
-
-      - name: Rename tar.gz with version number
-        run: |
-          mv GAPsurvey*.tar.gz GAPsurvey-${{ steps.version.outputs.version }}.tar.gz
-        shell: bash
 
       - name: Convert GAPsurvey-script.Rmd to .R script
         run: |
