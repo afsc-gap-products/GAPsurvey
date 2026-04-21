@@ -120,23 +120,37 @@ main:
 This workflow:
 
 ✅ Runs R package checks on Windows (R release and R 3.6.0) to ensure
-code quality ✅ Installs all package dependencies (devtools, knitr,
-rmarkdown, here) ✅ Builds the package into a .tar.gz file with the
-version number from DESCRIPTION (e.g., GAPsurvey-2026.04.21.tar.gz) ✅
-Converts the vignette GAPsurvey-script.Rmd into an R script
-(inst/r/GAPsurvey-script.R) ✅ Renders inst/r/README.Rmd into README.md
+code quality
+
+✅ Installs all package dependencies (devtools, knitr, rmarkdown, here)
+
+✅ Builds the package into a .tar.gz file with the version number from
+DESCRIPTION (e.g., GAPsurvey-2026.04.21.tar.gz)
+
+✅ Converts the vignette GAPsurvey-script.Rmd into an R script
+(inst/r/GAPsurvey-script.R)
+
+✅ Renders inst/r/README.Rmd into README.md
+
 ✅ Commits and pushes the updated generated files back to the repository
+
 ✅ Uploads the built .tar.gz package as a workflow artifact (available
-for download in GitHub Actions) Check status: Visit GitHub Actions to
-view workflow runs and download built packages.
+for download in GitHub Actions)
+
+Check status: Visit GitHub Actions to view workflow runs and download
+built packages.
 
 #### 2. pkgdown Workflow (.github/workflows/pkgdown.yml)
 
 This workflow:
 
-✅ Builds the package documentation site using pkgdown ✅ Deploys the
-documentation to GitHub Pages ✅ Automatically updates when you push to
-main View documentation: <https://afsc-gap-products.github.io/GAPsurvey>
+✅ Builds the package documentation site using pkgdown
+
+✅ Deploys the documentation to GitHub Pages
+
+✅ Automatically updates when you push to main
+
+View documentation: <https://afsc-gap-products.github.io/GAPsurvey>
 
 ## Cite this data
 
