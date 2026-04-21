@@ -62,6 +62,37 @@ jobs:
           mv GAPsurvey*.tar.gz GAPsurvey-${{ steps.version.outputs.version }}.tar.gz
         shell: bash
 
+      - name: Convert GAPsurvey-script.Rmd to .R script
+        run: |
+          knitr::purl(
+            input = here::here("vignettes", "GAPsurvey-script.Rmd"), 
+            output = here::here("inst", "r", "GAPsurvey-script.R"), 
+            documentation = 2)
+          
+          aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R")) 
+          aa <- aa[c(2,20:length(aa))]
+          aa <- aa[!grepl(pattern = "## ----", x = aa)]
+          aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
+          aa <- gsub(pattern = "# > ", replacement = "# ", x = aa)
+          aa <- aa[aa != "# "]
+          writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
+        shell: Rscript {0}
+
+      - name: Render README from README.Rmd
+        run: |
+          rmarkdown::render(here::here("inst", "r", "README.Rmd"),
+                            output_dir = "./",
+                            output_file = "README.md")
+        shell: Rscript {0}
+
+      - name: Commit and push updated files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add inst/r/GAPsurvey-script.R README.md
+          git commit -m "Update generated files with version ${{ steps.version.outputs.version }}" || echo "No changes to commit"
+          git push || echo "Nothing to push"
+
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
