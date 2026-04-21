@@ -10,16 +10,7 @@ name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {os: windows-latest, r: 'release'}
-          - {os: windows-latest, r: '3.6.0'}
+    runs-on: ubuntu-latest
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -32,8 +23,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version: ${{ matrix.config.r }}
-          http-user-agent: ${{ matrix.config.http-user-agent }}
+          r-version: release
           use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
@@ -96,5 +86,5 @@ jobs:
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
-          name: GAPsurvey-${{ steps.version.outputs.version }}-${{ matrix.config.os }}-R${{ matrix.config.r }}
+          name: GAPsurvey-${{ steps.version.outputs.version }}
           path: GAPsurvey-*.tar.gz
