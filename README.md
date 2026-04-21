@@ -81,6 +81,55 @@ library(GAPsurvey)
 - [Research Surveys conducted at
   AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
 
+Updating the Package This repository uses automated GitHub Actions
+workflows to streamline package updates and documentation builds. Follow
+these steps to release a new version:
+
+Step 1: Update the Version Number in DESCRIPTION The only manual change
+you need to make is updating the version number in the DESCRIPTION file
+at the repository root. The version uses a date-based format
+(YYYY.MM.DD):
+
+Code Version: 2026.04.21 Step 2: Commit and Push to Main Branch Once
+you’ve updated the DESCRIPTION file, commit your changes and push to the
+main branch:
+
+bash git add DESCRIPTION git commit -m “Update version to 2026.04.21”
+git push origin main Step 3: Automated Workflows Two GitHub Actions
+workflows will automatically trigger on your push to main:
+
+1.  R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml) This
+    workflow:
+
+✅ Runs R package checks on Windows (R release and R 3.6.0) to ensure
+code quality ✅ Installs all package dependencies (devtools, knitr,
+rmarkdown, here) ✅ Builds the package into a .tar.gz file with the
+version number from DESCRIPTION (e.g., GAPsurvey-2026.04.21.tar.gz) ✅
+Converts the vignette GAPsurvey-script.Rmd into an R script
+(inst/r/GAPsurvey-script.R) ✅ Renders inst/r/README.Rmd into README.md
+✅ Commits and pushes the updated generated files back to the repository
+✅ Uploads the built .tar.gz package as a workflow artifact (available
+for download in GitHub Actions) Check status: Visit GitHub Actions to
+view workflow runs and download built packages.
+
+2.  pkgdown Workflow (.github/workflows/pkgdown.yml) This workflow:
+
+✅ Builds the package documentation site using pkgdown ✅ Deploys the
+documentation to GitHub Pages ✅ Automatically updates when you push to
+main View documentation: <https://afsc-gap-products.github.io/GAPsurvey>
+
+What Gets Updated Automatically When you update the version in
+DESCRIPTION and push to main, the following are automatically updated:
+
+.tar.gz package file - Built with the new version number
+inst/r/GAPsurvey-script.R - Regenerated from the vignette README.md -
+Rendered from README.Rmd (this file) GitHub Pages documentation -
+Rebuilt and deployed GitHub Actions artifacts - .tar.gz available for
+download Troubleshooting Workflow failed? Check the GitHub Actions tab
+for detailed error logs Version not updating? Ensure you edited the
+Version: line in DESCRIPTION (not Date:) Files not committing back?
+Verify the workflow has permissions to commit (should be automatic)
+
 ## Cite this data
 
 Use the below [bibtext
@@ -186,34 +235,35 @@ repository](https://github.com/afsc-gap-products/GAPsurvey/issues).
 
 ``` r
 sessionInfo()
-#> R version 4.5.1 (2025-06-13 ucrt)
+#> R version 4.5.3 (2026-03-11 ucrt)
 #> Platform: x86_64-w64-mingw32/x64
-#> Running under: Windows 11 x64 (build 22631)
+#> Running under: Windows Server 2022 x64 (build 26100)
 #> 
 #> Matrix products: default
 #>   LAPACK version 3.12.1
 #> 
 #> locale:
-#> [1] LC_COLLATE=English_United States.utf8  LC_CTYPE=English_United States.utf8    LC_MONETARY=English_United States.utf8
-#> [4] LC_NUMERIC=C                           LC_TIME=English_United States.utf8    
+#> [1] LC_COLLATE=English_United States.utf8 
+#> [2] LC_CTYPE=English_United States.utf8   
+#> [3] LC_MONETARY=English_United States.utf8
+#> [4] LC_NUMERIC=C                          
+#> [5] LC_TIME=English_United States.utf8    
 #> 
-#> time zone: America/Los_Angeles
+#> time zone: UTC
 #> tzcode source: internal
 #> 
 #> attached base packages:
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
-#> other attached packages:
-#> [1] ggplot2_4.0.2
-#> 
 #> loaded via a namespace (and not attached):
-#>  [1] vctrs_0.7.3         httr_1.4.8          cli_3.6.6           knitr_1.51          rlang_1.2.0         xfun_0.57          
-#>  [7] stringi_1.8.7       otel_0.2.0          readtext_0.92.1     generics_0.1.4      S7_0.2.1            data.table_1.18.2.1
-#> [13] glue_1.8.0          rprojroot_2.1.1     htmltools_0.5.9     scales_1.4.0        rmarkdown_2.31      grid_4.5.1         
-#> [19] tibble_3.3.1        evaluate_1.0.5      fastmap_1.2.0       yaml_2.3.12         lifecycle_1.0.5     compiler_4.5.1     
-#> [25] dplyr_1.2.1         RColorBrewer_1.1-3  pkgconfig_2.0.3     here_1.0.2          rstudioapi_0.18.0   farver_2.1.2       
-#> [31] digest_0.6.39       R6_2.6.1            tidyselect_1.2.1    pillar_1.11.1       magrittr_2.0.5      withr_3.0.2        
-#> [37] tools_4.5.1         gtable_0.3.6
+#>  [1] digest_0.6.39       R6_2.6.1            fastmap_1.2.0      
+#>  [4] xfun_0.57           glue_1.8.1          knitr_1.51         
+#>  [7] htmltools_0.5.9     rmarkdown_2.31      lifecycle_1.0.5    
+#> [10] cli_3.6.6           readtext_0.92.1     vctrs_0.7.3        
+#> [13] data.table_1.18.2.1 compiler_4.5.3      rprojroot_2.1.1    
+#> [16] here_1.0.2          httr_1.4.8          tools_4.5.3        
+#> [19] pillar_1.11.1       evaluate_1.0.5      yaml_2.3.12        
+#> [22] otel_0.2.0          rlang_1.2.0         stringi_1.8.7
 ```
 
 ## NOAA README
