@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -17,8 +17,8 @@ jobs:
 
       - name: Install system dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          # Windows doesn't need additional system dependencies for basic pkgdown
+          echo "System dependencies already available on Windows"
 
       - name: Install R dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
