@@ -63,7 +63,7 @@ jobs:
         shell: bash
 
       - name: Upload built package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: GAPsurvey-${{ steps.version.outputs.version }}-${{ matrix.config.os }}-R${{ matrix.config.r }}
           path: GAPsurvey-*.tar.gz
