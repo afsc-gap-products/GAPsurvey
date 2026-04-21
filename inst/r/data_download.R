@@ -280,91 +280,90 @@ write.table(str0,
             file = here::here("R","species_data.R"),
             sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
-# Update and run support files ------------------------------------------------
-
-date0 <- "2026.04.14" # Update files with new date version number!!!
-
-## GAPsurvey-run.Rmd -----------------------------------------------------------
-
-aaa <- readLines(con = here::here("vignettes", "GAPsurvey-script.Rmd"))
-aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
-write.table(x = aaa, file = here::here("vignettes", "GAPsurvey-script.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-## make GAPsurvey_script.Rmd into .R script -------------------------------------
-
-knitr::purl(
-  input = here::here("vignettes", "GAPsurvey-script.Rmd"),
-  output = here::here("inst", "r", "GAPsurvey-script.R"), documentation = 2)
-
-aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R"))
-aa <- aa[c(2,20:length(aa))]
-aa <- aa[!grepl(pattern = "## ----", x = aa)]
-aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
-aa <- gsub(pattern = "# > ", replacement = "# ", x = aa)
-aa <- aa[aa != "# "]
-# for (i in 1:15) { aa <- gsub(pattern = "-", replacement = "", x = aa) }
-writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
-
-## README -----------------------------------------------------------------------
-
-aaa <- readLines(con = here::here("inst", "r", "README.Rmd"))
-aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
-write.table(x = aaa, file = here::here("inst", "r", "README.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
-rmarkdown::render(here::here("inst", "r", "README.Rmd"),
-                  output_dir = "./",
-                  output_file = "README.md")
-
-## Update DESCRIPTION -----------------------------------------------------------
-
-aaa <- readLines(con = here::here("DESCRIPTION"))
-aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
-write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-# Document and create Package --------------------------------------------------
-
-.rs.restartR()
-
-# Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
-
-PKG <- c("devtools",
-         "here",
-         "usethis",
-         "roxygen2",
-         "RODBC")
-source(here::here("inst/r/pkg_install.R"))
-lapply(unique(PKG), pkg_install)
-
-devtools::document()
-setwd("..")
-install("GAPsurvey")
-3
-setwd(here::here())
-devtools::check()
-
-## Create Documentation GitHub-Pages -------------------------------------------
-
-# date0 <- "2025.06.07" # Update files with new date version number!!!
-
-PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
-         "here",
-         "usethis",
-         "pkgdown")
-source("./inst/r/pkg_install.R")
-lapply(unique(PKG), pkg_install)
-
-# devtools::install_github("r-lib/pkgdown")
-# pkgdown::build_favicons()
-# devtools::build_vignettes()
-# usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
-# usethis::use_vignette("my-vignette")
-# pkgdown::clean_site()
-pkgdown::build_site(pkg = here::here())
-# usethis::use_github_action("pkgdown")
-
-# Save Package tar.gz
-aa <- list.files(path = here::here(), pattern = ".tar.gz")
-file.copy(from = here::here(aa), to = paste0("../", aa), overwrite = TRUE)
-file.remove(here::here(aa))
-devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
-
-
+# shouldnt need the below anymore with github action improvements!
+# # Update and run support files ------------------------------------------------
+# 
+# date0 <- "2026.04.14" # Update files with new date version number!!!
+# 
+# ## GAPsurvey-run.Rmd -----------------------------------------------------------
+# 
+# aaa <- readLines(con = here::here("vignettes", "GAPsurvey-script.Rmd"))
+# aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
+# write.table(x = aaa, file = here::here("vignettes", "GAPsurvey-script.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
+# 
+# ## make GAPsurvey_script.Rmd into .R script -------------------------------------
+# 
+# knitr::purl(
+#   input = here::here("vignettes", "GAPsurvey-script.Rmd"),
+#   output = here::here("inst", "r", "GAPsurvey-script.R"), documentation = 2)
+# 
+# aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R"))
+# aa <- aa[c(2,20:length(aa))]
+# aa <- aa[!grepl(pattern = "## ----", x = aa)]
+# aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
+# aa <- gsub(pattern = "# > ", replacement = "# ", x = aa)
+# aa <- aa[aa != "# "]
+# # for (i in 1:15) { aa <- gsub(pattern = "-", replacement = "", x = aa) }
+# writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
+# 
+# ## README -----------------------------------------------------------------------
+# 
+# aaa <- readLines(con = here::here("inst", "r", "README.Rmd"))
+# aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
+# write.table(x = aaa, file = here::here("inst", "r", "README.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
+# rmarkdown::render(here::here("inst", "r", "README.Rmd"),
+#                   output_dir = "./",
+#                   output_file = "README.md")
+# 
+# ## Update DESCRIPTION -----------------------------------------------------------
+# 
+# aaa <- readLines(con = here::here("DESCRIPTION"))
+# aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
+# write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
+# 
+# # Document and create Package --------------------------------------------------
+# 
+# .rs.restartR()
+# 
+# # Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
+# 
+# PKG <- c("devtools",
+#          "here",
+#          "usethis",
+#          "roxygen2",
+#          "RODBC")
+# source(here::here("inst/r/pkg_install.R"))
+# lapply(unique(PKG), pkg_install)
+# 
+# devtools::document()
+# setwd("..")
+# install("GAPsurvey")
+# 3
+# setwd(here::here())
+# devtools::check()
+# 
+# ## Create Documentation GitHub-Pages -------------------------------------------
+# 
+# # date0 <- "2025.06.07" # Update files with new date version number!!!
+# 
+# PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
+#          "here",
+#          "usethis",
+#          "pkgdown")
+# source("./inst/r/pkg_install.R")
+# lapply(unique(PKG), pkg_install)
+# 
+# # devtools::install_github("r-lib/pkgdown")
+# # pkgdown::build_favicons()
+# # devtools::build_vignettes()
+# # usethis::use_pkgdown(config_file = "./pkgdown/_pkgdown.yml")
+# # usethis::use_vignette("my-vignette")
+# # pkgdown::clean_site()
+# pkgdown::build_site(pkg = here::here())
+# # usethis::use_github_action("pkgdown")
+# 
+# # Save Package tar.gz
+# aa <- list.files(path = here::here(), pattern = ".tar.gz")
+# file.copy(from = here::here(aa), to = paste0("../", aa), overwrite = TRUE)
+# file.remove(here::here(aa))
+# devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
