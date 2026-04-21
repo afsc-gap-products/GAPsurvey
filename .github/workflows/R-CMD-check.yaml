@@ -14,7 +14,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      # Forces the runner to use Node.js 24, resolving the deprecation warning
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
@@ -45,26 +44,30 @@ jobs:
 
       - name: Build and Rename R package
         run: |
-          # 1. Clean up any existing tar.gz files to ensure a fresh build
-          files <- list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$")
-          if (length(files) > 0) file.remove(files)
+          # 1. Debugging: List files before build to see what's in the repo
+          message("--- Files in repo before build ---")
+          print(list.files(recursive = TRUE))
+
+          # 2. Build the package explicitly in the current directory
+          # We use path = "." to build the current folder, and path = getwd() to output to current folder
+          devtools::build(pkg = ".", path = getwd())
+
+          # 3. Debugging: List files after build to find the tar.gz
+          message("--- Files in repo after build ---")
+          built_files <- list.files(pattern = "\\.tar\\.gz$")
+          print(built_files)
           
-          # 2. Build the package
-          pkg_path <- devtools::build(path = getwd())
+          # 4. Rename the file using the version from DESCRIPTION
+          if (length(built_files) == 0) {
+            stop("FATAL: No .tar.gz file found after build attempt. Check logs above.")
+          }
           
-          # 3. Read current version from DESCRIPTION to ensure 100% accuracy
           current_version <- read.dcf("DESCRIPTION")[,"Version"]
           new_name <- paste0("GAPsurvey-", current_version, ".tar.gz")
           
-          # 4. Explicitly rename the file
-          file.rename(pkg_path, new_name)
+          file.rename(built_files[1], new_name)
           
-          # 5. Verify the file exists and has the new name
-          if (file.exists(new_name)) {
-            message("Successfully created: ", new_name)
-          } else {
-            stop("FAILED to rename file to: ", new_name)
-          }
+          message("Successfully renamed ", built_files[1], " to ", new_name)
         shell: Rscript {0}
 
       - name: Convert GAPsurvey-script.Rmd to .R script
@@ -73,7 +76,6 @@ jobs:
             input = here::here("vignettes", "GAPsurvey-script.Rmd"), 
             output = here::here("inst", "r", "GAPsurvey-script.R"), 
             documentation = 2)
-          
           aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R")) 
           aa <- aa[c(2,20:length(aa))]
           aa <- aa[!grepl(pattern = "## ----", x = aa)]
@@ -102,5 +104,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: GAPsurvey-${{ steps.version.outputs.version }}
-          # Path explicitly matches the versioned file name we just created
-          path: GAPsurvey-${{ steps.version.outputs.version }}.tar.gz
+          path: GAPsurvey-*.tar.gz
