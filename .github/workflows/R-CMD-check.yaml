@@ -44,3 +44,26 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+
+      - name: Extract package version from DESCRIPTION
+        id: version
+        run: |
+          VERSION=$(grep "^Version:" DESCRIPTION | cut -d' ' -f2)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Build R package tar.gz
+        run: |
+          devtools::build(path = getwd())
+        shell: Rscript {0}
+
+      - name: Rename tar.gz with version number
+        run: |
+          mv GAPsurvey*.tar.gz GAPsurvey-${{ steps.version.outputs.version }}.tar.gz
+        shell: bash
+
+      - name: Upload built package
+        uses: actions/upload-artifact@v3
+        with:
+          name: GAPsurvey-${{ steps.version.outputs.version }}-${{ matrix.config.os }}-R${{ matrix.config.r }}
+          path: GAPsurvey-*.tar.gz
