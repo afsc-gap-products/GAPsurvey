@@ -14,7 +14,7 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      # This forces the runner to use Node.js 24, resolving the deprecation warning
+      # Forces the runner to use Node.js 24, resolving the deprecation warning
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
@@ -52,12 +52,19 @@ jobs:
           # 2. Build the package
           pkg_path <- devtools::build(path = getwd())
           
-          # 3. Rename the file using the version extracted earlier
-          version <- "${{ steps.version.outputs.version }}"
-          new_name <- paste0("GAPsurvey-", version, ".tar.gz")
+          # 3. Read current version from DESCRIPTION to ensure 100% accuracy
+          current_version <- read.dcf("DESCRIPTION")[,"Version"]
+          new_name <- paste0("GAPsurvey-", current_version, ".tar.gz")
+          
+          # 4. Explicitly rename the file
           file.rename(pkg_path, new_name)
           
-          message("Successfully renamed ", pkg_path, " to ", new_name)
+          # 5. Verify the file exists and has the new name
+          if (file.exists(new_name)) {
+            message("Successfully created: ", new_name)
+          } else {
+            stop("FAILED to rename file to: ", new_name)
+          }
         shell: Rscript {0}
 
       - name: Convert GAPsurvey-script.Rmd to .R script
@@ -95,4 +102,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: GAPsurvey-${{ steps.version.outputs.version }}
-          path: GAPsurvey-*.tar.gz
+          # Path explicitly matches the versioned file name we just created
+          path: GAPsurvey-${{ steps.version.outputs.version }}.tar.gz
