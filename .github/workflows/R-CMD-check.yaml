@@ -44,13 +44,14 @@ jobs:
        
       - name: Build R package
         run: |
-          # Clean up any existing tar.gz files
-          # Using wildcard to catch any version
-          unlink("GAPsurvey*.tar.gz")
-          
-          # Build the package using devtools
           devtools::build(path = ".")
         shell: Rscript {0}
+
+      - name: Verify and list built packages
+        run: |
+          ls -la *.tar.gz 2>/dev/null || echo "No .tar.gz files in root"
+          find . -name "GAPsurvey*.tar.gz" -type f
+        shell: bash
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
