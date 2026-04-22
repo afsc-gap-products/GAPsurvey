@@ -127,9 +127,13 @@ Version: 2026.04.21
 
 Once a year re-download data to go into the package using this [data_download.R script](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/data_download.R). 
 
-## Step 4: Make needed edits to README.rmd
+## Step 4: If you make needed edits to README.rmd
 
 Changes should be minimal, but all edits to this README file must be made in the [RMD](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/README.Rmd) version. 
+
+## Step 4: If you add or remove functions
+
+If you add or remove functions that are supposed to be used by the user, update the function list in the [`_pkgdown.yml`](https://github.com/afsc-gap-products/GAPsurvey/blob/main/_pkgdown.yml). 
 
 ## Step 5: Commit and Push to Main Branch
 
