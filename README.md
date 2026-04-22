@@ -26,19 +26,21 @@ Seattle, WA 98195
 
 > - [*Make sure the necessary packages are
 >   installed*](#make-sure-the-necessary-packages-are-installed)
-> - [*example, the user may have a different
->   path*](#example,-the-user-may-have-a-different-path)
->   - [*User Resources*](#user-resources)
->   - [*Updating the Package*](#updating-the-package)
->     - [*Step 1: Update the Version Number in
->       `DESCRIPTION`*](#step-1:-update-the-version-number-in-%60description%60)
->     - [*Step 2: Commit and Push to Main
->       Branch*](#step-2:-commit-and-push-to-main-branch)
->     - [*Step 3: Automated Workflows*](#step-3:-automated-workflows)
->       \#\> - [*1. R-CMD-check Workflow
->       (.github/workflows/R-CMD-check.yaml)*](#1.-r-cmd-check-workflow-(.github/workflows/r-cmd-check.yaml))
->       \#\> - [*2. pkgdown Workflow
->       (.github/workflows/pkgdown.yml)*](#2.-pkgdown-workflow-(.github/workflows/pkgdown.yml))
+> - [*User Resources*](#user-resources)
+> - [*Updating the Package*](#updating-the-package)
+>   - [*Step 1: Update the Version Number in
+>     `DESCRIPTION`*](#step-1:-update-the-version-number-in-%60description%60)
+>   - [*Step 2: Once a year: Re-download source
+>     data*](#step-2:-once-a-year:-re-download-source-data)
+>   - [*Step 4: Make needed edits to
+>     README.rmd*](#step-4:-make-needed-edits-to-readme.rmd)
+>   - [*Step 5: Commit and Push to Main
+>     Branch*](#step-5:-commit-and-push-to-main-branch)
+>   - [*Step 6: Automated Workflows*](#step-6:-automated-workflows)
+>     - [*A. R-CMD-check Workflow
+>       (.github/workflows/R-CMD-check.yaml)*](#a.-r-cmd-check-workflow-(.github/workflows/r-cmd-check.yaml))
+>     - [*B. pkgdown Workflow
+>       (.github/workflows/pkgdown.yml)*](#b.-pkgdown-workflow-(.github/workflows/pkgdown.yml))
 >   - [*Cite this data*](#cite-this-data)
 > - [*Relevant publications*](#relevant-publications)
 > - [*Suggestions and Comments*](#suggestions-and-comments)
@@ -61,7 +63,7 @@ library(GAPsurvey)
 or install from local file `.tar.gz`:
 
 ``` r
-# example, the user may have a different path
+ # example, the user may have a different path
 install.packages('C:/Users/User/Downloads/GAPsurvey.tar.gz',
                  repos=NULL, type='source')
 library(GAPsurvey)
@@ -91,13 +93,13 @@ library(GAPsurvey)
 - [Research Surveys conducted at
   AFSC](https://www.fisheries.noaa.gov/alaska/ecosystems/alaska-fish-research-surveys)
 
-## Updating the Package
+# Updating the Package
 
 This repository uses automated GitHub Actions workflows to streamline
 package updates and documentation builds. Follow these steps to release
 a new version once you have made your content edits to the package code.
 
-### Step 1: Update the Version Number in `DESCRIPTION`
+## Step 1: Update the Version Number in `DESCRIPTION`
 
 The only manual change you need to make is updating the version number
 in the `DESCRIPTION` file at the repository root. The version uses a
@@ -105,22 +107,34 @@ date-based format (YYYY.MM.DD). For example:
 
     Version: 2026.04.21
 
-### Step 2: Commit and Push to Main Branch
+## Step 2: Once a year: Re-download source data
+
+Once a year re-download data to go into the package using this
+[data_download.R
+script](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/data_download.R).
+
+## Step 4: Make needed edits to README.rmd
+
+Changes should be minimal, but all edits to this README file must be
+made in the
+[RMD](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/README.Rmd)
+version.
+
+## Step 5: Commit and Push to Main Branch
 
 Once you’ve updated the `DESCRIPTION` file, commit your changes and push
 to the main branch.
 
-### Step 3: Automated Workflows
+## Step 6: Automated Workflows
 
 Two GitHub Actions workflows will automatically trigger on your push to
 main:
 
-#### 1. R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml)
+### A. R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml)
 
 This workflow:
 
-✅ Runs R package checks on Windows (R release and R 3.6.0) to ensure
-code quality
+✅ Runs R package checks on Windows to ensure code quality
 
 ✅ Installs all package dependencies (devtools, knitr, rmarkdown, here)
 
@@ -140,7 +154,7 @@ for download in GitHub Actions)
 Check status: Visit GitHub Actions to view workflow runs and download
 built packages.
 
-#### 2. pkgdown Workflow (.github/workflows/pkgdown.yml)
+### B. pkgdown Workflow (.github/workflows/pkgdown.yml)
 
 This workflow:
 
