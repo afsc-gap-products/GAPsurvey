@@ -124,15 +124,23 @@ The only manual change you need to make is updating the version number in the `D
 Version: 2026.04.21
 ```
 
-### Step 2: Commit and Push to Main Branch
+### Step 2: Once a year: Re-download source data
+
+Once a year re-download data to go into the package using this [data_download.R script](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/data_download.R). 
+
+### Step 4: Make needed edits to README.rmd
+
+Changes should be minimal, but all edits to this README file must be made in the [RMD](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/README.Rmd) version. 
+
+### Step 5: Commit and Push to Main Branch
 
 Once you've updated the `DESCRIPTION` file, commit your changes and push to the main branch. 
 
-### Step 3: Automated Workflows
+### Step 6: Automated Workflows
 
 Two GitHub Actions workflows will automatically trigger on your push to main:
 
-#### 1. R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml)
+#### A. R-CMD-check Workflow (.github/workflows/R-CMD-check.yaml)
 
 This workflow:
 
@@ -152,7 +160,7 @@ This workflow:
 
 Check status: Visit GitHub Actions to view workflow runs and download built packages.
 
-#### 2. pkgdown Workflow (.github/workflows/pkgdown.yml)
+#### B. pkgdown Workflow (.github/workflows/pkgdown.yml)
 
 This workflow:
 
