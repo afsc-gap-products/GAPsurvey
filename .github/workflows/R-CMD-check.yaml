@@ -45,12 +45,11 @@ jobs:
       - name: Build R package
         run: |
           # Clean up any existing tar.gz files in the root
-          files <- list.files(path = ".", pattern = "^GAPsurvey.*\\.tar\\.gz$")
-          if (length(files) > 0) file.remove(files)
-          
-          # Build the package, forcing it to the current directory
-          devtools::build(pkg = ".", path = ".")
-        shell: Rscript {0}
+          system("rm -f GAPsurvey*.tar.gz")
+    
+          # Build the package using R CMD build
+          system("R CMD build .")
+        shell: bash
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
