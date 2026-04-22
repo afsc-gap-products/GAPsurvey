@@ -14,7 +14,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      # Forces the runner to use Node.js 24, resolving the deprecation warning
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
@@ -45,16 +44,19 @@ jobs:
 
       - name: Build R package
         run: |
-          # Clean up any existing tar.gz files
-          files <- list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$")
+          # Clean up any existing tar.gz files in the root
+          files <- list.files(path = ".", pattern = "^GAPsurvey.*\\.tar\\.gz$")
           if (length(files) > 0) file.remove(files)
           
-          # Build the package in the current directory
-          devtools::build(path = getwd())
-          
-          # Debug: list what was created
-          print(list.files(pattern = "\\.tar\\.gz$"))
+          # Build the package, forcing it to the current directory
+          devtools::build(pkg = ".", path = ".")
         shell: Rscript {0}
+
+      - name: Upload built package
+        uses: actions/upload-artifact@v4
+        with:
+          name: GAPsurvey-build
+          path: "*.tar.gz"
 
       - name: Convert GAPsurvey-script.Rmd to .R script
         run: |
@@ -84,12 +86,5 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add inst/r/GAPsurvey-script.R README.md
-          git commit -m "Update generated files with version ${{ steps.version.outputs.version }}" || echo "No changes to commit"
+          git commit -m "Update generated files" || echo "No changes to commit"
           git push || echo "Nothing to push"
-
-      - name: Upload built package
-        uses: actions/upload-artifact@v4
-        with:
-          name: GAPsurvey-build
-          # Using a wildcard ensures it picks up whatever devtools created
-          path: "*.tar.gz"
