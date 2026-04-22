@@ -41,21 +41,23 @@ jobs:
           VERSION=$(grep "^Version:" DESCRIPTION | cut -d' ' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
         shell: bash
-
-      - name: Build R package
+        
+        - name: Build R package
         run: |
-          # Clean up any existing tar.gz files in the root
-          system("rm -f GAPsurvey.tar.gz")
-    
-          # Build the package using R CMD build
-          system("R CMD build .")
-        shell: bash
+          # Clean up any existing tar.gz files
+          # Using wildcard to catch any version
+          unlink("GAPsurvey*.tar.gz")
+          
+          # Build the package using devtools
+          devtools::build(path = ".")
+        shell: Rscript {0}
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
           name: GAPsurvey-build
-          path: "GAPsurvey.tar.gz"
+          # The asterisk (*) will catch the file regardless of the version number
+          path: "GAPsurvey*.tar.gz"
 
       - name: Convert GAPsurvey-script.Rmd to .R script
         run: |
