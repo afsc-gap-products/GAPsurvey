@@ -47,12 +47,25 @@ jobs:
        
       - name: Build R package
         run: |
-          # Clean up any existing .tar.gz files in root
-          unlink(list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$"))
+          # 1. Clean up any existing GAPsurvey files to avoid duplicates
+          unlink("GAPsurvey*.tar.gz")
           
-          # Build the package in current directory
+          # 2. Build the package (creates GAPsurvey_X.Y.Z.tar.gz)
           devtools::build(pkg = ".", path = ".")
+          
+          # 3. Identify the generated versioned file
+          versioned_file <- list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$")
+          
+          # 4. Copy it to the static name "GAPsurvey.tar.gz"
+          file.copy(from = versioned_file, to = "GAPsurvey.tar.gz", overwrite = TRUE)
         shell: Rscript {0}
+
+      - name: Upload built package with generic name
+        uses: actions/upload-artifact@v4
+        with:
+          name: GAPsurvey-build
+          # Now you can target the static filename directly
+          path: "GAPsurvey.tar.gz"
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
