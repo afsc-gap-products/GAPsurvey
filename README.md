@@ -32,8 +32,8 @@ Seattle, WA 98195
 >     file*](#step-1:-update-the-version-number-in-description-file)
 >   - [*Step 2: Once a year: Re-download source
 >     data*](#step-2:-once-a-year:-re-download-source-data)
->   - [*Step 4: If you make needed edits to
->     README.rmd*](#step-4:-if-you-make-needed-edits-to-readme.rmd)
+>   - [*Step 3: If you make needed edits to
+>     README.rmd*](#step-3:-if-you-make-needed-edits-to-readme.rmd)
 >   - [*Step 4: If you add or remove
 >     functions*](#step-4:-if-you-add-or-remove-functions)
 >   - [*Step 5: Commit and Push to Main
@@ -107,9 +107,7 @@ The only manual change you need to make is updating the version number
 in the
 [`DESCRIPTION`](https://github.com/afsc-gap-products/GAPsurvey/blob/main/DESCRIPTION)
 file at the repository root. The version uses a date-based format
-(YYYY.MM.DD). For example:
-
-    Version: 2026.04.21
+(YYYY.MM.DD). For example: `Version: 2026.04.21`
 
 ## Step 2: Once a year: Re-download source data
 
@@ -117,7 +115,7 @@ Once a year re-download data to go into the package using this
 [data_download.R
 script](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/data_download.R).
 
-## Step 4: If you make needed edits to README.rmd
+## Step 3: If you make needed edits to README.rmd
 
 Changes should be minimal, but all edits to this README file must be
 made in the
