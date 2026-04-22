@@ -41,8 +41,8 @@ jobs:
           VERSION=$(grep "^Version:" DESCRIPTION | cut -d' ' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
         shell: bash
-        
-        - name: Build R package
+       
+      - name: Build R package
         run: |
           # Clean up any existing tar.gz files
           # Using wildcard to catch any version
