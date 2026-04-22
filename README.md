@@ -147,7 +147,7 @@ This workflow:
 ✅ Installs all package dependencies (devtools, knitr, rmarkdown, here)
 
 ✅ Builds the package into a .tar.gz file with the version number from
-DESCRIPTION (e.g., GAPsurvey-2026.04.21.tar.gz)
+DESCRIPTION
 
 ✅ Converts the vignette GAPsurvey-script.Rmd into an R script
 (inst/r/GAPsurvey-script.R)
