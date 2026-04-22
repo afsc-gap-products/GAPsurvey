@@ -21,7 +21,6 @@ knitr::opts_chunk$set(
 )
 link_repo <- "https://github.com/afsc-gap-products/GAPsurvey"
 link_repopage <- "https://afsc-gap-products.github.io/GAPsurvey"
-require(ggplot2)
 ```
 
 

@@ -4,32 +4,31 @@
 PKG <- c(
 
   "devtools",
-  "remotes",
+  # "remotes",
 
   # other tidyverse
-  "plyr",
+  # "plyr",
   "dplyr",
-  "magrittr",
-  "tidyr",
+  # "tidyr",
   "readxl",
-  "viridis",
+  # "viridis",
   "readr",
-  "ggplot2",
-  "tibble",
+  # "ggplot2",
+  # "tibble",
   "janitor",
-  "data.table",
+  # "data.table",
   "here",
-  "terra",
+  # "terra",
 
   # Survey data pull Specific packages
   "akgfmaps", # devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = TRUE)
-  "coldpool", # devtools::install_github("afsc-gap-products/coldpool")
-  "gapctd", # install_github("afsc-gap-products/gapctd")
-  "gapindex", # devtools::install_github("afsc-gap-products/gapindex")
+  # "coldpool", # devtools::install_github("afsc-gap-products/coldpool")
+  # "gapctd", # install_github("afsc-gap-products/gapctd")
+  # "gapindex", # devtools::install_github("afsc-gap-products/gapindex")
 
-  "jsonlite",
-  "httr",
-  "sp",
+  # "jsonlite",
+  # "httr",
+  # "sp",
   "RODBC",
 
   "roxygen2",
@@ -38,17 +37,51 @@ PKG <- c(
   "pkgdown",
 
   # Spatial mapping
-  "sf",
-  "ggspatial",
+  "sf"#,
+  # "ggspatial",
 
-  "fontawesome",
-
-  # API pulls
-  "jsonlite",
-  "httr"
+  # "fontawesome",
+  #
+  # # API pulls
+  # "jsonlite",
+  # "httr"
 )
 
-source("./inst/r/pkg_install.R")
+
+#' Package install
+#'
+#' @param PKG name of package
+#' this script has additional capability to work on google workstations.
+#' You can use the library install bash script.
+#' @keywords internal
+#' @example
+#' # lapply(PKG = c("dplyr", "ggplot2"), pkg_install)
+pkg_install <- function(PKG){
+
+  if(base::grepl("/home/user/", base::getwd())){
+    base::system("chmod a+x ubuntu_libraries.sh")
+    base::system("./ubuntu_libraries.sh")
+  }
+
+  if(!require(PKG, character.only = TRUE)) {
+    if (PKG == 'coldpool') {
+      devtools::install_github("afsc-gap-products/coldpool")
+    } else if (PKG == "akgfmapas") {
+      devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = TRUE)
+    } else if (PKG == 'gapctd') {
+      remotes::install_github("afsc-gap-products/gapctd")
+    } else if (PKG == 'navmaps') {
+      remotes::install_github("afsc-gap-products/navmaps")
+    } else if (PKG == 'gapindex') {
+      remotes::install_github("afsc-gap-products/gapindex")
+    } else {
+      utils::install.packages(PKG)
+    }
+    require(PKG, character.only = TRUE)}
+}
+
+
+# source("./inst/r/pkg_install.R")
 lapply(unique(PKG), pkg_install)
 
 # Connect to oracle ------------------------------------------------------------
@@ -72,18 +105,18 @@ metadata_table_comment <- dplyr::bind_rows(
     query = "SELECT table_name, comments
 FROM all_tab_comments
 WHERE owner = 'GAP_PRODUCTS'
-ORDER BY table_name") %>%
+ORDER BY table_name") |>
     data.frame(),
   # materialized view
   RODBC::sqlQuery(
     channel = channel,
-    query = "SELECT * FROM user_mview_comments") %>%
-    data.frame() %>%
+    query = "SELECT * FROM user_mview_comments") |>
+    data.frame() |>
     dplyr::rename(TABLE_NAME = MVIEW_NAME) )
 
 metadata_colname <- RODBC::sqlQuery(
   channel = channel,
-  query = "SELECT * FROM GAP_PRODUCTS.METADATA_COLUMN") %>%
+  query = "SELECT * FROM GAP_PRODUCTS.METADATA_COLUMN") |>
   janitor::clean_names()
 
 ## FOSS catch and haul data ----------------------------------------------------
@@ -138,16 +171,16 @@ ON sv.SURVEY_DEFINITION_ID = hh.SURVEY_DEFINITION_ID
 FULL OUTER JOIN GAP_PRODUCTS.FOSS_CATCH cc
 ON sv.SPECIES_CODE = cc.SPECIES_CODE
 AND hh.HAULJOIN = cc.HAULJOIN
-WHERE cc.WEIGHT_KG > 0" ) %>%
+WHERE cc.WEIGHT_KG > 0" ) |>
   janitor::clean_names()
 
 # Save table to local directory
 # https://stackoverflow.com/questions/70503726/warning-lazydata-db-of-mb-without-lazydatacompression-set
 save(public_data, file ="./data/public_data.rda", compress = "xz")
 
-column <- metadata_colname %>%
-  dplyr::filter(metadata_colname %in% toupper(names(public_data))) %>%
-  dplyr::mutate(metadata_colname = tolower(metadata_colname)) %>%
+column <- metadata_colname |>
+  dplyr::filter(metadata_colname %in% toupper(names(public_data))) |>
+  dplyr::mutate(metadata_colname = tolower(metadata_colname)) |>
   dplyr::distinct()
 
 str0 <- paste0("#' @title Presence-only public data from FOSS
@@ -203,17 +236,17 @@ for (ii in 1:length(sel_region)) {
     dplyr::bind_rows(station_center)
 }
 
-station_coords <- station_coords %>%
-  dplyr::filter(!is.na(srvy)) %>%
-  dplyr::filter(!is.na(station)) %>%
-  dplyr::filter(!is.na(longitude_dd)) %>%
+station_coords <- station_coords |>
+  dplyr::filter(!is.na(srvy)) |>
+  dplyr::filter(!is.na(station)) |>
+  dplyr::filter(!is.na(longitude_dd)) |>
   dplyr::filter(!is.na(latitude_dd))
 
 save(station_coords, file = "./data/station_coords.rda", compress = "xz")
 
-column <- metadata_colname %>%
-  dplyr::filter(metadata_colname %in% toupper(names(station_coords))) %>%
-  dplyr::mutate(metadata_colname = tolower(metadata_colname)) %>%
+column <- metadata_colname |>
+  dplyr::filter(metadata_colname %in% toupper(names(station_coords))) |>
+  dplyr::mutate(metadata_colname = tolower(metadata_colname)) |>
   dplyr::distinct()
 
 table <- "Station centroid coordinates for each station for all surveys, as defined by the akgfmaps package. "
@@ -244,17 +277,17 @@ species_data <- RODBC::sqlQuery(
   query =
     "SELECT *
 FROM GAP_PRODUCTS.TAXONOMIC_CLASSIFICATION
-WHERE SURVEY_SPECIES = 1" ) %>%
-  janitor::clean_names() %>%
+WHERE SURVEY_SPECIES = 1" ) |>
+  janitor::clean_names() |>
   dplyr::select(species_code,
                 common_name,
                 scientific_name = species_name)
 
 save(species_data, file = "./data/species_data.rda", compress = "xz")
 
-column <- metadata_colname %>%
-  dplyr::filter(metadata_colname %in% toupper(names(species_data))) %>%
-  dplyr::mutate(metadata_colname = tolower(metadata_colname)) %>%
+column <- metadata_colname |>
+  dplyr::filter(metadata_colname %in% toupper(names(species_data))) |>
+  dplyr::mutate(metadata_colname = tolower(metadata_colname)) |>
   dplyr::distinct()
 
 str0 <- paste0("#' @title Subsetted species data
@@ -282,21 +315,21 @@ write.table(str0,
 
 # shouldnt need the below anymore with github action improvements!
 # # Update and run support files ------------------------------------------------
-# 
+#
 # date0 <- "2026.04.14" # Update files with new date version number!!!
-# 
+#
 # ## GAPsurvey-run.Rmd -----------------------------------------------------------
-# 
+#
 # aaa <- readLines(con = here::here("vignettes", "GAPsurvey-script.Rmd"))
 # aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
 # write.table(x = aaa, file = here::here("vignettes", "GAPsurvey-script.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
-# 
+#
 # ## make GAPsurvey_script.Rmd into .R script -------------------------------------
-# 
+#
 # knitr::purl(
 #   input = here::here("vignettes", "GAPsurvey-script.Rmd"),
 #   output = here::here("inst", "r", "GAPsurvey-script.R"), documentation = 2)
-# 
+#
 # aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R"))
 # aa <- aa[c(2,20:length(aa))]
 # aa <- aa[!grepl(pattern = "## ----", x = aa)]
@@ -305,28 +338,28 @@ write.table(str0,
 # aa <- aa[aa != "# "]
 # # for (i in 1:15) { aa <- gsub(pattern = "-", replacement = "", x = aa) }
 # writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
-# 
+#
 # ## README -----------------------------------------------------------------------
-# 
+#
 # aaa <- readLines(con = here::here("inst", "r", "README.Rmd"))
 # aaa[grepl(pattern = "install.packages('C:", x = aaa, fixed = TRUE)] <- paste0("install.packages('C:/Users/User/Downloads/GAPsurvey_", date0, ".tar.gz',")
 # write.table(x = aaa, file = here::here("inst", "r", "README.Rmd"), quote = FALSE, row.names = FALSE, col.names = FALSE)
 # rmarkdown::render(here::here("inst", "r", "README.Rmd"),
 #                   output_dir = "./",
 #                   output_file = "README.md")
-# 
+#
 # ## Update DESCRIPTION -----------------------------------------------------------
-# 
+#
 # aaa <- readLines(con = here::here("DESCRIPTION"))
 # aaa[grepl(pattern = "Version: ", x = aaa)] <- paste0("Version: ", date0)
 # write.table(x = aaa, file = "DESCRIPTION", quote = FALSE, row.names = FALSE, col.names = FALSE)
-# 
+#
 # # Document and create Package --------------------------------------------------
-# 
+#
 # .rs.restartR()
-# 
+#
 # # Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
-# 
+#
 # PKG <- c("devtools",
 #          "here",
 #          "usethis",
@@ -334,25 +367,25 @@ write.table(str0,
 #          "RODBC")
 # source(here::here("inst/r/pkg_install.R"))
 # lapply(unique(PKG), pkg_install)
-# 
+#
 # devtools::document()
 # setwd("..")
 # install("GAPsurvey")
 # 3
 # setwd(here::here())
 # devtools::check()
-# 
+#
 # ## Create Documentation GitHub-Pages -------------------------------------------
-# 
+#
 # # date0 <- "2025.06.07" # Update files with new date version number!!!
-# 
+#
 # PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
 #          "here",
 #          "usethis",
 #          "pkgdown")
 # source("./inst/r/pkg_install.R")
 # lapply(unique(PKG), pkg_install)
-# 
+#
 # # devtools::install_github("r-lib/pkgdown")
 # # pkgdown::build_favicons()
 # # devtools::build_vignettes()
@@ -361,7 +394,7 @@ write.table(str0,
 # # pkgdown::clean_site()
 # pkgdown::build_site(pkg = here::here())
 # # usethis::use_github_action("pkgdown")
-# 
+#
 # # Save Package tar.gz
 # aa <- list.files(path = here::here(), pattern = ".tar.gz")
 # file.copy(from = here::here(aa), to = paste0("../", aa), overwrite = TRUE)
