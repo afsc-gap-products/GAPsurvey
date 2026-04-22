@@ -18,6 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Required to allow git pull --rebase to work without errors
+          fetch-depth: 0
 
       - uses: r-lib/actions/setup-pandoc@v2
 
@@ -44,20 +47,17 @@ jobs:
        
       - name: Build R package
         run: |
-          devtools::build(path = ".")
+          # Clean up any existing .tar.gz files in root
+          unlink(list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$"))
+          
+          # Build the package in current directory
+          devtools::build(pkg = ".", path = ".")
         shell: Rscript {0}
-
-      - name: Verify and list built packages
-        run: |
-          ls -la *.tar.gz 2>/dev/null || echo "No .tar.gz files in root"
-          find . -name "GAPsurvey*.tar.gz" -type f
-        shell: bash
 
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
           name: GAPsurvey-build
-          # The asterisk (*) will catch the file regardless of the version number
           path: "GAPsurvey*.tar.gz"
 
       - name: Convert GAPsurvey-script.Rmd to .R script
@@ -84,9 +84,18 @@ jobs:
         shell: Rscript {0}
 
       - name: Commit and push updated files
+        shell: bash
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add inst/r/GAPsurvey-script.R README.md
-          git commit -m "Update generated files" || echo "No changes to commit"
-          git push || echo "Nothing to push"
+          
+          # Only commit/push if there are actually changes
+          if ! git diff --quiet --cached; then
+            git commit -m "Update generated files"
+            # Pull latest changes to avoid conflicts (race condition protection)
+            git pull origin main --rebase
+            git push
+          else
+            echo "No changes to commit"
+          fi
