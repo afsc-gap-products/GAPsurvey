@@ -115,9 +115,9 @@ library(GAPsurvey)
 
 This repository uses automated GitHub Actions workflows to streamline package updates and documentation builds. Follow these steps to release a new version once you have made your content edits to the package code. 
 
-## Step 1: Update the Version Number in `DESCRIPTION`
+## Step 1: Update the Version Number in DESCRIPTION file
 
-The only manual change you need to make is updating the version number in the `DESCRIPTION` file at the repository root. The version uses a date-based format (YYYY.MM.DD). For example: 
+The only manual change you need to make is updating the version number in the [`DESCRIPTION`](https://github.com/afsc-gap-products/GAPsurvey/blob/main/DESCRIPTION) file at the repository root. The version uses a date-based format (YYYY.MM.DD). For example: 
 
 ```
 Version: 2026.04.21
