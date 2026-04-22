@@ -28,12 +28,14 @@ Seattle, WA 98195
 >   installed*](#make-sure-the-necessary-packages-are-installed)
 > - [*User Resources*](#user-resources)
 > - [*Updating the Package*](#updating-the-package)
->   - [*Step 1: Update the Version Number in
->     `DESCRIPTION`*](#step-1:-update-the-version-number-in-%60description%60)
+>   - [*Step 1: Update the Version Number in DESCRIPTION
+>     file*](#step-1:-update-the-version-number-in-description-file)
 >   - [*Step 2: Once a year: Re-download source
 >     data*](#step-2:-once-a-year:-re-download-source-data)
->   - [*Step 4: Make needed edits to
->     README.rmd*](#step-4:-make-needed-edits-to-readme.rmd)
+>   - [*Step 4: If you make needed edits to
+>     README.rmd*](#step-4:-if-you-make-needed-edits-to-readme.rmd)
+>   - [*Step 4: If you add or remove
+>     functions*](#step-4:-if-you-add-or-remove-functions)
 >   - [*Step 5: Commit and Push to Main
 >     Branch*](#step-5:-commit-and-push-to-main-branch)
 >   - [*Step 6: Automated Workflows*](#step-6:-automated-workflows)
@@ -99,11 +101,13 @@ This repository uses automated GitHub Actions workflows to streamline
 package updates and documentation builds. Follow these steps to release
 a new version once you have made your content edits to the package code.
 
-## Step 1: Update the Version Number in `DESCRIPTION`
+## Step 1: Update the Version Number in DESCRIPTION file
 
 The only manual change you need to make is updating the version number
-in the `DESCRIPTION` file at the repository root. The version uses a
-date-based format (YYYY.MM.DD). For example:
+in the
+[`DESCRIPTION`](https://github.com/afsc-gap-products/GAPsurvey/blob/main/DESCRIPTION)
+file at the repository root. The version uses a date-based format
+(YYYY.MM.DD). For example:
 
     Version: 2026.04.21
 
@@ -113,12 +117,18 @@ Once a year re-download data to go into the package using this
 [data_download.R
 script](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/data_download.R).
 
-## Step 4: Make needed edits to README.rmd
+## Step 4: If you make needed edits to README.rmd
 
 Changes should be minimal, but all edits to this README file must be
 made in the
 [RMD](https://github.com/afsc-gap-products/GAPsurvey/blob/main/inst/r/README.Rmd)
 version.
+
+## Step 4: If you add or remove functions
+
+If you add or remove functions that are supposed to be used by the user,
+update the function list in the
+[`_pkgdown.yml`](https://github.com/afsc-gap-products/GAPsurvey/blob/main/_pkgdown.yml).
 
 ## Step 5: Commit and Push to Main Branch
 
