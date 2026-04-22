@@ -60,13 +60,6 @@ jobs:
           file.copy(from = versioned_file, to = "GAPsurvey.tar.gz", overwrite = TRUE)
         shell: Rscript {0}
 
-      - name: Upload built package with generic name
-        uses: actions/upload-artifact@v4
-        with:
-          name: GAPsurvey-build
-          # Now you can target the static filename directly
-          path: "GAPsurvey.tar.gz"
-
       - name: Upload built package
         uses: actions/upload-artifact@v4
         with:
@@ -101,7 +94,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add inst/r/GAPsurvey-script.R README.md GAPsurvey_*.tar.gz
+          git add inst/r/GAPsurvey-script.R README.md GAPsurvey.tar.gz
           
           # Only commit/push if there are actually changes
           if ! git diff --quiet --cached; then
