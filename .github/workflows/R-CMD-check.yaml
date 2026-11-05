@@ -44,18 +44,18 @@ jobs:
           VERSION=$(grep "^Version:" DESCRIPTION | cut -d' ' -f2)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
         shell: bash
-       
+
       - name: Build R package
         run: |
           # 1. Clean up any existing GAPsurvey files to avoid duplicates
           unlink("GAPsurvey*.tar.gz")
-          
+
           # 2. Build the package (creates GAPsurvey_X.Y.Z.tar.gz)
           devtools::build(pkg = ".", path = ".")
-          
+
           # 3. Identify the generated versioned file
           versioned_file <- list.files(pattern = "^GAPsurvey.*\\.tar\\.gz$")
-          
+
           # 4. Copy it to the static name "GAPsurvey.tar.gz"
           file.copy(from = versioned_file, to = "GAPsurvey.tar.gz", overwrite = TRUE)
         shell: Rscript {0}
@@ -69,11 +69,11 @@ jobs:
       - name: Convert GAPsurvey-script.Rmd to .R script
         run: |
           knitr::purl(
-            input = here::here("vignettes", "GAPsurvey-script.Rmd"), 
-            output = here::here("inst", "r", "GAPsurvey-script.R"), 
+            input = here::here("vignettes", "GAPsurvey-script.Rmd"),
+            output = here::here("inst", "r", "GAPsurvey-script.R"),
             documentation = 2)
-          
-          aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R")) 
+
+          aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R"))
           aa <- aa[c(2,20:length(aa))]
           aa <- aa[!grepl(pattern = "## ----", x = aa)]
           aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
@@ -90,12 +90,13 @@ jobs:
         shell: Rscript {0}
 
       - name: Commit and push updated files
+        if: github.event_name == 'push'
         shell: bash
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add inst/r/GAPsurvey-script.R README.md GAPsurvey.tar.gz
-          
+
           # Only commit/push if there are actually changes
           if ! git diff --quiet --cached; then
             git commit -m "Update generated files"
