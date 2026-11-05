@@ -1,3 +1,22 @@
+GAPsurvey 2026.11.04 (November 4, 2026)
+----------------------------------------------------------------
+
+NEW FUNCTIONALITY
+
+- check_haul_depths() added to flag hauls with depth anomalies
+  for the data finalization steps.
+- check_haul_abundance() added to flag hauls that violate
+  abundance haul assumptions for the data finalization steps.
+- merge_scs_files() added to read multiple SCS XML data files,
+  sorts them chronologically by start time, and merges their
+  triggers, diagnostics, metadata, and output nodes into a single
+  XML file
+- pull_repick_data() added to query haul information for a given
+  cruise and vessel for in season on/off bottom repicks
+- plot_haul_track() added to plot a haul track over corresponding
+  survey grid cells shaded by depth stratum.
+
+
 GAPsurvey 2026.04.08 (April 8, 2026)
 ----------------------------------------------------------------
 
