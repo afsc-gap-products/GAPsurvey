@@ -1,7 +1,7 @@
 Package: GAPsurvey
 Type: Package
-Title: Provides at-sea data management tools for RACE GAP surveys
-Version: 2026.04.22
+Title: Provides at-sea and in-season data management tools for RACE GAP surveys
+Version: 2026.11.04
 License: GPL-3
 Authors@R: 
   c(person(given = "Emily",
@@ -22,18 +22,28 @@ Authors@R:
            role = "aut",
            email = "Liz.Dawson@noaa.gov"))
 URL: https://afsc-gap-products.github.io/GAPsurvey
-Description: Provides at-sea data management tools for RACE GAP surveys. 
+Description: Provides at-sea and in-season data management tools for RACE GAP surveys. 
 Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
-Depends: R (>= 3.5.0)
+Depends: R (>= 4.1.0)
 Imports: 
     stats, 
     utils,
-    RSQLite
-RoxygenNote: 7.3.3
+    RSQLite,
+    akgfmaps,
+    dplyr,
+    gapindex,
+    graphics,
+    sf,
+    xml2
+Remotes: 
+    afsc-gap-products/akgfmaps,
+    afsc-gap-products/gapindex
 Suggests: 
     knitr,
     testthat,
-    rmarkdown
+    rmarkdown,
+    withr
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0

@@ -1,0 +1,126 @@
+---
+title: "Basic Workflow for in Season Effort Data Checking"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic Workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+```{r}
+library(GAPsurvey)
+library(gapindex)
+```
+
+## Establish an Oracle connection
+
+### Database Authentication
+
+Functions querying Oracle tables directly rely on an active database connection established via `gapindex`. You can either pass an existing connection object via the channel parameter or allow functions to connect automatically.
+
+```{r}
+con <- gapindex::get_connected(check_access = FALSE)
+```
+
+## Getting Haul Data for Repicks
+
+To export haul metadata directly to a CSV file for repicks, use `pull_repick_data()`:
+
+```{r}
+repick_df <- pull_repick_data(
+  cruise      = "202601",
+  vessel      = "176",
+  channel     = con,
+  output_path = "haul_data_202601_176.csv"
+)
+```
+
+## Plot Haul Track over Station Grids
+
+To visualize a haul's GPS track overlaid on survey grid cells shaded by depth stratum, call `plot_haul_track()`:
+
+```{r}
+haul_spatial <- plot_haul_track(
+  cruise  = 202601,
+  vessel  = 176,
+  haul    = 194,
+  region  = "ai",
+  channel = con
+)
+
+# Access spatial features returned by the function
+track_sf <- haul_spatial$track
+grid_sf  <- haul_spatial$grid
+```
+
+## Merging Multiple XML Files
+
+During survey operations, the Scientific Computing System (SCS) logs may end up split across multiple sequential XML files. The `merge_scs_files()` function combines these XML logs into a single file for upload to Poseidon, orders events chronologically, and allows users to crop data outside active tow windows.
+
+```{r}
+xml_files <- c(
+  "data/SCS_Log_001.xml",
+  "data/SCS_Log_002.xml",
+  "data/SCS_Log_003.xml"
+)
+
+# Merge XML files into a single master document
+merged_doc <- merge_scs_files(
+  file_paths  = xml_files,
+  output_path = "output/Merged_Haul.xml"
+)
+```
+
+#### Time-Trimming Records
+
+You can optionally supply start_time and end_time parameters in local time (e.g., Alaska Daylight Time). The function automatically converts local timestamps to UTC and crops timestamped entries occurring outside the active tow window:
+
+```{r}
+merged_trimmed <- merge_scs_files(
+  file_paths  = xml_files,
+  output_path = "output/Haul0073_Trimmed.xml",
+  start_time  = "2026-06-22 12:34:00",
+  end_time    = "2026-06-22 13:46:00",
+  tz          = "America/Anchorage"
+)
+```
+
+# Data Finalization
+
+## Checking Depth Errors
+
+The `check_haul_depths()` function scans unfinalized hauls for missing gear or bottom depths (0) or cases where gear depth meets or exceeds bottom depth:
+
+```{r}
+# Audit depth records for the 2026 Aleutian Islands survey
+depth_errors <- check_haul_depths(
+  cruise  = 202601,
+  region  = "AI",
+  channel = con
+)
+
+head(depth_errors)
+```
+
+## Evaluating Hauls for Abundance
+
+The `check_haul_abundance()` function joins unfinalized catch and haul records to flag hauls where abundance should be false (e.g., non-standard gear or accessories, bad performance codes, short tow duration relative to catch weight, or duplicate stations):
+
+```{r}
+# Flag operational haul issues
+haul_issues <- check_haul_abundance(
+  cruise  = 202601,
+  region  = "AI",
+  channel = con
+)
+
+head(haul_issues)
+```

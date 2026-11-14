@@ -82,4 +82,12 @@ reference:
       - '`station_coords`'
       - '`species_data`'
       - '`PolySpecies`'
+  - title: Effort Data Checking
+    contents:
+      - '`check_haul_abundance`'
+      - '`check_haul_depths`'
+      - '`merge_scs_files`'
+      - '`plot_haul_track`'
+      - '`pull_repick_data`'
+
 
